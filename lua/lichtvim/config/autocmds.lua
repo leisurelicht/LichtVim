@@ -1,7 +1,6 @@
 -- =================
--- init.lua -
+-- autocmds.lua -
 -- Note: 自动命令配置
--- Author: MuCheng
 -- =================
 --
 -- Check if we need to reload the file when it changed

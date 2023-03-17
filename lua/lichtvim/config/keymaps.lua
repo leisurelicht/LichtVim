@@ -3,9 +3,6 @@
 -- Note: 基础快捷键绑定设置
 -- =================
 --
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
-
 -- 强制保存
 map.set("c", "w!!", "w !sudo tee > /dev/null %", "Saved")
 

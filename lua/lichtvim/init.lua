@@ -1,10 +1,8 @@
 local M = {}
 
----@param opts? LazyVimConfig
+---@param opts? LichtVimConfig
 function M.setup(opts)
-  require("lichtvim.utils.G")
-
-  require("lichtvim.core").setup(opts)
+  require("lichtvim.config").setup(opts)
 end
 
 return M

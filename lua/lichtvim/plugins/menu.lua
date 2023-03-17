@@ -2,6 +2,7 @@
 -- init.lua
 -- =================
 --
+--
 return {
   {
     "nvim-lua/plenary.nvim",
@@ -10,21 +11,6 @@ return {
   },
   {"nvim-tree/nvim-web-devicons", lazy = true}, -- 图标
   -- {"MunifTanjim/nui.nvim", lazy = true},
-  {
-    "EdenEast/nightfox.nvim",
-    opts = {
-      options = {
-        styles = {
-          comments = "italic",
-          keywords = "bold",
-          types = "italic,bold"
-        }
-      }
-    },
-    config = function()
-      vim.cmd("colorscheme nightfox")
-    end
-  }, -- 主题
   {
     "rcarriga/nvim-notify",
     opts = {
