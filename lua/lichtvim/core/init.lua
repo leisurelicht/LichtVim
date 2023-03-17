@@ -10,7 +10,6 @@ local M = {}
 function M.setup(opts)
   vim.notify = vim.pretty_print
 
-  require("lichtvim.utils.G")
   require("lichtvim.core.basic")
 
   if vim.fn.argc(-1) == 0 then
