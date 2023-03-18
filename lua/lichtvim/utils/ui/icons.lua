@@ -10,38 +10,54 @@ Icons.lsp_hover = {
 }
 
 Icons.diagnostics = {
-  Error = " ",
-  Warn = " ",
-  Info = "ﬤ ",
-  Hint = " "
+  Error = " ",
+  Warn = " ",
+  Hint = " ",
+  Info = " "
+}
+
+Icons.git = {
+  added = " ",
+  modified = " ",
+  removed = " "
 }
 
 Icons.kind = {
-  Text = "",
-  Method = "פּ",
-  Function = "",
+  Array = " ",
+  Boolean = " ",
+  Class = " ",
+  Color = " ",
+  Constant = " ",
   Constructor = "",
-  Field = "ﰠ",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "ﰪ",
-  Property = "ﳋ",
-  Unit = "塞",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "﬌",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
+  Copilot = " ",
+  Enum = " ",
+  EnumMember = " ",
+  Event = " ",
+  Field = " ",
+  File = " ",
+  Folder = " ",
+  Function = "",
+  Interface = " ",
+  Key = "",
+  Keyword = " ",
+  Method = " ",
+  Module = " ",
+  Namespace = " ",
+  Null = " ",
+  Number = " ",
+  Object = " ",
+  Operator = " ",
+  Package = " ",
+  Property = " ",
+  Reference = " ",
+  Snippet = " ",
+  String = " ",
+  Struct = " ",
+  Text = "",
+  TypeParameter = " ",
+  Unit = " ",
+  Value = " ",
+  Variable = " "
 }
 
 Icons.vscode = {

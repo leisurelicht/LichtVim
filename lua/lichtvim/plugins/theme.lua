@@ -1,12 +1,8 @@
 return {
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = {style = "moon"}
-  },
   -- nightfox
   {
     "EdenEast/nightfox.nvim",
+    lazy = true,
     opts = {
       options = {
         styles = {

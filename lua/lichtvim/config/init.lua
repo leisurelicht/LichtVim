@@ -8,81 +8,38 @@ local M = {}
 
 require("lichtvim.utils.G")
 
+icons = require("lichtvim.utils.ui.icons")
+
 M.lazy_version = ">=9.1.0"
 
----@class LazyVimConfig
+---@class LichtVimConfig
 local defaults = {
   -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
   ---@type string|fun()
-  colorscheme = function()
-    require("tokyonight").load()
-  end,
+  colorscheme = "nightfox",
   -- load the default settings
   defaults = {
-    autocmds = true, -- lazyvim.config.autocmds
-    keymaps = true, -- lazyvim.config.keymaps
-    options = true -- lazyvim.config.options
+    autocmds = true, -- lichtvim.config.autocmds
+    keymaps = true, -- lichtvim.config.keymaps
+    options = true -- lichtvim.config.options
   },
   -- icons used by other plugins
   icons = {
-    diagnostics = {
-      Error = " ",
-      Warn = " ",
-      Hint = " ",
-      Info = " "
-    },
-    git = {
-      added = " ",
-      modified = " ",
-      removed = " "
-    },
-    kinds = {
-      Array = " ",
-      Boolean = " ",
-      Class = " ",
-      Color = " ",
-      Constant = " ",
-      Constructor = " ",
-      Copilot = " ",
-      Enum = " ",
-      EnumMember = " ",
-      Event = " ",
-      Field = " ",
-      File = " ",
-      Folder = " ",
-      Function = " ",
-      Interface = " ",
-      Key = " ",
-      Keyword = " ",
-      Method = " ",
-      Module = " ",
-      Namespace = " ",
-      Null = " ",
-      Number = " ",
-      Object = " ",
-      Operator = " ",
-      Package = " ",
-      Property = " ",
-      Reference = " ",
-      Snippet = " ",
-      String = " ",
-      Struct = " ",
-      Text = " ",
-      TypeParameter = " ",
-      Unit = " ",
-      Value = " ",
-      Variable = " "
-    }
+    diagnostics = icons.diagnostics,
+    git = icons.git,
+    kinds = icons.kinds
   }
 }
+
+local options
 
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {})
   if not M.has() then
     require("lazy.config.util").error(
-      "**LazyVim** needs **lazy.nvim** version " ..
+      "**LichtVim** needs **lazy.nvim** version " ..
         M.lazy_version .. " to work properly.\n" .. "Please upgrade **lazy.nvim**",
-      {title = "LazyVim"}
+      {title = "LichtVim"}
     )
     error("Exiting")
   end
@@ -94,17 +51,12 @@ function M.setup(opts)
         group = api.augroup("LichtVim"),
         pattern = "VeryLazy",
         callback = function()
-          -- require("lichtvim.config.autocmds")
-          -- require("lichtvim.config.keymaps")
           M.load("autocmds")
           M.load("keymaps")
         end
       }
     )
   else
-    -- require("lichtvim.config.autocmds")
-    -- require("lichtvim.config.keymaps")
-
     M.load("autocmds")
     M.load("keymaps")
   end
@@ -143,21 +95,23 @@ function M.load(name)
       {
         msg = "Failed loading " .. mod,
         on_error = function(msg)
-          local modpath = require("lazy.core.cache").find(mod)
-          if modpath then
-            Util.error(msg)
+          local info = require("lazy.core.cache").find(mod)
+          if info == nil or (type(info) == "table" and #info == 0) then
+            return
           end
+          Util.error(msg)
         end
       }
     )
   end
+
   -- always load lichtvim, then user file
   if M.defaults[name] then
     _load("lichtvim.config." .. name)
   end
-
   _load("config." .. name)
-  if vim.bo.filetype == "lazy" then -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
+  if vim.bo.filetype == "lazy" then
+    -- HACK: LichtVim may have overwritten options of the Lazy ui, so reset this here
     vim.cmd([[do VimResized]])
   end
 end
