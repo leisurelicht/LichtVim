@@ -4,13 +4,6 @@ return {
     event = {"BufRead", "BufNewFile"},
     init = function()
       vim.g.gitblame_enabled = 0
-    end,
-    config = function()
-      map.set("n", "<leader>gB", "<CMD>GitBlameToggle<CR>", "Toggle Current Line Blame")
-      -- map.set("n", "<leader>ge", "<CMD>GitBlameEnable<CR>", "Enable Blame")
-      -- map.set("n", "<leader>gd", "<CMD>GitBlameDisable<CR>", "Disable Blame")
-      map.set("n", "<leader>gy", "<CMD>GitBlameCopySHA<CR>", "Copy Blame SHA")
-      map.set("n", "<leader>go", "<CMD>GitBlameOpenCommitURL<CR>", "Open Commit URL")
     end
   },
   {
@@ -113,6 +106,12 @@ return {
               "Previous Git Hunk",
               {buffer = bufnr, expr = true}
             )
+
+            map.set("n", "<leader>gB", "<CMD>GitBlameToggle<CR>", "Toggle Current Line Blame")
+            -- map.set("n", "<leader>ge", "<CMD>GitBlameEnable<CR>", "Enable Blame")
+            -- map.set("n", "<leader>gd", "<CMD>GitBlameDisable<CR>", "Disable Blame")
+            map.set("n", "<leader>gy", "<CMD>GitBlameCopySHA<CR>", "Copy Blame SHA")
+            map.set("n", "<leader>go", "<CMD>GitBlameOpenCommitURL<CR>", "Open Commit URL")
 
             -- Text object
             map.set({"o", "x"}, "ih", ":<C-U>Gitsigns select_hunk<CR>")
