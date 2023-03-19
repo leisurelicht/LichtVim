@@ -24,7 +24,7 @@ function open_nvim_tree_file(data)
   require("nvim-tree.api").tree.open()
 end
 
-api.autocmd({"VimEnter"}, {callback = open_nvim_tree_dir})
+api.autocmd({"VimEnter"}, {group = api.augroup("explorer"), callback = open_nvim_tree_dir})
 
 -- api.autocmd({"BufReadPost"}, {callback = open_nvim_tree_file})
 
