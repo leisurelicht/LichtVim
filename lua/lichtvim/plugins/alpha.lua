@@ -112,7 +112,7 @@ local buttons = {
     button("SPC f f", "  Find File"),
     button("SPC f o", "  Recently Opened Files"),
     button("SPC f w", "  Find Word"),
-    button("SPC P u", "  Update plugins"),
+    button("p", "  Plugins", "<CMD>Lazy<CR>"),
     button("q", "  Quit", ":qa<cr>")
   },
   opts = {spacing = 1}
