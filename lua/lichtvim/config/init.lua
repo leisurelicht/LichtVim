@@ -120,7 +120,7 @@ M.did_init = false
 function M.init()
   if not M.did_init then
     M.did_init = true
-    require("lichtvim.utils").lazy_notify()
+    require("lichtvim.utils.lazy").lazy_notify()
 
     require("lichtvim.config").load("options")
   end

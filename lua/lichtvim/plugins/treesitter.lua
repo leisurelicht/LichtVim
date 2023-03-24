@@ -39,10 +39,7 @@ return {
         scope_incremental = "<nop>"
       }
     },
-    indent = {
-      enable = true,
-      disable = {"python"}
-    },
+    indent = {enable = true, disable = {"python"}},
     -- 彩虹括号
     rainbow = {
       enable = true,
@@ -55,12 +52,8 @@ return {
     -- comment
     context_commentstring = {enable = true},
     -- match % g% [% ]% z%
-    matchup = {
-      enable = true
-    },
-    endwise = {
-      enable = true
-    }
+    matchup = {enable = true},
+    endwise = {enable = true}
   },
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
@@ -69,8 +62,6 @@ return {
     map.set("n", "<leader>Ts", "<CMD>TSModuleInfo<CR>", "Module Info")
 
     local wk_ok, wk = pcall(require, "which-key")
-    if wk_ok then
-      wk.register({T = {name = "Treesitter"}, mode = "n", prefix = "<leader>"})
-    end
+    if wk_ok then wk.register({T = {name = "Treesitter"}, mode = "n", prefix = "<leader>"}) end
   end
 }

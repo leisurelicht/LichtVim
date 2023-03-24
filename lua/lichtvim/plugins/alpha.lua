@@ -55,29 +55,14 @@ local function info()
   local total_plugins = require("lazy").stats().count
   local datetime = os.date(" %d-%m-%Y   %H:%M:%S")
   local version = vim.version()
-  local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
+  local version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
-  return datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
+  return datetime .. "   " .. total_plugins .. " plugins" .. version_info
 end
 
-local header = {
-  type = "text",
-  val = logo,
-  opts = {position = "center", hl = pick_color()}
-}
-
-local heading = {
-  type = "text",
-  val = info,
-  opts = {position = "center", hl = "Number"}
-}
-
-local footer = {
-  type = "text",
-  val = "- Licht -",
-  opts = {position = "center", hl = "Number"}
-}
-
+local header = {type = "text", val = logo, opts = {position = "center", hl = pick_color()}}
+local heading = {type = "text", val = info, opts = {position = "center", hl = "Number"}}
+local footer = {type = "text", val = "- Licht -", opts = {position = "center", hl = "Number"}}
 local leader = "SPC"
 
 local function button(sc, txt, keybind, keybind_opts)
@@ -118,12 +103,7 @@ local buttons = {
   opts = {spacing = 1}
 }
 
-local section = {
-  header = header,
-  heading = heading,
-  buttons = buttons,
-  footer = footer
-}
+local section = {header = header, heading = heading, buttons = buttons, footer = footer}
 
 local config = {
   layout = {
@@ -143,7 +123,5 @@ return {
   "goolord/alpha-nvim",
   dependencies = {"nvim-web-devicons"},
   opts = config,
-  init = function()
-    vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]])
-  end
+  init = function() vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]]) end
 }
