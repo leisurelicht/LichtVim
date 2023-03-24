@@ -67,6 +67,7 @@ return {
       s = {name = "Shift"},
       t = {name = "Tab"},
       to = {name = "Close Only"},
+      u = {name = "Utils"},
       mode = "n",
       prefix = "<leader>"
     })

@@ -12,7 +12,16 @@ return {
     },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = {"help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason", "NvimTree"},
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "mason",
+          "NvimTree"
+        },
         callback = function() vim.b.miniindentscope_disable = true end
       })
     end,
@@ -34,7 +43,9 @@ return {
           position = {row = 8, col = "50%"},
           size = {width = 60, height = 10},
           border = {style = "rounded", padding = {0, 1}},
-          win_options = {winhighlight = {Normal = "Normal", FloatBorder = "DiagnosticInfo"}}
+          win_options = {
+            winhighlight = {Normal = "Normal", FloatBorder = "DiagnosticInfo"}
+          }
         }
       },
       lsp = {
@@ -59,7 +70,9 @@ return {
       -- { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
       {
         "<c-f>",
-        function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end,
+        function()
+          if not require("noice.lsp").scroll(4) then return "<c-f>" end
+        end,
         silent = true,
         expr = true,
         desc = "Scroll forward",
@@ -67,7 +80,9 @@ return {
       },
       {
         "<c-b>",
-        function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
+        function()
+          if not require("noice.lsp").scroll(-4) then return "<c-b>" end
+        end,
         silent = true,
         expr = true,
         desc = "Scroll backward",
@@ -80,7 +95,9 @@ return {
     keys = {
       {
         "<leader>un",
-        function() require("notify").dismiss({silent = true, pending = true}) end,
+        function()
+          require("notify").dismiss({silent = true, pending = true})
+        end,
         desc = "Delete all Notifications"
       }
     },
