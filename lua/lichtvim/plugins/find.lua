@@ -27,7 +27,30 @@ end
 
 return {
   {"tami5/sqlite.lua"},
-  {"folke/todo-comments.nvim"},
+  {
+    "folke/todo-comments.nvim",
+    cmd = {"TodoTrouble", "TodoTelescope"},
+    event = {"BufReadPost", "BufNewFile"},
+    keys = {
+      {
+        "]t",
+        function() require("todo-comments").jump_next() end,
+        desc = "Next todo comment"
+      },
+      {
+        "[t",
+        function() require("todo-comments").jump_prev() end,
+        desc = "Previous todo comment"
+      },
+      {"<leader>ut", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)"},
+      {
+        "<leader>uT",
+        "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",
+        desc = "Todo/Fix/Fixme (Trouble)"
+      },
+      {"<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo"}
+    }
+  },
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = "tami5/sqlite.lua",
@@ -93,7 +116,7 @@ return {
       {"nvim-telescope/telescope-frecency.nvim"}
     },
     keys = {
-      {"<leader>ft", ts_b("builtin"), desc = "Built In"},
+      {"<leader>fT", ts_b("builtin"), desc = "Built In"},
       {"<leader>fb", ts_b("buffers"), desc = "Buffers"},
       {"<leader>f<tab>", ts_b("commands"), desc = "Commands"},
       {"<leader>fc", ts_b("command_history"), desc = "History Command"},
@@ -123,7 +146,6 @@ return {
       {"<leader>gn", ts_b("git_branches"), desc = "Branches"},
       {"<leader>gs", ts_b("git_status"), desc = "Status"},
 
-      {"<leader>fd", "<CMD>TodoTelescope<CR>", desc = "Todo"},
       {
         "<leader>fn",
         "<CMD>Telescope notify theme=dropdown<CR>",
@@ -200,8 +222,8 @@ return {
           buffer_previewer_maker = new_maker, -- Dont preview binaries
           mappings = {
             i = {
-              ["<c-t>"] = trouble.open_with_trouble,
-              ["<a-t>"] = trouble.open_selected_with_trouble,
+              ["<C-t>"] = trouble.open_with_trouble,
+              ["<A-t>"] = trouble.open_selected_with_trouble,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<ESC>"] = actions.close
@@ -224,10 +246,7 @@ return {
           git_status = {theme = "ivy"},
           git_stash = {theme = "ivy"}
         },
-        extensions = {
-          notify = {theme = "dropdown"},
-          ["ui-select"] = {no_preview()}
-        }
+        extensions = {["ui-select"] = {no_preview()}}
       })
 
       telescope.load_extension("fzf")
