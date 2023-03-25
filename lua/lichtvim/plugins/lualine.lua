@@ -25,7 +25,6 @@ return {
       options = {theme = "nightfox"},
       sections = {
         lualine_a = {
-          -- {"tabs", separator = {right = ""}},
           {
             window_num,
             separator = {right = ""},
@@ -44,13 +43,24 @@ return {
             end,
             separator = {right = ""}
           }
-
+        },
+        lualine_b = {
+          {"branch", separator = {right = ""}},
+          {
+            "diff",
+            symbols = {
+              added = icons_g.added,
+              modified = icons_g.modified,
+              removed = icons_g.removed
+            },
+            separator = {right = ""}
+          }
         },
         lualine_c = {{vim.fn.getcwd()}, "filename"},
         lualine_x = {
           {"encoding"},
-          {"fileformat"},
           {"filetype"},
+          {"fileformat"},
           {
             function()
               return require("noice").api.status.command.get()
@@ -68,16 +78,6 @@ return {
           }
         },
         lualine_y = {
-          {
-            "diff",
-            symbols = {
-              added = icons_g.added,
-              modified = icons_g.modified,
-              removed = icons_g.removed
-            },
-            separator = {left = ""},
-            color = {fg = "white", bg = "black"}
-          },
           {
             "diagnostics",
             -- Table of diagnostic sources, available sources are:
