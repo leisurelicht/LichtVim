@@ -64,10 +64,27 @@ return {
     },
     -- stylua: ignore
     keys = {
-      -- { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
-      -- { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-      -- { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-      -- { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
+      {
+        "<S-Enter>",
+        function() require("noice").redirect(vim.fn.getcmdline()) end,
+        mode = "c",
+        desc = "Redirect Cmdline"
+      },
+      {
+        "<leader>ul",
+        function() require("noice").cmd("last") end,
+        desc = "Noice Last Message"
+      },
+      {
+        "<leader>uh",
+        function() require("noice").cmd("history") end,
+        desc = "Noice History"
+      },
+      {
+        "<leader>ua",
+        function() require("noice").cmd("all") end,
+        desc = "Noice All"
+      },
       {
         "<c-f>",
         function()
@@ -94,11 +111,11 @@ return {
     "rcarriga/nvim-notify",
     keys = {
       {
-        "<leader>un",
+        "<leader>uc",
         function()
           require("notify").dismiss({silent = true, pending = true})
         end,
-        desc = "Delete all Notifications"
+        desc = "Clear Notifications"
       }
     },
     opts = {
@@ -114,7 +131,7 @@ return {
       end
     end
   },
-  {
+  { -- better vim.ui
     "stevearc/dressing.nvim",
     lazy = true,
     init = function()
@@ -129,8 +146,8 @@ return {
         return vim.ui.input(...)
       end
     end
-  }, -- better vim.ui
-  {
+  },
+  { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
     event = {"BufNewFile", "BufRead"},
     opts = {
@@ -148,6 +165,5 @@ return {
         "toggleterm"
       }
     }
-  }, -- 缩进标识线
-  {"norcalli/nvim-colorizer.lua", event = {"BufNewFile", "BufRead"}} -- 颜色显示
+  }
 }

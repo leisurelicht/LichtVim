@@ -55,14 +55,27 @@ local function info()
   local total_plugins = require("lazy").stats().count
   local datetime = os.date(" %d-%m-%Y   %H:%M:%S")
   local version = vim.version()
-  local version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
+  local version_info =
+      "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
   return datetime .. "   " .. total_plugins .. " plugins" .. version_info
 end
 
-local header = {type = "text", val = logo, opts = {position = "center", hl = pick_color()}}
-local heading = {type = "text", val = info, opts = {position = "center", hl = "Number"}}
-local footer = {type = "text", val = "- Licht -", opts = {position = "center", hl = "Number"}}
+local header = {
+  type = "text",
+  val = logo,
+  opts = {position = "center", hl = pick_color()}
+}
+local heading = {
+  type = "text",
+  val = info,
+  opts = {position = "center", hl = "Number"}
+}
+local footer = {
+  type = "text",
+  val = "- Licht -",
+  opts = {position = "center", hl = "Number"}
+}
 local leader = "SPC"
 
 local function button(sc, txt, keybind, keybind_opts)
@@ -77,13 +90,15 @@ local function button(sc, txt, keybind, keybind_opts)
     hl_shortcut = "Keyword"
   }
   if keybind then
-    keybind_opts = vim.F.if_nil(keybind_opts, {noremap = true, silent = true, nowait = true})
+    keybind_opts = vim.F.if_nil(keybind_opts,
+                                {noremap = true, silent = true, nowait = true})
     opts.keymap = {"n", sc_, keybind, keybind_opts}
   end
 
   local function on_press()
     -- local key = vim.api.nvim_replace_termcodes(keybind .. "<Ignore>", true, false, true)
-    local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false, true)
+    local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false,
+                                               true)
     vim.api.nvim_feedkeys(key, "t", false)
   end
 
@@ -97,13 +112,18 @@ local buttons = {
     button("SPC f f", "  Find File"),
     button("SPC f o", "  Recently Opened Files"),
     button("SPC f w", "  Find Word"),
-    button("p", "  Plugins", "<CMD>Lazy<CR>"),
-    button("q", "  Quit", ":qa<cr>")
+    button("SPC u p", "  Plugins", "<CMD>Lazy<CR>"),
+    button("SPC q", "  Quit", ":qa<cr>")
   },
   opts = {spacing = 1}
 }
 
-local section = {header = header, heading = heading, buttons = buttons, footer = footer}
+local section = {
+  header = header,
+  heading = heading,
+  buttons = buttons,
+  footer = footer
+}
 
 local config = {
   layout = {

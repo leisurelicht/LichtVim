@@ -8,11 +8,11 @@ map.set("c", "w!!", "w !sudo tee > /dev/null %", "Saved")
 
 -- 一键大写
 map.set("i", "<C-U>", "<ESC>viwUea", "Upper Word")
-map.set("n", "<leader>su", "viwUe", "Upper Word")
+map.set("n", "<leader>vu", "viwUe", "Upper Word")
 
 -- 一键小写
 map.set("i", "<C-L>", "<ESC>viwuea", "Lower Word")
-map.set("n", "<leader>sl", "viwue", "Lower Word")
+map.set("n", "<leader>vl", "viwue", "Lower Word")
 
 -- 首字母大写
 -- map.set('i', '<C-O>', "<ESC>bvi'Uea")
@@ -91,7 +91,8 @@ map.set("n", "<leader>t9", "9gt", "Tab 9")
 -- buffer
 map.set("n", "<leader>bs", "<CMD>buffers<CR>", "All Buffers")
 map.set("n", "<leader>ba", "<CMD>ball<CR>", "List All Buffers Horizontally")
-map.set("n", "<leader>bv", "<CMD>vertical ball<CR>", "List All Buffers Vertically")
+map.set("n", "<leader>bv", "<CMD>vertical ball<CR>",
+        "List All Buffers Vertically")
 map.set("n", "<leader>bf", "<CMD>bfirst<CR>", "First Buffer")
 map.set("n", "<leader>bl", "<CMD>blast<CR>", "Last Buffer")
 map.set("n", "<leader>bp", "<CMD>bprev<CR>", "Previous Buffer")

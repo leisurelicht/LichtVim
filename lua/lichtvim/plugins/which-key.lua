@@ -64,10 +64,11 @@ return {
       ["q"] = {"<cmd>confirm q<CR>", "Quit"},
       b = {name = "Buffer"},
       w = {name = "Window"},
-      s = {name = "Shift"},
       t = {name = "Tab"},
       to = {name = "Close Only"},
       u = {name = "Utils"},
+      f = {name = "Find"},
+      g = {name = "Git"},
       mode = "n",
       prefix = "<leader>"
     })
