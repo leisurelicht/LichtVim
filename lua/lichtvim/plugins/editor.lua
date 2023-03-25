@@ -14,6 +14,12 @@ return {
     opts = {enable_check_bracket_line = false, ignored_next_char = "[%w%.]"}
   },
   {
+    "nacro90/numb.nvim",
+    event = {"BufNewFile", "BufRead"},
+    config = function() require("numb").setup() end
+  },
+
+  {
     "andymass/vim-matchup",
     event = {"BufNewFile", "BufRead"},
     init = function()
@@ -105,12 +111,11 @@ return {
     },
     config = function() require("hlslens").setup() end
   },
-  {"nacro90/numb.nvim", event = {"CmdlineEnter"}},
   {
     "lewis6991/spellsitter.nvim",
+    event = {"BufNewFile", "BufRead"},
     dependencies = "nvim-treesitter/nvim-treesitter",
     opts = {enable = true}
-
   },
   {
     "mrjones2014/smart-splits.nvim",
@@ -144,7 +149,7 @@ return {
   },
   {
     "brglng/vim-im-select",
-
+    event = {"BufNewFile", "BufRead"},
     config = function()
       vim.g.im_select_enable_focus_eventsF = 1
       local sys = require("lichtvim.utils").sys
@@ -169,7 +174,7 @@ return {
   },
   {
     "karb94/neoscroll.nvim",
-    event = {"VimEnter"},
+    event = {"BufNewFile", "BufRead"},
     config = function()
       require("neoscroll").setup({easing_function = "quadratic"})
       local t = {}
@@ -198,4 +203,19 @@ return {
 
     end
   }
+  -- {
+  --   "ellisonleao/glow.nvim",
+  --   ft = {"markdown"},
+  --   config = function()
+  --     require("glow").setup({style = "dark", border = "rounded", pager = true})
+  --     api.autocmd({"FileType"}, {
+  --       pattern = {"markdown"},
+  --       callback = function()
+  --         map.set("n", "<leader>r", "<CMD>Glow<CR>", "Run",
+  --                 {buffer = vim.fn.bufnr()})
+  --       end,
+  --       group = api.augroup("runner", {clear = true})
+  --     })
+  --   end
+  -- }
 }

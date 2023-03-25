@@ -233,8 +233,8 @@ return {
         },
         pickers = {
           find_files = {theme = "dropdown"},
+          git_files = {theme = "dropdown"},
           oldfiles = {theme = "dropdown"},
-          gitfiles = {theme = "dropdown"},
           buffers = {theme = "dropdown"},
           marks = {theme = "dropdown"},
           commands = {theme = "dropdown"},
