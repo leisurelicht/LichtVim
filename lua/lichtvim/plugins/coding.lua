@@ -1,8 +1,26 @@
 return {
   {"vim-scripts/indentpython.vim", ft = {"python", "djangohtml"}},
+  { -- 缩进标识线
+    "lukas-reineke/indent-blankline.nvim",
+    event = {"BufNewFile", "BufRead"},
+    opts = {
+      show_current_context = true,
+      show_current_context_start = true,
+      filetype_exclude = {
+        "alpha",
+        "lazy",
+        "terminal",
+        "help",
+        "log",
+        "markdown",
+        "TelescopePrompt",
+        "mason",
+        "toggleterm"
+      }
+    }
+  },
   {
     "numToStr/Comment.nvim",
-    dependencies = {"JoosepAlviste/nvim-ts-context-commentstring"},
     event = {"BufRead", "BufNewFile"},
     opts = {
       toggler = {

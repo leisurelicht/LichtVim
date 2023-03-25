@@ -3,7 +3,11 @@ return {
   version = false,
   build = ":TSUpdate",
   event = {"BufRead", "BufNewFile"},
-  dependencies = {"p00f/nvim-ts-rainbow"},
+  dependencies = {
+    "p00f/nvim-ts-rainbow",
+    "RRethy/nvim-treesitter-endwise",
+    "JoosepAlviste/nvim-ts-context-commentstring"
+  },
   opts = {
     ensure_installed = {
       "vim",
@@ -62,6 +66,8 @@ return {
     map.set("n", "<leader>Ts", "<CMD>TSModuleInfo<CR>", "Module Info")
 
     local wk_ok, wk = pcall(require, "which-key")
-    if wk_ok then wk.register({T = {name = "Treesitter"}, mode = "n", prefix = "<leader>"}) end
+    if wk_ok then
+      wk.register({T = {name = "Treesitter"}, mode = "n", prefix = "<leader>"})
+    end
   end
 }
