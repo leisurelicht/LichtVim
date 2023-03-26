@@ -1,3 +1,8 @@
+local str = require("lichtvim.utils").str
+local icons_g = require("lichtvim.utils.ui.icons").git
+local icons_d = require("lichtvim.utils.ui.icons").diagnostics
+local fg = require("lichtvim.utils.ui.colors").fg
+
 return {
   {"nvim-tree/nvim-web-devicons", lazy = true}, -- 图标
   {"MunifTanjim/nui.nvim", lazy = true}, -- ui components
@@ -180,6 +185,152 @@ return {
         desc = "Next trouble/quickfix item"
       }
     }
+  },
+  {
+    "nanozuki/tabby.nvim",
+    event = "VeryLazy",
+    config = function()
+      local theme = {
+        fill = "TabLineFill",
+        head = "TabLine",
+        current_tab = "TabLineSel",
+        tab = "TabLine",
+        win = "TabLine",
+        tail = "TabLine"
+      }
+      require("tabby.tabline").set(function(line)
+        return {
+          {{"  ", hl = LichtTLHead}, line.sep("", theme.head, theme.fill)},
+          line.tabs().foreach(function(tab)
+            local hl = tab.is_current() and theme.current_tab or theme.tab
+            return {
+              line.sep("", hl, theme.fill),
+              tab.is_current() and "" or "",
+              tab.number(),
+              tab.name(),
+              tab.is_current() and tab.close_btn("") or "",
+              line.sep("", hl, theme.fill),
+              hl = hl,
+              margin = " "
+            }
+          end),
+          line.spacer(),
+          line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+            local win_name = win.buf_name()
+            if str.starts_with(vim.fn.toupper(win_name), "NVIMTREE") then
+              win_name = "Explorer"
+            end
+            return {
+              line.sep("", theme.win, theme.fill),
+              win.is_current() and "" or "",
+              win_name,
+              line.sep("", theme.win, theme.fill),
+              hl = theme.win,
+              margin = " "
+            }
+          end),
+          {line.sep("", theme.tail, theme.fill), {"  ", hl = theme.tail}},
+          hl = theme.fill
+        }
+      end)
+    end
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {"gitsigns.nvim"},
+    opts = {
+      options = {theme = "nightfox"},
+      sections = {
+        lualine_a = {
+          {
+            "[" .. [[%winnr()]] .. "]",
+            separator = {right = ""},
+            color = {fg = "white", bg = "grey"}
+          },
+          {
+            "mode",
+            fmt = function(str) return str:sub(1, 1) end,
+            separator = {right = ""}
+          },
+          {
+            function() return require("noice").api.status.mode.get() end,
+            cond = function()
+              return package.loaded["noice"] and
+                         require("noice").api.status.mode.has()
+            end,
+            separator = {right = ""}
+          }
+        },
+        lualine_b = {
+          {"branch", separator = {right = ""}},
+          {
+            "diff",
+            symbols = {
+              added = icons_g.added,
+              modified = icons_g.modified,
+              removed = icons_g.removed
+            },
+            separator = {right = ""}
+          }
+        },
+        lualine_c = {{vim.fn.getcwd()}, "filename"},
+        lualine_x = {
+          {"encoding"},
+          {"filetype"},
+          {"fileformat"},
+          {
+            function()
+              return require("noice").api.status.command.get()
+            end,
+            cond = function()
+              return package.loaded["noice"] and
+                         require("noice").api.status.command.has()
+            end,
+            color = fg("Statement")
+          },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = fg("Special")
+          }
+        },
+        lualine_y = {
+          {
+            "diagnostics",
+            -- Table of diagnostic sources, available sources are:
+            --   'nvim_lsp', 'nvim_diagnostic', 'coc', 'ale', 'vim_lsp'.
+            -- or a function that returns a table as such:
+            --   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
+            sources = {"nvim_diagnostic", "nvim_lsp"},
+            -- Displays diagnostics for the defined severity types
+            sections = {"error", "warn", "info", "hint"},
+            diagnostics_color = {
+              -- Same values as the general color option can be used here.
+              error = "DiagnosticError", -- Changes diagnostics' error color.
+              warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+              info = "DiagnosticInfo", -- Changes diagnostics' info color.
+              hint = "DiagnosticHint" -- Changes diagnostics' hint color.
+            },
+            symbols = {
+              error = icons_d.Error,
+              warn = icons_d.Warn,
+              info = icons_d.Info,
+              hint = icons_d.Hint
+            },
+            colored = true, -- Displays diagnostics status in color if set to true.
+            update_in_insert = false, -- Update diagnostics in insert mode.
+            always_visible = false, -- Show diagnostics even if there are none.
+            separator = {left = ""}
+          },
+          {"progress", separator = {left = ""}}
+        }
+      },
+      inactive_sections = {
+        lualine_a = {
+          {separator = {right = ""}, color = {fg = "white", bg = "grey"}}
+        }
+      },
+      extensions = {"nvim-tree", "symbols-outline", "fzf"}
+    }
   }
-
 }

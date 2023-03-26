@@ -20,17 +20,10 @@ local function set_highlights(groups)
     if opts.link then
       table.insert(lines, fmt("highlight! link %s %s", group, opts.link))
     else
-      table.insert(
-        lines,
-        fmt(
-          "highlight %s guifg=%s guibg=%s gui=%s guisp=%s",
-          group,
-          opts.fg or "NONE",
-          opts.bg or "NONE",
-          opts.style or "NONE",
-          opts.sp or "NONE"
-        )
-      )
+      table.insert(lines,
+                   fmt("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", group,
+                       opts.fg or "NONE", opts.bg or "NONE",
+                       opts.style or "NONE", opts.sp or "NONE"))
     end
   end
   vim.cmd(table.concat(lines, " | "))
@@ -38,23 +31,13 @@ end
 
 local function get_highlight(name)
   local hl = vim.api.nvim_get_hl_by_name(name, true)
-  if hl.link then
-    return get_highlight(hl.link)
-  end
+  if hl.link then return get_highlight(hl.link) end
 
-  local hex = function(n)
-    if n then
-      return string.format("#%06x", n)
-    end
-  end
+  local hex = function(n) if n then return string.format("#%06x", n) end end
 
   local names = {"underline", "undercurl", "bold", "italic", "reverse"}
   local styles = {}
-  for _, n in ipairs(names) do
-    if hl[n] then
-      table.insert(styles, n)
-    end
-  end
+  for _, n in ipairs(names) do if hl[n] then table.insert(styles, n) end end
 
   return {
     fg = hex(hl.foreground),
@@ -123,7 +106,9 @@ function M.generate_user_config_highlights()
     colors["LichtRv" .. name] = {fg = value.bg, bg = value.fg, style = "bold"}
   end
 
-  local status = vim.o.background == "dark" and {fg = pal.black, bg = pal.white} or {fg = pal.white, bg = pal.black}
+  local status =
+      vim.o.background == "dark" and {fg = pal.black, bg = pal.white} or
+          {fg = pal.white, bg = pal.black}
 
   local groups = {
     LichtSLHint = {fg = pal.sl.bg, bg = pal.hint, style = "bold"},
@@ -157,13 +142,18 @@ M.generate_user_config_highlights()
 -- Define autocmd that generates the highlight groups from the new colorscheme
 -- Then reset the highlights for feline
 local api = require("lichtvim.utils").api
-api.autocmd(
-  {"SessionLoadPost", "ColorScheme"},
-  {
-    callback = function()
-      require("lichtvim.utils.ui.colors").generate_user_config_highlights()
-    end
-  }
-)
+api.autocmd({"SessionLoadPost", "ColorScheme"}, {
+  callback = function()
+    require("lichtvim.utils.ui.colors").generate_user_config_highlights()
+  end
+})
+
+function M.fg(name)
+  return function()
+    ---@type {foreground?:number}?
+    local hl = vim.api.nvim_get_hl_by_name(name, true)
+    return hl and hl.foreground and {fg = string.format("#%06x", hl.foreground)}
+  end
+end
 
 return M
