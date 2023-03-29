@@ -7,28 +7,12 @@ return {
     lazy = true,
     cmd = {"PlenaryBustedFile", "PlenaryBustedDirectory"}
   },
-  {"tpope/vim-surround", event = "InsertEnter"}, -- 快速修改
   {"itchyny/vim-cursorword", event = {"BufNewFile", "BufRead"}}, -- 标注所有光标所在单词
-  {"norcalli/nvim-colorizer.lua", event = {"BufNewFile", "BufRead"}}, -- 颜色预览
-  {"p00f/nvim-ts-rainbow", event = {"BufRead", "BufNewFile"}},
-  { -- 自动配对
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {enable_check_bracket_line = false, ignored_next_char = "[%w%.]"}
-  },
   {
     "nacro90/numb.nvim",
     event = {"BufNewFile", "BufRead"},
     config = function() require("numb").setup() end
-  },
-
-  {
-    "andymass/vim-matchup",
-    event = {"BufNewFile", "BufRead"},
-    init = function()
-      vim.g.matchup_matchparen_offscreen = {method = "poopup"}
-    end
-  },
+  }, 
   {
     "phaazon/hop.nvim",
     version = "v2",

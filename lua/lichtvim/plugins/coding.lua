@@ -1,4 +1,17 @@
 return {
+  {"p00f/nvim-ts-rainbow", event = {"BufRead", "BufNewFile"}},
+  { -- 自动配对
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {enable_check_bracket_line = false, ignored_next_char = "[%w%.]"}
+  },
+  {
+    "andymass/vim-matchup",
+    event = {"BufNewFile", "BufRead"},
+    init = function()
+      vim.g.matchup_matchparen_offscreen = {method = "poopup"}
+    end
+  }, 
   {"vim-scripts/indentpython.vim", ft = {"python", "djangohtml"}},
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
