@@ -1,4 +1,5 @@
 return {
+  {"tpope/vim-surround", event = {"BufRead", "BufNewFile"}},
   {"p00f/nvim-ts-rainbow", event = {"BufRead", "BufNewFile"}},
   { -- 自动配对
     "windwp/nvim-autopairs",
