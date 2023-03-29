@@ -72,5 +72,10 @@ return {
       mode = "n",
       prefix = "<leader>",
     })
+    wk.register({
+      g = { name = "Git" },
+      mode = "v",
+      prefix = "<leader>",
+    })
   end,
 }
