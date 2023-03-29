@@ -2,11 +2,11 @@ return {
   "nvim-treesitter/nvim-treesitter",
   version = false,
   build = ":TSUpdate",
-  event = {"BufRead", "BufNewFile"},
+  event = { "BufRead", "BufNewFile" },
   dependencies = {
     "p00f/nvim-ts-rainbow",
     "RRethy/nvim-treesitter-endwise",
-    "JoosepAlviste/nvim-ts-context-commentstring"
+    "JoosepAlviste/nvim-ts-context-commentstring",
   },
   opts = {
     ensure_installed = {
@@ -31,33 +31,33 @@ return {
       "cmake",
       "comment",
       "gitignore",
-      "toml"
+      "toml",
     },
-    highlight = {enable = true, additional_vim_regex_highlighting = false},
+    highlight = { enable = true, additional_vim_regex_highlighting = false },
     incremental_selection = {
       enable = true,
       keymaps = {
         init_selection = "<C-space>",
         node_incremental = "<C-space>",
         node_decremental = "<BS>",
-        scope_incremental = "<nop>"
-      }
+        scope_incremental = "<nop>",
+      },
     },
-    indent = {enable = true, disable = {"python"}},
+    indent = { enable = true, disable = { "python" } },
     -- 彩虹括号
     rainbow = {
       enable = true,
       -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
       extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-      max_file_lines = nil -- Do not enable for files with more than n lines, int
+      max_file_lines = nil, -- Do not enable for files with more than n lines, int
       -- colors = {}, -- table of hex strings
       -- termcolors = {} -- table of colour name strings
     },
     -- comment
-    context_commentstring = {enable = true},
+    context_commentstring = { enable = true },
     -- match % g% [% ]% z%
-    matchup = {enable = true},
-    endwise = {enable = true}
+    matchup = { enable = true },
+    endwise = { enable = true },
   },
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
@@ -67,7 +67,7 @@ return {
 
     local wk_ok, wk = pcall(require, "which-key")
     if wk_ok then
-      wk.register({T = {name = "Treesitter"}, mode = "n", prefix = "<leader>"})
+      wk.register({ T = { name = "Treesitter" }, mode = "n", prefix = "<leader>" })
     end
-  end
+  end,
 }

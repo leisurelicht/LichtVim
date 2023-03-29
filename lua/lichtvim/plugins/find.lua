@@ -1,17 +1,23 @@
-local function is_whitespace(line) return vim.fn.match(line, [[^\s*$]]) ~= -1 end
+local function is_whitespace(line)
+  return vim.fn.match(line, [[^\s*$]]) ~= -1
+end
 
 local function all(tbl, check)
-  for _, entry in ipairs(tbl) do if not check(entry) then return false end end
+  for _, entry in ipairs(tbl) do
+    if not check(entry) then
+      return false
+    end
+  end
   return true
 end
 
-function ts_b(builtin, opts)
-  local params = {builtin = builtin, opts = opts}
+local function ts_b(builtin, opts)
+  local params = { builtin = builtin, opts = opts }
   return function()
     builtin = params.builtin
     opts = params.opts
     opts = vim.tbl_deep_extend("force", {
-      cwd = require("lichtvim.utils").path.get_root()
+      cwd = require("lichtvim.utils").path.get_root(),
     }, opts or {})
     if builtin == "files" then
       if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
@@ -26,30 +32,34 @@ function ts_b(builtin, opts)
 end
 
 return {
-  {"tami5/sqlite.lua"},
+  { "tami5/sqlite.lua" },
   {
     "folke/todo-comments.nvim",
-    cmd = {"TodoTrouble", "TodoTelescope"},
-    event = {"BufReadPost", "BufNewFile"},
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = { "BufReadPost", "BufNewFile" },
     keys = {
       {
         "]d",
-        function() require("todo-comments").jump_next() end,
-        desc = "Next todo comment"
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
       },
       {
         "[d",
-        function() require("todo-comments").jump_prev() end,
-        desc = "Previous todo comment"
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous todo comment",
       },
-      {"<leader>ut", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)"},
+      { "<leader>ut", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       {
         "<leader>uT",
         "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",
-        desc = "Todo/Fix/Fixme (Trouble)"
+        desc = "Todo/Fix/Fixme (Trouble)",
       },
-      {"<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo"}
-    }
+      { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+    },
   },
   {
     "AckslD/nvim-neoclip.lua",
@@ -70,7 +80,7 @@ return {
             past_behind = "<a-o>",
             replay = "<nop>",
             delete = "<c-d>",
-            custom = {}
+            custom = {},
           },
           n = {
             select = "<cr>",
@@ -78,17 +88,17 @@ return {
             paste_behind = "P",
             replay = "<nop>",
             delete = "dd",
-            custom = {}
-          }
-        }
-      }
-    }
+            custom = {},
+          },
+        },
+      },
+    },
   },
   {
     "ahmedkhalf/project.nvim",
     opts = {
       manual_mode = false,
-      detection_methods = {"lsp", "pattern"},
+      detection_methods = { "lsp", "pattern" },
       patterns = {
         ".git",
         "_darcs",
@@ -96,71 +106,73 @@ return {
         ".bzr",
         ".svn",
         "Makefile",
-        "package.json"
+        "package.json",
       },
-      ignore_lsp = {"dockerls"},
+      ignore_lsp = { "dockerls" },
       exclude_dirs = {},
       show_hidden = true,
       silent_chdir = false,
-      datapath = vim.fn.stdpath("data")
+      datapath = vim.fn.stdpath("data"),
     },
-    config = function(_, opts) require("project_nvim").setup(opts) end
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
     version = false,
     cmd = "Telescope",
     dependencies = {
-      {"nvim-telescope/telescope-fzf-native.nvim", build = "make"},
-      {"nvim-telescope/telescope-ui-select.nvim"},
-      {"nvim-telescope/telescope-frecency.nvim"}
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
+      { "nvim-telescope/telescope-frecency.nvim" },
     },
     keys = {
-      {"<leader>fT", ts_b("builtin"), desc = "Built In"},
-      {"<leader>fb", ts_b("buffers"), desc = "Buffers"},
-      {"<leader>f<tab>", ts_b("commands"), desc = "Commands"},
-      {"<leader>fc", ts_b("command_history"), desc = "History Command"},
-      {"<leader>fs", ts_b("search_history"), desc = "History Search"},
-      {"<leader>fA", ts_b("autocommands"), desc = "AutoCommand"},
-      {"<leader>ff", ts_b("files"), desc = "Files(root dir)"},
-      {"<leader>ff", ts_b("files", {cwd = false}), desc = "Files(cwd)"},
-      {"<leader>fH", ts_b("help_tags"), desc = "Help Tags"},
-      {"<leader>fm", ts_b("marks"), desc = "Marks"},
-      {"<leader>fM", ts_b("man_pages"), desc = "Man Pages"},
-      {"<leader>fo", ts_b("oldfiles"), desc = "Recently Opened File"},
-      {"<leader>fO", ts_b("vim_options"), desc = "Vim Option"},
-      {"<leader>fg", ts_b("live_grep"), desc = "Grep(root dir)"},
-      {"<leader>fG", ts_b("live_grep", {cwd = false}), desc = "Grep(cwd)"},
-      {"<leader>fw", ts_b("grep_string"), desc = "Word(root dir)"},
-      {"<leader>fW", ts_b("grep_string", {cwd = false}), desc = "Word(cwd)"},
-      {"<leader>fk", ts_b("keymaps"), desc = "Key Maps"},
+      { "<leader>fT", ts_b("builtin"), desc = "Built In" },
+      { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
+      { "<leader>f<tab>", ts_b("commands"), desc = "Commands" },
+      { "<leader>fc", ts_b("command_history"), desc = "History Command" },
+      { "<leader>fs", ts_b("search_history"), desc = "History Search" },
+      { "<leader>fA", ts_b("autocommands"), desc = "AutoCommand" },
+      { "<leader>ff", ts_b("files"), desc = "Files(root dir)" },
+      { "<leader>ff", ts_b("files", { cwd = false }), desc = "Files(cwd)" },
+      { "<leader>fH", ts_b("help_tags"), desc = "Help Tags" },
+      { "<leader>fm", ts_b("marks"), desc = "Marks" },
+      { "<leader>fM", ts_b("man_pages"), desc = "Man Pages" },
+      { "<leader>fo", ts_b("oldfiles"), desc = "Recently Opened File" },
+      { "<leader>fO", ts_b("vim_options"), desc = "Vim Option" },
+      { "<leader>fg", ts_b("live_grep"), desc = "Grep(root dir)" },
+      { "<leader>fG", ts_b("live_grep", { cwd = false }), desc = "Grep(cwd)" },
+      { "<leader>fw", ts_b("grep_string"), desc = "Word(root dir)" },
+      { "<leader>fW", ts_b("grep_string", { cwd = false }), desc = "Word(cwd)" },
+      { "<leader>fk", ts_b("keymaps"), desc = "Key Maps" },
       {
         "<leader>fC",
-        ts_b("colorscheme", {enable_preview = true}),
-        desc = "Colorscheme"
+        ts_b("colorscheme", { enable_preview = true }),
+        desc = "Colorscheme",
       },
 
-      {"<leader>gC", ts_b("git_bcommits"), desc = "Buffer's Commits"},
-      {"<leader>gc", ts_b("git_commits"), desc = "Commits"},
-      {"<leader>gS", ts_b("git_stash"), desc = "Stash"},
-      {"<leader>gn", ts_b("git_branches"), desc = "Branches"},
-      {"<leader>gs", ts_b("git_status"), desc = "Status"},
+      { "<leader>gC", ts_b("git_bcommits"), desc = "Buffer's Commits" },
+      { "<leader>gc", ts_b("git_commits"), desc = "Commits" },
+      { "<leader>gS", ts_b("git_stash"), desc = "Stash" },
+      { "<leader>gn", ts_b("git_branches"), desc = "Branches" },
+      { "<leader>gs", ts_b("git_status"), desc = "Status" },
 
       {
         "<leader>fn",
         "<CMD>Telescope notify theme=dropdown<CR>",
-        desc = "Notify"
+        desc = "Notify",
       },
       {
         "<leader>fj",
         "<CMD>Telescope projects theme=dropdown<CR>",
-        desc = "Projects"
+        desc = "Projects",
       },
       {
         "<leader>fp",
         "<CMD>Telescope neoclip a extra=star,plus,b theme=dropdown<CR>",
-        desc = "Paster"
-      }
+        desc = "Paster",
+      },
     },
     config = function()
       local Job = require("plenary.job")
@@ -175,7 +187,7 @@ return {
         filepath = vim.fn.expand(filepath)
         Job:new({
           command = "file",
-          args = {"--mime-type", "-b", filepath},
+          args = { "--mime-type", "-b", filepath },
           on_exit = function(j)
             local mime_type = vim.split(j:result()[1], "/")[1]
             if mime_type == "text" then
@@ -183,24 +195,24 @@ return {
             else
               -- maybe we want to write something to the buffer here
               vim.schedule(function()
-                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {"BINARY"})
+                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
               end)
             end
-          end
+          end,
         }):sync()
       end
 
       local function no_preview()
         return themes.get_dropdown({
           borderchars = {
-            {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
-            prompt = {"─", "│", " ", "│", "┌", "┐", "│", "│"},
-            results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
-            preview = {"─", "│", "─", "│", "┌", "┐", "┘", "└"}
+            { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+            prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+            results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+            preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
           },
           width = 0.8,
           previewer = false,
-          prompt_title = false
+          prompt_title = false,
         })
       end
 
@@ -210,12 +222,12 @@ return {
           selection_caret = " ",
           file_sorter = sorters.get_fuzzy_file,
           generic_sorter = sorters.get_generic_fuzzy_sorter,
-          path_display = {"truncate"},
+          path_display = { "truncate" },
           winblend = 0,
           border = {},
-          borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
+          borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
           use_less = true,
-          set_env = {["COLORTERM"] = "truecolor"}, -- default = nil,
+          set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
           file_previewer = previewers.vim_buffer_cat.new,
           grep_previewer = previewers.vim_buffer_vimgrep.new,
           qflist_previewer = previewers.vim_buffer_qflist.new,
@@ -226,27 +238,27 @@ return {
               ["<A-t>"] = trouble.open_selected_with_trouble,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
-              ["<ESC>"] = actions.close
+              ["<ESC>"] = actions.close,
             },
-            n = {["<ESC>"] = actions.close}
-          }
+            n = { ["<ESC>"] = actions.close },
+          },
         },
         pickers = {
-          find_files = {theme = "dropdown"},
-          git_files = {theme = "dropdown"},
-          oldfiles = {theme = "dropdown"},
-          buffers = {theme = "dropdown"},
-          marks = {theme = "dropdown"},
-          commands = {theme = "dropdown"},
-          command_history = {theme = "dropdown"},
-          search_history = {theme = "dropdown"},
-          git_commits = {theme = "ivy"},
-          git_bcommits = {theme = "ivy"},
-          git_branches = {theme = "ivy"},
-          git_status = {theme = "ivy"},
-          git_stash = {theme = "ivy"}
+          find_files = { theme = "dropdown" },
+          git_files = { theme = "dropdown" },
+          oldfiles = { theme = "dropdown" },
+          buffers = { theme = "dropdown" },
+          marks = { theme = "dropdown" },
+          commands = { theme = "dropdown" },
+          command_history = { theme = "dropdown" },
+          search_history = { theme = "dropdown" },
+          git_commits = { theme = "ivy" },
+          git_bcommits = { theme = "ivy" },
+          git_branches = { theme = "ivy" },
+          git_status = { theme = "ivy" },
+          git_stash = { theme = "ivy" },
         },
-        extensions = {["ui-select"] = {no_preview()}}
+        extensions = { ["ui-select"] = { no_preview() } },
       })
 
       telescope.load_extension("fzf")
@@ -255,7 +267,6 @@ return {
       telescope.load_extension("ui-select")
       telescope.load_extension("projects")
       telescope.load_extension("frecency")
-    end
-  }
-
+    end,
+  },
 }

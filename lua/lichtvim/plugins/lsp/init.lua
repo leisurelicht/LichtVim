@@ -1,4 +1,4 @@
-return { 
+return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -21,7 +21,7 @@ return {
         severity_sort = true,
         update_in_insert = false,
         float = { source = "always" },
-        virtual_text = { prefix = "●", source = "always" }
+        virtual_text = { prefix = "●", source = "always" },
       },
       autoformat = true,
       format = {
@@ -33,18 +33,16 @@ return {
           settings = {
             Lua = {
               workspace = {
-                checkThirdParty = false
+                checkThirdParty = false,
               },
               completion = {
                 callSnippet = "Replace",
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      setup = {
-
-      },
+      setup = {},
     },
     config = function(_, opts)
       -- setup autoformat
@@ -55,7 +53,6 @@ return {
         require("lichtvim.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-
       for name, icon in pairs(require("lichtvim.utils.ui.icons").diagnostics) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
@@ -64,9 +61,9 @@ return {
 
       local servers = opts.servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       if ok then
-        capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
       end
 
       local function setup(server)
@@ -110,22 +107,21 @@ return {
         mlsp.setup({ ensure_installed = ensure_installed })
         mlsp.setup_handlers({ setup })
       end
-    end
+    end,
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
-    opts = function()
+    opts = function(_, test)
       local nls = require("null-ls")
       return {
         debug = false,
         sources = {
           nls.builtins.formatting.fish_indent,
           nls.builtins.diagnostics.fish,
-          nls.builtins.diagnostics.luacheck,
           nls.builtins.formatting.stylua.with({
-            "-indent-type=Spaces",
+            "--indent-type=Spaces",
             "--indent-width=2",
           }),
           nls.builtins.formatting.shfmt,
@@ -139,18 +135,17 @@ return {
     cmd = "Mason",
     keys = { { "<leader>um", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
-       ui = {
+      ui = {
         icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-        }
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
       },
       ensure_installed = {
         "stylua",
         "shfmt",
         "flake8",
-        "luacheck",
       },
     },
     config = function(_, opts)
@@ -169,9 +164,9 @@ return {
 
       if mr.refresh then
         mr.refresh(ensure_installed)
-      else 
+      else
         ensure_installed()
       end
     end,
-  }, 
+  },
 }
