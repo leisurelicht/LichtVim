@@ -1,11 +1,11 @@
 -- =================
--- mapping.lua --- 快捷键映射
--- Author: MuCheng
+-- mapping.lua
+-- Note:
 -- =================
 --
 local Map = {}
 
-Map.opts = {silent = true}
+Map.opts = { silent = true }
 
 local function check_opts(opts)
   if opts == nil then

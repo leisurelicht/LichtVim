@@ -1,25 +1,25 @@
 -- =================
--- icons.lua --- icons config file
--- Author: MuCheng
+-- icons.lua
+-- Note:
 -- =================
 --
 local Icons = {}
 
 Icons.lsp_hover = {
-  Action = "💡"
+  Action = "💡",
 }
 
 Icons.diagnostics = {
   Error = " ",
   Warn = " ",
   Hint = " ",
-  Info = " "
+  Info = " ",
 }
 
 Icons.git = {
   added = " ",
   modified = " ",
-  removed = " "
+  removed = " ",
 }
 
 Icons.kind = {
@@ -57,7 +57,7 @@ Icons.kind = {
   TypeParameter = " ",
   Unit = " ",
   Value = " ",
-  Variable = " "
+  Variable = " ",
 }
 
 Icons.vscode = {
@@ -85,7 +85,7 @@ Icons.vscode = {
   Struct = " ",
   Event = " ",
   Operator = " ",
-  TypeParameter = " "
+  TypeParameter = " ",
 }
 
 return Icons

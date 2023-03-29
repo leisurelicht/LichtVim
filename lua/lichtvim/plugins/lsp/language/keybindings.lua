@@ -3,7 +3,6 @@
 -- Author: MuCheng
 -- =================
 --
-local map = require("utils.mapping")
 local lspsaga_ok, _ = pcall(require, "lspsaga")
 local telescope_ok, _ = pcall(require, "telescope")
 local wk_ok, wk = pcall(require, "which-key")

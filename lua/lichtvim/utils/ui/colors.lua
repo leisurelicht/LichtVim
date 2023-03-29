@@ -1,3 +1,8 @@
+-- =================
+-- colors.lua
+-- Note:
+-- =================
+--
 local fmt = string.format
 
 -- Ui highlight color groups
@@ -20,10 +25,17 @@ local function set_highlights(groups)
     if opts.link then
       table.insert(lines, fmt("highlight! link %s %s", group, opts.link))
     else
-      table.insert(lines,
-                   fmt("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", group,
-                       opts.fg or "NONE", opts.bg or "NONE",
-                       opts.style or "NONE", opts.sp or "NONE"))
+      table.insert(
+        lines,
+        fmt(
+          "highlight %s guifg=%s guibg=%s gui=%s guisp=%s",
+          group,
+          opts.fg or "NONE",
+          opts.bg or "NONE",
+          opts.style or "NONE",
+          opts.sp or "NONE"
+        )
+      )
     end
   end
   vim.cmd(table.concat(lines, " | "))
@@ -31,19 +43,29 @@ end
 
 local function get_highlight(name)
   local hl = vim.api.nvim_get_hl_by_name(name, true)
-  if hl.link then return get_highlight(hl.link) end
+  if hl.link then
+    return get_highlight(hl.link)
+  end
 
-  local hex = function(n) if n then return string.format("#%06x", n) end end
+  local hex = function(n)
+    if n then
+      return string.format("#%06x", n)
+    end
+  end
 
-  local names = {"underline", "undercurl", "bold", "italic", "reverse"}
+  local names = { "underline", "undercurl", "bold", "italic", "reverse" }
   local styles = {}
-  for _, n in ipairs(names) do if hl[n] then table.insert(styles, n) end end
+  for _, n in ipairs(names) do
+    if hl[n] then
+      table.insert(styles, n)
+    end
+  end
 
   return {
     fg = hex(hl.foreground),
     bg = hex(hl.background),
     sp = hex(hl.special),
-    style = #styles > 0 and table.concat(styles, ",") or "NONE"
+    style = #styles > 0 and table.concat(styles, ",") or "NONE",
   }
 end
 
@@ -61,10 +83,10 @@ local function generate_pallet_from_colorscheme()
   }
 
   local diagnostic_map = {
-    hint = {hl = "DiagnosticHint", default = color_map.green.default},
-    info = {hl = "DiagnosticInfo", default = color_map.blue.default},
-    warn = {hl = "DiagnosticWarn", default = color_map.yellow.default},
-    error = {hl = "DiagnosticError", default = color_map.red.default}
+    hint = { hl = "DiagnosticHint", default = color_map.green.default },
+    info = { hl = "DiagnosticInfo", default = color_map.blue.default },
+    warn = { hl = "DiagnosticWarn", default = color_map.yellow.default },
+    error = { hl = "DiagnosticError", default = color_map.red.default },
   }
 
   local pallet = {}
@@ -102,36 +124,34 @@ function M.generate_user_config_highlights()
 
   local colors = {}
   for name, value in pairs(sl_colors) do
-    colors["Licht" .. name] = {fg = value.fg, bg = value.bg, style = "bold"}
-    colors["LichtRv" .. name] = {fg = value.bg, bg = value.fg, style = "bold"}
+    colors["Licht" .. name] = { fg = value.fg, bg = value.bg, style = "bold" }
+    colors["LichtRv" .. name] = { fg = value.bg, bg = value.fg, style = "bold" }
   end
 
-  local status =
-      vim.o.background == "dark" and {fg = pal.black, bg = pal.white} or
-          {fg = pal.white, bg = pal.black}
+  local status = vim.o.background == "dark" and { fg = pal.black, bg = pal.white } or { fg = pal.white, bg = pal.black }
 
   local groups = {
-    LichtSLHint = {fg = pal.sl.bg, bg = pal.hint, style = "bold"},
-    LichtSLInfo = {fg = pal.sl.bg, bg = pal.info, style = "bold"},
-    LichtSLWarn = {fg = pal.sl.bg, bg = pal.warn, style = "bold"},
-    LichtSLError = {fg = pal.sl.bg, bg = pal.error, style = "bold"},
-    LichtSLStatus = {fg = status.fg, bg = status.bg, style = "bold"},
-    LichtSLFtHint = {fg = pal.sel.bg, bg = pal.hint},
-    LichtSLHintInfo = {fg = pal.hint, bg = pal.info},
-    LichtSLInfoWarn = {fg = pal.info, bg = pal.warn},
-    LichtSLWarnError = {fg = pal.warn, bg = pal.error},
-    LichtSLErrorStatus = {fg = pal.error, bg = status.bg},
-    LichtSLStatusBg = {fg = status.bg, bg = pal.sl.bg},
+    LichtSLHint = { fg = pal.sl.bg, bg = pal.hint, style = "bold" },
+    LichtSLInfo = { fg = pal.sl.bg, bg = pal.info, style = "bold" },
+    LichtSLWarn = { fg = pal.sl.bg, bg = pal.warn, style = "bold" },
+    LichtSLError = { fg = pal.sl.bg, bg = pal.error, style = "bold" },
+    LichtSLStatus = { fg = status.fg, bg = status.bg, style = "bold" },
+    LichtSLFtHint = { fg = pal.sel.bg, bg = pal.hint },
+    LichtSLHintInfo = { fg = pal.hint, bg = pal.info },
+    LichtSLInfoWarn = { fg = pal.info, bg = pal.warn },
+    LichtSLWarnError = { fg = pal.warn, bg = pal.error },
+    LichtSLErrorStatus = { fg = pal.error, bg = status.bg },
+    LichtSLStatusBg = { fg = status.bg, bg = pal.sl.bg },
     LichtSLAlt = pal.sel,
-    LichtSLAltSep = {fg = pal.sl.bg, bg = pal.sel.bg},
-    LichtSLGitBranch = {fg = pal.yellow, bg = pal.sl.bg},
+    LichtSLAltSep = { fg = pal.sl.bg, bg = pal.sel.bg },
+    LichtSLGitBranch = { fg = pal.yellow, bg = pal.sl.bg },
     -- tabline
-    LichtTLHead = {fg = pal.fill.bg, bg = pal.cyan},
-    LichtTLHeadSep = {fg = pal.cyan, bg = pal.fill.bg},
-    LichtTLActive = {fg = pal.sel.fg, bg = pal.sel.bg, style = "bold"},
-    LichtTLActiveSep = {fg = pal.sel.bg, bg = pal.fill.bg},
-    LichtTLBoldLine = {fg = pal.tab.fg, bg = pal.tab.bg, style = "bold"},
-    LichtTLLineSep = {fg = pal.tab.bg, bg = pal.fill.bg}
+    LichtTLHead = { fg = pal.fill.bg, bg = pal.cyan },
+    LichtTLHeadSep = { fg = pal.cyan, bg = pal.fill.bg },
+    LichtTLActive = { fg = pal.sel.fg, bg = pal.sel.bg, style = "bold" },
+    LichtTLActiveSep = { fg = pal.sel.bg, bg = pal.fill.bg },
+    LichtTLBoldLine = { fg = pal.tab.fg, bg = pal.tab.bg, style = "bold" },
+    LichtTLLineSep = { fg = pal.tab.bg, bg = pal.fill.bg },
   }
 
   set_highlights(vim.tbl_extend("force", colors, groups))
@@ -142,17 +162,17 @@ M.generate_user_config_highlights()
 -- Define autocmd that generates the highlight groups from the new colorscheme
 -- Then reset the highlights for feline
 local api = require("lichtvim.utils").api
-api.autocmd({"SessionLoadPost", "ColorScheme"}, {
+api.autocmd({ "SessionLoadPost", "ColorScheme" }, {
   callback = function()
     require("lichtvim.utils.ui.colors").generate_user_config_highlights()
-  end
+  end,
 })
 
 function M.fg(name)
   return function()
     ---@type {foreground?:number}?
     local hl = vim.api.nvim_get_hl_by_name(name, true)
-    return hl and hl.foreground and {fg = string.format("#%06x", hl.foreground)}
+    return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
   end
 end
 
