@@ -183,12 +183,16 @@ return {
         return {
           { { "  ", hl = theme.head }, line.sep("", theme.head, theme.fill) },
           line.tabs().foreach(function(tab)
+            local tab_name = tab.name()
+            if str.starts_with(vim.fn.toupper(tab_name), "NVIMTREE") then
+              tab_name = "Explorer"
+            end
             local hl = tab.is_current() and theme.current_tab or theme.tab
             return {
               line.sep("", hl, theme.fill),
               tab.is_current() and "" or "",
               tab.number(),
-              tab.name(),
+              tab_name,
               tab.is_current() and tab.close_btn("") or "",
               line.sep("", hl, theme.fill),
               hl = hl,
