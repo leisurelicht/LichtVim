@@ -34,6 +34,7 @@ function M.format()
       end
       return client.name ~= "null-ls"
     end,
+    async = true,
   }, require("lichtvim.utils.lazy").opts("nvim-lspconfig").format or {}))
 end
 

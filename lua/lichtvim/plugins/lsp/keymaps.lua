@@ -1,8 +1,7 @@
 local Keys = require("lazy.core.handler.keys")
 local has = require("lichtvim.utils.lazy").has
 local format = require("lichtvim.plugins.lsp.format").format
-local wk_ok, wk = pcall(require, "which-key")
-local telescope_ok, _ = pcall(require, "telescope")
+local list = require("lichtvim.utils").list
 
 local M = {}
 
@@ -23,8 +22,7 @@ function M.get()
 
   M._keys = {
     { "<leader>lI", "<CMD>LspInfo<CR>", desc = "Info" },
-    -- map.set("n", "<leader>lo", "<CMD>SymbolsOutline<CR>", "Open Outline")
-
+    -- { "<leader>lo", "<CMD>SymbolsOutline<CR>", desc = "Open Outline"},
     { "<leader>ln", M.diagnostic_goto(true), desc = "Next Diagnostic" },
     { "<leader>lp", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
     { "]d", M.diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -33,11 +31,16 @@ function M.get()
     { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
     { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
     { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
-    { "<leader>lf", format, desc = "Format Document", has = "documentFormatting" },
-    { "<leader>lf", format, desc = "Format Range", mode = "v", has = "documentRangeFormatting" },
+    { "<leader>lF", format, desc = "Format Document", has = "documentFormatting" },
+    { "<leader>lF", format, desc = "Format Range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help", mode = "i", has = "signatureHelp" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
+    {
+      "<leader>ll",
+      vim.diagnostic.open_float,
+      desc = "Line Diagnostic",
+    },
     {
       "<leader>la",
       function()
@@ -50,23 +53,35 @@ function M.get()
           },
         })
       end,
-      desc = "Source Action",
+      desc = "Code Action",
       has = "codeAction",
     },
   }
 
-  if has("lspsaga.nvim") then
-    M._keys[#M._keys + 1] = {
-      "<leader>ll",
-      "<CMD>Lspsaga show_line_diagnostics<CR>",
-      desc = "Line Diagnostic",
+  if has("telescope.nvim") then
+    local _keys = {
+      { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
+      {
+        "<leader>ld",
+        "<cmd>Telescope lsp_definitions theme=dropdown<cr>",
+        desc = "Goto Definition",
+        has = "definition",
+      },
+      { "<leader>li", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
+      { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
+      { "<leader>lg", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostic" },
     }
+
+    list.extend(M._keys, _keys)
   else
-    M._keys[#M._keys + 1] = {
-      "<leader>ll",
-      vim.diagnostic.open_float,
-      desc = "Line Diagnostic",
+    local _keys = {
+      { "<leader>lf", vim.lsp.buf.references, "References" },
+      { "<leader>ld", vim.lsp.buf.definition, "Definition" },
+      { "<leader>lt", vim.lsp.buf.type_definition, "Type Definition" },
+      { "<leader>li", vim.lsp.buf.implementation, "Implementation" },
+      { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
     }
+    list.extend(M._keys, _keys)
   end
 
   if has("inc-rename.nvim") then
@@ -109,8 +124,8 @@ function M.on_attach(client, buffer)
     end
   end
 
-  if wk_ok then
-    wk.register({
+  if has("which-key.nvim") then
+    require("which-key").register({
       l = { name = "LSP" },
       mode = { "n", "v" },
       prefix = "<leader>",

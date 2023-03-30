@@ -39,18 +39,18 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     keys = {
       {
-        "]d",
+        "]o",
         function()
           require("todo-comments").jump_next()
         end,
-        desc = "Next todo comment",
+        desc = "Next Todo Comment",
       },
       {
-        "[d",
+        "[o",
         function()
           require("todo-comments").jump_prev()
         end,
-        desc = "Previous todo comment",
+        desc = "Previous Todo Comment",
       },
       { "<leader>ut", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       {

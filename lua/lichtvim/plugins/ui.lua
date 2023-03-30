@@ -134,6 +134,7 @@ return {
   },
   { -- better vim.ui
     "stevearc/dressing.nvim",
+    enabled = false,
     lazy = true,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field

@@ -13,6 +13,15 @@ function M.api.augroup(name)
   return vim.api.nvim_create_augroup("lichtvim_" .. name, { clear = true })
 end
 
+M.list = {}
+
+function M.list.extend(l1, l2)
+  for _, v in ipairs(l2) do
+    l1[#l1 + 1] = v
+  end
+  return l1
+end
+
 M.table = {}
 
 function M.table.merge(t1, t2)

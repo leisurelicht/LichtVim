@@ -180,6 +180,7 @@ return {
   },
   {
     "karb94/neoscroll.nvim",
+    enabled = false,
     event = { "BufNewFile", "BufRead" },
     config = function()
       require("neoscroll").setup({ easing_function = "quadratic" })
