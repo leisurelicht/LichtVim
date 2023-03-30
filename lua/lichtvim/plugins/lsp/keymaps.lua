@@ -43,18 +43,32 @@ function M.get()
     {
       "<leader>la",
       function()
-        vim.lsp.buf.code_action({
+        require("actions-preview").code_actions({
           context = {
-            only = {
-              "source",
-            },
+            only = { "source" },
             diagnostics = {},
           },
         })
       end,
+      mode = { "v", "n" },
       desc = "Code Action",
       has = "codeAction",
     },
+    -- {
+    --   "<leader>lA",
+    --   function()
+    --     vim.lsp.buf.code_action({
+    --       context = {
+    --         only = {
+    --           "source",
+    --         },
+    --         diagnostics = {},
+    --       },
+    --     })
+    --   end,
+    --   desc = "Code Action",
+    --   has = "codeAction",
+    -- },
   }
 
   if lazy.has("telescope.nvim") then

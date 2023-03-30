@@ -172,4 +172,17 @@ return {
       end
     end,
   },
+  {
+    "aznhe21/actions-preview.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("actions-preview").setup({
+        diff = {
+          algorithm = "patience",
+          ignore_whitespace = true,
+        },
+        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+      })
+    end,
+  },
 }
