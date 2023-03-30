@@ -164,6 +164,11 @@ return {
         desc = "Notify",
       },
       {
+        "<leader>fN",
+        "<CMD>Telescope noice<CR>",
+        desc = "Notify",
+      },
+      {
         "<leader>fj",
         "<CMD>Telescope projects theme=dropdown<CR>",
         desc = "Projects",
@@ -267,6 +272,7 @@ return {
       telescope.load_extension("ui-select")
       telescope.load_extension("projects")
       telescope.load_extension("frecency")
+      telescope.load_extension("noice")
     end,
   },
 }

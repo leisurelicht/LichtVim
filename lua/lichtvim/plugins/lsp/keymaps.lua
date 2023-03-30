@@ -112,6 +112,7 @@ function M.on_attach(client, buffer)
       keymaps[keys.id] = keys
     end
   end
+  Dump(keymaps)
 
   for _, keys in pairs(keymaps) do
     if not keys.has or client.server_capabilities[keys.has .. "Provider"] then
