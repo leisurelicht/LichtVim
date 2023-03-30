@@ -61,7 +61,7 @@ return {
     })
     wk.register({
       [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
-      ["q"] = { "<cmd>confirm q<CR>", "Quit" },
+      q = { "<cmd>confirm q<CR>", "Quit" },
       b = { name = "Buffer" },
       w = { name = "Window" },
       t = { name = "Tab" },
