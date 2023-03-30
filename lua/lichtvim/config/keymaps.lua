@@ -94,8 +94,7 @@ map.set("n", "<leader>t9", "9gt", "Tab 9")
 -- buffer
 map.set("n", "<leader>bs", "<CMD>buffers<CR>", "All Buffers")
 map.set("n", "<leader>ba", "<CMD>ball<CR>", "List All Buffers Horizontally")
-map.set("n", "<leader>bv", "<CMD>vertical ball<CR>",
-        "List All Buffers Vertically")
+map.set("n", "<leader>bv", "<CMD>vertical ball<CR>", "List All Buffers Vertically")
 map.set("n", "<leader>bf", "<CMD>bfirst<CR>", "First Buffer")
 map.set("n", "<leader>bl", "<CMD>blast<CR>", "Last Buffer")
 map.set("n", "<leader>bp", "<CMD>bprev<CR>", "Previous Buffer")

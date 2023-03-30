@@ -43,11 +43,11 @@ local logo = {
   "              ██    ████░░░░▒▒▒▒░░▒▒▒▒░░░░████▓▓▓▓██              ",
   "            ██    ██    ████░░░░░░░░░░████    ██▓▓▓▓██            ",
   "          ████████          ████░░████          ████████          ",
-  "                                ██                                "
+  "                                ██                                ",
 }
 
 local function pick_color()
-  local colors = {"String", "Identifier", "Keyword", "Number"}
+  local colors = { "String", "Identifier", "Keyword", "Number" }
   return colors[math.random(#colors)]
 end
 
@@ -55,8 +55,7 @@ local function info()
   local total_plugins = require("lazy").stats().count
   local datetime = os.date(" %d-%m-%Y   %H:%M:%S")
   local version = vim.version()
-  local version_info =
-      "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
+  local version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
   return datetime .. "   " .. total_plugins .. " plugins" .. version_info
 end
@@ -64,17 +63,17 @@ end
 local header = {
   type = "text",
   val = logo,
-  opts = {position = "center", hl = pick_color()}
+  opts = { position = "center", hl = pick_color() },
 }
 local heading = {
   type = "text",
   val = info,
-  opts = {position = "center", hl = "Number"}
+  opts = { position = "center", hl = "Number" },
 }
 local footer = {
   type = "text",
   val = "- Licht -",
-  opts = {position = "center", hl = "Number"}
+  opts = { position = "center", hl = "Number" },
 }
 local leader = "SPC"
 
@@ -87,22 +86,20 @@ local function button(sc, txt, keybind, keybind_opts)
     cursor = 5,
     width = 50,
     align_shortcut = "right",
-    hl_shortcut = "Keyword"
+    hl_shortcut = "Keyword",
   }
   if keybind then
-    keybind_opts = vim.F.if_nil(keybind_opts,
-                                {noremap = true, silent = true, nowait = true})
-    opts.keymap = {"n", sc_, keybind, keybind_opts}
+    keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
+    opts.keymap = { "n", sc_, keybind, keybind_opts }
   end
 
   local function on_press()
     -- local key = vim.api.nvim_replace_termcodes(keybind .. "<Ignore>", true, false, true)
-    local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false,
-                                               true)
+    local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false, true)
     vim.api.nvim_feedkeys(key, "t", false)
   end
 
-  return {type = "button", val = txt, on_press = on_press, opts = opts}
+  return { type = "button", val = txt, on_press = on_press, opts = opts }
 end
 
 local buttons = {
@@ -113,35 +110,37 @@ local buttons = {
     button("SPC f o", "  Recently Opened Files"),
     button("SPC f w", "  Find Word"),
     button("SPC u p", "  Plugins", "<CMD>Lazy<CR>"),
-    button("SPC q", "  Quit", ":qa<cr>")
+    button("SPC q", "  Quit", ":qa<cr>"),
   },
-  opts = {spacing = 1}
+  opts = { spacing = 1 },
 }
 
 local section = {
   header = header,
   heading = heading,
   buttons = buttons,
-  footer = footer
+  footer = footer,
 }
 
 local config = {
   layout = {
-    {type = "padding", val = 1},
+    { type = "padding", val = 1 },
     section.header,
-    {type = "padding", val = 1},
+    { type = "padding", val = 1 },
     section.heading,
-    {type = "padding", val = 1},
+    { type = "padding", val = 1 },
     section.buttons,
-    {type = "padding", val = 1},
-    section.footer
+    { type = "padding", val = 1 },
+    section.footer,
   },
-  opts = {margin = 5}
+  opts = { margin = 5 },
 }
 
 return {
   "goolord/alpha-nvim",
-  dependencies = {"nvim-web-devicons"},
+  dependencies = { "nvim-web-devicons" },
   opts = config,
-  init = function() vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]]) end
+  init = function()
+    vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]])
+  end,
 }
