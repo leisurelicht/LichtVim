@@ -19,7 +19,7 @@ function M.table.merge(t1, t2)
   for k, v in pairs(t2) do
     if type(v) == "table" then
       if type(t1[k] or false) == "table" then
-        table_merge(t1[k] or {}, t2[k] or {})
+        M.table.merge(t1[k] or {}, t2[k] or {})
       else
         t1[k] = v
       end
@@ -120,15 +120,6 @@ function M.hi.get(group, style)
 end
 
 M.str = {}
-
-function M.str.split(str, sep)
-  local sep, fields = sep or ":", {}
-  local pattern = string.format("([^%s]+)", sep)
-  str:gsub(pattern, function(c)
-    fields[#fields + 1] = c
-  end)
-  return fields
-end
 
 function M.str.first_upper(str)
   return str:sub(1, 1):upper() .. str:sub(2)
