@@ -92,9 +92,14 @@ map.set("n", "<leader>t8", "8gt", "Tab 8")
 map.set("n", "<leader>t9", "9gt", "Tab 9")
 
 -- buffer
-map.set("n", "<leader>bs", "<CMD>buffers<CR>", "All Buffers")
-map.set("n", "<leader>ba", "<CMD>ball<CR>", "List All Buffers Horizontally")
-map.set("n", "<leader>bv", "<CMD>vertical ball<CR>", "List All Buffers Vertically")
+if lazy.has("telescope.nvim") then
+  map.set("n", "<leader>bs", require("telescope.builtin").buffers, "Buffers")
+else
+  map.set("n", "<leader>bs", "<CMD>buffers<CR>", "Buffers")
+end
+
+map.set("n", "<leader>bh", "<CMD>ball<CR>", "Horizontally List All")
+map.set("n", "<leader>bv", "<CMD>vertical ball<CR>", "Vertically List All")
 map.set("n", "<leader>bf", "<CMD>bfirst<CR>", "First Buffer")
 map.set("n", "<leader>bl", "<CMD>blast<CR>", "Last Buffer")
 map.set("n", "<leader>bp", "<CMD>bprev<CR>", "Previous Buffer")

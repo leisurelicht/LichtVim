@@ -129,7 +129,6 @@ return {
     },
     keys = {
       { "<leader>fT", ts_b("builtin"), desc = "Built In" },
-      { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
       { "<leader>f<tab>", ts_b("commands"), desc = "Commands" },
       { "<leader>fc", ts_b("command_history"), desc = "History Command" },
       { "<leader>fs", ts_b("search_history"), desc = "History Search" },
