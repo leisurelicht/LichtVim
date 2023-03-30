@@ -1,5 +1,4 @@
 local Keys = require("lazy.core.handler.keys")
-local has = require("lichtvim.utils.lazy").has
 local format = require("lichtvim.plugins.lsp.format").format
 local list = require("lichtvim.utils").list
 
@@ -58,7 +57,7 @@ function M.get()
     },
   }
 
-  if has("telescope.nvim") then
+  if lazy.has("telescope.nvim") then
     local _keys = {
       { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
       {
@@ -84,7 +83,7 @@ function M.get()
     list.extend(M._keys, _keys)
   end
 
-  if has("inc-rename.nvim") then
+  if lazy.has("inc-rename.nvim") then
     M._keys[#M._keys + 1] = {
       "<leader>lr",
       function()
@@ -124,7 +123,7 @@ function M.on_attach(client, buffer)
     end
   end
 
-  if has("which-key.nvim") then
+  if lazy.has("which-key.nvim") then
     require("which-key").register({
       l = { name = "LSP" },
       mode = { "n", "v" },

@@ -65,9 +65,8 @@ return {
     map.set("n", "<leader>Tu", "<CMD>TSUpdate all<CR>", "Update All")
     map.set("n", "<leader>Ts", "<CMD>TSModuleInfo<CR>", "Module Info")
 
-    local wk_ok, wk = pcall(require, "which-key")
-    if wk_ok then
-      wk.register({ T = { name = "Treesitter" }, mode = "n", prefix = "<leader>" })
+    if lazy.has("which-key.nvim") then
+      require("which-key").register({ T = { name = "Treesitter" }, mode = "n", prefix = "<leader>" })
     end
   end,
 }

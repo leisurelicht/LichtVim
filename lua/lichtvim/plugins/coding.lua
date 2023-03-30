@@ -9,29 +9,83 @@ return {
   {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },
-    init = function()
+    config = function()
       vim.g.matchup_matchparen_offscreen = { method = "poopup" }
+      if lazy.has("which-key.nvim") then
+        require("which-key").register({
+          ["]%"] = "Next Matchup",
+          ["[%"] = "Previous Matchup",
+          mode = "n",
+        })
+      end
     end,
   },
-  { "vim-scripts/indentpython.vim", ft = { "python", "djangohtml" } },
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
+    enabled = true,
     event = { "BufNewFile", "BufRead" },
     opts = {
-      show_current_context = true,
-      show_current_context_start = true,
+      show_current_context = false,
+      show_current_context_start = false,
       filetype_exclude = {
-        "alpha",
-        "lazy",
-        "terminal",
-        "help",
         "log",
-        "markdown",
-        "TelescopePrompt",
+        "help",
+        "lazy",
         "mason",
+        "alpha",
+        "neo-tree",
+        "NvimTree",
+        "Trouble",
+        "terminal",
+        "markdown",
+        "dashboard",
         "toggleterm",
+        "TelescopePrompt",
       },
     },
+  },
+  { "vim-scripts/indentpython.vim", enabled = false, ft = { "python", "djangohtml" } },
+  {
+    "echasnovski/mini.indentscope",
+    enabled = true,
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "log",
+          "help",
+          "lazy",
+          "mason",
+          "alpha",
+          "neo-tree",
+          "NvimTree",
+          "Trouble",
+          "terminal",
+          "markdown",
+          "dashboard",
+          "toggleterm",
+          "TelescopePrompt",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+    config = function(_, opts)
+      require("mini.indentscope").setup(opts)
+      if lazy.has("which-key.nvim") then
+        require("which-key").register({
+          ["]i"] = "Goto Indent Scope Bottom",
+          ["[i"] = "Goto Indent Scope Top",
+          mode = "n",
+        })
+      end
+    end,
   },
   {
     "numToStr/Comment.nvim",

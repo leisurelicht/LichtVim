@@ -7,36 +7,6 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
   { "MunifTanjim/nui.nvim", lazy = true }, -- ui components
   {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "help",
-          "alpha",
-          "dashboard",
-          "neo-tree",
-          "Trouble",
-          "lazy",
-          "mason",
-          "NvimTree",
-        },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
-    config = function(_, opts)
-      require("mini.indentscope").setup(opts)
-    end,
-  },
-  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
@@ -124,7 +94,6 @@ return {
     },
     init = function()
       -- when noice is not enabled, install notify on VeryLazy
-      local lazy = require("lichtvim.utils.lazy")
       if not lazy.has("noice.nvim") then
         lazy.on_very_lazy(function()
           vim.notify = require("notify")
@@ -212,7 +181,7 @@ return {
       }
       require("tabby.tabline").set(function(line)
         return {
-          { { "  ", hl = LichtTLHead }, line.sep("", theme.head, theme.fill) },
+          { { "  ", hl = theme.head }, line.sep("", theme.head, theme.fill) },
           line.tabs().foreach(function(tab)
             local hl = tab.is_current() and theme.current_tab or theme.tab
             return {

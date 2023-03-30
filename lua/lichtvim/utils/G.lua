@@ -10,3 +10,4 @@ end
 
 _G.api = require("lichtvim.utils.api")
 _G.map = require("lichtvim.utils.mapping")
+_G.lazy = require("lichtvim.utils.lazy")
