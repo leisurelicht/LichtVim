@@ -17,7 +17,7 @@ if sys.IsNeovide() then
   vim.g.neovide_no_idle = true
   vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_scroll_animation_length = 0
-  vim.opt.guifont = {"FiraCode Nerd Font", ":h12"}
+  vim.opt.guifont = { "FiraCode Nerd Font", ":h12" }
 end
 
 vim.g.loaded_perl_provider = 0

@@ -120,12 +120,6 @@ return {
     end,
   },
   {
-    "lewis6991/spellsitter.nvim",
-    event = { "BufNewFile", "BufRead" },
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    opts = { enable = true },
-  },
-  {
     "mrjones2014/smart-splits.nvim",
     event = { "BufRead", "BufNewFile" },
     opts = {
