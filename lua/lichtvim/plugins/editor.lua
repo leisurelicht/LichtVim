@@ -82,41 +82,26 @@ return {
   },
   {
     "kevinhwang91/nvim-hlslens",
+    enabled = true,
     event = { "BufNewFile", "BufRead" },
-    keys = {
-      {
-        "n",
-        desc = "Next Hlslens",
-        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      },
-      {
-        "N",
-        desc = "Previous Hlslens",
-        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      },
-      {
-        "*",
-        desc = "Forward Search",
-        [[*<Cmd>lua require('hlslens').start()<CR>]],
-      },
-      {
-        "#",
-        desc = "Backward Search",
-        [[#<Cmd>lua require('hlslens').start()<CR>]],
-      },
-      {
-        "g*",
-        desc = "Weak Forward Search",
-        [[g*<Cmd>lua require('hlslens').start()<CR>]],
-      },
-      {
-        "g#",
-        desc = "Weak Backward Search",
-        [[g#<Cmd>lua require('hlslens').start()<CR>]],
-      },
-    },
     config = function()
       require("hlslens").setup()
+      map.set(
+        "n",
+        "n",
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        "Next"
+      )
+      map.set(
+        "n",
+        "N",
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        "Previous"
+      )
+      map.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], "Forward Search")
+      map.set("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], "Backward Search")
+      map.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], "Weak Forward Search")
+      map.set("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], "Weak Backward Search")
     end,
   },
   {
