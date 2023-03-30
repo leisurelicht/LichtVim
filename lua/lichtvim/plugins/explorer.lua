@@ -14,19 +14,7 @@ local function open_nvim_tree_dir(data)
   require("nvim-tree.api").tree.open()
 end
 
-local function open_nvim_tree_file(data)
-  local alpha = vim.bo[data.buf].ft == "alpha"
-
-  if alpha then
-    return
-  end
-
-  require("nvim-tree.api").tree.open()
-end
-
 api.autocmd({ "VimEnter" }, { group = api.augroup("explorer"), callback = open_nvim_tree_dir })
-
--- api.autocmd({"BufReadPost"}, {callback = open_nvim_tree_file})
 
 local function print_node_path(node)
   print(node.absolute_path)
