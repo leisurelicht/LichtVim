@@ -25,37 +25,37 @@ return {
         "n",
         "f",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-        "Jump Forward"
+        "Jump forward"
       )
       map.set(
         "n",
         "F",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-        "Jump BackWard"
+        "Jump backward"
       )
       map.set(
         "o",
         "f",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-        "Jump Forward"
+        "Jump forward"
       )
       map.set(
         "o",
         "F",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-        "Jump BackWard"
+        "Jump backward"
       )
       map.set(
         "",
         "t",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
-        "Jump Forward"
+        "Jump forward"
       )
       map.set(
         "",
         "T",
         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
-        "Jump BackWard"
+        "Jump backward"
       )
 
       map.set("n", "<leader>hw", "<CMD>HopWord<CR>", "Word")
