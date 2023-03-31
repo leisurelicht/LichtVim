@@ -315,6 +315,12 @@ return {
             inactive_sections = {
               lualine_a = {
                 { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
+                {
+                  function()
+                    return [[File Explorer]]
+                  end,
+                  separator = { right = "" },
+                },
               },
             },
             filetypes = { "NvimTree" },
