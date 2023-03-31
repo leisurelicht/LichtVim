@@ -1,47 +1,47 @@
 -- =================
 -- icons.lua
--- Note:
+-- Note: 图标
 -- =================
 --
-local Icons = {}
+local M = {}
 
-Icons.lsp_hover = {
+M.lsp_hover = {
   Action = "💡",
 }
 
-Icons.diagnostics = {
+M.diagnostics = {
   Error = " ",
   Warn = " ",
   Hint = " ",
   Info = " ",
 }
 
-Icons.git = {
+M.git = {
   added = " ",
   modified = " ",
   removed = " ",
 }
 
-Icons.kind = {
+M.kind = {
   Array = " ",
   Boolean = " ",
-  Class = " ",
-  Color = " ",
-  Constant = " ",
-  Constructor = "",
+  Class = "ﴯ",
+  Color = "",
+  Constant = "",
+  Constructor = "",
   Copilot = " ",
   Enum = " ",
   EnumMember = " ",
-  Event = " ",
-  Field = " ",
-  File = " ",
-  Folder = " ",
+  Event = "",
+  Field = "ﰠ",
+  File = "",
+  Folder = "",
   Function = "",
-  Interface = "練",
-  Key = "",
-  Keyword = " ",
+  Interface = "",
+  Key = " ",
+  Keyword = "",
   Method = " ",
-  Module = " ",
+  Module = "",
   Namespace = " ",
   Null = " ",
   Number = " ",
@@ -50,42 +50,29 @@ Icons.kind = {
   Package = " ",
   Property = " ",
   Reference = " ",
-  Snippet = " ",
+  Snippet = "",
   String = " ",
-  Struct = " ",
+  Struct = "פּ",
   Text = "",
   TypeParameter = " ",
-  Unit = " ",
+  Unit = "塞",
   Value = " ",
-  Variable = " ",
+  Variable = "",
 }
 
-Icons.vscode = {
-  Text = " ",
-  Method = " ",
-  Function = " ",
-  Constructor = " ",
-  Field = " ",
-  Variable = " ",
-  Class = " ",
-  Interface = " ",
-  Module = " ",
-  Property = " ",
-  Unit = " ",
-  Value = " ",
-  Enum = " ",
-  Keyword = " ",
-  Snippet = " ",
-  Color = " ",
-  File = " ",
-  Reference = " ",
-  Folder = " ",
-  EnumMember = " ",
-  Constant = " ",
-  Struct = " ",
-  Event = " ",
-  Operator = " ",
-  TypeParameter = " ",
+M.source = {
+  nvim_lsp = "󰘐 ",
+  path = "󰴠 ",
+  buffer = "﬘ ",
+  nvim_lua = " ",
+  look = "󰍄 ",
+  vsnip = " ",
+  spell = "󰓆 ",
+  cmp_tabnine = "󰐭 ",
+  cmdline = " ",
+  fuzzy_buffer = "󱁴 ",
+  copilot = " ",
+  luasnip = "",
 }
 
-return Icons
+return M

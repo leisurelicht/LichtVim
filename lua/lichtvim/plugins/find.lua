@@ -121,6 +121,7 @@ return {
       { "<leader>fw", ts_b("grep_string"), desc = "Word(root dir)" },
       { "<leader>fW", ts_b("grep_string", { cwd = false }), desc = "Word(cwd)" },
       { "<leader>fk", ts_b("keymaps"), desc = "Key Maps" },
+      { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
       {
         "<leader>fC",
         ts_b("colorscheme", { enable_preview = true }),

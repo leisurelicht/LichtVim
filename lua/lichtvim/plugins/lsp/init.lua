@@ -222,6 +222,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
+      "onsails/lspkind-nvim",
     },
     opts = function()
       local cmp = require("cmp")
@@ -262,13 +263,21 @@ return {
           }),
         },
         formatting = {
-          format = function(_, item)
-            local icons = require("lichtvim.utils.ui.icons").kind
-            if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
-            end
-            return item
-          end,
+          format = require("lspkind").cmp_format({
+            mode = "symbol_text",
+            maxwidth = 50,
+            symbol_map = require("lichtvim.utils.ui.icons").kind,
+            before = function(entry, vim_item)
+              vim_item.menu = (function()
+                local m = require("lichtvim.utils.ui.icons").source[entry.source.name]
+                if m == nil then
+                  m = "[" .. string.upper(entry.source.name) .. "]"
+                end
+                return m
+              end)()
+              return vim_item
+            end,
+          }),
         },
         experimental = {
           ghost_text = {
