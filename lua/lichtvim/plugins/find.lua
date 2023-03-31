@@ -141,7 +141,7 @@ return {
       {
         "<leader>fN",
         "<CMD>Telescope noice<CR>",
-        desc = "Notify",
+        desc = "Noice",
       },
       {
         "<leader>fj",
