@@ -13,6 +13,19 @@ return {
           return require("lichtvim.utils.lazy").has("nvim-cmp")
         end,
       },
+      {
+        "aznhe21/actions-preview.nvim",
+        dependencies = { "MunifTanjim/nui.nvim", "nvim-telescope/telescope.nvim" },
+        config = function()
+          require("actions-preview").setup({
+            diff = {
+              algorithm = "patience",
+              ignore_whitespace = true,
+            },
+            telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+          })
+        end,
+      },
     },
     opts = {
       diagnostics = {
@@ -173,19 +186,6 @@ return {
     end,
   },
   {
-    "aznhe21/actions-preview.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-telescope/telescope.nvim" },
-    config = function()
-      require("actions-preview").setup({
-        diff = {
-          algorithm = "patience",
-          ignore_whitespace = true,
-        },
-        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
-      })
-    end,
-  },
-  {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
@@ -249,7 +249,7 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
-          -- { name = "luasnip" },
+          { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
         }),
