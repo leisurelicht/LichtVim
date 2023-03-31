@@ -181,9 +181,9 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     dependencies = { "gitsigns.nvim" },
     opts = {
-      options = { theme = "nightfox" },
       sections = {
         lualine_a = {
           {
