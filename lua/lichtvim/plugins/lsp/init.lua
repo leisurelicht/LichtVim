@@ -253,6 +253,14 @@ return {
           { name = "buffer" },
           { name = "path" },
         }),
+        window = {
+          completion = cmp.config.window.bordered({
+            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+          }),
+          documentation = cmp.config.window.bordered({
+            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+          }),
+        },
         formatting = {
           format = function(_, item)
             local icons = require("lichtvim.utils.ui.icons").kind
