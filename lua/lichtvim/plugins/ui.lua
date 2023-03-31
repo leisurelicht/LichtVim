@@ -144,7 +144,7 @@ return {
           line.tabs().foreach(function(tab)
             local tab_name = tab.name()
             if str.starts_with(vim.fn.toupper(tab_name), "NVIMTREE") then
-              tab_name = "Explorer"
+              tab_name = "File Explorer"
             end
             local hl = tab.is_current() and theme.current_tab or theme.tab
             return {
@@ -162,7 +162,7 @@ return {
           line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
             local win_name = win.buf_name()
             if str.starts_with(vim.fn.toupper(win_name), "NVIMTREE") then
-              win_name = "Explorer"
+              win_name = "File Explorer"
             end
             return {
               line.sep("", theme.win, theme.fill),
@@ -189,27 +189,25 @@ return {
         local num = [[%{winnr()}]]
         return "[" .. num .. "]"
       end
+
       return {
+        options = {
+          theme = "auto",
+          disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+        },
         sections = {
           lualine_a = {
             {
-              window_num(),
+              window_num,
               separator = { right = "" },
-              -- color = { fg = "white", bg = "grey" },
+              color = { fg = "white", bg = "grey" },
             },
             {
               "mode",
               fmt = function(s)
                 return s:sub(1, 1)
-              end,
-              separator = { right = "" },
-            },
-            {
-              function()
-                return require("noice").api.status.mode.get()
-              end,
-              cond = function()
-                return package.loaded["noice"] and require("noice").api.status.mode.has()
               end,
               separator = { right = "" },
             },
@@ -274,13 +272,54 @@ return {
         inactive_sections = {
           lualine_a = {
             {
-              window_num(),
+              window_num,
               separator = { right = "" },
               color = { fg = "white", bg = "grey" },
             },
           },
+          lualine_c = {
+            {
+              "filename",
+              color = { fg = "grey" },
+            },
+          },
+          lualine_x = {
+            {
+              "location",
+              color = { fg = "grey" },
+            },
+          },
         },
-        extensions = { "nvim-tree", "symbols-outline", "fzf" },
+        extensions = {
+          -- "nvim-tree",
+          "symbols-outline",
+          "fzf",
+          "quickfix",
+          "lazy",
+          "nvim-dap-ui",
+          "toggleterm",
+          "trouble",
+          "man",
+          {
+            sections = {
+              lualine_a = {
+                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
+                {
+                  function()
+                    return [[File Explorer]]
+                  end,
+                  separator = { right = "" },
+                },
+              },
+            },
+            inactive_sections = {
+              lualine_a = {
+                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
+              },
+            },
+            filetypes = { "NvimTree" },
+          },
+        },
       }
     end,
   },
