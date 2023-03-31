@@ -13,8 +13,10 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "poopup" }
       if lazy.has("which-key.nvim") then
         require("which-key").register({
-          ["]%"] = "Next Matchup",
-          ["[%"] = "Previous Matchup",
+          ["]%"] = "Jump to next matchup",
+          ["[%"] = "Jump to previous matchup",
+          ["g%"] = "Jump to close matchup",
+          ["z%"] = "Jump inside matchup",
           mode = "n",
         })
       end
@@ -80,8 +82,8 @@ return {
       require("mini.indentscope").setup(opts)
       if lazy.has("which-key.nvim") then
         require("which-key").register({
-          ["]i"] = "Goto Indent Scope Bottom",
-          ["[i"] = "Goto Indent Scope Top",
+          ["]i"] = "Goto indent scope bottom",
+          ["[i"] = "Goto indent scope top",
           mode = "n",
         })
       end
