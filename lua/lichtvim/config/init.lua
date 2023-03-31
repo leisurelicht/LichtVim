@@ -15,7 +15,7 @@ M.lazy_version = ">=9.1.0"
 local defaults = {
   -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
   ---@type string|fun()
-  colorscheme = "nightfox",
+  colorscheme = "tokyonight",
   -- load the default settings
   defaults = {
     autocmds = true, -- lichtvim.config.autocmds
@@ -69,7 +69,7 @@ function M.setup(opts)
     msg = "Could not load your colorscheme",
     on_error = function(msg)
       require("lazy.core.util").error(msg)
-      vim.cmd.colorscheme("nightfox")
+      vim.cmd.colorscheme("todyonight")
     end,
   })
 end
