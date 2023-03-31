@@ -1,6 +1,6 @@
 require("lichtvim.config").init()
 
-local dev = os.getenv("LICHT_VIM_DEV")
+local dev = os.getenv("LICHTVIM_DEV")
 if dev == "1" then
   return {
     { "folke/lazy.nvim", version = "*" },
