@@ -9,7 +9,7 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", "nvim-treesitter/nvim-treesitter" },
+    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = {
       routes = {
         -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
@@ -183,100 +183,105 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     dependencies = { "gitsigns.nvim" },
-    opts = {
-      sections = {
-        lualine_a = {
-          {
-            "[" .. [[%winnr()]] .. "]",
-            separator = { right = "" },
-            color = { fg = "white", bg = "grey" },
-          },
-          {
-            "mode",
-            fmt = function(s)
-              return s:sub(1, 1)
-            end,
-            separator = { right = "" },
-          },
-          {
-            function()
-              return require("noice").api.status.mode.get()
-            end,
-            cond = function()
-              return package.loaded["noice"] and require("noice").api.status.mode.has()
-            end,
-            separator = { right = "" },
-          },
-        },
-        lualine_b = {
-          { "branch", separator = { right = "" } },
-          {
-            "diff",
-            symbols = {
-              added = icons_g.added,
-              modified = icons_g.modified,
-              removed = icons_g.removed,
+    opts = function()
+      local function window_num()
+        -- local num = vim.inspect([[%{tabpagewinnr(tabpagenr())}]])
+        local num = [[%{winnr()}]]
+        return "[" .. num .. "]"
+      end
+      return {
+        sections = {
+          lualine_a = {
+            {
+              window_num(),
+              separator = { right = "" },
+              -- color = { fg = "white", bg = "grey" },
             },
-            separator = { right = "" },
-          },
-        },
-        lualine_c = { { vim.fn.getcwd() }, "filename" },
-        lualine_x = {
-          { "encoding" },
-          { "filetype" },
-          { "fileformat" },
-          {
-            function()
-              return require("noice").api.status.command.get()
-            end,
-            cond = function()
-              return package.loaded["noice"] and require("noice").api.status.command.has()
-            end,
-            color = fg("Statement"),
-          },
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = fg("Special"),
-          },
-        },
-        lualine_y = {
-          {
-            "diagnostics",
-            -- Table of diagnostic sources, available sources are:
-            --   'nvim_lsp', 'nvim_diagnostic', 'coc', 'ale', 'vim_lsp'.
-            -- or a function that returns a table as such:
-            --   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
-            sources = { "nvim_diagnostic", "nvim_lsp" },
-            -- Displays diagnostics for the defined severity types
-            sections = { "error", "warn", "info", "hint" },
-            diagnostics_color = {
-              -- Same values as the general color option can be used here.
-              error = "DiagnosticError", -- Changes diagnostics' error color.
-              warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-              info = "DiagnosticInfo", -- Changes diagnostics' info color.
-              hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+            {
+              "mode",
+              fmt = function(s)
+                return s:sub(1, 1)
+              end,
+              separator = { right = "" },
             },
-            symbols = {
-              error = icons_d.Error,
-              warn = icons_d.Warn,
-              info = icons_d.Info,
-              hint = icons_d.Hint,
+            {
+              function()
+                return require("noice").api.status.mode.get()
+              end,
+              cond = function()
+                return package.loaded["noice"] and require("noice").api.status.mode.has()
+              end,
+              separator = { right = "" },
             },
-            colored = true, -- Displays diagnostics status in color if set to true.
-            update_in_insert = false, -- Update diagnostics in insert mode.
-            always_visible = false, -- Show diagnostics even if there are none.
-            separator = { left = "" },
           },
-          { "progress", separator = { left = "" } },
+          lualine_b = {
+            { "branch", separator = { right = "" } },
+            {
+              "diff",
+              symbols = {
+                added = icons_g.added,
+                modified = icons_g.modified,
+                removed = icons_g.removed,
+              },
+              separator = { right = "" },
+            },
+          },
+          lualine_c = { { vim.fn.getcwd() }, "filename" },
+          lualine_x = {
+            { "encoding" },
+            { "filetype" },
+            { "fileformat" },
+            {
+              function()
+                return require("noice").api.status.command.get()
+              end,
+              cond = function()
+                return package.loaded["noice"] and require("noice").api.status.command.has()
+              end,
+              color = fg("Statement"),
+            },
+            {
+              require("lazy.status").updates,
+              cond = require("lazy.status").has_updates,
+              color = fg("Special"),
+            },
+          },
+          lualine_y = {
+            {
+              "diagnostics",
+              sources = { "nvim_diagnostic", "nvim_lsp" },
+              sections = { "error", "warn", "info", "hint" },
+              diagnostics_color = {
+                error = "DiagnosticError", -- Changes diagnostics' error color.
+                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+                info = "DiagnosticInfo", -- Changes diagnostics' info color.
+                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+              },
+              symbols = {
+                error = icons_d.Error,
+                warn = icons_d.Warn,
+                info = icons_d.Info,
+                hint = icons_d.Hint,
+              },
+              colored = true, -- Displays diagnostics status in color if set to true.
+              update_in_insert = false, -- Update diagnostics in insert mode.
+              always_visible = false, -- Show diagnostics even if there are none.
+              separator = { left = "" },
+            },
+            { "progress", separator = { left = "" } },
+          },
         },
-      },
-      inactive_sections = {
-        lualine_a = {
-          { separator = { right = "" }, color = { fg = "white", bg = "grey" } },
+        inactive_sections = {
+          lualine_a = {
+            {
+              window_num(),
+              separator = { right = "" },
+              color = { fg = "white", bg = "grey" },
+            },
+          },
         },
-      },
-      extensions = { "nvim-tree", "symbols-outline", "fzf" },
-    },
+        extensions = { "nvim-tree", "symbols-outline", "fzf" },
+      }
+    end,
   },
 }

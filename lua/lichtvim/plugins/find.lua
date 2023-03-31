@@ -32,37 +32,10 @@ local function ts_b(builtin, opts)
 end
 
 return {
-  { "tami5/sqlite.lua" },
-  {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = { "BufReadPost", "BufNewFile" },
-    keys = {
-      {
-        "]o",
-        function()
-          require("todo-comments").jump_next()
-        end,
-        desc = "Next Todo Comment",
-      },
-      {
-        "[o",
-        function()
-          require("todo-comments").jump_prev()
-        end,
-        desc = "Previous Todo Comment",
-      },
-      { "<leader>ut", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-      {
-        "<leader>uT",
-        "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",
-        desc = "Todo/Fix/Fixme (Trouble)",
-      },
-      { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-    },
-  },
+  { "tami5/sqlite.lua", lazy = true },
   {
     "AckslD/nvim-neoclip.lua",
+    lazy = true,
     dependencies = "tami5/sqlite.lua",
     opts = {
       history = 1000,
@@ -96,6 +69,7 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
+    lazy = true,
     opts = {
       manual_mode = false,
       detection_methods = { "lsp", "pattern" },
@@ -121,11 +95,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     version = false,
+    lazy = true,
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-frecency.nvim" },
+      { "ahmedkhalf/project.nvim" },
     },
     keys = {
       { "<leader>fT", ts_b("builtin"), desc = "Built In" },

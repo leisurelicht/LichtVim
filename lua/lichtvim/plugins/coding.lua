@@ -7,6 +7,20 @@ return {
     opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
   },
   {
+    "folke/todo-comments.nvim",
+    lazy = true,
+    cmd = { "TodoTelescope" },
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    keys = {
+      { "<leader>ft", "<CMD>TodoTelescope keywords=TODO,FIX,HACK<CR>", desc = "Todo" },
+    },
+  },
+  {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },
     config = function()

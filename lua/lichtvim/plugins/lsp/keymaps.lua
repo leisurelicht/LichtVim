@@ -82,7 +82,7 @@ function M.get()
       },
       { "<leader>li", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
       { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
-      { "<leader>lg", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostic" },
+      { "<leader>ld", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostic" },
     }
 
     list.extend(M._keys, _keys)
