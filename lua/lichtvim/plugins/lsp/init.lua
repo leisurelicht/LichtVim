@@ -243,7 +243,7 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<cr>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<S-CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -300,7 +300,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     keys = {
-      { "<leader>lo", "<cmd>SymbolsOutline<CR>", "OUtline" },
+      { "<leader>lo", "<cmd>SymbolsOutline<cr>", "OUtline" },
     },
     opts = { show_numbers = true },
   },

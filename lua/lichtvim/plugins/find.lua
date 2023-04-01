@@ -136,22 +136,22 @@ return {
 
       {
         "<leader>fn",
-        "<cmd>Telescope notify theme=dropdown<CR>",
+        "<cmd>Telescope notify theme=dropdown<cr>",
         desc = "Notify",
       },
       {
         "<leader>fN",
-        "<cmd>Telescope noice<CR>",
+        "<cmd>Telescope noice<cr>",
         desc = "Noice",
       },
       {
         "<leader>fj",
-        "<cmd>Telescope projects theme=dropdown<CR>",
+        "<cmd>Telescope projects theme=dropdown<cr>",
         desc = "Projects",
       },
       {
         "<leader>fp",
-        "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<CR>",
+        "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
         desc = "Paster",
       },
     },

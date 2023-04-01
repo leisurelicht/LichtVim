@@ -7,20 +7,20 @@ local lspsaga_ok, _ = pcall(require, "lspsaga")
 local telescope_ok, _ = pcall(require, "telescope")
 local wk_ok, wk = pcall(require, "which-key")
 
-map.set("n", "<leader>lI", "<cmd>LspInstallInfo<CR>", "Install Info")
-map.set("n", "<leader>lo", "<cmd>SymbolsOutline<CR>", "Open Outline")
+map.set("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", "Install Info")
+map.set("n", "<leader>lo", "<cmd>SymbolsOutline<cr>", "Open Outline")
 if lspsaga_ok then
-  map.set("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", "Line Diagnostic")
-  map.set("n", "<leader>ln", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next Diagnostic")
-  map.set("n", "<leader>lp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous Diagnostic")
-  map.set("n", "<leader>]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next Diagnostic Info")
-  map.set("n", "<leader>[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous Diagnostic Info")
+  map.set("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<cr>", "Line Diagnostic")
+  map.set("n", "<leader>ln", "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic")
+  map.set("n", "<leader>lp", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic")
+  map.set("n", "<leader>]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic Info")
+  map.set("n", "<leader>[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous Diagnostic Info")
 else
-  map.set("n", "<leader>ll", "<cmd>lua vim.diagnostic.open_float()<CR>", "Line Diagnostic")
-  map.set("n", "<leader>ln", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Next Diagnostic")
-  map.set("n", "<leader>lp", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Previous Diagnostic")
-  map.set("n", "<leader>]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next Diagnostic Info")
-  map.set("n", "<leader>[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Previous Diagnostic Info")
+  map.set("n", "<leader>ll", "<cmd>lua vim.diagnostic.open_float()<cr>", "Line Diagnostic")
+  map.set("n", "<leader>ln", "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Next Diagnostic")
+  map.set("n", "<leader>lp", "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Previous Diagnostic")
+  map.set("n", "<leader>]d", "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic Info")
+  map.set("n", "<leader>[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Previous Diagnostic Info")
 end
 
 if wk_ok then
@@ -39,13 +39,13 @@ M.register = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   map.set("n", "<leader>la", vim.lsp.buf.code_action, "Code Action", { buffer = bufnr })
-  map.set("n", "<leader>lF", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "Code Format", { buffer = bufnr })
+  map.set("n", "<leader>lF", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Code Format", { buffer = bufnr })
   map.set("n", "<leader>lwa", vim.lsp.buf.add_workspace_folder, "Add Folder", { buffer = bufnr })
   map.set("n", "<leader>lwr", vim.lsp.buf.remove_workspace_folder, "Remove Folder", { buffer = bufnr })
   map.set(
     "n",
     "<leader>lwl",
-    "<cmd>print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+    "<cmd>print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
     "List Folders",
     { buffer = bufnr }
   )
@@ -60,25 +60,25 @@ M.register = function(_, bufnr)
   map.set("n", "<leader>lh", vim.lsp.buf.hover, "Hover", { buffer = bufnr })
   map.set("n", "<leader>lH", vim.lsp.buf.signature_help, "Signature Help", { buffer = bufnr })
 
-  map.set("v", "<leader>lF", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "Code Foramt", { buffer = bufnr })
+  map.set("v", "<leader>lF", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Code Foramt", { buffer = bufnr })
   --[[ map.set("v", "<leader>la", vim.lsp.buf.range_code_action, "Code Action", { buffer = bufnr }) ]]
   if lspsaga_ok then
-    map.set("n", "<leader>lr", "<cmd>Lspsaga rename<CR>", "Rename", { buffer = bufnr })
-    -- map.set("n", "<leader>lh", "<cmd>Lspsaga hover_doc<CR>", "Hover", { buffer = bufnr })
-    -- map.set("n", "<leader>lH", "<cmd>Lspsaga signature_help<CR>", "Signature Help", { buffer = bufnr })
-    map.set("n", "<leader>lD", "<cmd>Lspsaga preview_definition<CR>", "Preview Definition", { buffer = bufnr })
+    map.set("n", "<leader>lr", "<cmd>Lspsaga rename<cr>", "Rename", { buffer = bufnr })
+    -- map.set("n", "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", "Hover", { buffer = bufnr })
+    -- map.set("n", "<leader>lH", "<cmd>Lspsaga signature_help<cr>", "Signature Help", { buffer = bufnr })
+    map.set("n", "<leader>lD", "<cmd>Lspsaga preview_definition<cr>", "Preview Definition", { buffer = bufnr })
 
     map.set(
       "n",
       "<C-u>",
-      "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
+      "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>",
       "Scroll Up",
       { buffer = bufnr }
     )
     map.set(
       "n",
       "<C-f>",
-      "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>",
+      "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>",
       "Scroll Down",
       { buffer = bufnr }
     )
@@ -87,29 +87,29 @@ M.register = function(_, bufnr)
   end
 
   if telescope_ok then
-    map.set("n", "<leader>lf", "<cmd>Telescope lsp_references<CR>", "References", { buffer = bufnr })
-    map.set("n", "<leader>ld", "<cmd>Telescope lsp_definitions theme=dropdown<CR>", "Definition", { buffer = bufnr })
-    map.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<CR>", "Type Definition", { buffer = bufnr })
-    map.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<CR>", "Implementation", { buffer = bufnr })
-    map.set("n", "<leader>lg", "<cmd>Telescope diagnostics theme=dropdown<CR>", "Diagnostic", { buffer = bufnr })
+    map.set("n", "<leader>lf", "<cmd>Telescope lsp_references<cr>", "References", { buffer = bufnr })
+    map.set("n", "<leader>ld", "<cmd>Telescope lsp_definitions theme=dropdown<cr>", "Definition", { buffer = bufnr })
+    map.set("n", "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", "Type Definition", { buffer = bufnr })
+    map.set("n", "<leader>li", "<cmd>Telescope lsp_implementations<cr>", "Implementation", { buffer = bufnr })
+    map.set("n", "<leader>lg", "<cmd>Telescope diagnostics theme=dropdown<cr>", "Diagnostic", { buffer = bufnr })
     map.set(
       "n",
       "<leader>lsd",
-      "<cmd>Telescope lsp_document_symbols theme=dropdown<CR>",
+      "<cmd>Telescope lsp_document_symbols theme=dropdown<cr>",
       "Document",
       { buffer = bufnr }
     )
     map.set(
       "n",
       "<leader>lsw",
-      "<cmd>Telescope lsp_workspace_symbols theme=dropdown<CR>",
+      "<cmd>Telescope lsp_workspace_symbols theme=dropdown<cr>",
       "WorkSpace",
       { buffer = bufnr }
     )
     map.set(
       "n",
       "<leader>lsy",
-      "<cmd>Telescope lsp_dynamic_workspace_symbols theme=dropdown<CR>",
+      "<cmd>Telescope lsp_dynamic_workspace_symbols theme=dropdown<cr>",
       "Dynamically",
       { buffer = bufnr }
     )

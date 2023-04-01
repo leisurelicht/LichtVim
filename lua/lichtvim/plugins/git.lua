@@ -1,10 +1,10 @@
 local function git_key(gs, bufnr)
-  map.set("n", "<leader>gB", "<cmd>GitBlameToggle<CR>", "Toggle Line Blame")
-  map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<CR>", "Open Commit URL")
+  map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle Line Blame")
+  map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open Commit URL")
 
-  map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<CR>", "Add Hunk", { buffer = bufnr })
+  map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<cr>", "Add Hunk", { buffer = bufnr })
   map.set("n", "<leader>gA", gs.stage_buffer, "Add Buffer", { buffer = bufnr })
-  map.set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk", { buffer = bufnr })
+  map.set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<cr>", "Reset Hunk", { buffer = bufnr })
   map.set("n", "<leader>gR", gs.reset_buffer, "Reset Buffer", { buffer = bufnr })
   map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo Stage Hunk", { buffer = bufnr })
   map.set("n", "<leader>gp", gs.preview_hunk, "Preview Hunk", { buffer = bufnr })
@@ -38,7 +38,7 @@ local function git_key(gs, bufnr)
   end, "Previous Git Hunk", { buffer = bufnr, expr = true })
 
   -- Text object
-  map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+  map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
 end
 
 return {

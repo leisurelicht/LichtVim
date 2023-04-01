@@ -11,17 +11,17 @@ return {
 		-- wk.register({
 		-- 	y = {
 		-- 		name = "+Golang",
-		-- 		a = { "<cmd>GoCodeAction<CR>", "Action" },
+		-- 		a = { "<cmd>GoCodeAction<cr>", "Action" },
 		-- 		t = {
 		-- 			name = "+Tag",
-		-- 			a = { "<cmd>GoAddTag<CR>", "Add Tag" },
-		-- 			r = { "<cmd>GoRmTag<CR>", "Rm Tag" },
-		-- 			c = { "<cmd>GoClearTag<CR>", "Clear Tag" },
+		-- 			a = { "<cmd>GoAddTag<cr>", "Add Tag" },
+		-- 			r = { "<cmd>GoRmTag<cr>", "Rm Tag" },
+		-- 			c = { "<cmd>GoClearTag<cr>", "Clear Tag" },
 		-- 		},
-		-- 		c = { "<cmd>GoCmt<CR>", "Add Comment" },
-		-- 		f = { "<cmd>GoFmt<CR>", "Format" },
+		-- 		c = { "<cmd>GoCmt<cr>", "Add Comment" },
+		-- 		f = { "<cmd>GoFmt<cr>", "Format" },
 		--
-		-- 		m = { "<cmd>GoModTidy<CR>", "Go Mod Tidy" },
+		-- 		m = { "<cmd>GoModTidy<cr>", "Go Mod Tidy" },
 		-- 	},
 		-- }, { prefix = "<leader>", buffer = bufnr })
 	-- end,
