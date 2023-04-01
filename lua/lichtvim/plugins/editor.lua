@@ -203,8 +203,17 @@ return {
   {
     "windwp/nvim-spectre",
     -- stylua: ignore
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
     keys = {
-      { "<leader>fr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+      {
+        "<leader>fr",
+        function()
+          require("spectre").open()
+        end,
+        desc = "Replace in files (Spectre)",
+      },
     },
   },
 

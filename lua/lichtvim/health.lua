@@ -14,7 +14,7 @@ function M.check()
     vim.health.report_error("Neovim >= 0.8.0 is required")
   end
 
-  for _, cmd in ipairs({ "git", "rg", { "fd", "fdfind" }, "lazygit", "fzf" }) do
+  for _, cmd in ipairs({ "git", "rg", { "fd", "fdfind" }, "lazygit", "fzf", "sed" }) do
     local name = type(cmd) == "string" and cmd or vim.inspect(cmd)
     local commands = type(cmd) == "string" and { cmd } or cmd
     ---@cast commands string[]
