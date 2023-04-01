@@ -63,7 +63,7 @@ return {
         scope_incremental = "<nop>",
       },
     },
-    indent = { enable = true, disable = { "python" } },
+    indent = { enable = true, disable = { "python", "lua", "go" } },
     -- 彩虹括号
     rainbow = {
       enable = true,
