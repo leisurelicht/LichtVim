@@ -1,3 +1,48 @@
+-- 为 lsp hover 添加文件类型
+local function lsp_hover(_, result, ctx, config)
+  -- Add file type for LSP hover
+  local bufnr, winner = vim.lsp.handlers.hover(_, result, ctx, config)
+  if bufnr and winner then
+    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
+    return bufnr, winner
+  end
+end
+
+-- 为 lsp 签名帮助添加文件类型
+local function lsp_signature_help(_, result, ctx, config)
+  -- Add file type for LSP signature help
+  local bufnr, winner = vim.lsp.handlers.signature_help(_, result, ctx, config)
+  if bufnr and winner then
+    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
+    return bufnr, winner
+  end
+end
+
+-- 设置浮动样式
+local lsp_handlers = {
+  ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
+    border = "rounded",
+    filetype = "lsp-hover",
+  }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
+    border = "rounded",
+    filetype = "lsp-signature-help",
+  }),
+}
+
+local function lsmod(modname, fn)
+  local root = require("lazy.core.util").find_root(modname)
+  if not root then
+    return
+  end
+
+  require("lichtvim.utils").path.ls(root, function(_, name, type)
+    if (type == "file" or type == "link") and name:sub(-4) == ".lua" then
+      fn(modname .. "." .. name:sub(1, -5), name:sub(1, -5))
+    end
+  end)
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -10,7 +55,7 @@ return {
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
-          return require("lichtvim.utils.lazy").has("nvim-cmp")
+          return lazy.has("nvim-cmp")
         end,
       },
       {
@@ -41,26 +86,15 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
-      servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-              },
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        },
-      },
       setup = {},
     },
     config = function(_, opts)
+      for name, icon in pairs(require("lichtvim.utils.ui.icons").diagnostics) do
+        name = "DiagnosticSign" .. name
+        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      end
+      vim.diagnostic.config(opts.diagnostics)
+
       -- setup autoformat
       require("lichtvim.plugins.lsp.format").autoformat = opts.autoformat
       -- setup formatting and keymaps
@@ -69,58 +103,54 @@ return {
         require("lichtvim.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-      for name, icon in pairs(require("lichtvim.utils.ui.icons").diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-      end
-      vim.diagnostic.config(opts.diagnostics)
-
-      local servers = opts.servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      if ok then
-        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-      end
+      local servers = {}
+      local s_names = {}
+      lsmod("lichtvim.plugins.lsp.servers", function(modname, name)
+        s_names[#s_names + 1] = name
+        servers[name] = require(modname)
+      end)
 
       local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
+        local options = servers[server].options
+        local settings = servers[server].settings
+        local on_attach = servers[server].on_attach
+
+        options = vim.tbl_deep_extend("force", {
+          capabilities = vim.deepcopy(
+            require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+          ),
+        }, options or {})
+
+        options.on_attach = function(client, bufnr)
+          if on_attach ~= nil then
+            on_attach(client, bufnr)
+          end
+
+          if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
+            local handler = {
+              ["textDocument/publishDiagnostics"] = function(...) end,
+            }
+            options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
+          end
+          options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
+        end
 
         if opts.setup[server] then
-          if opts.setup[server](server, server_opts) then
+          if opts.setup[server](server, options) then
             return
           end
         elseif opts.setup["*"] then
-          if opts.setup["*"](server, server_opts) then
+          if opts.setup["*"](server, options) then
             return
           end
         end
-        require("lspconfig")[server].setup(server_opts)
+
+        require("lspconfig")[server].setup(options)
       end
 
-      -- get all the servers that are available thourgh mason-lspconfig
-      local have_mason, mlsp = pcall(require, "mason-lspconfig")
-      local all_mslp_servers = {}
-      if have_mason then
-        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-      end
-
-      local ensure_installed = {} ---@type string[]
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        end
-      end
-
-      if have_mason then
-        mlsp.setup({ ensure_installed = ensure_installed })
+      local mlsp_ok, mlsp = pcall(require, "mason-lspconfig")
+      if mlsp_ok then
+        mlsp.setup({ ensure_installed = s_names })
         mlsp.setup_handlers({ setup })
       end
     end,
@@ -319,7 +349,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     keys = {
-      { "<leader>lo", "<cmd>SymbolsOutline<cr>", "OUtline" },
+      { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
     },
     opts = { show_numbers = true },
   },

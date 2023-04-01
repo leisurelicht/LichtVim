@@ -53,6 +53,25 @@ M.path = {}
 
 M.path.root_patterns = { ".git", "lua" }
 
+---@alias FileType "file"|"directory"|"link"|"fifo"|"socket"|"char"|"block"|nil
+---@param path string
+---@param fn fun(path: string, name:string, type:FileType):boolean?
+function M.path.ls(path, fn)
+  local handle = vim.loop.fs_scandir(path)
+  while handle do
+    local name, t = vim.loop.fs_scandir_next(handle)
+    if not name then
+      break
+    end
+
+    local fname = path .. "/" .. name
+
+    if fn(fname, name, t or vim.loop.fs_stat(fname).type) == false then
+      break
+    end
+  end
+end
+
 -- returns the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir

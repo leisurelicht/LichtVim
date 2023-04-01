@@ -4,7 +4,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 return {
   settings = {
-    document_diagnostics = true,
+    document_diagnostics = false,
     document_formatting = true,
     formatting_on_save = false,
   },
@@ -30,6 +30,9 @@ return {
         },
         telemetry = {
           enable = false,
+        },
+        completion = {
+          callSnippet = "Replace",
         },
       },
     },

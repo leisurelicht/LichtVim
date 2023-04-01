@@ -80,7 +80,12 @@ function M.get()
         desc = "Goto Definition",
         has = "definition",
       },
-      { "<leader>li", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
+      {
+        "<leader>li",
+        "<cmd>Telescope lsp_implementations<cr>",
+        desc = "Goto Implementation",
+        has = "implementation",
+      },
       { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
       { "<leader>ld", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
     }
@@ -91,7 +96,7 @@ function M.get()
       { "<leader>lf", vim.lsp.buf.references, "References" },
       { "<leader>ld", vim.lsp.buf.definition, "Definition" },
       { "<leader>lt", vim.lsp.buf.type_definition, "Type Definition" },
-      { "<leader>li", vim.lsp.buf.implementation, "Implementation" },
+      { "<leader>li", vim.lsp.buf.implementation, "Implementation", has = "implementation" },
       { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
     }
     list.extend(M._keys, _keys)
