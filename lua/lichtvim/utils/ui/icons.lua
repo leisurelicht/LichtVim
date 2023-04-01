@@ -71,7 +71,7 @@ M.source = {
   cmp_tabnine = "󰐭 ",
   cmdline = " ",
   fuzzy_buffer = "󱁴 ",
-  copilot = " ",
+  copilot = "",
   luasnip = "",
 }
 
