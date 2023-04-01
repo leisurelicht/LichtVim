@@ -35,12 +35,12 @@ function M.mapKey(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-function M.mapCmd(lhs, rhs, opts)
+function M.mapcmd(lhs, rhs, opts)
   opts = check_opts(opts)
   vim.api.nvim_set_keymap("n", lhs, ":" .. rhs .. "<cr>", opts)
 end
 
-function M.mapCmdWait(lhs, rhs, opts)
+function M.mapcmdWait(lhs, rhs, opts)
   opts = check_opts(opts)
   vim.api.nvim_set_keymap("n", lhs, ":" .. rhs .. " ", opts)
 end

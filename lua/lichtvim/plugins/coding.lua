@@ -17,7 +17,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     keys = {
-      { "<leader>ft", "<CMD>TodoTelescope keywords=TODO,FIXME,HACK,PERF theme=dropdown<CR>", desc = "Todo" },
+      { "<leader>ft", "<cmd>TodoTelescope keywords=TODO,FIXME,HACK,PERF theme=dropdown<CR>", desc = "Todo" },
     },
     config = function()
       require("todo-comments").setup({})

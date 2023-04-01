@@ -300,7 +300,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     keys = {
-      { "<leader>lo", "<CMD>SymbolsOutline<CR>", "OUtline" },
+      { "<leader>lo", "<cmd>SymbolsOutline<CR>", "OUtline" },
     },
     opts = { show_numbers = true },
   },

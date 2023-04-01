@@ -58,16 +58,16 @@ return {
         "Jump backward"
       )
 
-      map.set("n", "<leader>hw", "<CMD>HopWord<CR>", "Word")
-      map.set("n", "<leader>hl", "<CMD>HopLine<CR>", "Line")
-      map.set("n", "<leader>hc", "<CMD>HopChar1<CR>", "Char")
-      map.set("n", "<leader>hp", "<CMD>HopPattern<CR>", "Pattern")
-      map.set("n", "<leader>hs", "<CMD>HopLineStart<CR>", "Line Start")
-      map.set("n", "<leader>haw", "<CMD>HopWordMW<CR>", "Word")
-      map.set("n", "<leader>hal", "<CMD>HopLineMW<CR>", "Line")
-      map.set("n", "<leader>hac", "<CMD>HopChar1MW<CR>", "Char")
-      map.set("n", "<leader>hap", "<CMD>HopPatternMW<CR>", "Pattern")
-      map.set("n", "<leader>has", "<CMD>HopLineStartMW<CR>", "Line Start")
+      map.set("n", "<leader>hw", "<cmd>HopWord<CR>", "Word")
+      map.set("n", "<leader>hl", "<cmd>HopLine<CR>", "Line")
+      map.set("n", "<leader>hc", "<cmd>HopChar1<CR>", "Char")
+      map.set("n", "<leader>hp", "<cmd>HopPattern<CR>", "Pattern")
+      map.set("n", "<leader>hs", "<cmd>HopLineStart<CR>", "Line Start")
+      map.set("n", "<leader>haw", "<cmd>HopWordMW<CR>", "Word")
+      map.set("n", "<leader>hal", "<cmd>HopLineMW<CR>", "Line")
+      map.set("n", "<leader>hac", "<cmd>HopChar1MW<CR>", "Char")
+      map.set("n", "<leader>hap", "<cmd>HopPatternMW<CR>", "Pattern")
+      map.set("n", "<leader>has", "<cmd>HopLineStartMW<CR>", "Line Start")
 
       local wk_ok, wk = pcall(require, "which-key")
       if wk_ok then
@@ -86,12 +86,12 @@ return {
     event = { "BufNewFile", "BufRead" },
     config = function()
       require("hlslens").setup()
-      map.set("n", "n", [[<Cmd>execute('normal! '.v:count1.'n')<CR><Cmd>lua require('hlslens').start()<CR>]], "Next")
-      map.set("n", "N", [[<Cmd>execute('normal! '.v:count1.'N')<CR><Cmd>lua require('hlslens').start()<CR>]], "Prev")
-      map.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], "Forward search")
-      map.set("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], "Backward search")
-      map.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], "Weak forward search")
-      map.set("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], "Weak backward search")
+      map.set("n", "n", [[<cmd>execute('normal! '.v:count1.'n')<CR><cmd>lua require('hlslens').start()<CR>]], "Next")
+      map.set("n", "N", [[<cmd>execute('normal! '.v:count1.'N')<CR><cmd>lua require('hlslens').start()<CR>]], "Prev")
+      map.set("n", "*", [[*<cmd>lua require('hlslens').start()<CR>]], "Forward search")
+      map.set("n", "#", [[#<cmd>lua require('hlslens').start()<CR>]], "Backward search")
+      map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<CR>]], "Weak forward search")
+      map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<CR>]], "Weak backward search")
     end,
   },
   {
@@ -134,7 +134,7 @@ return {
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
-        api.autocmd({ "CmdlineLeave" }, {
+        api.autocmd({ "cmdlineLeave" }, {
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
@@ -143,8 +143,8 @@ return {
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
       end
-      map.set("n", "<leader>ue", "<CMD>ImSelectEnable<CR>", "ImSelect Enable")
-      map.set("n", "<leader>ud", "<CMD>ImSelectDisable<CR>", "ImSelect Disable")
+      map.set("n", "<leader>ue", "<cmd>ImSelectEnable<CR>", "ImSelect Enable")
+      map.set("n", "<leader>ud", "<cmd>ImSelectDisable<CR>", "ImSelect Disable")
     end,
   },
   {
@@ -197,7 +197,7 @@ return {
         vim.o.undodir = undotree_dir
         vim.o.undofile = true
       end
-      map.set("n", "<leader>uu", "<CMD>UndotreeToggle<CR>", "UndoTree")
+      map.set("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", "UndoTree")
     end,
   },
   {
@@ -225,7 +225,7 @@ return {
   --     api.autocmd({"FileType"}, {
   --       pattern = {"markdown"},
   --       callback = function()
-  --         map.set("n", "<leader>r", "<CMD>Glow<CR>", "Run",
+  --         map.set("n", "<leader>r", "<cmd>Glow<CR>", "Run",
   --                 {buffer = vim.fn.bufnr()})
   --       end,
   --       group = api.augroup("runner", {clear = true})

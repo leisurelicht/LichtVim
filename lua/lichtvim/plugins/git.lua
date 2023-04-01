@@ -1,6 +1,6 @@
 local function git_key(gs, bufnr)
-  map.set("n", "<leader>gB", "<CMD>GitBlameToggle<CR>", "Toggle Line Blame")
-  map.set("n", "<leader>go", "<CMD>GitBlameOpenCommitURL<CR>", "Open Commit URL")
+  map.set("n", "<leader>gB", "<cmd>GitBlameToggle<CR>", "Toggle Line Blame")
+  map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<CR>", "Open Commit URL")
 
   map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<CR>", "Add Hunk", { buffer = bufnr })
   map.set("n", "<leader>gA", gs.stage_buffer, "Add Buffer", { buffer = bufnr })
