@@ -200,6 +200,14 @@ return {
       map.set("n", "<leader>uu", "<CMD>UndotreeToggle<CR>", "UndoTree")
     end,
   },
+  {
+    "windwp/nvim-spectre",
+    -- stylua: ignore
+    keys = {
+      { "<leader>fr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+    },
+  },
+
   -- {
   --   "ethanholz/nvim-lastplace",
   --   event = {"BufRead", "BufNewFile"},
