@@ -218,11 +218,12 @@ return {
     version = false,
     event = "InsertEnter",
     dependencies = {
+      "onsails/lspkind-nvim",
+      "nvim-lua/plenary.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
-      "onsails/lspkind-nvim",
     },
     opts = function()
       local cmp = require("cmp")
@@ -245,7 +246,7 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<S-CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
+            select = true,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
         sources = cmp.config.sources({
@@ -263,6 +264,11 @@ return {
           }),
         },
         formatting = {
+          fields = {
+            "abbr",
+            "kind",
+            "menu",
+          },
           format = require("lspkind").cmp_format({
             mode = "symbol_text",
             maxwidth = 50,
