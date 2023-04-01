@@ -105,12 +105,12 @@ end
 local buttons = {
   type = "group",
   val = {
-    button("e", "  New File", "<CMD>ene <CR>"),
+    button("e", "  New File", "<cmd>ene <cr>"),
     button("SPC f f", "  Find File"),
     button("SPC f o", "  Recently Opened Files"),
     button("SPC f w", "  Find Word"),
-    button("SPC u p", "  Plugins", "<CMD>Lazy<CR>"),
-    button("SPC q", "  Quit"),
+    button("SPC u p", "  Plugins", "<cmd>Lazy<cr>"),
+    button("q", "  Quit", "<cmd>confirm q<cr>"),
   },
   opts = { spacing = 1 },
 }

@@ -292,16 +292,16 @@ return {
         },
       }
     end,
-    {
-      "simrat39/symbols-outline.nvim",
-      cmd = "SymbolsOutline",
-      dependencies = {
-        "neovim/nvim-lspconfig",
-      },
-      keys = {
-        { "<leader>lo", "<CMD>SymbolsOutline<CR>", "OUtline" },
-      },
-      opts = { show_numbers = true },
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+    dependencies = {
+      "neovim/nvim-lspconfig",
     },
+    keys = {
+      { "<leader>lo", "<CMD>SymbolsOutline<CR>", "OUtline" },
+    },
+    opts = { show_numbers = true },
   },
 }
