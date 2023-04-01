@@ -20,8 +20,8 @@ function M.get()
   end
 
   M._keys = {
-    { "<leader>lI", "<CMD>LspInfo<CR>", desc = "Info" },
-    -- { "<leader>lo", "<CMD>SymbolsOutline<CR>", desc = "Open Outline"},
+    { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
+    -- { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open Outline"},
     { "<leader>ln", M.diagnostic_goto(true), desc = "Next Diagnostic" },
     { "<leader>lp", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
     { "]d", M.diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -82,7 +82,7 @@ function M.get()
       },
       { "<leader>li", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
       { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
-      { "<leader>ld", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostic" },
+      { "<leader>ld", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
     }
 
     list.extend(M._keys, _keys)

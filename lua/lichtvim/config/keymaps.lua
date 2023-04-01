@@ -4,82 +4,82 @@
 -- =================
 --
 -- 强制保存
-map.set("c", "w!!", "w !sudo tee > /dev/null %", "Saved")
+map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved")
 
 -- 一键大写
-map.set("i", "<C-U>", "<ESC>viwUea", "Upper Word")
-map.set("n", "<leader>vu", "viwUe", "Upper Word")
+map.set("i", "<C-u>", "<esc>viwUea", "Upper word")
+map.set("n", "<leader>vu", "viwUe", "Upper word")
 
 -- 一键小写
-map.set("i", "<C-L>", "<ESC>viwuea", "Lower Word")
-map.set("n", "<leader>vl", "viwue", "Lower Word")
+map.set("i", "<C-l>", "<esc>viwuea", "Lower word")
+map.set("n", "<leader>vl", "viwue", "Lower word")
 
 -- 首字母大写
 -- map.set('i', '<C-O>', "<ESC>bvi'Uea")
 -- map.set('n', '<localleader>so', "bvi'Uea")
 
 -- 正常模式下按 ESC 取消高亮显示
-map.set("n", "<ESC>", "<CMD>nohlsearch<CR>", "No Highlight")
+map.set("n", "<esc>", "<cmd>nohlsearch<cr>", "No highlight")
 
 -- 窗口切换组合快捷键
-map.set("n", "<C-J>", "<C-W><C-J>", "Down Window")
-map.set("n", "<C-K>", "<C-W><C-K>", "Up Window")
-map.set("n", "<C-L>", "<C-W><C-L>", "Left Window")
-map.set("n", "<C-H>", "<C-W><C-H>", "Right Window")
+map.set("n", "<C-j>", "<C-W><C-j>", "Down window")
+map.set("n", "<C-k>", "<C-W><C-k>", "Up window")
+map.set("n", "<C-l>", "<C-W><C-l>", "Left window")
+map.set("n", "<C-h>", "<C-W><C-h>", "Right window")
 
 -- 连续缩进
-map.set("v", "<", "<gv", "Move Left Continuously")
-map.set("v", ">", ">gv", "Move Right Continuously")
+map.set("v", "<", "<gv", "Move left continuously")
+map.set("v", ">", ">gv", "Move right continuously")
 
 -- 水平分屏
-map.set("n", "<leader>wv", "<CMD>vsp<CR>", "Split Window Horizontally")
+map.set("n", "<leader>wv", "<cmd>vsp<cr>", "Split window horizontally")
 -- 垂直分屏
-map.set("n", "<leader>wo", "<CMD>sp<CR>", "Split Window Vertically")
+map.set("n", "<leader>wo", "<cmd>sp<cr>", "Split window vertically")
 -- 关闭当前分屏
-map.set("n", "<leader>wd", "<C-w>c", "Close Current Window")
+map.set("n", "<leader>wd", "<C-w>c", "Close current window")
 -- 关闭其他分屏
-map.set("n", "<leader>wc", "<C-w>o", "Close Other Window")
+map.set("n", "<leader>wc", "<C-w>o", "Close other window")
 
 -- 窗口快速跳转
-map.set("n", "<leader>1", "<CMD>1wincmd w<CR>", "Win 1")
-map.set("n", "<leader>2", "<CMD>2wincmd w<CR>", "Win 2")
-map.set("n", "<leader>3", "<CMD>3wincmd w<CR>", "Win 3")
-map.set("n", "<leader>4", "<CMD>4wincmd w<CR>", "Win 4")
-map.set("n", "<leader>5", "<CMD>5wincmd w<CR>", "Win 5")
-map.set("n", "<leader>6", "<CMD>6wincmd w<CR>", "Win 6")
-map.set("n", "<leader>7", "<CMD>7wincmd w<CR>", "Win 7")
-map.set("n", "<leader>8", "<CMD>8wincmd w<CR>", "Win 8")
-map.set("n", "<leader>9", "<CMD>9wincmd w<CR>", "Win 9")
+map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1")
+map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2")
+map.set("n", "<leader>3", "<cmd>3wincmd w<cr>", "Win 3")
+map.set("n", "<leader>4", "<cmd>4wincmd w<cr>", "Win 4")
+map.set("n", "<leader>5", "<cmd>5wincmd w<cr>", "Win 5")
+map.set("n", "<leader>6", "<cmd>6wincmd w<cr>", "Win 6")
+map.set("n", "<leader>7", "<cmd>7wincmd w<cr>", "Win 7")
+map.set("n", "<leader>8", "<cmd>8wincmd w<cr>", "Win 8")
+map.set("n", "<leader>9", "<cmd>9wincmd w<cr>", "Win 9")
 
 -- tab页
-map.set("n", "<leader>tt", "<CMD>tab<CR>", "Tab")
-map.set("n", "<leader>td", "<CMD>tabdo<CR>", "Tabdo")
-map.set("n", "<leader>ta", "<CMD>tabnew<CR>", "New Tab")
-map.set("n", "<leader>te", "<CMD>tabedit<CR>", "Edit Tab")
-map.set("n", "<leader>tc", "<CMD>tabclose<CR>", "Close Tab")
-map.set("n", "<leader>tw", "<CMD>tabs<CR>", "Show Tabs")
-map.set("n", "<leader>tf", "<CMD>tabfirst<CR>", "First Tab")
-map.set("n", "<leader>tl", "<CMD>tablast<CR>", "Last Tab")
-map.set("n", "[t", "<CMD>tabp<CR>", "Previous Tab")
-map.set("n", "]t", "<CMD>tabn<CR>", "Next Tab")
-map.set("n", "<leader>tp", "<CMD>tabp<CR>", "Previous Tab")
-map.set("n", "<leader>tn", "<CMD>tabn<CR>", "Next Tab")
-map.set("n", "<leader>tP", "<CMD>-tabmove<CR>", "Move Forward")
-map.set("n", "<leader>tN", "<CMD>+tabmove<CR>", "Move Backward")
+map.set("n", "<leader>tt", "<cmd>tab<cr>", "Tab")
+map.set("n", "<leader>td", "<cmd>tabdo<cr>", "Tabdo")
+map.set("n", "<leader>ta", "<cmd>tabnew<cr>", "New tab")
+map.set("n", "<leader>te", "<cmd>tabedit<cr>", "Edit tab")
+map.set("n", "<leader>tc", "<cmd>tabclose<cr>", "Close tab")
+map.set("n", "<leader>tw", "<cmd>tabs<cr>", "Show tabs")
+map.set("n", "<leader>tf", "<cmd>tabfirst<cr>", "First tab")
+map.set("n", "<leader>tl", "<cmd>tablast<cr>", "Last tab")
+map.set("n", "[t", "<cmd>tabp<cr>", "Previous tab")
+map.set("n", "]t", "<cmd>tabn<cr>", "Next tab")
+map.set("n", "<leader>tp", "<cmd>tabp<cr>", "Previous tab")
+map.set("n", "<leader>tn", "<cmd>tabn<cr>", "Next tab")
+map.set("n", "<leader>tP", "<cmd>-tabmove<cr>", "Move forward")
+map.set("n", "<leader>tN", "<cmd>+tabmove<cr>", "Move backward")
 
 map.set("n", "<leader>ts", ":tab split ", "Split Tab")
 -- 关闭tab页
-map.set("n", "<leader>too", "<CMD>tabonly<CR>", "Close All")
-map.set("n", "<leader>to1", "<CMD>tabonly 1<CR>", "Close All Except 1")
-map.set("n", "<leader>to2", "<CMD>tabonly 2<CR>", "Close All Except 2")
-map.set("n", "<leader>to3", "<CMD>tabonly 3<CR>", "Close All Except 3")
-map.set("n", "<leader>to4", "<CMD>tabonly 4<CR>", "Close All Except 4")
-map.set("n", "<leader>to5", "<CMD>tabonly 5<CR>", "Close All Except 5")
-map.set("n", "<leader>to6", "<CMD>tabonly 6<CR>", "Close All Except 6")
-map.set("n", "<leader>to7", "<CMD>tabonly 7<CR>", "Close All Except 7")
-map.set("n", "<leader>to8", "<CMD>tabonly 8<CR>", "Close All Except 8")
-map.set("n", "<leader>to9", "<CMD>tabonly 9<CR>", "Close All Except 9")
-map.set("n", "<leader>to$", "<CMD>tabonly $<CR>", "Close All Except Last")
+map.set("n", "<leader>too", "<cmd>tabonly<cr>", "Close all")
+map.set("n", "<leader>to1", "<cmd>tabonly 1<cr>", "Close all except 1")
+map.set("n", "<leader>to2", "<cmd>tabonly 2<cr>", "Close all except 2")
+map.set("n", "<leader>to3", "<cmd>tabonly 3<cr>", "Close all except 3")
+map.set("n", "<leader>to4", "<cmd>tabonly 4<cr>", "Close all except 4")
+map.set("n", "<leader>to5", "<cmd>tabonly 5<cr>", "Close all except 5")
+map.set("n", "<leader>to6", "<cmd>tabonly 6<cr>", "Close all except 6")
+map.set("n", "<leader>to7", "<cmd>tabonly 7<cr>", "Close all except 7")
+map.set("n", "<leader>to8", "<cmd>tabonly 8<cr>", "Close all except 8")
+map.set("n", "<leader>to9", "<cmd>tabonly 9<cr>", "Close all except 9")
+map.set("n", "<leader>to$", "<cmd>tabonly $<cr>", "Close all except Last")
 -- tab页快速切换
 map.set("n", "<leader>t1", "1gt", "Tab 1")
 map.set("n", "<leader>t2", "2gt", "Tab 2")
@@ -95,14 +95,14 @@ map.set("n", "<leader>t9", "9gt", "Tab 9")
 if lazy.has("telescope.nvim") then
   map.set("n", "<leader>bs", require("telescope.builtin").buffers, "Buffers")
 else
-  map.set("n", "<leader>bs", "<CMD>buffers<CR>", "Buffers")
+  map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
 end
 
-map.set("n", "<leader>bh", "<CMD>ball<CR>", "Horizontally List All")
-map.set("n", "<leader>bv", "<CMD>vertical ball<CR>", "Vertically List All")
-map.set("n", "<leader>bf", "<CMD>bfirst<CR>", "First Buffer")
-map.set("n", "<leader>bl", "<CMD>blast<CR>", "Last Buffer")
-map.set("n", "<leader>bp", "<CMD>bprev<CR>", "Previous Buffer")
-map.set("n", "<leader>bn", "<CMD>bnext<CR>", "Next Buffer")
-map.set("n", "[b", "<CMD>bprev<CR>", "Previous Buffer")
-map.set("n", "]b", "<CMD>bnext<CR>", "Next Buffer")
+map.set("n", "<leader>bh", "<cmd>ball<cr>", "Horizontally list all")
+map.set("n", "<leader>bv", "<cmd>vertical ball<cr>", "Vertically list all")
+map.set("n", "<leader>bf", "<cmd>bfirst<cr>", "First buffer")
+map.set("n", "<leader>bl", "<cmd>blast<cr>", "Last buffer")
+map.set("n", "<leader>bp", "<cmd>bprev<cr>", "Previous buffer")
+map.set("n", "<leader>bn", "<cmd>bnext<cr>", "Next buffer")
+map.set("n", "[b", "<cmd>bprev<cr>", "Previous buffer")
+map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer")
