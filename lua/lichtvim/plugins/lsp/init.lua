@@ -238,12 +238,14 @@ return {
     version = false,
     event = "InsertEnter",
     dependencies = {
-      "onsails/lspkind-nvim",
       "nvim-lua/plenary.nvim",
+      "onsails/lspkind-nvim",
+      "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      { "tzachar/cmp-tabnine", build = "./install.sh" },
     },
 
     opts = function()
@@ -316,11 +318,26 @@ return {
           }),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
+          { name = "cmp_tabnine", group_index = 2 },
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "luasnip", group_index = 2 },
+          { name = "buffer", group_index = 2 },
+          { name = "path", group_index = 2 },
         }),
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            require("cmp-under-comparator").under,
+            require("cmp_tabnine.compare"),
+            cmp.config.compare.kind,
+            cmp.config.compare.locality,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
         window = {
           completion = cmp.config.window.bordered({
             winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
@@ -359,6 +376,7 @@ return {
       }
     end,
     config = function(_, opts)
+      Dump(opts)
       local cmp = require("cmp")
       cmp.setup(opts)
 

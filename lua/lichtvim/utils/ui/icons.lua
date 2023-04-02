@@ -50,7 +50,7 @@ M.kind = {
   Package = "",
   Property = "",
   Reference = " ",
-  Snippet = "",
+  Snippet = "",
   String = " ",
   Struct = "פּ",
   Text = "",
@@ -58,6 +58,7 @@ M.kind = {
   Unit = "塞",
   Value = " ",
   Variable = "",
+  TabNine = "",
 }
 
 M.source = {
@@ -72,7 +73,7 @@ M.source = {
   cmdline = " ",
   fuzzy_buffer = "󱁴 ",
   copilot = "",
-  luasnip = "",
+  luasnip = "󰾁",
 }
 
 return M
