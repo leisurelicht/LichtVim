@@ -50,6 +50,7 @@ end
 return {
   {
     "neovim/nvim-lspconfig",
+    enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "mason.nvim" },
@@ -233,6 +234,7 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
+    enabled = true,
     version = false,
     event = "InsertEnter",
     dependencies = {
@@ -253,10 +255,11 @@ return {
 
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+      local context = require("cmp.config.context")
+      local suggestion = require("copilot.suggestion")
       return {
         enabled = function()
           -- disable completion in comments
-          local context = require("cmp.config.context")
           -- keep command mode completion enabled when cursor is in a comment
           if vim.api.nvim_get_mode().mode == "c" then
             return true
@@ -277,7 +280,9 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.expand_or_jumpable() then
+            if suggestion.is_visible() then
+              suggestion.accept()
+            elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
             elseif cmp.visible() then
               cmp.select_next_item()
@@ -288,7 +293,9 @@ return {
             end
           end, { "i", "s" }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
+            if suggestion.is_visible() then
+              suggestion.dsmiss()
+            elseif luasnip.jumpable(-1) then
               luasnip.jump(-1)
             elseif cmp.visible() then
               cmp.select_prev_item()
@@ -350,6 +357,22 @@ return {
           },
         },
       }
+    end,
+    config = function(_, opts)
+      local cmp = require("cmp")
+      cmp.setup(opts)
+
+      cmp.event:on("menu_opened", function()
+        vim.b.copilot_suggestion_hidden = true
+      end)
+
+      cmp.event:on("menu_closed", function()
+        vim.b.copilot_suggestion_hidden = false
+      end)
+
+      -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      -- local cmp = require("cmp")
+      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
   {
