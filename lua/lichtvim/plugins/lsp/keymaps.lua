@@ -21,7 +21,6 @@ function M.get()
 
   M._keys = {
     { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
-    -- { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open Outline"},
     { "<leader>ln", M.diagnostic_goto(true), desc = "Next Diagnostic" },
     { "<leader>lp", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
     { "]d", M.diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -54,21 +53,8 @@ function M.get()
       desc = "Code Action",
       has = "codeAction",
     },
-    -- {
-    --   "<leader>lA",
-    --   function()
-    --     vim.lsp.buf.code_action({
-    --       context = {
-    --         only = {
-    --           "source",
-    --         },
-    --         diagnostics = {},
-    --       },
-    --     })
-    --   end,
-    --   desc = "Code Action",
-    --   has = "codeAction",
-    -- },
+
+    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open Outline" },
   }
 
   if lazy.has("telescope.nvim") then
@@ -87,7 +73,7 @@ function M.get()
         has = "implementation",
       },
       { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
-      { "<leader>ld", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
+      { "<leader>lL", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
     }
 
     list.extend(M._keys, _keys)
