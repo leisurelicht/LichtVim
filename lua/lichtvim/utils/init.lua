@@ -191,4 +191,8 @@ function M.sys.IsNeovide()
   return vim.fn.exists("g:neovide")
 end
 
+function M.sys.IsTerm()
+  return vim.fn.exists("g:termguicolors")
+end
+
 return M
