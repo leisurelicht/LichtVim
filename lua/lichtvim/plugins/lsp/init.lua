@@ -1,4 +1,6 @@
 -- 为 lsp hover 添加文件类型
+---@return bufnr
+---@return winner
 local function lsp_hover(_, result, ctx, config)
   -- Add file type for LSP hover
   local bufnr, winner = vim.lsp.handlers.hover(_, result, ctx, config)
@@ -9,6 +11,8 @@ local function lsp_hover(_, result, ctx, config)
 end
 
 -- 为 lsp 签名帮助添加文件类型
+---@return bufnr
+---@return winner
 local function lsp_signature_help(_, result, ctx, config)
   -- Add file type for LSP signature help
   local bufnr, winner = vim.lsp.handlers.signature_help(_, result, ctx, config)
@@ -106,7 +110,7 @@ return {
       require("lichtvim.plugins.lsp.format").autoformat = opts.autoformat
       -- setup formatting and keymaps
       require("lichtvim.utils.lazy").on_attach(function(client, buffer)
-        if s_opts[client.name].on_attach ~= nil then
+        if s_opts[client.name] ~= nil and s_opts[client.name].on_attach ~= nil then
           s_opts[client.name].on_attach(client, buffer)
         end
         require("lichtvim.plugins.lsp.format").on_attach(client, buffer)
