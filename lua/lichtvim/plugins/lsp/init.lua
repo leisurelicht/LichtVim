@@ -95,45 +95,41 @@ return {
       end
       vim.diagnostic.config(opts.diagnostics)
 
+      local s_names = {}
+      local s_opts = {}
+      lsmod("lichtvim.plugins.lsp.servers", function(modname, name)
+        s_names[#s_names + 1] = name
+        s_opts[name] = require(modname)
+      end)
+
       -- setup autoformat
       require("lichtvim.plugins.lsp.format").autoformat = opts.autoformat
       -- setup formatting and keymaps
       require("lichtvim.utils.lazy").on_attach(function(client, buffer)
+        if s_opts[client.name].on_attach ~= nil then
+          s_opts[client.name].on_attach(client, buffer)
+        end
         require("lichtvim.plugins.lsp.format").on_attach(client, buffer)
         require("lichtvim.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-      local servers = {}
-      local s_names = {}
-      lsmod("lichtvim.plugins.lsp.servers", function(modname, name)
-        s_names[#s_names + 1] = name
-        servers[name] = require(modname)
-      end)
-
       local function setup(server)
-        local options = servers[server].options
-        local settings = servers[server].settings
-        local on_attach = servers[server].on_attach
+        local options = s_opts[server].options
+        local settings = s_opts[server].settings
+
+        if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
+          local handler = {
+            ["textDocument/publishDiagnostics"] = function(...) end,
+          }
+          options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
+        end
+        options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
         options = vim.tbl_deep_extend("force", {
           capabilities = vim.deepcopy(
             require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
           ),
         }, options or {})
-
-        options.on_attach = function(client, bufnr)
-          if on_attach ~= nil then
-            on_attach(client, bufnr)
-          end
-
-          if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
-            local handler = {
-              ["textDocument/publishDiagnostics"] = function(...) end,
-            }
-            options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
-          end
-          options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
-        end
 
         if opts.setup[server] then
           if opts.setup[server](server, options) then
@@ -347,9 +343,6 @@ return {
     cmd = "SymbolsOutline",
     dependencies = {
       "neovim/nvim-lspconfig",
-    },
-    keys = {
-      { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
     },
     opts = { show_numbers = true },
   },
