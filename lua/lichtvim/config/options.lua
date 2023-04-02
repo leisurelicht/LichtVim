@@ -126,7 +126,7 @@ vim.g.foldmethod = "indent"
 vim.g.foldlevelstart = 99
 
 -- 自动补全不自动选中
-vim.o.completeopt = "menuone,noselect,noinsert"
+vim.o.completeopt = "menu, menuone,noselect,noinsert"
 
 -- 补全增强
 vim.o.wildmenu = true
