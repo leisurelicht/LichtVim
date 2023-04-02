@@ -78,4 +78,17 @@ return {
     { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send Visual Lines" },
     { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send Visual Selection" },
   },
+
+  config = function(_, opts)
+    require("toggleterm").setup(opts)
+
+    api.autocmd({ "TermOpen" }, {
+      pattern = { "term://*" },
+      command = "lua _Set_terminal_keymaps()",
+    })
+
+    if lazy.has("which-key.nvim") then
+      require("which-key").register({ o = { name = "Term" }, mode = { "n", "v" }, prefix = "<leader>" })
+    end
+  end,
 }
