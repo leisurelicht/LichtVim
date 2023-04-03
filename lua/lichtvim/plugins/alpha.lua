@@ -138,7 +138,7 @@ local config = {
 
 return {
   "goolord/alpha-nvim",
-  dependencies = { "nvim-web-devicons" },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = config,
   init = function()
     vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]])
