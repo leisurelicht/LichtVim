@@ -2,11 +2,6 @@ local sys = require("lichtvim.utils").sys
 local path = require("lichtvim.utils").path
 
 return {
-  {
-    "nvim-lua/plenary.nvim",
-    lazy = true,
-    cmd = { "PlenaryBustedFile", "PlenaryBustedDirectory" },
-  },
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   {
     "nacro90/numb.nvim",
