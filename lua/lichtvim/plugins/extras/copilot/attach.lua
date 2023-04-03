@@ -39,9 +39,45 @@ return {
           dismiss = "<C-]>",
         },
       },
+      filetypes = {
+        yaml = false,
+        markdown = false,
+        help = false,
+        gitcommit = false,
+        gitrebase = false,
+        hgcommit = false,
+        svn = false,
+        cvs = false,
+        ["."] = false,
+      },
     },
     config = function(_, opts)
       require("copilot").setup(opts)
+    end,
+  },
+  {
+    "nvim-cmp",
+    opts = function(_, opts)
+      local cmp = require("cmp")
+      local suggestion = require("copilot.suggestion")
+      for k, v in pairs(opts.mapping["<Tab>"]) do
+        opts.mapping["<Tab>"][k] = function(...)
+          if suggestion.is_visible() then
+            suggestion.accept()
+          else
+            v(...)
+          end
+        end
+      end
+      for k, v in pairs(opts.mapping["<S-Tab>"]) do
+        opts.mapping["<S-Tab>"][k] = function(...)
+          if suggestion.is_visible() then
+            suggestion.dismiss()
+          else
+            v(...)
+          end
+        end
+      end
     end,
   },
 }

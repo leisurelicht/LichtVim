@@ -38,14 +38,11 @@ return {
       require("copilot").setup(opts)
     end,
   },
-
-  copilot cmp source
   {
     "nvim-cmp",
     dependencies = {
       {
         "zbirenbaum/copilot-cmp",
-
         dependencies = "copilot.lua",
         opts = {},
         config = function(_, opts)

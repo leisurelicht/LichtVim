@@ -257,7 +257,6 @@ return {
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       local context = require("cmp.config.context")
-      local suggestion = require("copilot.suggestion")
       return {
         enabled = function()
           -- disable completion in comments
@@ -283,12 +282,10 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if suggestion.is_visible() then
-              suggestion.accept()
+            if cmp.visible() then
+              cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
-            elseif cmp.visible() then
-              cmp.select_next_item()
             elseif has_words_before() then
               cmp.complete()
             else
@@ -296,12 +293,10 @@ return {
             end
           end, { "i", "s" }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if suggestion.is_visible() then
-              suggestion.dsmiss()
+            if cmp.visible() then
+              cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
               luasnip.jump(-1)
-            elseif cmp.visible() then
-              cmp.select_prev_item()
             else
               fallback()
             end
