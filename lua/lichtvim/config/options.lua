@@ -11,15 +11,6 @@ elseif sys.IsLinux() then
   vim.api.nvim_set_var("python3_host_prog", "python3")
 end
 
-if sys.IsNeovide() then
-  vim.g.neovide_cursor_vfx_mode = "railgun"
-  vim.g.neovide_input_use_logo = false
-  vim.g.neovide_no_idle = true
-  vim.g.neovide_cursor_animation_length = 0
-  vim.g.neovide_scroll_animation_length = 0
-  vim.opt.guifont = { "FiraCode Nerd Font", ":h12" }
-end
-
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
@@ -27,138 +18,63 @@ vim.g.loaded_node_provider = 0
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
--- 修复delete键
--- set backspace=2
--- 始终显示状态拦
--- set laststatus=2
--- 输入搜索内容时就显示搜索结果
--- set incsearch
--- 搜索时高亮显示被找到的文本
--- set hlsearch
--- 文件自动检测外部更改
--- set autoread
--- 让鼠标能使用
--- set mouse=a
--- 开启语法高亮
-vim.cmd([[syntax enable]])
--- 开启文件类型检查
-vim.cmd([[filetype plugin indent on]])
+opt = vim.opt
 
 -- utf8
-vim.g.encoding = "UTF-8"
-vim.o.fileencoding = "utf-8"
-
--- 设定在无操作时，交换文件刷写到磁盘的等待毫秒数（默认为 4000）
-vim.o.updatetime = 100
-
--- 光标和顶部/底部保持8行的距离
-vim.o.scrolloff = 8
-vim.o.sidescrolloff = 8
-
--- 显示行号
-vim.o.number = true
--- vim.wo.relativenumber = true
-
--- 高亮所在行
-vim.o.cursorline = true
-
--- 使用backspace直接删除tab
-vim.o.smarttab = true
-
--- mapping delays
-vim.o.timeoutlen = 500
-
--- 关闭自动备份
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.swapfile = false
-
--- 不在单词中间折行
-vim.o.linebreak = true
-
--- 即时预览命令效果
-vim.o.inccommand = "split"
-
--- 系统剪贴板
-vim.o.clipboard = "unnamedplus"
-
--- 长度表示线
-vim.wo.colorcolumn = "0"
-
--- 右下角显示正在输入的命令
-vim.o.showcmd = true
-
--- 分隔窗口在当前窗口下边
-vim.o.splitbelow = true
-
--- 分隔窗口在当前窗口下边
-vim.o.splitright = true
-
--- 警告时不要闪烁
-vim.o.visualbell = false
-
--- 搜索时忽略大小写
-vim.o.ignorecase = true
-
--- 有一个或以上大写字母时仍大小写敏感
-vim.o.smartcase = true
-
--- 有一个或以上大写字母时仍大小写敏感
-vim.o.smartcase = true
-
--- 自动套用上一行的缩进方式
-vim.o.autoindent = true
-
--- 智能缩进
-vim.o.smartindent = true
-
--- 编辑的时候将所有的tab设置为空格
-vim.o.expandtab = true
-
--- 将tab换为4个空格
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-vim.o.shiftround = true
-
--- 折叠方式
-vim.g.foldmethod = "indent"
-vim.g.foldlevelstart = 99
-
--- 自动补全不自动选中
-vim.o.completeopt = "menu, menuone,noselect,noinsert"
-
--- 补全增强
-vim.o.wildmenu = true
-
--- 样式
-vim.o.termguicolors = true
-vim.o.background = "dark"
-
--- 不可见字符的显示
-vim.o.list = false
+opt.autowrite = true -- 自动写入
+opt.confirm = true -- 确认写入
+opt.formatoptions = "jcroqlnt" -- tcqj
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
+opt.mouse = "a" -- 开启鼠标控制
+opt.scrolloff = 5
+opt.wrap = false -- Disable line wrap
+opt.sidescrolloff = 8
+vim.cmd([[listchars+=precedes:<,extends:>]])
+opt.updatetime = 100 -- 设定在无操作时，交换文件刷写到磁盘的等待毫秒数（默认为 4000）
+opt.number = true -- 显示行号
+opt.cursorline = true -- 高亮所在行
+opt.smarttab = true -- 智能tab
+opt.timeoutlen = 500 -- mapping delays
+opt.backup = false -- 关闭自动备份
+opt.writebackup = false -- 关闭自动备份
+opt.swapfile = false -- 关闭交换文件
+opt.linebreak = true -- 不在单词中间折行
+opt.inccommand = "split" -- 即时预览命令效果
+opt.clipboard = "unnamedplus" -- 系统剪贴板
+opt.showcmd = true -- 右下角显示正在输入的命令
+opt.splitbelow = true -- 分隔窗口在当前窗口下边
+opt.splitright = true -- 分隔窗口在当前窗口下边
+opt.visualbell = false -- 警告时不要闪烁
+opt.ignorecase = true -- 搜索时忽略大小写
+opt.smartcase = true -- 有一个或以上大写字母时仍大小写敏感
+opt.autoindent = true -- 自动套用上一行的缩进方式
+opt.smartindent = true -- 智能缩进
+opt.expandtab = true -- Use spaces instead of tabs
+opt.tabstop = 4 -- 将tab换为4个空格
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.shiftround = true
+opt.foldmethod = "indent" -- 折叠方式
+opt.foldlevelstart = 99
+opt.completeopt = "menu, menuone,noselect,noinsert" -- 自动补全不自动选中
+opt.wildmenu = true -- 补全增强
+opt.wildmode = "longest:full,full" -- Command-line completion mode
+opt.termguicolors = true -- 样式
+opt.background = "dark"
+opt.list = false -- 不可见字符不显示
 -- vim.o.listchars = "space:·,tab:>-,"
+opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示控制
+opt.pumblend = 10 -- Popup blend
+opt.pumheight = 10
+opt.whichwrap = "b,s,<,>,[,],h,l" -- 行结尾可以跳到下一行
+opt.showtabline = 2 -- always show tabline
+opt.spell = true -- 是否开启单词拼写检查
+opt.spelllang = "en_us,cjk" -- 设定单词拼写检查的语言
+opt.guifont = "Hack Nerd Font" -- set gui font
 
---
-vim.o.shortmess = vim.o.shortmess .. "c"
-vim.o.pumheight = 10
-
--- 行结尾可以跳到下一行
-vim.o.whichwrap = "b,s,<,>,[,],h,l"
-
--- always show tabline
-vim.o.showtabline = 2
-
--- 是否开启单词拼写检查
-vim.o.spell = true
--- 设定单词拼写检查的语言
-vim.o.spelllang = "en_us,cjk"
-
--- 使用增强状态栏后不再需要 vim 的模式提示
--- vim.o.showmode = false
-
--- 隐藏未保存的buffer
--- vim.g.hidden = true
-
--- set gui font
-vim.o.guifont = "Hack Nerd Font"
+if vim.g.neovide then
+  vim.g.neovide_cursor_vfx_mode = "railgun"
+  vim.g.neovide_confirm_quit = true
+  vim.g.neovide_fullscreen = true
+end
