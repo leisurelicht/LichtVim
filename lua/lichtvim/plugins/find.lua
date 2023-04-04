@@ -127,23 +127,11 @@ return {
         ts_b("colorscheme", { enable_preview = true }),
         desc = "Colorscheme",
       },
-
       { "<leader>gC", ts_b("git_bcommits"), desc = "Buffer's Commits" },
       { "<leader>gc", ts_b("git_commits"), desc = "Commits" },
       { "<leader>gS", ts_b("git_stash"), desc = "Stash" },
       { "<leader>gn", ts_b("git_branches"), desc = "Branches" },
       { "<leader>gs", ts_b("git_status"), desc = "Status" },
-
-      {
-        "<leader>fn",
-        "<cmd>Telescope notify theme=dropdown<cr>",
-        desc = "Notify",
-      },
-      {
-        "<leader>fN",
-        "<cmd>Telescope noice<cr>",
-        desc = "Noice",
-      },
       {
         "<leader>fj",
         "<cmd>Telescope projects theme=dropdown<cr>",
@@ -243,12 +231,20 @@ return {
       })
 
       telescope.load_extension("fzf")
-      telescope.load_extension("notify")
       telescope.load_extension("neoclip")
       telescope.load_extension("ui-select")
       telescope.load_extension("projects")
       telescope.load_extension("frecency")
-      telescope.load_extension("noice")
+
+      if lazy.has("noice.nvim") then
+        telescope.load_extension("noice")
+        map.set("n", "<leader>fN", "<cmd>Telescope noice theme=dropdown<cr>", "Noice")
+      end
+
+      if lazy.has("nvim-notify") then
+        telescope.load_extension("notify")
+        map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
+      end
     end,
   },
 }
