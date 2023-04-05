@@ -31,6 +31,9 @@ api.autocmd("FileType", {
     "spectre_panel",
     "startuptime",
     "tsplayground",
+    "lsp-hover",
+    "lsp-signature-help",
+    "noice",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
