@@ -31,13 +31,34 @@ api.autocmd("FileType", {
     "spectre_panel",
     "startuptime",
     "tsplayground",
-    "lsp-hover",
-    "lsp-signature-help",
     "noice",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
+
+-- close some filetypes with <esc>
+api.autocmd("FileType", {
+  group = api.augroup("close_with_esc"),
+  pattern = {
+    "PlenaryTestPopup",
+    "help",
+    "lspinfo",
+    "man",
+    "notify",
+    "qf",
+    "query", -- :InspectTree
+    "spectre_panel",
+    "startuptime",
+    "tsplayground",
+    "noice",
+    "NvimTree",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
 
