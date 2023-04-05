@@ -122,6 +122,7 @@ return {
       { "<leader>fW", ts_b("grep_string", { cwd = false }), desc = "Word(cwd)" },
       { "<leader>fk", ts_b("keymaps"), desc = "Key Maps" },
       { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
+      { "<leader>fJ", ts_b("jumplist"), desc = "Jump List" },
       {
         "<leader>fC",
         ts_b("colorscheme", { enable_preview = true }),
