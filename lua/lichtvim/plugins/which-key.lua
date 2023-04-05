@@ -69,6 +69,7 @@ return {
       u = { name = "Utils" },
       f = { name = "Find" },
       g = { name = "Git" },
+      o = { name = "Term" },
       mode = "n",
       prefix = "<leader>",
     })
