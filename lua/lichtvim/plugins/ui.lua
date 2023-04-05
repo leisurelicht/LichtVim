@@ -8,6 +8,7 @@ return {
   { "MunifTanjim/nui.nvim", lazy = true }, -- ui components
   {
     "folke/noice.nvim",
+    enabled = true,
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = {
@@ -15,12 +16,37 @@ return {
         -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
         -- { view = "split", filter = { event = "msg_show", min_height = 20 } },
       },
+      views = {
+        split = {
+          enter = true,
+        },
+      },
       lsp = {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true,
         },
+        hover = {
+          enabled = false,
+          view = "hover",
+          opts = {
+            border = "rounded",
+          },
+        },
+        signature = {
+          enabled = false,
+          view = "hover",
+          opts = {
+            border = "rounded",
+          },
+        },
+      },
+      messages = {
+        enabled = true,
+        view = "notify",
+        view_error = "split",
+        view_warn = "notify",
       },
       presets = {
         bottom_search = true,
@@ -30,6 +56,21 @@ return {
         lsp_doc_border = false, -- add a border to hover docs and signature help
       },
     },
+    config = function(_, opts)
+      require("noice").setup(opts)
+
+    --   map.set({ "n", "i", "s" }, "<c-f>", function()
+    --     if not require("noice.lsp").scroll(4) then
+    --       return "<c-f>"
+    --     end
+    --   end, "Next", { silent = true, expr = true })
+
+    --   map.set({ "n", "i", "s" }, "<c-b>", function()
+    --     if not require("noice.lsp").scroll(-4) then
+    --       return "<c-b>"
+    --     end
+    --   end, "Previous", { silent = true, expr = true })
+    -- end,
   },
   {
     "rcarriga/nvim-notify",
