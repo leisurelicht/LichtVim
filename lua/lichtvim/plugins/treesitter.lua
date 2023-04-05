@@ -82,11 +82,10 @@ return {
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
 
-    map.set("n", "<leader>Tu", "<cmd>TSUpdate all<cr>", "Update All")
-    map.set("n", "<leader>Ts", "<cmd>TSModuleInfo<cr>", "Module Info")
-
     if lazy.has("which-key.nvim") then
       require("which-key").register({ T = { name = "Treesitter" }, mode = "n", prefix = "<leader>" })
+      map.set("n", "<leader>Tu", "<cmd>TSUpdate all<cr>", "Update All")
+      map.set("n", "<leader>Ts", "<cmd>TSModuleInfo<cr>", "Module Info")
     end
   end,
 }
