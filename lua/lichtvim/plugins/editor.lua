@@ -81,12 +81,25 @@ return {
     event = { "BufNewFile", "BufRead" },
     config = function()
       require("hlslens").setup()
-      map.set("n", "n", [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]], "Next")
-      map.set("n", "N", [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]], "Prev")
-      map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search")
-      map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search")
-      map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search")
-      map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search")
+      local kopts = { noremap = true, silent = true }
+      map.set(
+        "n",
+        "n",
+        [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]],
+        "Next",
+        kopts
+      )
+      map.set(
+        "n",
+        "N",
+        [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]],
+        "Prev",
+        kopts
+      )
+      map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search", kopts)
+      map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search", kopts)
+      map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search", kopts)
+      map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search", kopts)
     end,
   },
   {
