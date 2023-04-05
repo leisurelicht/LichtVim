@@ -8,15 +8,17 @@ map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved")
 
 -- 一键大写
 map.set("i", "<C-u>", "<esc>viwUea", "Upper word")
-map.set("n", "<leader>vu", "viwUe", "Upper word")
-
 -- 一键小写
 map.set("i", "<C-l>", "<esc>viwuea", "Lower word")
-map.set("n", "<leader>vl", "viwue", "Lower word")
-
 -- 首字母大写
--- map.set('i', '<C-O>', "<ESC>bvi'Uea")
--- map.set('n', '<localleader>so', "bvi'Uea")
+map.set("i", "<C-O>", "<ESC>wb~ea")
+
+if lazy.has("which-key.nvim") then
+  require("which-key").register({ s = { name = "ShortCuts" }, mode = "n", prefix = "<leader>" })
+  map.set("n", "<leader>sl", "viwue", "Lower word")
+  map.set("n", "<leader>su", "viwUe", "Upper word")
+  map.set("n", "<leader>so", "wb~ea", "Upper first word")
+end
 
 -- 正常模式下按 ESC 取消高亮显示
 map.set("n", "<esc>", "<cmd>nohlsearch<cr>", "No highlight")
