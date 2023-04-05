@@ -59,18 +59,18 @@ return {
     config = function(_, opts)
       require("noice").setup(opts)
 
-    --   map.set({ "n", "i", "s" }, "<c-f>", function()
-    --     if not require("noice.lsp").scroll(4) then
-    --       return "<c-f>"
-    --     end
-    --   end, "Next", { silent = true, expr = true })
+      -- map.set({ "n", "i", "s" }, "<c-f>", function()
+      --   if not require("noice.lsp").scroll(4) then
+      --     return "<c-f>"
+      --   end
+      -- end, "Next", { silent = true, expr = true })
 
-    --   map.set({ "n", "i", "s" }, "<c-b>", function()
-    --     if not require("noice.lsp").scroll(-4) then
-    --       return "<c-b>"
-    --     end
-    --   end, "Previous", { silent = true, expr = true })
-    -- end,
+      -- map.set({ "n", "i", "s" }, "<c-b>", function()
+      --   if not require("noice.lsp").scroll(-4) then
+      --     return "<c-b>"
+      --   end
+      -- end, "Previous", { silent = true, expr = true })
+    end,
   },
   {
     "rcarriga/nvim-notify",
