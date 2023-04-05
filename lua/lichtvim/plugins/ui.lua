@@ -15,6 +15,10 @@ return {
       routes = {
         -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
         -- { view = "split", filter = { event = "msg_show", min_height = 20 } },
+        {
+          filter = { event = "msg_show", kind = "search_count" },
+          opts = { skip = true },
+        },
       },
       views = {
         split = {
