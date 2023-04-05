@@ -1,27 +1,3 @@
--- 为 lsp hover 添加文件类型
----@return bufnr
----@return winner
-local function lsp_hover(_, result, ctx, config)
-  -- Add file type for LSP hover
-  local bufnr, winner = vim.lsp.handlers.hover(_, result, ctx, config)
-  if bufnr and winner then
-    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
-    return bufnr, winner
-  end
-end
-
--- 为 lsp 签名帮助添加文件类型
----@return bufnr
----@return winner
-local function lsp_signature_help(_, result, ctx, config)
-  -- Add file type for LSP signature help
-  local bufnr, winner = vim.lsp.handlers.signature_help(_, result, ctx, config)
-  if bufnr and winner then
-    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
-    return bufnr, winner
-  end
-end
-
 local function lsmod(modname, fn)
   local root = require("lazy.core.util").find_root(modname)
   if not root then
@@ -128,7 +104,6 @@ return {
           }
           options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
         end
-        options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
         options = vim.tbl_deep_extend("force", {
           capabilities = vim.deepcopy(
