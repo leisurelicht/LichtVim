@@ -12,12 +12,14 @@ return {
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = {
-      routes = {
-        { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
-      },
       views = {
         split = {
           enter = true,
+        },
+      },
+      commands = {
+        history = {
+          view = "split",
         },
       },
       lsp = {
@@ -49,9 +51,11 @@ return {
         view = "notify",
         view_error = "split",
         view_warn = "notify",
+        view_history = "messages",
+        view_search = false, -- 关闭搜索统计信息，用 hlslens 插件去做
       },
       presets = {
-        bottom_search = true,
+        bottom_search = false,
         command_palette = true,
         long_message_to_split = true,
         inc_rename = false, -- enables an input dialog for inc-rename.nvim
