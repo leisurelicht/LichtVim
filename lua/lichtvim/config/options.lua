@@ -21,24 +21,23 @@ vim.g.maplocalleader = ","
 local opt = vim.opt
 
 -- utf8
+opt.mouse:append("a") -- 开启鼠标控制
+opt.clipboard:append("unnamedplus") -- 系统剪贴板
 opt.autowrite = true -- 自动写入
 opt.confirm = true -- 确认写入
 opt.number = true -- 显示行号
 opt.backup = false -- 关闭自动备份
 opt.writebackup = false -- 关闭自动备份
 opt.swapfile = false -- 关闭交换文件
-opt.mouse = "a" -- 开启鼠标控制
 opt.grepprg = "rg --vimgrep"
 opt.scrolloff = 5 -- 光标移动到buffer顶部和底部时保持5行距离
 opt.wrap = false -- 不自动换行显示
 opt.sidescrolloff = 8 -- 光标移动到buffer左边和右边时保持8列距离
 opt.list = true -- 不可见字符不显示
-opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = "", eol = "" } -- 字符转换
 opt.updatetime = 100 -- 设定在无操作时，交换文件刷写到磁盘的等待毫秒数（默认为 4000）
 opt.timeoutlen = 500 -- mapping delays
 opt.linebreak = true -- 不在单词中间折行
 opt.inccommand = "split" -- 即时预览命令效果
-opt.clipboard = "unnamedplus" -- 系统剪贴板
 opt.splitbelow = true -- 分隔窗口在当前窗口下边
 opt.splitright = true -- 分隔窗口在当前窗口下边
 opt.visualbell = false -- 警告时不要闪烁
@@ -75,3 +74,5 @@ if vim.g.neovide then
   vim.g.neovide_confirm_quit = true
   vim.g.neovide_fullscreen = true
 end
+
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = " ", eol = " " } -- 字符转换
