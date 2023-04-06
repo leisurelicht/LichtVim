@@ -20,8 +20,10 @@ if lazy.has("which-key.nvim") then
   map.set("n", "<leader>so", "wb~ea", "Upper first word")
 end
 
--- 正常模式下按 ESC 取消高亮显示
-map.set("n", "<esc>", "<cmd>nohlsearch<cr>", "No highlight")
+-- normal 模式下按 esc 取消高亮显示
+map.set("n", "<esc>", function()
+  vim.cmd("silent! noh")
+end, "No highlight")
 
 -- 窗口切换组合快捷键
 map.set("n", "<C-j>", "<C-W><C-j>", "Down window")
