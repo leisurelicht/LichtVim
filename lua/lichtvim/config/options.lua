@@ -33,7 +33,6 @@ opt.grepprg = "rg --vimgrep"
 opt.scrolloff = 5 -- 光标移动到buffer顶部和底部时保持5行距离
 opt.wrap = false -- 不自动换行显示
 opt.sidescrolloff = 8 -- 光标移动到buffer左边和右边时保持8列距离
-opt.list = true -- 不可见字符不显示
 opt.updatetime = 100 -- 设定在无操作时，交换文件刷写到磁盘的等待毫秒数（默认为 4000）
 opt.timeoutlen = 500 -- mapping delays
 opt.linebreak = true -- 不在单词中间折行
@@ -68,11 +67,18 @@ opt.pumheight = 10
 opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示控制
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
+opt.list = true -- 不可见字符不显示
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = " ", eol = " " } -- 字符转换
 
 if vim.g.neovide then
+  opt.list = false
   vim.g.neovide_cursor_vfx_mode = "railgun"
   vim.g.neovide_confirm_quit = true
   vim.g.neovide_fullscreen = true
+  vim.g.neovide_cursor_animation_length = 0.13
+  vim.g.neovide_cursor_trail_size = 0.8
+  if sys.IsMacOS() then
+    vim.g.neovide_input_macos_alt_is_meta = true
+    vim.g.neovide_input_use_logo = true
+  end
 end
-
-opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = " ", eol = " " } -- 字符转换
