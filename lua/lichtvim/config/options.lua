@@ -4,6 +4,7 @@
 -- =================
 --
 local sys = require("lichtvim.utils").sys
+vim.notify("test2")
 
 if sys.IsMacOS() then
   vim.api.nvim_set_var("python3_host_prog", "/opt/homebrew/bin/python3")
@@ -33,7 +34,7 @@ opt.scrolloff = 5 -- 光标移动到buffer顶部和底部时保持5行距离
 opt.wrap = false -- 不自动换行显示
 opt.sidescrolloff = 8 -- 光标移动到buffer左边和右边时保持8列距离
 opt.list = true -- 不可见字符不显示
-opt.listchars = "tab:▸ ,nbsp:␣,extends:❯,precedes:❮" -- 不可见字符显示
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = "", eol = "" } -- 字符转换
 opt.updatetime = 100 -- 设定在无操作时，交换文件刷写到磁盘的等待毫秒数（默认为 4000）
 opt.timeoutlen = 500 -- mapping delays
 opt.linebreak = true -- 不在单词中间折行
@@ -60,7 +61,7 @@ opt.spelloptions = "camel"
 opt.whichwrap = "b,s,<,>,[,],h,l" -- 行结尾可以跳到下一行
 opt.showcmd = true -- 右下角显示正在输入的命令
 opt.showtabline = 2 -- always show tabline
-opt.completeopt = "menu, menuone,noselect,noinsert" -- 自动补全不自动选中
+opt.completeopt = "menu,menuone,noselect,noinsert" -- 自动补全不自动选中
 opt.wildmenu = true -- 补全增强
 opt.wildmode = "longest:full"
 opt.termguicolors = true -- 样式
