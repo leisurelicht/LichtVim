@@ -31,6 +31,9 @@ map.set("n", "<C-k>", "<C-W><C-k>", "Up window")
 map.set("n", "<C-l>", "<C-W><C-l>", "Left window")
 map.set("n", "<C-h>", "<C-W><C-h>", "Right window")
 
+map.set("v", "J", ":m '>+1<cr>gv=gv", "Move line down")
+map.set("v", "K", ":m '<-2<cr>gv=gv", "Move line up")
+
 -- 连续缩进
 map.set("v", "<", "<gv", "Move left continuously")
 map.set("v", ">", ">gv", "Move right continuously")
