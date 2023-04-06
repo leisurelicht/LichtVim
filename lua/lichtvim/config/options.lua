@@ -4,7 +4,6 @@
 -- =================
 --
 local sys = require("lichtvim.utils").sys
-vim.notify("test2")
 
 if sys.IsMacOS() then
   vim.api.nvim_set_var("python3_host_prog", "/opt/homebrew/bin/python3")
