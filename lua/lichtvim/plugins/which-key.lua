@@ -1,3 +1,5 @@
+local sc = require("lichtvim.utils.shortcut")
+
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
@@ -62,14 +64,17 @@ return {
     wk.register({
       [";"] = { "<cmd>Alpha<cr>", "Dashboard" },
       q = { "<cmd>confirm q<cr>", "Quit" },
-      b = { name = "Buffer" },
+      b = {
+        name = "Buffer",
+        [";"] = { sc._buf_path, "Buffer path" },
+        [":"] = { sc._buf_full_path, "Buffer full path" },
+      },
       w = { name = "Window" },
       t = { name = "Tab" },
       to = { name = "Close Only" },
-      u = { name = "Utils" },
+      u = { name = "Utils", h = { sc._htop, "Htop" } },
       f = { name = "Find" },
-      g = { name = "Git" },
-      o = { name = "Term" },
+      g = { name = "Git", l = { sc._lazygit, "Lazygit" } }, o = { name = "Term" },
       mode = "n",
       prefix = "<leader>",
     })
