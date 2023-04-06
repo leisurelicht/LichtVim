@@ -49,7 +49,7 @@ return {
       messages = {
         enabled = true,
         view = "notify",
-        view_error = "split",
+        view_error = "notify",
         view_warn = "notify",
         view_history = "messages",
         view_search = false, -- 关闭搜索统计信息，用 hlslens 插件去做
@@ -110,7 +110,7 @@ return {
   { -- better vim.ui
     "stevearc/dressing.nvim",
     enabled = true,
-    event = "VeryLazy",
+    lazy = true,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
