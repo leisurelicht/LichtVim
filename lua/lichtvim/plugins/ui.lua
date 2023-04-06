@@ -41,6 +41,9 @@ return {
         signature = {
           enabled = true,
           view = "hover",
+          auto_open = {
+            trigger = false,
+          },
           opts = {
             border = "rounded",
           },
