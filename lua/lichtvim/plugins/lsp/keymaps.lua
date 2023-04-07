@@ -21,24 +21,39 @@ function M.get()
 
   M._keys = {
     { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
-    { "<leader>ln", M.diagnostic_goto(true), desc = "Next Diagnostic" },
+    { "<leader>ln", M.diagnostic_goto(true), desc = "Next diagnostic" },
     { "<leader>lp", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
-    { "]d", M.diagnostic_goto(true), desc = "Next Diagnostic" },
-    { "[d", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
-    { "]e", M.diagnostic_goto(true, "ERROR"), desc = "Next Error" },
-    { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
-    { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
-    { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
-    { "<leader>lF", format, desc = "Format Document", has = "documentFormatting" },
-    { "<leader>lF", format, desc = "Format Range", mode = "v", has = "documentRangeFormatting" },
-    { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-    { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help", mode = "i", has = "signatureHelp" },
+    { "]d", M.diagnostic_goto(true), desc = "Next diagnostic" },
+    { "[d", M.diagnostic_goto(false), desc = "Prev diagnostic" },
+    { "]e", M.diagnostic_goto(true, "ERROR"), desc = "Next error" },
+    { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev error" },
+    { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next warning" },
+    { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev warning" },
+    { "<leader>lF", format, desc = "Format document", has = "documentFormatting" },
+    { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
+    { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
+    { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
-    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto Definition" },
+    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
+    {
+      "<leader>ls",
+      function()
+        vim.lsp.buf.definition({ split_cmd = "vsplit" })
+      end,
+      desc = "Goto definition (vsplit)",
+    },
+    {
+      "<leader>lS",
+      function()
+        vim.lsp.buf.definition({ split_cmd = "split" })
+      end,
+      desc = "Goto definition (split)",
+    },
+
     {
       "<leader>ll",
       vim.diagnostic.open_float,
-      desc = "Line Diagnostic",
+      desc = "Line diagnostic",
     },
     {
       "<leader>la",
@@ -51,16 +66,16 @@ function M.get()
         })
       end,
       mode = { "v", "n" },
-      desc = "Code Action",
+      desc = "Code action",
       has = "codeAction",
     },
 
-    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open Outline" },
+    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
   }
 
   if lazy.has("telescope.nvim") then
     local _keys = {
-      { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
+      { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto references" },
       -- {
       --   "<leader>ld",
       --   "<cmd>Telescope lsp_definitions theme=dropdown<cr>",
@@ -70,10 +85,10 @@ function M.get()
       {
         "<leader>li",
         "<cmd>Telescope lsp_implementations<cr>",
-        desc = "Goto Implementation",
+        desc = "Goto implementation",
         has = "implementation",
       },
-      { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
+      { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto type definition" },
       { "<leader>lL", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
     }
 
@@ -81,8 +96,7 @@ function M.get()
   else
     local _keys = {
       { "<leader>lf", vim.lsp.buf.references, "References" },
-      { "<leader>ld", vim.lsp.buf.definition, "Definition" },
-      { "<leader>lt", vim.lsp.buf.type_definition, "Type Definition" },
+      { "<leader>lt", vim.lsp.buf.type_definition, "Type definition" },
       { "<leader>li", vim.lsp.buf.implementation, "Implementation", has = "implementation" },
       { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
     }
