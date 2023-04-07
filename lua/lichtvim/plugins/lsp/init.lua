@@ -82,18 +82,6 @@ return {
         require("lichtvim.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-      -- 设置浮动样式
-      local lsp_handlers = {
-        ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
-          border = "rounded",
-          filetype = "lsp-hover",
-        }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
-          border = "rounded",
-          filetype = "lsp-signature-help",
-        }),
-      }
-
       local function setup(server)
         local options = s_opts[server].options
         local settings = s_opts[server].settings
