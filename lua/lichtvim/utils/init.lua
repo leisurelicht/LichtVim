@@ -195,4 +195,14 @@ function M.sys.IsTerm()
   return vim.fn.exists("g:termguicolors")
 end
 
+M.buf = {}
+
+function M.buf.winid(bufnr)
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_get_buf(win) == bufnr then
+      return win
+    end
+  end
+end
+
 return M
