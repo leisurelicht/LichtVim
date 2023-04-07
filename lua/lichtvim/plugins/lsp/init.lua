@@ -13,47 +13,68 @@ local function lsmod(modname, fn)
   end)
 end
 
-local function goto_definition()
+local function list_or_jump(title)
   local api = vim.api
   local util = vim.lsp.util
   local log = require("vim.lsp.log")
+  local pickers = require("telescope.pickers")
+  local conf = require("telescope.config").values
+  local finders = require("telescope.finders")
+  local make_entry = require("telescope.make_entry")
 
-  local handler = function(_, result, ctx, config)
+  local handler = function(_, result, ctx, opts)
     if result == nil or vim.tbl_isempty(result) then
       local _ = log.info() and log.info(ctx.method, "No location found")
       return nil
     end
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
 
-    local is_list = false
-    local res = result
-    if vim.tbl_islist(result) then
-      res = result[1]
-      is_list = true
+    opts = vim.tbl_deep_extend("force", { reuse_win = true }, opts or {})
+
+    local res = {}
+    if not vim.tbl_islist(result) then
+      res = { result }
     end
+    vim.list_extend(res, result)
 
-    if config ~= nil and config.split_cmd then
+    if #res == 0 then
+      return
+    elseif #res == 1 then
       -- location may be Location or LocationLink
-      local uri = res.uri or res.targetUri
+      local uri = res[1].uri or res[1].targetUri
       if uri == nil then
         return
       end
       local bufnr = vim.uri_to_bufnr(uri)
-
-      if config ~= nil and config.split_cmd and not utils.buf.winid(bufnr) then
-        vim.cmd(config.split_cmd)
+      if not utils.buf.winid(bufnr) then
+        if opts.jump_type == "tab" then
+          vim.cmd("tabedit")
+        elseif opts.jump_type == "split" then
+          vim.cmd("new")
+        elseif opts.jump_type == "vsplit" then
+          vim.cmd("vnew")
+        end
+      else
+        vim.notify(title .. " Go To Exist Window")
       end
-    end
 
-    if is_list then
-      util.jump_to_location(res, "utf-8", true)
-
-      if #result > 1 then
-        util.set_qflist(util.locations_to_items(result))
-        api.nvim_command("copen")
-        api.nvim_command("wincmd p")
-      end
+      util.jump_to_location(res[1], client.offset_encoding, opts.reuse_win)
+      return
     else
-      util.jump_to_location(res, "utf-8", true)
+      local items = util.locations_to_items(res, client.offset_encoding)
+      pickers
+        .new(opts, {
+          prompt_title = title,
+          finder = finders.new_table({
+            results = items,
+            entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+          }),
+          previewer = conf.qflist_previewer(opts),
+          sorter = conf.generic_sorter(opts),
+          push_cursor_on_edit = true,
+          push_tagstack_on_edit = true,
+        })
+        :find()
     end
   end
 
@@ -136,7 +157,13 @@ return {
         local settings = s_opts[server].settings
 
         local handler = {
-          ["textDocument/definition"] = goto_definition(),
+          ["textDocument/definition"] = list_or_jump("LSP Definitions"),
+          ["textDocument/declaration"] = list_or_jump("LSP Declaration"),
+          ["textDocument/typeDefinition"] = list_or_jump("LSP Type Definitions"),
+          ["textDocument/implementation"] = list_or_jump("LSP Implementations"),
+          ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            border = "rounded",
+          }),
         }
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
           handler["textDocument/publishDiagnostics"] = function(...) end

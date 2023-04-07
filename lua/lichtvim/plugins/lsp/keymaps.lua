@@ -34,22 +34,6 @@ function M.get()
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
-    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
-    {
-      "<leader>ls",
-      function()
-        vim.lsp.buf.definition({ split_cmd = "vsplit" })
-      end,
-      desc = "Goto definition (vsplit)",
-    },
-    {
-      "<leader>lS",
-      function()
-        vim.lsp.buf.definition({ split_cmd = "split" })
-      end,
-      desc = "Goto definition (split)",
-    },
-
     {
       "<leader>ll",
       vim.diagnostic.open_float,
@@ -69,35 +53,82 @@ function M.get()
       desc = "Code action",
       has = "codeAction",
     },
-
     { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
   }
 
-  if lazy.has("telescope.nvim") then
+  if lazy.has("telescope.nvim") and false then
+    local builtin = require("telescope.builtin")
+
     local _keys = {
-      { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto references" },
-      -- {
-      --   "<leader>ld",
-      --   "<cmd>Telescope lsp_definitions theme=dropdown<cr>",
-      --   desc = "Goto Definition",
-      --   has = "definition",
-      -- },
+      {
+        "<leader>ld",
+        function()
+          builtin.lsp_definitions({ jump_type = "never" })
+        end,
+        desc = "Goto",
+        has = "definition",
+      },
+      {
+        "<leader>lf",
+        function()
+          builtin.lsp_references({ jump_type = "never" })
+        end,
+        desc = "Goto references",
+        has = "references",
+      },
       {
         "<leader>li",
-        "<cmd>Telescope lsp_implementations<cr>",
+        function()
+          builtin.lsp_implementations({ jump_type = "never" })
+        end,
         desc = "Goto implementation",
         has = "implementation",
       },
-      { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto type definition" },
-      { "<leader>lL", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostic" },
+      {
+        "<leader>lt",
+        function()
+          builtin.lsp_type_definitions({ jump_type = "never" })
+        end,
+        desc = "Goto type definition",
+        has = "typeDefinition",
+      },
+      {
+        "<leader>lL",
+        function()
+          builtin.diagnostics({ jump_type = "never" })
+        end,
+        desc = "Diagnostic",
+      },
     }
 
     list.extend(M._keys, _keys)
   else
     local _keys = {
-      { "<leader>lf", vim.lsp.buf.references, "References" },
-      { "<leader>lt", vim.lsp.buf.type_definition, "Type definition" },
-      { "<leader>li", vim.lsp.buf.implementation, "Implementation", has = "implementation" },
+      { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
+      {
+        "<leader>lD",
+        function()
+          vim.lsp.buf.definition({ jump_type = "tab" })
+        end,
+        desc = "Goto definition (tab)",
+      },
+      {
+        "<leader>ls",
+        function()
+          vim.lsp.buf.definition({ jump_type = "vsplit" })
+        end,
+        desc = "Goto definition (vsplit)",
+      },
+      {
+        "<leader>lS",
+        function()
+          vim.lsp.buf.definition({ jump_type = "split" })
+        end,
+        desc = "Goto definition (split)",
+      },
+      { "<leader>lt", vim.lsp.buf.type_definition, "Goto type definition" },
+      { "<leader>li", vim.lsp.buf.implementation, "Goto implementation", has = "implementation" },
+      { "<leader>lf", vim.lsp.buf.references, "Goto references" },
       { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
     }
     list.extend(M._keys, _keys)

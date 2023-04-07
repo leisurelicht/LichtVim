@@ -227,15 +227,32 @@ return {
           git_branches = { theme = "ivy" },
           git_status = { theme = "ivy" },
           git_stash = { theme = "ivy" },
+          lsp_definitions = { theme = "dropdown" },
+          lsp_type_definitions = { theme = "dropdown" },
+          lsp_implementations = { theme = "dropdown" },
+          lsp_references = { theme = "dropdown" },
+          diagnostics = { theme = "dropdown" },
+          lsp_document_symbols = { theme = "dropdown" },
+          lsp_workspace_symbols = { theme = "dropdown" },
+          lsp_incoming_calls = { theme = "dropdown" },
+          lsp_outgoing_calls = { theme = "dropdown" },
         },
-        extensions = { ["ui-select"] = { no_preview() } },
-      })
+        extensions = {
+          file_borwser = {
+            theme = "ivy",
+          },
+        },
+      }
+    end,
+    config = function(_, opts)
+      local telescope = require("telescope")
+      telescope.setup(opts)
 
       telescope.load_extension("fzf")
       telescope.load_extension("neoclip")
-      telescope.load_extension("ui-select")
       telescope.load_extension("projects")
       telescope.load_extension("frecency")
+      telescope.load_extension("file_browser")
 
       if lazy.has("noice.nvim") then
         telescope.load_extension("noice")
