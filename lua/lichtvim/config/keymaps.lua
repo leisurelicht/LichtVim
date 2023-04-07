@@ -62,9 +62,9 @@ map.set("n", "<leader>9", "<cmd>9wincmd w<cr>", "Win 9")
 map.set("n", "<leader>tt", "<cmd>tab<cr>", "Tab")
 map.set("n", "<leader>td", "<cmd>tabdo<cr>", "Tabdo")
 map.set("n", "<leader>ta", "<cmd>tabnew<cr>", "New tab")
-map.set("n", "<leader>te", "<cmd>tabedit<cr>", "Edit tab")
+map.set("n", "<leader>te", "<cmd>tabedit %<cr>", "Copy current tab")
 map.set("n", "<leader>tc", "<cmd>tabclose<cr>", "Close tab")
-map.set("n", "<leader>tw", "<cmd>tabs<cr>", "Show tabs")
+map.set("n", "<leader>ts", "<cmd>tabs<cr>", "Show tabs")
 map.set("n", "<leader>tf", "<cmd>tabfirst<cr>", "First tab")
 map.set("n", "<leader>tl", "<cmd>tablast<cr>", "Last tab")
 map.set("n", "[t", "<cmd>tabp<cr>", "Previous tab")
@@ -73,8 +73,12 @@ map.set("n", "<leader>tp", "<cmd>tabp<cr>", "Previous tab")
 map.set("n", "<leader>tn", "<cmd>tabn<cr>", "Next tab")
 map.set("n", "<leader>tP", "<cmd>-tabmove<cr>", "Move forward")
 map.set("n", "<leader>tN", "<cmd>+tabmove<cr>", "Move backward")
-
 map.set("n", "<leader>ts", ":tab split ", "Split Tab")
+
+if lazy.has("tabby.nvim") then
+  map.set("n", "<leader>tr", ":TabRename ", "Rename tab")
+end
+
 -- 关闭tab页
 map.set("n", "<leader>too", "<cmd>tabonly<cr>", "Close all")
 map.set("n", "<leader>to1", "<cmd>tabonly 1<cr>", "Close all except 1")
