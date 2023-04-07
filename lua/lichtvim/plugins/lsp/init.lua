@@ -105,11 +105,11 @@ return {
           options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
         end
 
-        options = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(
-            require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-          ),
-        }, options or {})
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        if lazy.has("cmp_nvim_lsp") then
+          capabilities = vim.lsp.protocol.make_client_capabilities(capabilities)
+        end
+        options = vim.tbl_deep_extend("force", { capabilities = capabilities }, options or {})
 
         if opts.setup[server] then
           if opts.setup[server](server, options) then
