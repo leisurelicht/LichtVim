@@ -34,6 +34,7 @@ function M.get()
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help", mode = "i", has = "signatureHelp" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
+    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto Definition" },
     {
       "<leader>ll",
       vim.diagnostic.open_float,
@@ -60,12 +61,12 @@ function M.get()
   if lazy.has("telescope.nvim") then
     local _keys = {
       { "<leader>lf", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
-      {
-        "<leader>ld",
-        "<cmd>Telescope lsp_definitions theme=dropdown<cr>",
-        desc = "Goto Definition",
-        has = "definition",
-      },
+      -- {
+      --   "<leader>ld",
+      --   "<cmd>Telescope lsp_definitions theme=dropdown<cr>",
+      --   desc = "Goto Definition",
+      --   has = "definition",
+      -- },
       {
         "<leader>li",
         "<cmd>Telescope lsp_implementations<cr>",
