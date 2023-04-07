@@ -145,7 +145,15 @@ return {
       },
       {
         "<leader>fe",
-        "<cmd>Telescope file_browser default_selection_index=2 theme=dropdown<cr>",
+        function()
+          require("telescope").extensions.file_browser.file_browser({
+            sorting_strategy = "ascending",
+            layout_config = {
+              -- preview_cutoff = 0.5,
+              prompt_position = "top",
+            },
+          })
+        end,
         desc = "File Browser",
       },
     },
@@ -206,6 +214,20 @@ return {
           grep_previewer = previewers.vim_buffer_vimgrep.new,
           qflist_previewer = previewers.vim_buffer_qflist.new,
           buffer_previewer_maker = new_maker, -- Dont preview binaries
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--trim", -- add this value
+          },
+          layout_config = {
+            height = 0.7,
+            width = 0.6,
+          },
           mappings = {
             i = {
               ["<C-t>"] = trouble.open_with_trouble,
@@ -218,7 +240,7 @@ return {
           },
         },
         pickers = {
-          find_files = { theme = "dropdown" },
+          find_files = { theme = "dropdown", find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
           git_files = { theme = "dropdown" },
           oldfiles = { theme = "dropdown" },
           buffers = { theme = "dropdown" },

@@ -73,6 +73,10 @@ local function list_or_jump(title)
           sorter = conf.generic_sorter(opts),
           push_cursor_on_edit = true,
           push_tagstack_on_edit = true,
+          layout_config = {
+            height = 0.7,
+            width = 0.6,
+          },
         })
         :find()
     end
