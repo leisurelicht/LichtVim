@@ -41,7 +41,7 @@ map.set("v", ">", ">gv", "Move right continuously")
 -- 水平分屏
 map.set("n", "<leader>wv", "<cmd>vsp<cr>", "Split window horizontally")
 -- 垂直分屏
-map.set("n", "<leader>wo", "<cmd>sp<cr>", "Split window vertically")
+map.set("n", "<leader>ws", "<cmd>sp<cr>", "Split window vertically")
 -- 关闭当前分屏
 map.set("n", "<leader>wd", "<C-w>c", "Close current window")
 -- 关闭其他分屏
@@ -109,8 +109,8 @@ else
   map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
 end
 
-map.set("n", "<leader>bh", "<cmd>ball<cr>", "Horizontally list all")
-map.set("n", "<leader>bv", "<cmd>vertical ball<cr>", "Vertically list all")
+-- map.set("n", "<leader>bh ", "<cmd>ball<cr>", "Horizontally list all")
+-- map.set("n", "<leader>bv", "<cmd>vertical ball<cr>", "Vertically list all")
 map.set("n", "<leader>bf", "<cmd>bfirst<cr>", "First buffer")
 map.set("n", "<leader>bl", "<cmd>blast<cr>", "Last buffer")
 map.set("n", "<leader>bp", "<cmd>bprev<cr>", "Previous buffer")
