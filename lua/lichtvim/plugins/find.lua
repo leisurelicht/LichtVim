@@ -99,9 +99,9 @@ return {
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-telescope/telescope-frecency.nvim" },
       { "ahmedkhalf/project.nvim" },
+      { "nvim-telescope/telescope-file-browser.nvim" },
     },
     keys = {
       { "<leader>fT", ts_b("builtin"), desc = "Built In" },
@@ -143,10 +143,14 @@ return {
         "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
         desc = "Paster",
       },
+      {
+        "<leader>fe",
+        "<cmd>Telescope file_browser default_selection_index=2 theme=dropdown<cr>",
+        desc = "File Browser",
+      },
     },
-    config = function()
+    opts = function()
       local Job = require("plenary.job")
-      local telescope = require("telescope")
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
       local themes = require("telescope.themes")
@@ -186,7 +190,7 @@ return {
         })
       end
 
-      telescope.setup({
+      return {
         defaults = {
           prompt_prefix = "🔍 ",
           selection_caret = " ",
