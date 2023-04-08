@@ -39,39 +39,25 @@ function M.get()
       vim.diagnostic.open_float,
       desc = "Line diagnostic",
     },
-    {
-      "<leader>la",
-      function()
-        require("actions-preview").code_actions({
-          context = {
-            only = { "source" },
-            diagnostics = {},
-          },
-        })
-      end,
-      mode = { "v", "n" },
-      desc = "Code action",
-      has = "codeAction",
-    },
     { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
   }
 
-  if lazy.has("telescope.nvim") and false then
+  if lazy.has("telescope.nvim") then
     local builtin = require("telescope.builtin")
 
     local _keys = {
       {
         "<leader>ld",
         function()
-          builtin.lsp_definitions({ jump_type = "never" })
+          builtin.lsp_definitions({ reuse_win = true })
         end,
-        desc = "Goto",
+        desc = "Goto Definition",
         has = "definition",
       },
       {
         "<leader>lf",
         function()
-          builtin.lsp_references({ jump_type = "never" })
+          builtin.lsp_references({})
         end,
         desc = "Goto references",
         has = "references",
@@ -79,7 +65,7 @@ function M.get()
       {
         "<leader>li",
         function()
-          builtin.lsp_implementations({ jump_type = "never" })
+          builtin.lsp_implementations({})
         end,
         desc = "Goto implementation",
         has = "implementation",
@@ -87,7 +73,7 @@ function M.get()
       {
         "<leader>lt",
         function()
-          builtin.lsp_type_definitions({ jump_type = "never" })
+          builtin.lsp_type_definitions({})
         end,
         desc = "Goto type definition",
         has = "typeDefinition",
@@ -95,9 +81,23 @@ function M.get()
       {
         "<leader>lL",
         function()
-          builtin.diagnostics({ jump_type = "never" })
+          builtin.diagnostics({})
         end,
         desc = "Diagnostic",
+      },
+      {
+        "<leader>la",
+        function()
+          require("actions-preview").code_actions({
+            context = {
+              only = { "source" },
+              diagnostics = {},
+            },
+          })
+        end,
+        mode = { "v", "n" },
+        desc = "Code action",
+        has = "codeAction",
       },
     }
 
@@ -112,24 +112,24 @@ function M.get()
         end,
         desc = "Goto definition (tab)",
       },
-      {
-        "<leader>ls",
-        function()
-          vim.lsp.buf.definition({ jump_type = "vsplit" })
-        end,
-        desc = "Goto definition (vsplit)",
-      },
-      {
-        "<leader>lS",
-        function()
-          vim.lsp.buf.definition({ jump_type = "split" })
-        end,
-        desc = "Goto definition (split)",
-      },
       { "<leader>lt", vim.lsp.buf.type_definition, "Goto type definition" },
       { "<leader>li", vim.lsp.buf.implementation, "Goto implementation", has = "implementation" },
       { "<leader>lf", vim.lsp.buf.references, "Goto references" },
       { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
+      {
+        "<leader>la",
+        function()
+          vim.lsp.buf.code_actionn({
+            context = {
+              only = { "source" },
+              diagnostics = {},
+            },
+          })
+        end,
+        mode = { "v", "n" },
+        desc = "Code action",
+        has = "codeAction",
+      },
     }
     list.extend(M._keys, _keys)
   end

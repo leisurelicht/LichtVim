@@ -17,10 +17,10 @@ local function list_or_jump(title)
   local api = vim.api
   local util = vim.lsp.util
   local log = require("vim.lsp.log")
-  local pickers = require("telescope.pickers")
-  local conf = require("telescope.config").values
-  local finders = require("telescope.finders")
-  local make_entry = require("telescope.make_entry")
+  -- local pickers = require("telescope.pickers")
+  -- local conf = require("telescope.config").values
+  -- local finders = require("telescope.finders")
+  -- local make_entry = require("telescope.make_entry")
 
   local handler = function(_, result, ctx, opts)
     if result == nil or vim.tbl_isempty(result) then
@@ -54,31 +54,31 @@ local function list_or_jump(title)
         elseif opts.jump_type == "vsplit" then
           vim.cmd("vnew")
         end
-      else
-        vim.notify(title .. " Go To Exist Window")
       end
 
       util.jump_to_location(res[1], client.offset_encoding, opts.reuse_win)
       return
     else
       local items = util.locations_to_items(res, client.offset_encoding)
-      pickers
-        .new(opts, {
-          prompt_title = title,
-          finder = finders.new_table({
-            results = items,
-            entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
-          }),
-          previewer = conf.qflist_previewer(opts),
-          sorter = conf.generic_sorter(opts),
-          push_cursor_on_edit = true,
-          push_tagstack_on_edit = true,
-          layout_config = {
-            height = 0.7,
-            width = 0.6,
-          },
-        })
-        :find()
+      vim.fn.setqflist({}, " ", { title = title, items = items })
+      api.nvim_command("botright copen")
+      -- pickers
+      --   .new(opts, {
+      --     prompt_title = title,
+      --     finder = finders.new_table({
+      --       results = items,
+      --       entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+      --     }),
+      --     previewer = conf.qflist_previewer(opts),
+      --     sorter = conf.generic_sorter(opts),
+      --     push_cursor_on_edit = true,
+      --     push_tagstack_on_edit = true,
+      --     layout_config = {
+      --       height = 0.7,
+      --       width = 0.6,
+      --     },
+      --   })
+      --   :find()
     end
   end
 
@@ -101,19 +101,6 @@ return {
           return lazy.has("nvim-cmp")
         end,
       },
-      {
-        "aznhe21/actions-preview.nvim",
-        dependencies = { "MunifTanjim/nui.nvim", "nvim-telescope/telescope.nvim" },
-        config = function()
-          require("actions-preview").setup({
-            diff = {
-              algorithm = "patience",
-              ignore_whitespace = true,
-            },
-            telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
-          })
-        end,
-      },
     },
     opts = {
       diagnostics = {
@@ -122,7 +109,7 @@ return {
         severity_sort = true,
         update_in_insert = false,
         float = { source = "always" },
-        virtual_text = { prefix = "●", source = "always", source = "always" },
+        virtual_text = { prefix = "●", source = "always" },
       },
       autoformat = true,
       format = {

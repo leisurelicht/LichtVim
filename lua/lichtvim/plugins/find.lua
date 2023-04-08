@@ -94,6 +94,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    -- dir = "~/Code/neovim/plugins/telescope.nvim",
     version = false,
     lazy = true,
     cmd = "Telescope",
@@ -102,6 +103,30 @@ return {
       { "nvim-telescope/telescope-frecency.nvim" },
       { "ahmedkhalf/project.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
+      {
+        "folke/todo-comments.nvim",
+        lazy = true,
+        cmd = { "TodoTelescope" },
+        event = { "BufReadPost", "BufNewFile" },
+        dependencies = { "nvim-lua/plenary.nvim" },
+        keys = {},
+        config = function()
+          require("todo-comments").setup({})
+        end,
+      },
+      {
+        "aznhe21/actions-preview.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+        config = function()
+          require("actions-preview").setup({
+            diff = {
+              algorithm = "patience",
+              ignore_whitespace = true,
+            },
+            telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+          })
+        end,
+      },
     },
     keys = {
       { "<leader>fT", ts_b("builtin"), desc = "Built In" },
@@ -143,6 +168,7 @@ return {
         "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
         desc = "Paster",
       },
+      { "<leader>ft", "<cmd>TodoTelescope keywords=TODO,FIXME,HACK,PERF theme=dropdown<cr>", desc = "Todo" },
       {
         "<leader>fe",
         function()
@@ -161,7 +187,7 @@ return {
       local Job = require("plenary.job")
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
-      local themes = require("telescope.themes")
+      -- local themes = require("telescope.themes")
       local sorters = require("telescope.sorters")
       local trouble = require("trouble.providers.telescope")
 
@@ -184,19 +210,37 @@ return {
         }):sync()
       end
 
-      local function no_preview()
-        return themes.get_dropdown({
-          borderchars = {
-            { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-            prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
-            results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
-            preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-          },
-          width = 0.8,
-          previewer = false,
-          prompt_title = false,
-        })
-      end
+      -- local no_preview = themes.get_dropdown({
+      --   borderchars = {
+      --     { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      --     prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+      --     results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+      --     preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      --   },
+      --   width = 0.8,
+      --   previewer = false,
+      --   prompt_title = false,
+      -- })
+
+      -- local center_list = themes.get_dropdown({
+      --   winblend = 10,
+      --   width = 0.5,
+      --   prompt = " ",
+      --   results_height = 15,
+      --   previewer = false,
+      -- })
+
+      -- -- Settings for with preview option
+      -- local with_preview = {
+      --   winblend = 10,
+      --   show_line = false,
+      --   results_title = false,
+      --   preview_title = false,
+      --   layout_config = {
+      --     preview_width = 0.5,
+      --   },
+      --   sorting_strategy = "ascending",
+      -- }
 
       return {
         defaults = {
@@ -253,21 +297,17 @@ return {
           git_branches = { theme = "ivy" },
           git_status = { theme = "ivy" },
           git_stash = { theme = "ivy" },
-          lsp_definitions = { theme = "dropdown" },
-          lsp_type_definitions = { theme = "dropdown" },
-          lsp_implementations = { theme = "dropdown" },
-          lsp_references = { theme = "dropdown" },
-          diagnostics = { theme = "dropdown" },
-          lsp_document_symbols = { theme = "dropdown" },
-          lsp_workspace_symbols = { theme = "dropdown" },
-          lsp_incoming_calls = { theme = "dropdown" },
-          lsp_outgoing_calls = { theme = "dropdown" },
+          lsp_definitions = {},
+          lsp_type_definitions = {},
+          lsp_implementations = {},
+          lsp_references = {},
+          diagnostics = {},
+          lsp_document_symbols = {},
+          lsp_workspace_symbols = {},
+          lsp_incoming_calls = {},
+          lsp_outgoing_calls = {},
         },
-        extensions = {
-          file_borwser = {
-            theme = "ivy",
-          },
-        },
+        extensions = {},
       }
     end,
     config = function(_, opts)
