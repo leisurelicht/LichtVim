@@ -1,7 +1,3 @@
-local runtime_path = vim.split(package.path, ";")
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
 return {
   settings = {
     document_diagnostics = true,
@@ -17,10 +13,6 @@ return {
       Lua = {
         runtime = {
           version = "LuaJIT",
-          path = runtime_path,
-        },
-        hover = {
-          previewFields = 999,
         },
         diagnostics = {
           globals = { "vim" },

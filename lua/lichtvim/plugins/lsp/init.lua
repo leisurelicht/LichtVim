@@ -152,9 +152,6 @@ return {
           ["textDocument/declaration"] = list_or_jump("LSP Declaration"),
           ["textDocument/typeDefinition"] = list_or_jump("LSP Type Definitions"),
           ["textDocument/implementation"] = list_or_jump("LSP Implementations"),
-          ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-            border = "rounded",
-          }),
         }
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
           handler["textDocument/publishDiagnostics"] = function(...) end
