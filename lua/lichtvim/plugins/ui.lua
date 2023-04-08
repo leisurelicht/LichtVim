@@ -12,16 +12,16 @@ return {
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = {
-      -- views = {
-      --   split = {
-      --     enter = true,
-      --   },
-      -- },
+      views = {
+        split = {
+          enter = true,
+        },
+      },
       -- TODO: 重定向 luv 配置询问窗口
       -- routes = {
       --   {
       --     filter = { find = "luv" },
-      --     view = "popup",
+      --     view = "split",
       --   },
       -- },
       commands = {
