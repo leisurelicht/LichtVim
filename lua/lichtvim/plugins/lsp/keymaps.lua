@@ -88,12 +88,7 @@ function M.get()
       {
         "<leader>la",
         function()
-          require("actions-preview").code_actions({
-            context = {
-              only = { "source" },
-              diagnostics = {},
-            },
-          })
+          require("actions-preview").code_actions()
         end,
         mode = { "v", "n" },
         desc = "Code action",
@@ -118,14 +113,7 @@ function M.get()
       { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
       {
         "<leader>la",
-        function()
-          vim.lsp.buf.code_actionn({
-            context = {
-              only = { "source" },
-              diagnostics = {},
-            },
-          })
-        end,
+        vim.lsp.buf.code_actionn,
         mode = { "v", "n" },
         desc = "Code action",
         has = "codeAction",

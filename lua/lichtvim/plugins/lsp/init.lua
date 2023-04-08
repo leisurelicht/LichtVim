@@ -188,22 +188,71 @@ return {
     end,
   },
   {
+    "aznhe21/actions-preview.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("actions-preview").setup({
+        diff = {
+          algorithm = "patience",
+          ignore_whitespace = true,
+        },
+        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+      })
+    end,
+  },
+
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    opts = {
+      prompt_func_return_type = {
+        go = true,
+        java = false,
+        cpp = false,
+        c = false,
+        h = false,
+        hpp = false,
+        cxx = false,
+      },
+      prompt_func_param_type = {
+        go = true,
+        java = false,
+
+        cpp = false,
+        c = false,
+        h = false,
+        hpp = false,
+        cxx = false,
+      },
+      printf_statements = {},
+      print_var_statements = {},
+    },
+  },
+  {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
     opts = function()
-      local nls = require("null-ls")
+      local null_ls = require("null-ls")
       return {
         debug = false,
         sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.diagnostics.fish,
-          nls.builtins.formatting.stylua.with({
+          null_ls.builtins.formatting.fish_indent,
+          null_ls.builtins.diagnostics.fish,
+          null_ls.builtins.diagnostics.luacheck.with({
+            extra_args = { "--globals=vim lazy" },
+          }),
+          null_ls.builtins.formatting.stylua.with({
             "--indent-type=Spaces",
             "--indent-width=2",
           }),
-          nls.builtins.formatting.shfmt,
-          nls.builtins.diagnostics.flake8,
+          null_ls.builtins.formatting.shfmt,
+          null_ls.builtins.diagnostics.flake8,
+          null_ls.builtins.code_actions.refactoring,
+          null_ls.builtins.completion.luasnip,
+          null_ls.builtins.formatting.goimports,
         },
       }
     end,
@@ -224,6 +273,8 @@ return {
         "stylua",
         "shfmt",
         "flake8",
+        "goimports",
+        "luacheck",
       },
     },
     config = function(_, opts)
@@ -277,7 +328,6 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
     },
-
     opts = function()
       local has_words_before = function()
         unpack = unpack or table.unpack

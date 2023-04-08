@@ -4,7 +4,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 return {
   settings = {
-    document_diagnostics = false,
+    document_diagnostics = true,
     document_formatting = true,
     formatting_on_save = false,
   },
@@ -22,9 +22,9 @@ return {
         hover = {
           previewFields = 999,
         },
-        -- diagnostics = {
-        --   globals = { "vim" },
-        -- },
+        diagnostics = {
+          globals = { "vim" },
+        },
         workspace = {
           -- library = vim.api.nvim_get_runtime_file("", true),
           library = "checkThirdParty",

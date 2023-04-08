@@ -109,22 +109,8 @@ return {
         cmd = { "TodoTelescope" },
         event = { "BufReadPost", "BufNewFile" },
         dependencies = { "nvim-lua/plenary.nvim" },
-        keys = {},
         config = function()
           require("todo-comments").setup({})
-        end,
-      },
-      {
-        "aznhe21/actions-preview.nvim",
-        dependencies = { "MunifTanjim/nui.nvim" },
-        config = function()
-          require("actions-preview").setup({
-            diff = {
-              algorithm = "patience",
-              ignore_whitespace = true,
-            },
-            telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
-          })
         end,
       },
     },
