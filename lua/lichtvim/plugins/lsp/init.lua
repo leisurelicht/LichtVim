@@ -319,11 +319,16 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "onsails/lspkind-nvim",
-      "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      {
+        "tzachar/cmp-fuzzy-buffer",
+        dependencies = {
+          "tzachar/fuzzy.nvim",
+        },
+      },
     },
     opts = function()
       local has_words_before = function()
@@ -388,7 +393,7 @@ return {
               end
             end,
             s = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+            -- c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
           }),
         }),
         sources = cmp.config.sources({
@@ -396,16 +401,19 @@ return {
           { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
+          { name = "fuzzy_buffer" },
         }),
         sorting = {
+          priority_weight = 2,
           comparators = {
+            require("cmp_fuzzy_buffer.compare"),
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
-            require("cmp-under-comparator").under,
             cmp.config.compare.kind,
             cmp.config.compare.locality,
+            cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
@@ -450,6 +458,12 @@ return {
     config = function(_, opts)
       local cmp = require("cmp")
       cmp.setup(opts)
+
+      cmp.setup.cmdline("/", {
+        sources = cmp.config.sources({
+          { name = "fuzzy_buffer" },
+        }),
+      })
 
       -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       -- local cmp = require("cmp")
