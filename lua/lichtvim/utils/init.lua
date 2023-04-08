@@ -205,4 +205,12 @@ function M.buf.winid(bufnr)
   end
 end
 
+function M.buf.path()
+  return vim.fn.expand("%")
+end
+
+function M.buf.full_path()
+  return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
+end
+
 return M

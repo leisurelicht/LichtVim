@@ -6,7 +6,7 @@ function _G._Set_terminal_keymaps()
   map.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], "Right", { buffer = 0 })
 end
 
-function _SMART_ADD_TERM()
+local function _smart_add_term()
   local direction = require("toggleterm.ui").guess_direction()
 
   if vim.b.toggle_number == nil then
@@ -20,7 +20,7 @@ function _SMART_ADD_TERM()
     elseif vim.g._term_direction == 2 then
       direction = "horizontal"
     elseif vim.g._term_direction == 0 then
-      vim.notify("Can Not Add Term Window", "warn")
+      vim.notify("Can Not Add Term Window", vim.log.levels.WARN)
       return
     end
   end
@@ -32,6 +32,28 @@ function _SMART_ADD_TERM()
     vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=horizontal'")
     vim.g._term_direction = 2
   end
+end
+
+local function _lazygit()
+  require("toggleterm.terminal").Terminal
+    :new({
+      cmd = "lazygit",
+      dir = "git_dir",
+      direction = "float",
+      float_opts = {
+        border = "curved", -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+      },
+      -- function to run on opening the terminal
+      on_open = function(term)
+        vim.cmd("startinsert!")
+        map.set("n", "q", "<CScutD>close<CR>", "Close Lazygit", { buffer = term.bufnr, silent = true })
+      end,
+    })
+    :toggle({})
+end
+
+local function _htop()
+  require("toggleterm.terminal").Terminal:new({ cmd = "htop", hidden = true, direction = "float" }):toggle({})
 end
 
 return {
@@ -73,10 +95,12 @@ return {
     { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle In Tab" },
     { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle In Horizontal" },
     { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle In Vertical" },
-    { "<leader>oa", "<CMD>lua _SMART_ADD_TERM()<CR>", desc = "Add New Term" },
     { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send Current Line" },
     { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send Visual Lines" },
     { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send Visual Selection" },
+    { "<leader>oa", _smart_add_term, desc = "Add New Term" },
+    { "<leader>uh", _htop, desc = "Htop" },
+    { "<leader>gl", _lazygit, desc = "Lazygit" },
   },
 
   config = function(_, opts)

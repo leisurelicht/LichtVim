@@ -121,11 +121,6 @@ map.set("n", "<leader>cl", "viwue", "Lower word")
 map.set("n", "<leader>cu", "viwUe", "Upper word")
 map.set("n", "<leader>co", "wb~ea", "Upper first word")
 
-local sc = require("lichtvim.utils.shortcut")
-
-map.set("n", "<leader>b;", sc._buf_path, "Buffer path")
-map.set("n", "<leader>b:", sc._buf_full_path, "Buffer full path")
-
 if lazy.has("which-key.nvim") then
   require("which-key").register({
     c = { name = "ShortCuts" },
