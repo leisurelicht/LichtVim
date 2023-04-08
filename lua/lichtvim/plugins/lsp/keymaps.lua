@@ -36,7 +36,11 @@ function M.get()
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
     {
       "<leader>ll",
-      vim.diagnostic.open_float,
+      function()
+        vim.diagnostic.open_float({
+          border = "rounded",
+        })
+      end,
       desc = "Line diagnostic",
     },
     { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
