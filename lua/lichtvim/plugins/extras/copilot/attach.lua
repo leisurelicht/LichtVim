@@ -58,7 +58,6 @@ return {
   {
     "nvim-cmp",
     opts = function(_, opts)
-      local cmp = require("cmp")
       local suggestion = require("copilot.suggestion")
       for k, v in pairs(opts.mapping["<Tab>"]) do
         opts.mapping["<Tab>"][k] = function(...)
@@ -79,6 +78,7 @@ return {
         end
       end
 
+      local cmp = require("cmp")
       cmp.event:on("menu_opened", function()
         vim.b.copilot_suggestion_hidden = true
       end)
