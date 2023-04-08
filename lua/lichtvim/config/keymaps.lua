@@ -13,13 +13,6 @@ map.set("i", "<C-l>", "<esc>viwuea", "Lower word")
 -- 首字母大写
 map.set("i", "<C-O>", "<ESC>wb~ea")
 
-if lazy.has("which-key.nvim") then
-  require("which-key").register({ c = { name = "ShortCuts" }, mode = "n", prefix = "<leader>" })
-  map.set("n", "<leader>cl", "viwue", "Lower word")
-  map.set("n", "<leader>cu", "viwUe", "Upper word")
-  map.set("n", "<leader>co", "wb~ea", "Upper first word")
-end
-
 -- normal 模式下按 esc 取消高亮显示
 map.set("n", "<esc>", function()
   vim.cmd("silent! noh")
@@ -39,13 +32,20 @@ map.set("v", "<", "<gv", "Move left continuously")
 map.set("v", ">", ">gv", "Move right continuously")
 
 -- 分屏
-map.set("n", "<leader>v", "<cmd>vsp<cr>", "Vsplit")
-map.set("n", "<leader>s", "<cmd>sp<cr>", "Split")
+-- map.set("n", "<leader>v", "<cmd>vsp<cr>", "Vsplit")
+-- map.set("n", "<leader>s", "<cmd>sp<cr>", "Split")
+map.set("n", "<leader>sh", "<cmd>vertical leftabove sbuffer<cr>", "Left")
+map.set("n", "<leader>sl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
+map.set("n", "<leader>sk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
+map.set("n", "<leader>sj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
 
--- 关闭当前分屏
-map.set("n", "<leader>wd", "<C-w>c", "Close current window")
--- 关闭其他分屏
-map.set("n", "<leader>wc", "<C-w>o", "Close other window")
+map.set("n", "<leader>si", "<cmd>vertical topleft sbuffer<cr>", "Far left")
+map.set("n", "<leader>su", "<cmd>vertical botright sbuffer<cr>", "Far right")
+map.set("n", "<leader>sy", "<cmd>horizontal topleft sbuffer<cr>", "Top")
+map.set("n", "<leader>so", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
+
+map.set("n", "<leader>sd", "<C-w>c", "Close current window") -- 关闭当前分屏
+map.set("n", "<leader>sc", "<C-w>o", "Close other window") -- 关闭其他分屏
 
 -- 窗口快速跳转
 map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1")
@@ -59,12 +59,9 @@ map.set("n", "<leader>8", "<cmd>8wincmd w<cr>", "Win 8")
 map.set("n", "<leader>9", "<cmd>9wincmd w<cr>", "Win 9")
 
 -- tab页
-map.set("n", "<leader>tt", "<cmd>tab<cr>", "Tab")
-map.set("n", "<leader>td", "<cmd>tabdo<cr>", "Tabdo")
+map.set("n", "<leader>te", "<cmd>tab sb<cr>", "Copy current tab")
 map.set("n", "<leader>ta", "<cmd>tabnew<cr>", "New tab")
-map.set("n", "<leader>te", "<cmd>tabedit %<cr>", "Copy current tab")
 map.set("n", "<leader>tc", "<cmd>tabclose<cr>", "Close tab")
-map.set("n", "<leader>ts", "<cmd>tabs<cr>", "Show tabs")
 map.set("n", "<leader>tf", "<cmd>tabfirst<cr>", "First tab")
 map.set("n", "<leader>tl", "<cmd>tablast<cr>", "Last tab")
 map.set("n", "[t", "<cmd>tabp<cr>", "Previous tab")
@@ -73,7 +70,8 @@ map.set("n", "<leader>tp", "<cmd>tabp<cr>", "Previous tab")
 map.set("n", "<leader>tn", "<cmd>tabn<cr>", "Next tab")
 map.set("n", "<leader>tP", "<cmd>-tabmove<cr>", "Move forward")
 map.set("n", "<leader>tN", "<cmd>+tabmove<cr>", "Move backward")
-map.set("n", "<leader>ts", ":tab split ", "Split Tab")
+-- map.set("n", "<leader>ts", "<cmd>tabs<cr>", "Show tabs")
+-- map.set("n", "<leader>ts", ":tab split ", "Split Tab")
 
 if lazy.has("tabby.nvim") then
   map.set("n", "<leader>tr", ":TabRename ", "Rename tab")
@@ -118,3 +116,24 @@ map.set("n", "<leader>bn", "<cmd>bnext<cr>", "Next buffer")
 map.set("n", "<leader>bd", "<cmd>bd<cr>", "Delete buffer")
 map.set("n", "[b", "<cmd>bprev<cr>", "Previous buffer")
 map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer")
+
+map.set("n", "<leader>cl", "viwue", "Lower word")
+map.set("n", "<leader>cu", "viwUe", "Upper word")
+map.set("n", "<leader>co", "wb~ea", "Upper first word")
+
+local sc = require("lichtvim.utils.shortcut")
+
+map.set("n", "<leader>b;", sc._buf_path, "Buffer path")
+map.set("n", "<leader>b:", sc._buf_full_path, "Buffer full path")
+
+if lazy.has("which-key.nvim") then
+  require("which-key").register({
+    c = { name = "ShortCuts" },
+    b = { name = "Buffer" },
+    s = { name = "Split" },
+    t = { name = "Tab" },
+    to = { name = "Close Only" },
+    mode = "n",
+    prefix = "<leader>",
+  })
+end
