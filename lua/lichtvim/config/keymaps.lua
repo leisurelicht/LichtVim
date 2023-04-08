@@ -14,10 +14,10 @@ map.set("i", "<C-l>", "<esc>viwuea", "Lower word")
 map.set("i", "<C-O>", "<ESC>wb~ea")
 
 if lazy.has("which-key.nvim") then
-  require("which-key").register({ s = { name = "ShortCuts" }, mode = "n", prefix = "<leader>" })
-  map.set("n", "<leader>sl", "viwue", "Lower word")
-  map.set("n", "<leader>su", "viwUe", "Upper word")
-  map.set("n", "<leader>so", "wb~ea", "Upper first word")
+  require("which-key").register({ c = { name = "ShortCuts" }, mode = "n", prefix = "<leader>" })
+  map.set("n", "<leader>cl", "viwue", "Lower word")
+  map.set("n", "<leader>cu", "viwUe", "Upper word")
+  map.set("n", "<leader>co", "wb~ea", "Upper first word")
 end
 
 -- normal 模式下按 esc 取消高亮显示
@@ -38,10 +38,10 @@ map.set("v", "K", ":m '<-2<cr>gv=gv", "Move line up")
 map.set("v", "<", "<gv", "Move left continuously")
 map.set("v", ">", ">gv", "Move right continuously")
 
--- 水平分屏
-map.set("n", "<leader>wv", "<cmd>vsp<cr>", "Split window horizontally")
--- 垂直分屏
-map.set("n", "<leader>ws", "<cmd>sp<cr>", "Split window vertically")
+-- 分屏
+map.set("n", "<leader>v", "<cmd>vsp<cr>", "Vsplit")
+map.set("n", "<leader>s", "<cmd>sp<cr>", "Split")
+
 -- 关闭当前分屏
 map.set("n", "<leader>wd", "<C-w>c", "Close current window")
 -- 关闭其他分屏
