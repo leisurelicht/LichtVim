@@ -82,7 +82,7 @@ return {
         "Makefile",
         "package.json",
       },
-      ignore_lsp = { "dockerls" },
+      ignore_lsp = { "dockerls", "null_ls" },
       exclude_dirs = {},
       show_hidden = true,
       silent_chdir = false,
