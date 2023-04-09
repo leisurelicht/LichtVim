@@ -154,7 +154,7 @@ return {
         "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
         desc = "Paster",
       },
-      { "<leader>ft", "<cmd>TodoTelescope keywords=TODO,FIXME,HACK,PERF theme=dropdown<cr>", desc = "Todo" },
+      { "<leader>ft", "<cmd>TodoTelescope keywords=TODO,FIX,HACK,PERF theme=dropdown<cr>", desc = "Todo" },
       {
         "<leader>fe",
         function()
