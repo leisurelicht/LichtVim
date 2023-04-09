@@ -224,7 +224,7 @@ return {
       { "<leader>ad", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
     },
   },
-
+ 
   -- {
   --   "ethanholz/nvim-lastplace",
   --   event = {"BufRead", "BufNewFile"},

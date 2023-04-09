@@ -56,6 +56,20 @@ local function _htop()
   require("toggleterm.terminal").Terminal:new({ cmd = "htop", hidden = true, direction = "float" }):toggle({})
 end
 
+local function _glow(file_name)
+  local cmd = "glow " .. file_name .. "&& zsh"
+  vim.notify(cmd)
+  require("toggleterm.terminal").Terminal
+    :new({
+      cmd = cmd,
+      hidden = false,
+      direction = "float",
+      close_on_exit = false,
+      auto_scroll = false,
+    })
+    :toggle({})
+end
+
 return {
   "akinsho/toggleterm.nvim",
   cmd = "ToggleTerm",
@@ -87,21 +101,35 @@ return {
       },
     },
   },
-  keys = {
-    { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-    -- { "<C-T>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-    -- { "<C-T>", "<ESC><CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-    { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle In Float" },
-    { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle In Tab" },
-    { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle In Horizontal" },
-    { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle In Vertical" },
-    { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send Current Line" },
-    { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send Visual Lines" },
-    { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send Visual Selection" },
-    { "<leader>oa", _smart_add_term, desc = "Add New Term" },
-    { "<leader>uh", _htop, desc = "Htop" },
-    { "<leader>gl", _lazygit, desc = "Lazygit" },
-  },
+  keys = function()
+    -- TODO: 自动调用 glow 预览 markdown 文件
+    -- api.autocmd({ "FileType" }, {
+    --   group = api.augroup("Runner", { clear = true }),
+    --   pattern = { "markdown" },
+    --   callback = function()
+    --     local file_name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+    --     map.set("n", "<leader>r", function()
+    --       _glow(file_name)
+    --     end, "Run", { buffer = vim.api.nvim_get_current_buf() })
+    --   end,
+    -- })
+
+    return {
+      { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
+      -- { "<C-T>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
+      -- { "<C-T>", "<ESC><CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
+      { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle In Float" },
+      { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle In Tab" },
+      { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle In Horizontal" },
+      { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle In Vertical" },
+      { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send Current Line" },
+      { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send Visual Lines" },
+      { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send Visual Selection" },
+      { "<leader>oa", _smart_add_term, desc = "Add New Term" },
+      { "<leader>uh", _htop, desc = "Htop" },
+      { "<leader>gl", _lazygit, desc = "Lazygit" },
+    }
+  end,
 
   config = function(_, opts)
     require("toggleterm").setup(opts)
