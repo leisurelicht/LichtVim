@@ -144,7 +144,7 @@ return {
           local settings = s_opts[client.name].settings
 
           -- FIX: did not work
-          if settings.document_formatting ~= nil then 
+          if settings.document_formatting ~= nil then
             client.server_capabilities.document_formatting = settings.document_formatting
             client.server_capabilities.document_range_formatting = settings.document_formatting
           end
@@ -259,22 +259,25 @@ return {
       return {
         debug = false,
         sources = {
-          -- null_ls.builtins.formatting.fish_indent,
+
           null_ls.builtins.diagnostics.fish,
-          -- null_ls.builtins.diagnostics.luacheck.with({
-          --   extra_args = { "--globals=vim" },
-          -- }),
-          -- null_ls.builtins.formatting.stylua.with({
-          --   "--indent-type=Spaces",
-          --   "--indent-width=4",
-          -- }),
-          -- null_ls.builtins.formatting.shfmt,
           null_ls.builtins.diagnostics.flake8,
-          -- null_ls.builtins.code_actions.refactoring,
+          null_ls.builtins.diagnostics.luacheck.with({
+            extra_args = { "--globals=vim" },
+          }),
+
+          null_ls.builtins.formatting.fish_indent,
+          null_ls.builtins.formatting.stylua.with({
+            "--indent-type=Spaces",
+            "--indent-width=4",
+          }),
+          null_ls.builtins.formatting.shfmt,
+          null_ls.builtins.formatting.goimports,
+          null_ls.builtins.formatting.gofumpt,
+
+          null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.completion.luasnip,
-          -- null_ls.builtins.formatting.goimports,
-          -- null_ls.builtins.formatting.gofumpt,
-          -- null_ls.builtins.formatting.gofmt,
+
         },
       }
     end,
@@ -293,12 +296,11 @@ return {
       },
       ensure_installed = {
         "stylua",
-        -- "shfmt",
-        -- "flake8",
-        -- "goimports",
+        "shfmt",
+        "flake8",
         "luacheck",
-        -- "gofumpt",
-        -- "gofmt",
+        "gofumpt",
+        "goimports",
       },
     },
     config = function(_, opts)
