@@ -45,9 +45,9 @@ end
 
 function M.on_attach(client, buf)
   if
-      client.config
-      and client.config.capabilities
-      and client.config.capabilities.documentFormattingProvider == false
+    client.config
+    and client.config.capabilities
+    and client.config.capabilities.documentFormattingProvider == false
   then
     return false
   end

@@ -268,7 +268,7 @@ return {
           null_ls.builtins.formatting.fish_indent,
           null_ls.builtins.formatting.stylua.with({
             "--indent-type=Spaces",
-            "--indent-width=4",
+            "--indent-width=2",
           }),
           null_ls.builtins.formatting.shfmt,
           -- null_ls.builtins.formatting.goimports,
