@@ -97,7 +97,7 @@ return {
         "folke/neoconf.nvim",
         enabled = false,
         cmd = "Neoconf",
-        config = true
+        config = true,
       },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
       {
@@ -173,8 +173,7 @@ return {
           ["textDocument/implementation"] = list_or_jump("LSP Implementations"),
         }
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
-          handler["textDocument/publishDiagnostics"] = function(...)
-          end
+          handler["textDocument/publishDiagnostics"] = function(...) end
         end
         options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
 
@@ -272,12 +271,11 @@ return {
             "--indent-width=4",
           }),
           null_ls.builtins.formatting.shfmt,
-          null_ls.builtins.formatting.goimports,
-          null_ls.builtins.formatting.gofumpt,
+          -- null_ls.builtins.formatting.goimports,
+          -- null_ls.builtins.formatting.gofumpt,
 
           null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.completion.luasnip,
-
         },
       }
     end,
@@ -328,7 +326,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-        or nil,
+      or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
