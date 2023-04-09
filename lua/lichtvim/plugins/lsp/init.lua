@@ -150,7 +150,7 @@ return {
           end
 
           if settings.formatting_on_save ~= nil and settings.formatting_on_save then
-            require("lichtvim.plugins.lsp.format").on_attach(client, bufnr)
+            require("lichtvim.plugins.lsp.format").on_attach(client, buffer)
           end
         end
 
