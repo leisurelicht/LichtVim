@@ -93,7 +93,7 @@ return {
     dependencies = {
       { "mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim", enabled = false, cmd = "Neoconf", config = true },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
       {
         "hrsh7th/cmp-nvim-lsp",
