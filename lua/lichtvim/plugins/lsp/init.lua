@@ -254,29 +254,9 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = function()
-      local null_ls = require("null-ls")
       return {
         debug = false,
-        sources = {
-
-          null_ls.builtins.diagnostics.fish,
-          null_ls.builtins.diagnostics.flake8,
-          null_ls.builtins.diagnostics.luacheck.with({
-            extra_args = { "--globals=vim" },
-          }),
-
-          null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.formatting.stylua.with({
-            "--indent-type=Spaces",
-            "--indent-width=2",
-          }),
-          null_ls.builtins.formatting.shfmt,
-          -- null_ls.builtins.formatting.goimports,
-          -- null_ls.builtins.formatting.gofumpt,
-
-          null_ls.builtins.code_actions.refactoring,
-          null_ls.builtins.completion.luasnip,
-        },
+            sources = require("lichtvim.plugins.lsp.sources").null_ls(),
       }
     end,
   },
@@ -292,14 +272,7 @@ return {
           package_uninstalled = "✗",
         },
       },
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-        "flake8",
-        "luacheck",
-        "gofumpt",
-        "goimports",
-      },
+      ensure_installed = require("lichtvim.plugins.lsp.sources").mason,
     },
     config = function(_, opts)
       require("mason").setup(opts)
