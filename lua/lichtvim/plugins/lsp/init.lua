@@ -256,7 +256,7 @@ return {
     opts = function()
       return {
         debug = false,
-            sources = require("lichtvim.plugins.lsp.sources").null_ls(),
+        sources = require("lichtvim.plugins.lsp.sources").null_ls(),
       }
     end,
   },
