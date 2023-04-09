@@ -71,7 +71,7 @@ return {
     "ahmedkhalf/project.nvim",
     lazy = true,
     opts = {
-      manual_mode = false,
+      manual_mode = true,
       detection_methods = { "lsp", "pattern" },
       patterns = {
         ".git",
