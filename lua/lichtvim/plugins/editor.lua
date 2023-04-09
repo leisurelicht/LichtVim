@@ -12,57 +12,39 @@ return {
   },
   {
     "phaazon/hop.nvim",
-    version = "v2",
+    enabled = true,
     event = { "BufRead", "BufNewFile" },
     config = function()
-      require("hop").setup()
-      map.set(
-        "n",
-        "f",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-        "Jump forward"
-      )
-      map.set(
-        "n",
-        "F",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-        "Jump backward"
-      )
-      map.set(
-        "o",
-        "f",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-        "Jump forward"
-      )
-      map.set(
-        "o",
-        "F",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-        "Jump backward"
-      )
-      map.set(
-        "",
-        "t",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
-        "Jump forward"
-      )
-      map.set(
-        "",
-        "T",
-        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
-        "Jump backward"
-      )
+      local hop = require("hop")
+      local directions = require("hop.hint").HintDirection
+
+      hop.setup({ keys = "etovxqpdygfblzhckisuran" })
+
+      map.set("", "f", function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+      end, "Jump forward", { remap = true })
+
+      map.set("", "F", function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+      end, "Jump backward", { remap = true })
+
+      map.set("", "t", function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+      end, "Jump forward", { remap = true })
+      map.set("", "T", function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+      end, "Jump backward", { remap = true })
 
       map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
       map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
       map.set("n", "<leader>hc", "<cmd>HopChar1<cr>", "Char")
       map.set("n", "<leader>hp", "<cmd>HopPattern<cr>", "Pattern")
-      map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line Start")
+      map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line start")
       map.set("n", "<leader>haw", "<cmd>HopWordMW<cr>", "Word")
       map.set("n", "<leader>hal", "<cmd>HopLineMW<cr>", "Line")
       map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char")
       map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
-      map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line Start")
+      map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
 
       local wk_ok, wk = pcall(require, "which-key")
       if wk_ok then

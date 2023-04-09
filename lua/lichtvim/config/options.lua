@@ -73,8 +73,8 @@ opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮",
 if vim.g.neovide then
   opt.list = false
   vim.g.neovide_cursor_vfx_mode = "railgun"
-  vim.g.neovide_confirm_quit = true
-  vim.g.neovide_fullscreen = true
+  -- vim.g.neovide_confirm_quit = true
+  -- vim.g.neovide_fullscreen = false
   vim.g.neovide_hide_mouse_when_typing = false
   if sys.IsMacOS() then
     vim.g.neovide_input_macos_alt_is_meta = true

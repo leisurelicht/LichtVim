@@ -8,7 +8,9 @@ return {
   { "MunifTanjim/nui.nvim", lazy = true }, -- ui components
   {
     "folke/noice.nvim",
-    enabled = true,
+    enabled = function()
+      return not vim.g.neovide
+    end,
     event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = {

@@ -482,6 +482,9 @@ return {
     "glepnir/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     config = function()
       require("lspsaga").setup({})
     end,
@@ -490,5 +493,19 @@ return {
       --Please make sure you install markdown and markdown_inline parser
       { "nvim-treesitter/nvim-treesitter" },
     },
+  },
+  {
+    "j-hui/fidget.nvim",
+    enabled = function()
+      return vim.g.neovide
+    end,
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("fidget").setup({
+        window = { blend = 0 },
+      })
+    end,
   },
 }
