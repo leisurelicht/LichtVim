@@ -144,6 +144,11 @@ return {
       end)
 
       local function setup(server)
+        if s_opts[server] == nil then
+          vim.notify("LSP server [" .. server .. "] options not found")
+          return
+        end
+
         local options = s_opts[server].options
         local settings = s_opts[server].settings
 
@@ -186,6 +191,8 @@ return {
   },
   {
     "aznhe21/actions-preview.nvim",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = { "MunifTanjim/nui.nvim" },
     config = function()
       require("actions-preview").setup({
@@ -200,6 +207,8 @@ return {
 
   {
     "ThePrimeagen/refactoring.nvim",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
@@ -477,5 +486,18 @@ return {
       "neovim/nvim-lspconfig",
     },
     opts = { show_numbers = true },
+  },
+  {
+    "glepnir/lspsaga.nvim",
+    enabled = true,
+    event = "LspAttach",
+    config = function()
+      require("lspsaga").setup({})
+    end,
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+      --Please make sure you install markdown and markdown_inline parser
+      { "nvim-treesitter/nvim-treesitter" },
+    },
   },
 }
