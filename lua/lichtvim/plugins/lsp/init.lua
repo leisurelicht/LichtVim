@@ -93,7 +93,12 @@ return {
     dependencies = {
       { "mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
-      { "folke/neoconf.nvim", enabled = false, cmd = "Neoconf", config = true },
+      {
+        "folke/neoconf.nvim",
+        enabled = false,
+        cmd = "Neoconf",
+        config = true
+      },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
       {
         "hrsh7th/cmp-nvim-lsp",
@@ -134,18 +139,27 @@ return {
 
       -- setup autoformat
       require("lichtvim.plugins.lsp.format").autoformat = opts.autoformat
-      -- setup formatting and keymaps
-      require("lichtvim.utils.lazy").on_attach(function(client, buffer)
-        if s_opts[client.name] ~= nil and s_opts[client.name].on_attach ~= nil then
-          s_opts[client.name].on_attach(client, buffer)
+      lazy.on_attach(function(client, buffer)
+        if s_opts[client.name] ~= nil then
+          local settings = s_opts[client.name].settings
+
+          -- FIX: did not work
+          if settings.document_formatting ~= nil then 
+            client.server_capabilities.document_formatting = settings.document_formatting
+            client.server_capabilities.document_range_formatting = settings.document_formatting
+          end
+
+          if settings.formatting_on_save ~= nil and settings.formatting_on_save then
+            require("lichtvim.plugins.lsp.format").on_attach(client, bufnr)
+          end
         end
-        require("lichtvim.plugins.lsp.format").on_attach(client, buffer)
+
         require("lichtvim.plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
       local function setup(server)
         if s_opts[server] == nil then
-          vim.notify("LSP server [" .. server .. "] options not found")
+          -- vim.notify("LSP server [" .. server .. "] options not found")
           return
         end
 
@@ -159,7 +173,8 @@ return {
           ["textDocument/implementation"] = list_or_jump("LSP Implementations"),
         }
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
-          handler["textDocument/publishDiagnostics"] = function(...) end
+          handler["textDocument/publishDiagnostics"] = function(...)
+          end
         end
         options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
 
@@ -226,7 +241,6 @@ return {
       prompt_func_param_type = {
         go = true,
         java = false,
-
         cpp = false,
         c = false,
         h = false,
@@ -245,20 +259,22 @@ return {
       return {
         debug = false,
         sources = {
-          null_ls.builtins.formatting.fish_indent,
+          -- null_ls.builtins.formatting.fish_indent,
           null_ls.builtins.diagnostics.fish,
-          null_ls.builtins.diagnostics.luacheck.with({
-            extra_args = { "--globals=vim lazy" },
-          }),
-          null_ls.builtins.formatting.stylua.with({
-            "--indent-type=Spaces",
-            "--indent-width=2",
-          }),
-          null_ls.builtins.formatting.shfmt,
+          -- null_ls.builtins.diagnostics.luacheck.with({
+          --   extra_args = { "--globals=vim" },
+          -- }),
+          -- null_ls.builtins.formatting.stylua.with({
+          --   "--indent-type=Spaces",
+          --   "--indent-width=4",
+          -- }),
+          -- null_ls.builtins.formatting.shfmt,
           null_ls.builtins.diagnostics.flake8,
-          null_ls.builtins.code_actions.refactoring,
+          -- null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.completion.luasnip,
-          null_ls.builtins.formatting.goimports,
+          -- null_ls.builtins.formatting.goimports,
+          -- null_ls.builtins.formatting.gofumpt,
+          -- null_ls.builtins.formatting.gofmt,
         },
       }
     end,
@@ -277,10 +293,12 @@ return {
       },
       ensure_installed = {
         "stylua",
-        "shfmt",
-        "flake8",
-        "goimports",
+        -- "shfmt",
+        -- "flake8",
+        -- "goimports",
         "luacheck",
+        -- "gofumpt",
+        -- "gofmt",
       },
     },
     config = function(_, opts)
@@ -308,7 +326,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
+        or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()

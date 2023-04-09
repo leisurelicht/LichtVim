@@ -1,7 +1,7 @@
 return {
   settings = {
-    document_diagnostics = true,
-    document_formatting = true,
+    document_diagnostics = false,
+    document_formatting = false,
     formatting_on_save = false,
   },
   options = {
@@ -26,6 +26,15 @@ return {
         },
         completion = {
           callSnippet = "Replace",
+        },
+        format = {
+          enable = true,
+          -- Put format options here
+          -- NOTE: the value should be STRING!!
+          defaultConfig = {
+            indent_style = "space",
+            indent_size = "2",
+          },
         },
       },
     },
