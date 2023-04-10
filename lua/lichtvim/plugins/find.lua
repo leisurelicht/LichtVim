@@ -83,7 +83,7 @@ return {
         "package.json",
       },
       ignore_lsp = { "dockerls", "null_ls", "copilot" },
-      exclude_dirs = {},
+      exclude_dirs = { "/", "~" },
       show_hidden = true,
       silent_chdir = false,
       datapath = vim.fn.stdpath("data"),
@@ -260,11 +260,11 @@ return {
           },
           mappings = {
             i = {
-              ["<C-t>"] = trouble.open_with_trouble,
-              ["<A-t>"] = trouble.open_selected_with_trouble,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<ESC>"] = actions.close,
+              ["<C-j>"] = actions.move_selection_next,
+              ["<C-k>"] = actions.move_selection_previous,
             },
             n = { ["<ESC>"] = actions.close },
           },
