@@ -374,6 +374,7 @@ return {
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       local context = require("cmp.config.context")
+      local icons = require("lichtvim.utils.ui.icons")
       return {
         enabled = function()
           -- disable completion in comments
@@ -469,10 +470,10 @@ return {
           format = require("lspkind").cmp_format({
             mode = "symbol_text",
             maxwidth = 50,
-            symbol_map = require("lichtvim.utils.ui.icons").kind,
+            symbol_map = icons.kind,
             before = function(entry, vim_item)
               vim_item.menu = (function()
-                local m = require("lichtvim.utils.ui.icons").source[entry.source.name]
+                local m = icons.source[entry.source.name]
                 if m == nil then
                   m = "[" .. string.upper(entry.source.name) .. "]"
                 end
@@ -498,6 +499,22 @@ return {
           { name = "fuzzy_buffer" },
         }),
       })
+
+      if lazy.has("copilot.lua") then
+        local suggestion = require("copilot.suggestion")
+        cmp.event:on("menu_opened", function()
+          suggestion.dismiss()
+          vim.b.copilot_suggestion_hidden = true
+        end)
+
+        cmp.event:on("menu_closed", function()
+          vim.b.copilot_suggestion_hidden = false
+        end)
+
+        cmp.event:on("confirm_done", function()
+          vim.b.copilot_suggestion_hidden = false
+        end)
+      end
 
       -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       -- local cmp = require("cmp")
