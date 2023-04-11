@@ -74,7 +74,7 @@ return {
     lazy = true,
     opts = {
       manual_mode = true,
-      detection_methods = { "lsp", "pattern" },
+      detection_methods = { "pattern" },
       patterns = {
         ".git",
         "_darcs",
@@ -83,6 +83,10 @@ return {
         ".svn",
         "Makefile",
         "package.json",
+        "go.mod",
+        "requirements.txt",
+        "pyproject.toml",
+        "Cargo.toml",
       },
       ignore_lsp = { "dockerls", "null_ls", "copilot" },
       exclude_dirs = { "/", "~" },
@@ -205,9 +209,7 @@ return {
       --     results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
       --     preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
       --   },
-      --   width = 0.8,
-      --   previewer = false,
-      --   prompt_title = false,
+      --   width = 0.8, previewer = false, prompt_title = false,
       -- })
 
       -- local center_list = themes.get_dropdown({
