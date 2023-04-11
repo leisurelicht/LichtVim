@@ -32,11 +32,13 @@ local function ts_b(builtin, opts)
 end
 
 return {
-  { "tami5/sqlite.lua", lazy = true },
+  { "kkharji/sqlite.lua", lazy = true },
   {
     "AckslD/nvim-neoclip.lua",
     lazy = true,
-    dependencies = "tami5/sqlite.lua",
+    dependencies = {
+      { "kkharji/sqlite.lua", module = "sqlite" },
+    },
     opts = {
       history = 1000,
       enable_persistent_history = true,
@@ -100,7 +102,7 @@ return {
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-frecency.nvim" },
+      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
       { "ahmedkhalf/project.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
       {
