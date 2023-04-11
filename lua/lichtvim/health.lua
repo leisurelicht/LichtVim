@@ -8,10 +8,10 @@ M = {}
 function M.check()
   vim.health.report_start("LichtVim")
 
-  if vim.fn.has("nvim-0.8.0") == 1 then
-    vim.health.report_ok("Using Neovim >= 0.8.0")
+  if vim.fn.has("nvim-0.9.0") == 1 then
+    vim.health.report_ok("Using Neovim >= 0.9.0")
   else
-    vim.health.report_error("Neovim >= 0.8.0 is required")
+    vim.health.report_error("Neovim >= 0.9.0 is required")
   end
 
   for _, cmd in ipairs({ "git", "rg", { "fd", "fdfind" }, "lazygit", "fzf", "sed" }) do
