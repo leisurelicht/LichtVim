@@ -519,8 +519,20 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
     },
-    config = function()
-      require("lspsaga").setup({})
+    opts = {
+      lightbulb = {
+        enable = true,
+        enable_in_insert = false,
+        sign = true,
+        sign_priority = 40,
+        virtual_text = false,
+      },
+      ui = {
+        border = "rounded",
+      },
+    },
+    config = function(_, opts)
+      require("lspsaga").setup(opts)
     end,
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },

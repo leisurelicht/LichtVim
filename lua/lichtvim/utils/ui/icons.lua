@@ -5,7 +5,7 @@
 --
 local M = {}
 
-M.lsp_hover = {
+M.lsp = {
   Action = "💡",
 }
 
