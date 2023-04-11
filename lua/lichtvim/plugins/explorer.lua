@@ -38,8 +38,8 @@ return {
     require("nvim-tree").setup({
       open_on_tab = false,
       system_open = { cmd = nil, args = {} },
-      sync_root_with_cwd = true,
-      respect_buf_cwd = true,
+      sync_root_with_cwd = false,
+      respect_buf_cwd = false,
       update_focused_file = { enable = true, update_root = true },
       view = {
         width = 30,

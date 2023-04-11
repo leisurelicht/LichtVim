@@ -75,5 +75,10 @@ return {
       mode = "v",
       prefix = "<leader>",
     })
+    wk.register({
+      ga = "Print ascii code",
+      mode = "n",
+      prefix = "",
+    })
   end,
 }
