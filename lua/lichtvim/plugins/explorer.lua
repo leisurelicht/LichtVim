@@ -40,7 +40,7 @@ return {
       system_open = { cmd = nil, args = {} },
       sync_root_with_cwd = false,
       respect_buf_cwd = false,
-      update_focused_file = { enable = true, update_root = true },
+      update_focused_file = { enable = true, update_root = false },
       view = {
         width = 30,
         mappings = {
