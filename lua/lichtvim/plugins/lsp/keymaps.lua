@@ -22,13 +22,13 @@ function M.get()
   M._keys = {
     { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
     { "<leader>ln", M.diagnostic_goto(true), desc = "Next diagnostic" },
-    { "<leader>lp", M.diagnostic_goto(false), desc = "Prev Diagnostic" },
+    { "<leader>lp", M.diagnostic_goto(false), desc = "Previous diagnostic" },
     { "]d", M.diagnostic_goto(true), desc = "Next diagnostic" },
-    { "[d", M.diagnostic_goto(false), desc = "Prev diagnostic" },
-    { "]e", M.diagnostic_goto(true, "ERROR"), desc = "Next error" },
-    { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev error" },
-    { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next warning" },
-    { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev warning" },
+    { "[d", M.diagnostic_goto(false), desc = "Previous diagnostic" },
+    { "]e", M.diagnostic_goto(true, "ERROR"), desc = "Next diagnostic (error)" },
+    { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Previous diagnostic (error)" },
+    { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next diagnostic (warning)" },
+    { "[w", M.diagnostic_goto(false, "WARN"), desc = "Previous diagnostic (warning)" },
     { "<leader>lF", format, desc = "Format document", has = "documentFormatting" },
     { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
@@ -36,13 +36,12 @@ function M.get()
     { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
     { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
-    { "<leader>lt", vim.lsp.buf.type_definition, "Goto type definition" },
-    { "<leader>li", vim.lsp.buf.implementation, "Goto implementation", has = "implementation" },
-    { "<leader>lf", vim.lsp.buf.references, "Goto references" },
-    { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
+    { "<leader>lt", vim.lsp.buf.type_definition, desc = "Goto type definition" },
+    { "<leader>li", vim.lsp.buf.implementation, desc = "Goto implementation", has = "implementation" },
+    { "<leader>lf", vim.lsp.buf.references, desc = "Goto references" },
     {
       "<leader>la",
-      vim.lsp.buf.code_actionn,
+      vim.lsp.buf.code_action,
       mode = { "v", "n" },
       desc = "Code action",
       has = "codeAction",
@@ -61,11 +60,12 @@ function M.get()
           border = "rounded",
         })
       end,
-      desc = "Line diagnostic",
+      desc = "Diagnostic (line)",
     },
+    { "<leader>lg", vim.lsp.buf.references, desc = "Diagnostic (buffer)" },
   }
 
-  if lazy.has("actions-previes.nvim") then
+  if lazy.has("actions-preview.nvim") then
     _keys = {
       {
         "<leader>la",
@@ -73,14 +73,14 @@ function M.get()
           require("actions-preview").code_actions()
         end,
         mode = { "v", "n" },
-        desc = "Code action",
+        desc = "Code action (preview)",
         has = "codeAction",
       },
     }
     list.extend(M._keys, _keys)
   end
 
-  if lazy.has("lspsaga.nvim") then
+  if lazy.has("lspsaga.nvim") and false then
     _keys = {
       {
         "<leader>la",
@@ -90,16 +90,16 @@ function M.get()
         has = "codeAction",
       },
       { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover" },
-      { "<leader>lh", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover" },
+      { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover" },
       {
         "<leader>ll",
         "<cmd>Lspsaga show_line_diagnostics<CR>",
-        desc = "Line diagnostic",
+        desc = "Diagnostic (line)",
       },
       {
         "<leader>lc",
         "<cmd>Lspsaga show_cursor_diagnostics<CR>",
-        desc = "Cursor diagnostic",
+        desc = "Diagnostic (cursor)",
       },
     }
     list.extend(M._keys, _keys)
@@ -113,7 +113,7 @@ function M.get()
         function()
           builtin.lsp_definitions({ reuse_win = true })
         end,
-        desc = "Goto Definition",
+        desc = "Goto definition",
         has = "definition",
       },
       {
@@ -145,7 +145,7 @@ function M.get()
         function()
           builtin.diagnostics({})
         end,
-        desc = "Project Diagnostic",
+        desc = "Diagnostic (project)",
       },
     }
     list.extend(M._keys, _keys)

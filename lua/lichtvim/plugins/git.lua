@@ -1,21 +1,20 @@
 local function git_key(gs, bufnr)
-  map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle Line Blame")
-  map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open Commit URL")
-
-  map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<cr>", "Add Hunk", { buffer = bufnr })
-  map.set("n", "<leader>gA", gs.stage_buffer, "Add Buffer", { buffer = bufnr })
-  map.set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<cr>", "Reset Hunk", { buffer = bufnr })
-  map.set("n", "<leader>gR", gs.reset_buffer, "Reset Buffer", { buffer = bufnr })
-  map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo Stage Hunk", { buffer = bufnr })
-  map.set("n", "<leader>gp", gs.preview_hunk, "Preview Hunk", { buffer = bufnr })
+  map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
+  map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
+  map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<cr>", "Add hunk", { buffer = bufnr })
+  map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
+  map.set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<cr>", "Reset hunk", { buffer = bufnr })
+  map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
+  map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
+  map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
   map.set("n", "<leader>gb", function()
     gs.blame_line({ full = true })
-  end, "Show Blame Line", { buffer = bufnr })
-  map.set("n", "<leader>gd", gs.diffthis, "Diff This", { buffer = bufnr })
+  end, "Show blame line", { buffer = bufnr })
+  map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = bufnr })
   map.set("n", "<leader>gD", function()
     gs.diffthis("~")
-  end, "Diff This?", { buffer = bufnr })
-  map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle Deleted", { buffer = bufnr })
+  end, "Diff this?", { buffer = bufnr })
+  map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = bufnr })
 
   map.set("n", "]g", function()
     if vim.wo.diff then
@@ -25,7 +24,7 @@ local function git_key(gs, bufnr)
       gs.next_hunk()
     end)
     return "<Ignore>"
-  end, "Next Git Hunk", { buffer = bufnr, expr = true })
+  end, "Next git hunk", { buffer = bufnr, expr = true })
 
   map.set("n", "[g", function()
     if vim.wo.diff then
@@ -35,7 +34,7 @@ local function git_key(gs, bufnr)
       gs.prev_hunk()
     end)
     return "<Ignore>"
-  end, "Previous Git Hunk", { buffer = bufnr, expr = true })
+  end, "Previous git hunk", { buffer = bufnr, expr = true })
 
   -- Text object
   map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")

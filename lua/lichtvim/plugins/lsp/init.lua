@@ -238,64 +238,6 @@ return {
     end,
   },
   {
-    "aznhe21/actions-preview.nvim",
-    enabled = false,
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "MunifTanjim/nui.nvim" },
-    config = function()
-      require("actions-preview").setup({
-        diff = {
-          algorithm = "patience",
-          ignore_whitespace = true,
-        },
-        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
-      })
-    end,
-  },
-
-  {
-    "ThePrimeagen/refactoring.nvim",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-    opts = {
-      prompt_func_return_type = {
-        go = true,
-        java = false,
-        cpp = false,
-        c = false,
-        h = false,
-        hpp = false,
-        cxx = false,
-      },
-      prompt_func_param_type = {
-        go = true,
-        java = false,
-        cpp = false,
-        c = false,
-        h = false,
-        hpp = false,
-        cxx = false,
-      },
-      printf_statements = {},
-      print_var_statements = {},
-    },
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = function()
-      return {
-        debug = false,
-        sources = require("lichtvim.plugins.lsp.sources").null_ls(),
-      }
-    end,
-  },
-  {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>um", "<cmd>Mason<cr>", desc = "Mason" } },
@@ -523,6 +465,47 @@ return {
     end,
   },
   {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      return {
+        debug = false,
+        sources = require("lichtvim.plugins.lsp.sources").null_ls(),
+      }
+    end,
+  },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    opts = {
+      prompt_func_return_type = {
+        go = true,
+        java = false,
+        cpp = false,
+        c = false,
+        h = false,
+        hpp = false,
+        cxx = false,
+      },
+      prompt_func_param_type = {
+        go = true,
+        java = false,
+        cpp = false,
+        c = false,
+        h = false,
+        hpp = false,
+        cxx = false,
+      },
+      printf_statements = {},
+      print_var_statements = {},
+    },
+  },
+  {
     "simrat39/symbols-outline.nvim",
     cmd = "SymbolsOutline",
     dependencies = {
@@ -530,6 +513,23 @@ return {
     },
     opts = { show_numbers = true },
   },
+  {
+    "aznhe21/actions-preview.nvim",
+    enabled = true,
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("actions-preview").setup({
+        diff = {
+          algorithm = "patience",
+          ignore_whitespace = true,
+        },
+        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+      })
+    end,
+  },
+
   {
     "glepnir/lspsaga.nvim",
     enabled = true,
