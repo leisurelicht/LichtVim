@@ -121,6 +121,17 @@ map.set("n", "<leader>cl", "viwue", "Lower word")
 map.set("n", "<leader>cu", "viwUe", "Upper word")
 map.set("n", "<leader>co", "wb~ea", "Upper first word")
 
+-- 切换 mouse 模式
+local function switch_mouse()
+  if vim.opt.mouse == "" then
+    vim.opt.mouse = "a"
+  else
+    vim.opt.mouse = ""
+  end
+end
+
+map.set("n", "<leader>a", switch_mouse, "Switch mouse mode")
+
 if lazy.has("which-key.nvim") then
   require("which-key").register({
     c = { name = "ShortCuts" },

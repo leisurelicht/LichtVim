@@ -239,6 +239,7 @@ return {
   },
   {
     "aznhe21/actions-preview.nvim",
+    enabled = false,
     lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -537,6 +538,15 @@ return {
       "neovim/nvim-lspconfig",
     },
     opts = {
+      code_action = {
+        num_shortcut = true,
+        show_server_name = true,
+        extend_gitsigns = false,
+        keys = {
+          quit = "q",
+          exec = "<CR>",
+        },
+      },
       lightbulb = {
         enable = true,
         enable_in_insert = false,

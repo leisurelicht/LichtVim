@@ -67,7 +67,7 @@ return {
       f = { name = "Find" },
       g = { name = "Git" },
       o = { name = "Term" },
-      a = { name = "Session" },
+      i = { name = "Session" },
       mode = "n",
       prefix = "<leader>",
     })

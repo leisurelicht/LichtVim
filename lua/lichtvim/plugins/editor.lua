@@ -219,12 +219,12 @@ return {
     opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" } },
     -- stylua: ignore
     keys = {
-      { "<leader>as", function() require("persistence").load() end, desc = "Restore Session" },
-      { "<leader>al", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>ad", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+      { "<leader>is", function() require("persistence").load() end, desc = "Restore Session" },
+      { "<leader>il", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+      { "<leader>id", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
     },
   },
- 
+
   -- {
   --   "ethanholz/nvim-lastplace",
   --   event = {"BufRead", "BufNewFile"},

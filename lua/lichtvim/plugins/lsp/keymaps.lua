@@ -33,7 +33,27 @@ function M.get()
     { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
+    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
+    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
+    { "<leader>lt", vim.lsp.buf.type_definition, "Goto type definition" },
+    { "<leader>li", vim.lsp.buf.implementation, "Goto implementation", has = "implementation" },
+    { "<leader>lf", vim.lsp.buf.references, "Goto references" },
+    { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
+    {
+      "<leader>la",
+      vim.lsp.buf.code_actionn,
+      mode = { "v", "n" },
+      desc = "Code action",
+      has = "codeAction",
+    },
+    {
+      "<leader>lD",
+      function()
+        vim.lsp.buf.definition({ jump_type = "tab" })
+      end,
+      desc = "Goto definition (tab)",
+    },
     {
       "<leader>ll",
       function()
@@ -43,12 +63,50 @@ function M.get()
       end,
       desc = "Line diagnostic",
     },
-    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
   }
+
+  if lazy.has("actions-previes.nvim") then
+    _keys = {
+      {
+        "<leader>la",
+        function()
+          require("actions-preview").code_actions()
+        end,
+        mode = { "v", "n" },
+        desc = "Code action",
+        has = "codeAction",
+      },
+    }
+    list.extend(M._keys, _keys)
+  end
+
+  if lazy.has("lspsaga.nvim") then
+    _keys = {
+      {
+        "<leader>la",
+        "<cmd>Lspsaga code_action<CR>",
+        mode = { "v", "n" },
+        desc = "Code action",
+        has = "codeAction",
+      },
+      { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover" },
+      { "<leader>lh", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover" },
+      {
+        "<leader>ll",
+        "<cmd>Lspsaga show_line_diagnostics<CR>",
+        desc = "Line diagnostic",
+      },
+      {
+        "<leader>lc",
+        "<cmd>Lspsaga show_cursor_diagnostics<CR>",
+        desc = "Cursor diagnostic",
+      },
+    }
+    list.extend(M._keys, _keys)
+  end
 
   if lazy.has("telescope.nvim") then
     local builtin = require("telescope.builtin")
-
     local _keys = {
       {
         "<leader>ld",
@@ -87,40 +145,7 @@ function M.get()
         function()
           builtin.diagnostics({})
         end,
-        desc = "Diagnostic",
-      },
-      {
-        "<leader>la",
-        function()
-          require("actions-preview").code_actions()
-        end,
-        mode = { "v", "n" },
-        desc = "Code action",
-        has = "codeAction",
-      },
-    }
-
-    list.extend(M._keys, _keys)
-  else
-    local _keys = {
-      { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
-      {
-        "<leader>lD",
-        function()
-          vim.lsp.buf.definition({ jump_type = "tab" })
-        end,
-        desc = "Goto definition (tab)",
-      },
-      { "<leader>lt", vim.lsp.buf.type_definition, "Goto type definition" },
-      { "<leader>li", vim.lsp.buf.implementation, "Goto implementation", has = "implementation" },
-      { "<leader>lf", vim.lsp.buf.references, "Goto references" },
-      { "<leader>lg", vim.diagnostic.setloclist, "Diagnostic" },
-      {
-        "<leader>la",
-        vim.lsp.buf.code_actionn,
-        mode = { "v", "n" },
-        desc = "Code action",
-        has = "codeAction",
+        desc = "Project Diagnostic",
       },
     }
     list.extend(M._keys, _keys)

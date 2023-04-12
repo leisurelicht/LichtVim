@@ -22,14 +22,12 @@ api.autocmd("FileType", {
   group = api.augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
-    "help",
     "lspinfo",
     "man",
     "notify",
     "qf",
     "query", -- :InspectTree
     "spectre_panel",
-    "startuptime",
     "tsplayground",
     "noice",
   },
@@ -54,7 +52,6 @@ api.autocmd("FileType", {
     "startuptime",
     "tsplayground",
     "noice",
-    "NvimTree",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

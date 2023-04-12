@@ -68,10 +68,11 @@ opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 不可见字符不显示
-opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮", space = " ", eol = " " } -- 字符转换
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if vim.g.neovide then
-  opt.list = false
+  vim.notify("Use Neovide Configure")
+  opt.mouse = ""
   vim.g.neovide_cursor_vfx_mode = "railgun"
   -- vim.g.neovide_confirm_quit = true
   -- vim.g.neovide_fullscreen = false
