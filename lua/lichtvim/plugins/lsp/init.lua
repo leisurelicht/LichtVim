@@ -239,6 +239,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    enabled = true,
     cmd = "Mason",
     keys = { { "<leader>um", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
@@ -466,6 +467,7 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     opts = function()
       return {
@@ -507,6 +509,7 @@ return {
   },
   {
     "simrat39/symbols-outline.nvim",
+    enabled = true,
     cmd = "SymbolsOutline",
     dependencies = {
       "neovim/nvim-lspconfig",
