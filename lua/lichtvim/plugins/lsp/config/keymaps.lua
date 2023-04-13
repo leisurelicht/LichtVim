@@ -1,5 +1,5 @@
 local Keys = require("lazy.core.handler.keys")
-local format = require("lichtvim.plugins.lsp.format").format
+local format = require("lichtvim.plugins.lsp.config.format").format
 local list = require("lichtvim.utils").list
 
 local M = {}

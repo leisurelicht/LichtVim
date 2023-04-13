@@ -158,7 +158,7 @@ return {
       end)
 
       -- setup autoformat
-      require("lichtvim.plugins.lsp.format").autoformat = opts.autoformat
+      require("lichtvim.plugins.lsp.config.format").autoformat = opts.autoformat
       lazy.on_attach(function(client, buffer)
         if s_opts[client.name] ~= nil then
           local settings = s_opts[client.name].settings
@@ -206,7 +206,8 @@ return {
         }
 
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
-          handler["textDocument/publishDiagnostics"] = function(...) end
+          handler["textDocument/publishDiagnostics"] = function(...)
+          end
           options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
         end
         options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
