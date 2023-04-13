@@ -43,7 +43,7 @@ return {
       update_focused_file = { enable = true, update_root = true },
       diagnostics = {
         enable = true,
-        show_on_dirs = true,
+        show_on_dirs = false,
         icons = {
           hint = icons.Hint,
           info = icons.Info,
