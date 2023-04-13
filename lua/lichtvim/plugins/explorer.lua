@@ -35,14 +35,27 @@ return {
   end,
   config = function()
     local tree_cb = require("nvim-tree.config").nvim_tree_callback
+    local icons = require("lichtvim.utils.ui.icons").diagnostics
     require("nvim-tree").setup({
       open_on_tab = false,
-      system_open = { cmd = nil, args = {} },
-      sync_root_with_cwd = false,
-      respect_buf_cwd = false,
-      update_focused_file = { enable = true, update_root = false },
+      sync_root_with_cwd = true,
+      respect_buf_cwd = true,
+      update_focused_file = { enable = true, update_root = true },
+      diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        icons = {
+          hint = icons.Hint,
+          info = icons.Info,
+          warning = icons.Warn,
+          error = icons.Error,
+        },
+      },
+      select_prompts = true,
       view = {
+        centralize_selection = true,
         width = 30,
+        signcolumn = "auto",
         mappings = {
           list = {
             { key = "p", action = "print_path", action_cb = print_node_path },
@@ -52,6 +65,9 @@ return {
           },
         },
         number = true,
+        float = {
+          enable = true,
+        },
       },
     })
   end,

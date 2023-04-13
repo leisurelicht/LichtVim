@@ -71,6 +71,7 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
+    enabled = true,
     lazy = true,
     opts = {
       manual_mode = true,
@@ -92,6 +93,7 @@ return {
       exclude_dirs = { "/", "~" },
       show_hidden = true,
       silent_chdir = false,
+      scope_chdir = "tab",
       datapath = vim.fn.stdpath("data"),
     },
     config = function(_, opts)
