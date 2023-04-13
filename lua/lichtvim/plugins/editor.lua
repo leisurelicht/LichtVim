@@ -224,7 +224,7 @@ return {
     "glepnir/flybuf.nvim",
     cmd = "FlyBuf",
     opts = {
-      border = "single", -- border
+      border = "rounded", -- border
       quit = "q", -- quit flybuf window
       mark = "l", -- mark as delet or cancel delete
       delete = "x",
