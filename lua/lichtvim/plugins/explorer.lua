@@ -42,7 +42,7 @@ return {
       respect_buf_cwd = true,
       update_focused_file = { enable = true, update_root = true },
       diagnostics = {
-        enable = true,
+        enable = false,
         show_on_dirs = false,
         icons = {
           hint = icons.Hint,
