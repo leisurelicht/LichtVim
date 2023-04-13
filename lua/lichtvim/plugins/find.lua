@@ -268,11 +268,14 @@ return {
             i = {
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
-              ["<ESC>"] = actions.close,
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
+              ["<ESC>"] = actions.close,
             },
-            n = { ["<ESC>"] = actions.close },
+            n = {
+              ["q"] = actions.close,
+              ["<ESC>"] = actions.close,
+            },
           },
         },
         pickers = {

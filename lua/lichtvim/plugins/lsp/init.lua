@@ -531,7 +531,7 @@ return {
   },
 
   {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
     dependencies = {

@@ -213,16 +213,23 @@ return {
       vim.g.startuptime_tries = 10
     end,
   },
-  { -- session management
-    "folke/persistence.nvim",
-    event = "BufReadPre",
-    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" } },
-    -- stylua: ignore
-    keys = {
-      { "<leader>is", function() require("persistence").load() end, desc = "Restore Session" },
-      { "<leader>il", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>id", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+  {
+    "nvimdev/dbsession.nvim",
+    cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
+    opts = {
+      auto_save_on_exit = true,
     },
+  },
+  {
+    "glepnir/flybuf.nvim",
+    cmd = "FlyBuf",
+    opts = {
+      border = "single", -- border
+      quit = "q", -- quit flybuf window
+      mark = "l", -- mark as delet or cancel delete
+      delete = "x",
+    },
+    config = true,
   },
 
   -- {

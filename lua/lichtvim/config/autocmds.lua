@@ -1,5 +1,5 @@
 -- =================
--- autocmds.lua -
+-- autocmds.lua
 -- Note: 自动命令配置
 -- =================
 --
@@ -22,26 +22,6 @@ api.autocmd("FileType", {
   group = api.augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
-    "lspinfo",
-    "man",
-    "notify",
-    "qf",
-    "query", -- :InspectTree
-    "spectre_panel",
-    "tsplayground",
-    "noice",
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-  end,
-})
-
--- close some filetypes with <esc>
-api.autocmd("FileType", {
-  group = api.augroup("close_with_esc"),
-  pattern = {
-    "PlenaryTestPopup",
     "help",
     "lspinfo",
     "man",
@@ -55,9 +35,31 @@ api.autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- close some filetypes with <esc>
+-- api.autocmd("FileType", {
+--   group = api.augroup("close_with_esc"),
+--   pattern = {
+--     "PlenaryTestPopup",
+--     "help",
+--     "lspinfo",
+--     "man",
+--     "notify",
+--     "qf",
+--     "query", -- :InspectTree
+--     "spectre_panel",
+--     "startuptime",
+--     "tsplayground",
+--     "noice",
+--   },
+--   callback = function(event)
+--     vim.bo[event.buf].buflisted = false
+--     vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+--   end,
+-- })
 
 -- wrap and check for spell in text filetypes
 api.autocmd("FileType", {
@@ -70,12 +72,12 @@ api.autocmd("FileType", {
 })
 
 -- resize splits if window got resized
-api.autocmd({ "VimResized" }, {
-  group = api.augroup("resize_splits"),
-  callback = function()
-    vim.cmd("tabdo wincmd =")
-  end,
-})
+-- api.autocmd({ "VimResized" }, {
+--   group = api.augroup("resize_splits"),
+--   callback = function()
+--     vim.cmd("tabdo wincmd =")
+--   end,
+-- })
 
 -- go to last loc when opening a buffer
 api.autocmd("BufReadPost", {

@@ -62,12 +62,10 @@ return {
     wk.setup(opts)
     wk.register({
       [";"] = { "<cmd>Alpha<cr>", "Dashboard" },
-      q = { "<cmd>confirm q<cr>", "Quit" },
       u = { name = "Utils" },
       f = { name = "Find" },
       g = { name = "Git" },
       o = { name = "Term" },
-      i = { name = "Session" },
       mode = "n",
       prefix = "<leader>",
     })
