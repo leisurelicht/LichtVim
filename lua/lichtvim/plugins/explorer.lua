@@ -70,7 +70,7 @@ return {
           open_win_config = {
             border = "rounded",
             width = 35,
-            height = 65,
+            height = 50,
           },
         },
       },
