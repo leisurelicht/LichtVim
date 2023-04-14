@@ -21,6 +21,9 @@ return {
     event = "LspAttach",
     dependencies = {
       "neovim/nvim-lspconfig",
+      { "nvim-tree/nvim-web-devicons" },
+      --Please make sure you install markdown and markdown_inline parser
+      { "nvim-treesitter/nvim-treesitter" },
     },
     opts = {
       code_action = {
@@ -46,11 +49,6 @@ return {
     config = function(_, opts)
       require("lspsaga").setup(opts)
     end,
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-      --Please make sure you install markdown and markdown_inline parser
-      { "nvim-treesitter/nvim-treesitter" },
-    },
   },
   {
     "j-hui/fidget.nvim",
