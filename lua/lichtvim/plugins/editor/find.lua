@@ -183,7 +183,7 @@ return {
       local previewers = require("telescope.previewers")
       -- local themes = require("telescope.themes")
       local sorters = require("telescope.sorters")
-      local trouble = require("trouble.providers.telescope")
+      -- local trouble = require("trouble.providers.telescope")
 
       local new_maker = function(filepath, bufnr, opts)
         filepath = vim.fn.expand(filepath)

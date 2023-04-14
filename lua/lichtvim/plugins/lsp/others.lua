@@ -51,20 +51,6 @@ return {
     end,
   },
   {
-    "j-hui/fidget.nvim",
-    enabled = function()
-      return vim.g.neovide
-    end,
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      require("fidget").setup({
-        window = { blend = 0 },
-      })
-    end,
-  },
-  {
     "simrat39/symbols-outline.nvim",
     enabled = true,
     cmd = "SymbolsOutline",
