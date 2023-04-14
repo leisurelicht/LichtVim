@@ -3,7 +3,7 @@ return {
   require("lichtvim.plugins.ui.lualine"),
   require("lichtvim.plugins.ui.tabby"),
   -- require("lichtvim.plugins.ui.noice"),
-  -- require("lichtvim.plugins.ui.trouble"),
+  require("lichtvim.plugins.ui.trouble"),
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
   { "MunifTanjim/nui.nvim", lazy = true },
   { -- lsp progress
@@ -100,7 +100,6 @@ return {
         select = {
           get_config = function(conf)
             local str = require("lichtvim.utils").str
-            vim.notify(vim.inspect(conf))
             local buf = vim.api.nvim_get_current_buf()
             local ft = vim.api.nvim_buf_get_option(buf, "filetype")
             local opts = {}

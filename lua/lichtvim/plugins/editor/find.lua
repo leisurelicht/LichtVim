@@ -177,13 +177,12 @@ return {
         desc = "File Browser",
       },
     },
-    opts = function()
+    opts = function(_, opts)
       local Job = require("plenary.job")
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
       -- local themes = require("telescope.themes")
       local sorters = require("telescope.sorters")
-      -- local trouble = require("trouble.providers.telescope")
 
       local new_maker = function(filepath, bufnr, opts)
         filepath = vim.fn.expand(filepath)
@@ -234,7 +233,7 @@ return {
       --   sorting_strategy = "ascending",
       -- }
 
-      return {
+      opts = {
         defaults = {
           prompt_prefix = "🔍 ",
           selection_caret = " ",
@@ -266,11 +265,11 @@ return {
           },
           mappings = {
             i = {
+              ["<ESC>"] = actions.close,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
-              ["<ESC>"] = actions.close,
             },
             n = {
               ["q"] = actions.close,
@@ -304,6 +303,16 @@ return {
         },
         extensions = {},
       }
+
+      if lazy.has("trouble.nvim") then
+        local trouble = require("trouble.providers.telescope")
+        opts.defaults.mappings.n =
+          vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
+        opts.defaults.mappings.i =
+          vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
+      end
+
+      return opts
     end,
     config = function(_, opts)
       local telescope = require("telescope")
