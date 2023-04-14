@@ -1,4 +1,5 @@
 return {
+  require("lichtvim.plugins.ui.theme"),
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
   { -- notify
     "rcarriga/nvim-notify",
@@ -28,6 +29,23 @@ return {
       end
     end,
   },
+  { -- better vim.ui
+    "stevearc/dressing.nvim",
+    enabled = true,
+    lazy = true,
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.select(...)
+      end
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.input(...)
+      end
+    end,
+  },
   { -- lsp progress
     "j-hui/fidget.nvim",
     enabled = function()
@@ -42,11 +60,8 @@ return {
       })
     end,
   },
-
-  require("lichtvim.plugins.ui.theme"),
   require("lichtvim.plugins.ui.alpha"),
   require("lichtvim.plugins.ui.lualine"),
   require("lichtvim.plugins.ui.tabby"),
-  require("lichtvim.plugins.ui.trouble"),
-  require("lichtvim.plugins.ui.dressing"),
+  -- require("lichtvim.plugins.ui.trouble"),
 }
