@@ -131,7 +131,7 @@ return {
         pattern = { "term://*" },
         callback = function()
           local opts = { buffer = 0 }
-          map.set("t", "<esc>", [[<C-\><C-n>]], "Esc", opt)
+          map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opt)
           map.set("t", "jk", [[<C-\><C-n>]], opts)
           map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", opts)
           map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)

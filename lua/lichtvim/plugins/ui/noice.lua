@@ -49,7 +49,7 @@ return {
         },
       },
       messages = {
-        enabled = true,
+        enabled = false,
         view = "notify",
         view_error = "notify",
         view_warn = "notify",

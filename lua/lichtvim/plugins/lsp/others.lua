@@ -1,10 +1,9 @@
 return {
   {
     "aznhe21/actions-preview.nvim",
-    enabled = true,
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "MunifTanjim/nui.nvim" },
+    enabled = false,
+    event = "LspAttach",
+    dependencies = { "nui.nvim" },
     config = function()
       require("actions-preview").setup({
         diff = {

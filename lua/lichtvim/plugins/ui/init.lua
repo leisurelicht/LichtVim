@@ -1,6 +1,25 @@
 return {
-  require("lichtvim.plugins.ui.theme"),
+  require("lichtvim.plugins.ui.alpha"),
+  require("lichtvim.plugins.ui.lualine"),
+  require("lichtvim.plugins.ui.tabby"),
+  -- require("lichtvim.plugins.ui.noice"),
+  -- require("lichtvim.plugins.ui.trouble"),
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
+  { "MunifTanjim/nui.nvim", lazy = true },
+  { -- lsp progress
+    "j-hui/fidget.nvim",
+    enabled = function()
+      return vim.g.neovide
+    end,
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("fidget").setup({
+        window = { blend = 0 },
+      })
+    end,
+  },
   { -- notify
     "rcarriga/nvim-notify",
     keys = {
@@ -22,11 +41,7 @@ return {
       end,
     },
     init = function()
-      if not lazy.has("noice.nvim") then
-        lazy.on_very_lazy(function()
-          vim.notify = require("notify")
-        end)
-      end
+      vim.notify = require("notify")
     end,
   },
   { -- better vim.ui
@@ -45,23 +60,57 @@ return {
         return vim.ui.input(...)
       end
     end,
-  },
-  { -- lsp progress
-    "j-hui/fidget.nvim",
-    enabled = function()
-      return vim.g.neovide
+    opts = function()
+      return {
+        input = {
+          relative = "cursor",
+          win_options = {
+            listchars = "precedes:❮,extends:❯",
+          },
+          mappings = {
+            i = {
+              ["<esc>"] = "close",
+            },
+          },
+          override = function(conf)
+            local title = vim.trim(conf.title)
+            local buf = vim.api.nvim_get_current_buf()
+            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+            if ft == "NvimTree" and title == "Rename to" then
+              if conf.relative == "editor" then
+                conf.title = " Move to "
+              else
+                conf.title = " Rename to "
+              end
+            end
+            return conf
+          end,
+          get_config = function(conf)
+            local buf = vim.api.nvim_get_current_buf()
+            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+            local prompt = vim.trim(conf.prompt)
+            local is_path = vim.fn.isdirectory(conf.default) == 1
+            local opts = {}
+            if ft == "NvimTree" and prompt == "Rename to" and is_path then
+              opts["relative"] = "editor"
+            end
+            return opts
+          end,
+        },
+        select = {
+          get_config = function(conf)
+            local str = require("lichtvim.utils").str
+            vim.notify(vim.inspect(conf))
+            local buf = vim.api.nvim_get_current_buf()
+            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+            local opts = {}
+            if ft == "NvimTree" and str.starts_with(conf.prompt, "Remove") then
+              opts["backend"] = "telescope"
+            end
+            return opts
+          end,
+        },
+      }
     end,
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      require("fidget").setup({
-        window = { blend = 0 },
-      })
-    end,
   },
-  require("lichtvim.plugins.ui.alpha"),
-  require("lichtvim.plugins.ui.lualine"),
-  require("lichtvim.plugins.ui.tabby"),
-  -- require("lichtvim.plugins.ui.trouble"),
 }

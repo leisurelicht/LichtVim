@@ -60,21 +60,6 @@ local function info()
   return datetime .. "   " .. total_plugins .. " plugins" .. version_info
 end
 
-local header = {
-  type = "text",
-  val = logo,
-  opts = { position = "center", hl = pick_color() },
-}
-local heading = {
-  type = "text",
-  val = info,
-  opts = { position = "center", hl = "Number" },
-}
-local footer = {
-  type = "text",
-  val = "- Licht -",
-  opts = { position = "center", hl = "Number" },
-}
 local leader = "SPC"
 
 local function button(sc, txt, keybind, keybind_opts)
@@ -94,7 +79,6 @@ local function button(sc, txt, keybind, keybind_opts)
   end
 
   local function on_press()
-    -- local key = vim.api.nvim_replace_termcodes(keybind .. "<Ignore>", true, false, true)
     local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false, true)
     vim.api.nvim_feedkeys(key, "t", false)
   end
@@ -102,45 +86,46 @@ local function button(sc, txt, keybind, keybind_opts)
   return { type = "button", val = txt, on_press = on_press, opts = opts }
 end
 
-local buttons = {
-  type = "group",
-  val = {
-    button("e", "  New File", "<cmd>ene <cr>"),
-    button("SPC f f", "  Find File"),
-    button("SPC f o", "  Recently Opened Files"),
-    button("SPC f w", "  Find Word"),
-    button("SPC u p", "  Plugins", "<cmd>Lazy<cr>", { desc = "Lazy" }),
-    button("q", "  Quit", "<cmd>confirm q<cr>"),
-  },
-  opts = { spacing = 1 },
-}
-
-local section = {
-  header = header,
-  heading = heading,
-  buttons = buttons,
-  footer = footer,
-}
-
-local config = {
-  layout = {
-    { type = "padding", val = 1 },
-    section.header,
-    { type = "padding", val = 1 },
-    section.heading,
-    { type = "padding", val = 1 },
-    section.buttons,
-    { type = "padding", val = 1 },
-    section.footer,
-  },
-  opts = { margin = 5 },
-}
-
 return {
   {
     "goolord/alpha-nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = config,
+    dependencies = { "nvim-web-devicons" },
+    opts = {
+      layout = {
+        { type = "padding", val = 1 },
+        {
+          type = "text",
+          val = logo,
+          opts = { position = "center", hl = pick_color() },
+        },
+        { type = "padding", val = 1 },
+        {
+          type = "text",
+          val = info,
+          opts = { position = "center", hl = "Number" },
+        },
+        { type = "padding", val = 1 },
+        {
+          type = "group",
+          val = {
+            button("e", "  New File", "<cmd>ene <cr>"),
+            button("SPC f f", "  Find File"),
+            button("SPC f o", "  Recently Opened Files"),
+            button("SPC f w", "  Find Word"),
+            button("SPC u p", "  Plugins", "<cmd>Lazy<cr>", { desc = "Lazy" }),
+            button("q", "  Quit", "<cmd>confirm q<cr>"),
+          },
+          opts = { spacing = 1 },
+        },
+        { type = "padding", val = 1 },
+        {
+          type = "text",
+          val = "- Licht -",
+          opts = { position = "center", hl = "Number" },
+        },
+      },
+      opts = { margin = 5 },
+    },
     init = function()
       vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]])
     end,
