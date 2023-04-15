@@ -7,6 +7,7 @@ return {
   require("lichtvim.plugins.editor.find"),
   require("lichtvim.plugins.editor.which-key"),
   require("lichtvim.plugins.editor.toggleterm"),
+  { "yianwillis/vimcdoc", lazy = true },
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   {
     "nacro90/numb.nvim",

@@ -1,6 +1,7 @@
 return {
   {
     "L3MON4D3/LuaSnip",
+    event = "LspAttach",
     build = (not jit.os:find("Windows"))
         and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
       or nil,
@@ -19,7 +20,7 @@ return {
     "hrsh7th/nvim-cmp",
     enabled = true,
     version = false,
-    event = "InsertEnter",
+    event = "LspAttach",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "onsails/lspkind-nvim",

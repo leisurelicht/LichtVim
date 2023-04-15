@@ -72,7 +72,7 @@ return {
   {
     "ahmedkhalf/project.nvim",
     enabled = true,
-    lazy = true,
+    cmd = "Telescope",
     opts = {
       manual_mode = true,
       detection_methods = { "pattern" },
@@ -109,7 +109,7 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
-      { "ahmedkhalf/project.nvim" },
+      { "project.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
       {
         "folke/todo-comments.nvim",

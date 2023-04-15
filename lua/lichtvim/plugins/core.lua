@@ -2,7 +2,6 @@ require("lichtvim.config").init()
 
 local core = {
   { "folke/lazy.nvim", version = "*" },
-  { "yianwillis/vimcdoc" },
   {
     "nvim-lua/plenary.nvim",
     lazy = true,
