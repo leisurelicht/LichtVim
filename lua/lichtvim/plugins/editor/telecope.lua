@@ -151,7 +151,7 @@ return {
       local Job = require("plenary.job")
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
-      -- local themes = require("telescope.themes")
+      local themes = require("telescope.themes")
       local sorters = require("telescope.sorters")
 
       local new_maker = function(filepath, bufnr, opts)
@@ -173,35 +173,25 @@ return {
         }):sync()
       end
 
-      -- local no_preview = themes.get_dropdown({
-      --   borderchars = {
-      --     { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-      --     prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
-      --     results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
-      --     preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-      --   },
-      --   width = 0.8, previewer = false, prompt_title = false,
-      -- })
-
-      -- local center_list = themes.get_dropdown({
-      --   winblend = 10,
-      --   width = 0.5,
-      --   prompt = " ",
-      --   results_height = 15,
-      --   previewer = false,
-      -- })
+      local center_list = themes.get_dropdown({
+        winblend = 10,
+        width = 0.5,
+        prompt = " ",
+        results_height = 15,
+        previewer = false,
+      })
 
       -- -- Settings for with preview option
-      -- local with_preview = {
-      --   winblend = 10,
-      --   show_line = false,
-      --   results_title = false,
-      --   preview_title = false,
-      --   layout_config = {
-      --     preview_width = 0.5,
-      --   },
-      --   sorting_strategy = "ascending",
-      -- }
+      local with_preview = {
+        winblend = 10,
+        show_line = false,
+        results_title = false,
+        preview_title = false,
+        layout_config = {
+          preview_width = 0.5,
+        },
+        sorting_strategy = "ascending",
+      }
 
       opts = {
         defaults = {
@@ -251,7 +241,7 @@ return {
           find_files = { theme = "dropdown", find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
           git_files = { theme = "dropdown" },
           oldfiles = { theme = "dropdown" },
-          buffers = { theme = "dropdown" },
+          buffers = vim.deepcopy(center_list),
           marks = { theme = "dropdown" },
           commands = { theme = "dropdown" },
           command_history = { theme = "dropdown" },

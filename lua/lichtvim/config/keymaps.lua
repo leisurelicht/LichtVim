@@ -101,9 +101,7 @@ map.set("n", "<leader>t8", "8gt", "Tab 8")
 map.set("n", "<leader>t9", "9gt", "Tab 9")
 
 -- buffer
-if lazy.has("flybuf.nvim") then
-  map.set("n", "<leader>bs", "<cmd>FlyBuf<cr>", "Buffers")
-elseif lazy.has("telescope.nvim") then
+if lazy.has("telescope.nvim") then
   map.set("n", "<leader>bs", require("telescope.builtin").buffers, "Buffers")
 else
   map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
