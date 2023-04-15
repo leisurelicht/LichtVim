@@ -1,11 +1,10 @@
 return {
-  require("lichtvim.plugins.ui.alpha"),
-  require("lichtvim.plugins.ui.lualine"),
-  require("lichtvim.plugins.ui.tabby"),
-  -- require("lichtvim.plugins.ui.noice"),
-  require("lichtvim.plugins.ui.trouble"),
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
   { "MunifTanjim/nui.nvim", lazy = true },
+  { import = "lichtvim.plugins.ui.alpha" },
+  { import = "lichtvim.plugins.ui.lualine" },
+  { import = "lichtvim.plugins.ui.tabby" },
+  { import = "lichtvim.plugins.ui.trouble" },
   { -- lsp progress
     "j-hui/fidget.nvim",
     enabled = function()
@@ -51,7 +50,8 @@ return {
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } }) return vim.ui.select(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.select(...)
       end
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.input = function(...)

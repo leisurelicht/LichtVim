@@ -1,10 +1,9 @@
 return {
-  require("lichtvim.plugins.coding.indent"),
-  require("lichtvim.plugins.coding.autopairs"),
-  require("lichtvim.plugins.coding.git"),
-  require("lichtvim.plugins.coding.others"),
+  { import = "lichtvim.plugins.coding.indent" },
+  { import = "lichtvim.plugins.coding.autopairs" },
+  { import = "lichtvim.plugins.coding.git" },
+  { import = "lichtvim.plugins.coding.others" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
-  { "p00f/nvim-ts-rainbow", event = { "BufRead", "BufNewFile" } },
   {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },

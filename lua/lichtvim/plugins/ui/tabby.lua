@@ -3,7 +3,6 @@ local str = require("lichtvim.utils").str
 return {
   {
     "nanozuki/tabby.nvim",
-    event = "VeryLazy",
     config = function()
       local theme = {
         fill = "TabLineFill",

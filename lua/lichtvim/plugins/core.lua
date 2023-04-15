@@ -1,22 +1,13 @@
 require("lichtvim.config").init()
 
-local core = {
-  { "folke/lazy.nvim", version = "*" },
-  {
-    "nvim-lua/plenary.nvim",
-    lazy = true,
-    cmd = { "PlenaryBustedFile", "PlenaryBustedDirectory" },
-  },
-}
-
 local dev = os.getenv("LICHTVIM_DEV")
 if dev == "1" then
-  return core
+  return {
+    { "folke/lazy.nvim", version = "*" },
+  }
 else
-  table.insert(
-    core,
-    2,
-    { "leisurelicht/LichtVim", priority = 10000, lazy = false, config = true, cond = true, version = "*" }
-  )
-  return core
+  return {
+    { "folke/lazy.nvim", version = "*" },
+    { "leisurelicht/LichtVim", priority = 10000, lazy = false, config = true, cond = true, version = "*" },
+  }
 end

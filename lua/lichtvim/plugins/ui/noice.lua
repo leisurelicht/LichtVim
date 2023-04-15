@@ -5,7 +5,7 @@ return {
       return not vim.g.neovide
     end,
     event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
+    dependencies = { "nui.nvim", "nvim-notify" },
     opts = {
       views = {
         split = {

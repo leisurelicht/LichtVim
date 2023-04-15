@@ -14,6 +14,7 @@ return {
           require("window-picker").setup({
             autoselect_one = true,
             include_current = false,
+            selection_chars = "ABFJDKSL;CMRUEIWOQP",
             filter_rules = {
               -- filter using buffer options
               bo = {

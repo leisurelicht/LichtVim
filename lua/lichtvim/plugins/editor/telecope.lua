@@ -34,73 +34,6 @@ end
 return {
   { "kkharji/sqlite.lua", lazy = true },
   {
-    "AckslD/nvim-neoclip.lua",
-    lazy = true,
-    dependencies = {
-      { "kkharji/sqlite.lua", module = "sqlite" },
-    },
-    opts = {
-      history = 1000,
-      enable_persistent_history = true,
-      continuous_sync = true,
-      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-      filter = function(data)
-        return not all(data.event.regcontents, is_whitespace)
-      end,
-      keys = {
-        telescope = {
-          i = {
-            select = "<cr>",
-            paste = "<a-p>",
-            past_behind = "<a-o>",
-            replay = "<nop>",
-            delete = "<c-d>",
-            custom = {},
-          },
-          n = {
-            select = "<cr>",
-            paste = "p",
-            paste_behind = "P",
-            replay = "<nop>",
-            delete = "dd",
-            custom = {},
-          },
-        },
-      },
-    },
-  },
-  {
-    "ahmedkhalf/project.nvim",
-    enabled = true,
-    cmd = "Telescope",
-    opts = {
-      manual_mode = true,
-      detection_methods = { "pattern" },
-      patterns = {
-        ".git",
-        "_darcs",
-        ".hg",
-        ".bzr",
-        ".svn",
-        "Makefile",
-        "package.json",
-        "go.mod",
-        "requirements.txt",
-        "pyproject.toml",
-        "Cargo.toml",
-      },
-      ignore_lsp = { "dockerls", "null_ls", "copilot" },
-      exclude_dirs = { "/", "~" },
-      show_hidden = false,
-      silent_chdir = false,
-      scope_chdir = "tab",
-      datapath = vim.fn.stdpath("data"),
-    },
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-    end,
-  },
-  {
     "nvim-telescope/telescope.nvim",
     -- dir = "~/Code/neovim/plugins/telescope.nvim",
     version = false,
@@ -108,9 +41,10 @@ return {
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
+      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "sqlite.lua" } },
       { "project.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
+      { "tsakirist/telescope-lazy.nvim" },
       {
         "folke/todo-comments.nvim",
         lazy = true,
@@ -120,6 +54,42 @@ return {
         config = function()
           require("todo-comments").setup({})
         end,
+      },
+      {
+        "AckslD/nvim-neoclip.lua",
+        lazy = true,
+        dependencies = {
+          { "sqlite.lua", module = "sqlite" },
+        },
+        opts = {
+          history = 1000,
+          enable_persistent_history = true,
+          continuous_sync = true,
+          db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+          filter = function(data)
+            return not all(data.event.regcontents, is_whitespace)
+          end,
+          keys = {
+            telescope = {
+              i = {
+                select = "<cr>",
+                paste = "<a-p>",
+                past_behind = "<a-o>",
+                replay = "<nop>",
+                delete = "<c-d>",
+                custom = {},
+              },
+              n = {
+                select = "<cr>",
+                paste = "p",
+                paste_behind = "P",
+                replay = "<nop>",
+                delete = "dd",
+                custom = {},
+              },
+            },
+          },
+        },
       },
     },
     keys = {

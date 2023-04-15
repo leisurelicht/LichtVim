@@ -9,7 +9,7 @@ return {
     "zbirenbaum/copilot.lua",
     build = ":Copilot auth",
     cmd = "Copilot",
-    event = "InsertEnter",
+    event = { "BufNewFile", "BufRead" },
     opts = {
       panel = {
         enabled = true,
