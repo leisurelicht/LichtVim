@@ -8,52 +8,7 @@ return {
   { import = "lichtvim.plugins.editor.neo-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
   { import = "lichtvim.plugins.editor.toggleterm" },
-  { import = "lichtvim.plugins.editor.telecope" },
-  {
-    "ahmedkhalf/project.nvim",
-    opts = {
-      manual_mode = true,
-      detection_methods = { "pattern" },
-      patterns = {
-        ".git",
-        "_darcs",
-        ".hg",
-        ".bzr",
-        ".svn",
-        "Makefile",
-        "package.json",
-        "go.mod",
-        "requirements.txt",
-        "pyproject.toml",
-        "Cargo.toml",
-      },
-      ignore_lsp = { "dockerls", "null_ls", "copilot" },
-      exclude_dirs = { "/", "~" },
-      show_hidden = false,
-      silent_chdir = false,
-      scope_chdir = "tab",
-      datapath = vim.fn.stdpath("data"),
-    },
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-    end,
-  },
-  {
-    "windwp/nvim-spectre",
-    -- stylua: ignore
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    keys = {
-      {
-        "<leader>fr",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace in files (Spectre)",
-      },
-    },
-  },
+  { import = "lichtvim.plugins.editor.find" },
   {
     "nvimdev/dbsession.nvim",
     cmd = { "SessionSave", "SessionDelete", "SessionLoad" },

@@ -2,7 +2,6 @@ return {
   { import = "lichtvim.plugins.coding.indent" },
   { import = "lichtvim.plugins.coding.autopairs" },
   { import = "lichtvim.plugins.coding.git" },
-  { import = "lichtvim.plugins.coding.others" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
   {
     "andymass/vim-matchup",
@@ -39,5 +38,36 @@ return {
       },
       ignore = "^$",
     },
+  },
+  {
+    "ahmedkhalf/project.nvim",
+    dependencies = {},
+    opts = {
+      manual_mode = true,
+      detection_methods = { "pattern" },
+      patterns = {
+        ".git",
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "Makefile",
+        "package.json",
+        "go.mod",
+        "requirements.txt",
+        "pyproject.toml",
+        "Cargo.toml",
+      },
+      ignore_lsp = { "dockerls", "null_ls", "copilot" },
+      exclude_dirs = { "/", "~" },
+      show_hidden = false,
+      silent_chdir = false,
+      scope_chdir = "tab",
+      datapath = vim.fn.stdpath("data"),
+    },
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+      map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
+    end,
   },
 }

@@ -11,8 +11,6 @@ end
 return {
   {
     "nvim-lualine/lualine.nvim",
-    -- event = "VeryLazy",
-    event = { "BufRead", "BufNewFile" },
     dependencies = { "gitsigns.nvim" },
     opts = function()
       return {

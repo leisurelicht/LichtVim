@@ -34,6 +34,22 @@ end
 return {
   { "kkharji/sqlite.lua", lazy = true },
   {
+    "windwp/nvim-spectre",
+    -- stylua: ignore
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    keys = {
+      {
+        "<leader>fr",
+        function()
+          require("spectre").open()
+        end,
+        desc = "Replace in files (Spectre)",
+      },
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
     -- dir = "~/Code/neovim/plugins/telescope.nvim",
     version = false,
@@ -42,9 +58,8 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "sqlite.lua" } },
-      { "project.nvim" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
       { "tsakirist/telescope-lazy.nvim" },
+      { "nvim-telescope/telescope-file-browser.nvim" },
       {
         "folke/todo-comments.nvim",
         lazy = true,
@@ -122,11 +137,6 @@ return {
       { "<leader>gS", ts_b("git_stash"), desc = "Stash" },
       { "<leader>gn", ts_b("git_branches"), desc = "Branches" },
       { "<leader>gs", ts_b("git_status"), desc = "Status" },
-      {
-        "<leader>fj",
-        "<cmd>Telescope projects theme=dropdown<cr>",
-        desc = "Projects",
-      },
       {
         "<leader>fp",
         "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
@@ -230,6 +240,22 @@ return {
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
+              ["<C-g>"] = function(prompt_bufnr)
+                vim.notify(vim.inspect(prompt_bufnr))
+                -- Use nvim-window-picker to choose the window by dynamically attaching a function
+                local action_set = require("telescope.actions.set")
+                local action_state = require("telescope.actions.state")
+
+                local picker = action_state.get_current_picker(prompt_bufnr)
+                picker.get_selection_window = function(picker, entry)
+                  local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
+                  -- Unbind after using so next instance of the picker acts normally
+                  picker.get_selection_window = nil
+                  return picked_window_id
+                end
+
+                return action_set.edit(prompt_bufnr, "edit")
+              end,
             },
             n = {
               ["q"] = actions.close,
@@ -280,7 +306,6 @@ return {
 
       telescope.load_extension("fzf")
       telescope.load_extension("neoclip")
-      telescope.load_extension("projects")
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
 
