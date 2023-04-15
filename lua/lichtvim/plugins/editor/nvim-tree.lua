@@ -1,25 +1,3 @@
-local function open_nvim_tree_dir(data)
-  -- buffer is a directory
-  local directory = require("lichtvim.utils").file.is_dir(data.file)
-
-  if not directory then
-    return
-  end
-
-  if directory then
-    -- change to the directory
-    vim.cmd.cd(data.file)
-  end
-
-  require("nvim-tree.api").tree.open()
-end
-
-api.autocmd({ "VimEnter" }, { group = api.augroup("explorer"), callback = open_nvim_tree_dir })
-
-local function print_node_path(node)
-  print(node.absolute_path)
-end
-
 return {
   {
     "nvim-tree/nvim-tree.lua",
@@ -37,6 +15,10 @@ return {
     config = function()
       local tree_cb = require("nvim-tree.config").nvim_tree_callback
       local icons = require("lichtvim.utils.ui.icons").diagnostics
+      local function print_node_path(node)
+        print(node.absolute_path)
+      end
+
       require("nvim-tree").setup({
         open_on_tab = false,
         sync_root_with_cwd = true,
@@ -76,6 +58,23 @@ return {
           },
         },
       })
+      local function open_nvim_tree_dir(data)
+        -- buffer is a directory
+        local directory = require("lichtvim.utils").file.is_dir(data.file)
+
+        if not directory then
+          return
+        end
+
+        if directory then
+          -- change to the directory
+          vim.cmd.cd(data.file)
+        end
+
+        require("nvim-tree.api").tree.open()
+      end
+
+      api.autocmd({ "VimEnter" }, { group = api.augroup("explorer"), callback = open_nvim_tree_dir })
     end,
   },
 }

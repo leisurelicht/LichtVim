@@ -149,7 +149,7 @@ return {
                 },
               },
             },
-            filetypes = { "NvimTree" },
+            filetypes = { "NvimTree", "neo-tree" },
           },
         },
       }

@@ -18,7 +18,10 @@ return {
           { { "  ", hl = theme.head }, line.sep("", theme.head, theme.fill) },
           line.tabs().foreach(function(tab)
             local tab_name = tab.name()
-            if str.starts_with(vim.fn.toupper(tab_name), "NVIMTREE") then
+            if
+              str.starts_with(vim.fn.tolower(tab_name), "nvimtree")
+              or str.starts_with(vim.fn.tolower(tab_name), "neo-tree")
+            then
               tab_name = "File Explorer"
             end
             local hl = tab.is_current() and theme.current_tab or theme.tab
@@ -36,7 +39,10 @@ return {
           line.spacer(),
           line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
             local win_name = win.buf_name()
-            if str.starts_with(vim.fn.toupper(win_name), "NVIMTREE") then
+            if
+              str.starts_with(vim.fn.toupper(win_name), "nvimtree")
+              or str.starts_with(vim.fn.tolower(tab_name), "neo-tree")
+            then
               win_name = "File Explorer"
             end
             return {

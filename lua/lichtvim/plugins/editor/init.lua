@@ -3,9 +3,9 @@ local path = require("lichtvim.utils").path
 
 return {
   require("lichtvim.plugins.editor.treesitter"),
-  require("lichtvim.plugins.editor.which-key"),
-  require("lichtvim.plugins.editor.explorer"),
+  require("lichtvim.plugins.editor.neo-tree"),
   require("lichtvim.plugins.editor.find"),
+  require("lichtvim.plugins.editor.which-key"),
   require("lichtvim.plugins.editor.toggleterm"),
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   {
