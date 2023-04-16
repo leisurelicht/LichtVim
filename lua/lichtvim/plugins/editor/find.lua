@@ -50,7 +50,7 @@ return {
     },
   },
   {
-    "nvim-telescope/telescope.nvim",
+    "leisurelicht/telescope.nvim",
     -- dir = "~/Code/neovim/plugins/telescope.nvim",
     version = false,
     lazy = true,
