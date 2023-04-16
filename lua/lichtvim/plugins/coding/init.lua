@@ -41,7 +41,7 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
-    dependencies = {},
+    dependencies = { "telescope.nvim" },
     opts = {
       manual_mode = true,
       detection_methods = { "pattern" },
@@ -67,6 +67,8 @@ return {
     },
     config = function(_, opts)
       require("project_nvim").setup(opts)
+
+      require("telescope").load_extension("projects")
       map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
     end,
   },

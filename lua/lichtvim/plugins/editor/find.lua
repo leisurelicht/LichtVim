@@ -60,6 +60,7 @@ return {
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "sqlite.lua" } },
       { "tsakirist/telescope-lazy.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
+      { "tsakirist/telescope-lazy.nvim" },
       {
         "folke/todo-comments.nvim",
         lazy = true,
@@ -156,6 +157,7 @@ return {
         end,
         desc = "File Browser",
       },
+      { "<leader>fz", "<cmd>Telescope lazy<cr>", desc = "Lazy" },
     },
     opts = function(_, opts)
       local Job = require("plenary.job")
@@ -287,7 +289,25 @@ return {
           lsp_incoming_calls = {},
           lsp_outgoing_calls = {},
         },
-        extensions = {},
+        extensions = {
+          lazy = vim.tbl_extend("force", center_list, {
+            -- Optional theme (the extension doesn't set a default theme)
+            theme = "dropdown",
+            -- Whether or not to show the icon in the first column
+            show_icon = true,
+            -- Mappings for the actions
+            mappings = {
+              open_in_browser = "<C-o>",
+              open_in_file_browser = "<C-b>",
+              open_in_find_files = "<C-f>",
+              open_in_live_grep = "<C-g>",
+              -- open_plugins_picker = "<C-b>", -- Works only after having called first another action
+              -- open_lazy_root_find_files = "<C-r>f",
+              -- open_lazy_root_live_grep = "<C-r>g",
+            },
+            -- Other telescope configuration options
+          }),
+        },
       }
 
       if lazy.has("trouble.nvim") then
@@ -308,6 +328,7 @@ return {
       telescope.load_extension("neoclip")
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
+      telescope.load_extension("lazy")
 
       if lazy.has("noice.nvim") then
         telescope.load_extension("noice")
