@@ -111,8 +111,7 @@ return {
     enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { "mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
+      { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
       {
         "folke/neoconf.nvim",
         enabled = false,
@@ -206,8 +205,7 @@ return {
         }
 
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
-          handler["textDocument/publishDiagnostics"] = function(...)
-          end
+          handler["textDocument/publishDiagnostics"] = function(...) end
           options.handlers = vim.tbl_deep_extend("force", handler, options.handlers or {})
         end
         options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
