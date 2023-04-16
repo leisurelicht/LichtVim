@@ -37,8 +37,7 @@ return {
             vim.notify("Exiting Resize Mode. Bye")
           end,
         },
-      },
-    },
+      }, },
     config = function(_, opts)
       require("smart-splits").setup(opts)
       map.set("n", "<leader>ur", function()

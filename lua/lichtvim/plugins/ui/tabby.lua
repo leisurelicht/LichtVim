@@ -4,57 +4,68 @@ return {
   {
     "nanozuki/tabby.nvim",
     config = function()
-      local theme = {
-        fill = "TabLineFill",
-        head = "TabLine",
-        current_tab = "TabLineSel",
-        tab = "TabLine",
-        win = "TabLine",
-        tail = "TabLine",
-      }
       require("tabby.tabline").set(function(line)
         return {
-          { { "  ", hl = theme.head }, line.sep("", theme.head, theme.fill) },
+          { { "  ", hl = "LichtTLHead" }, line.sep("", "LichtTLHead", "LichtTLLineSep") },
           line.tabs().foreach(function(tab)
-            local tab_name = tab.name()
-            if
-              str.starts_with(vim.fn.tolower(tab_name), "nvimtree")
-              or str.starts_with(vim.fn.tolower(tab_name), "neo-tree")
-            then
-              tab_name = "File Explorer"
+            if vim.api.nvim_win_get_config(0).relative ~= "" then
+              return
             end
-            local hl = tab.is_current() and theme.current_tab or theme.tab
+
+            local tab_name = tab.name()
+
+            local ft = vim.api.nvim_buf_get_option(0, "filetype")
+            if ft == "alpha" then
+              tab_name = "Alpha"
+            else
+              local tnl = vim.fn.tolower(tab_name)
+              if str.starts_with(tnl, "nvimtree") or str.starts_with(tnl, "neo-tree") then
+                tab_name = "File Explorer"
+              end
+            end
+
+            local hl = tab.is_current() and "LichtTLActiveTab" or "LichtTLUnActive"
             return {
-              line.sep("", hl, theme.fill),
+              line.sep(" ", hl, "LichtTLLineSep"),
               tab.is_current() and "" or "",
               tab.number(),
               tab_name,
               tab.is_current() and tab.close_btn("") or "",
-              line.sep("", hl, theme.fill),
+              line.sep("", hl, "LichtTLLineSep"),
               hl = hl,
               margin = " ",
             }
           end),
           line.spacer(),
           line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+            if vim.api.nvim_win_get_config(0).relative ~= "" then
+              return
+            end
+
             local win_name = win.buf_name()
-            if
-              str.starts_with(vim.fn.toupper(win_name), "nvimtree")
-              or str.starts_with(vim.fn.tolower(tab_name), "neo-tree")
-            then
+
+            local ft = vim.api.nvim_buf_get_option(0, "filetype")
+            if ft == "alpha" then
+              win_name = "Alpha"
+            end
+
+            local wnl = vim.fn.tolower(win_name)
+            if str.starts_with(wnl, "nvimtree") or str.starts_with(wnl, "neo-tree") then
               win_name = "File Explorer"
             end
+
+            local hl = win.is_current() and "LichtTLActiveWin" or "LichtTLUnActive"
             return {
-              line.sep("", theme.win, theme.fill),
+              line.sep(" ", hl, "LichtTLLineSep"),
               win.is_current() and "" or "",
               win_name,
-              line.sep("", theme.win, theme.fill),
-              hl = theme.win,
+              line.sep("", hl, "LichtTLLineSep"),
+              hl = hl,
               margin = " ",
             }
           end),
-          { line.sep("", theme.tail, theme.fill), { "  ", hl = theme.tail } },
-          hl = theme.fill,
+          { line.sep(" ", "LichtTLTail", "LichtTLLineSep"), { " ", hl = "LichtTLTail" } },
+          hl = "LichtTLLineSep",
         }
       end)
     end,

@@ -30,6 +30,21 @@ function M.del(mode, lhs, opts)
   vim.keymap.del(mode, lhs, opts)
 end
 
+function M.has(mode, lhs, opts)
+  local keymap = {}
+  if opts and opts.buffer then
+    keymap = vim.api.nvim_buf_get_keymap(opts.buffer, mode)
+  else
+    keymap = vim.api.nvim_get_keymap(mode)
+  end
+  for _, v in pairs(keymap) do
+    if v.lhs == lhs then
+      return true
+    end
+  end
+  return false
+end
+
 function M.mapKey(mode, lhs, rhs, opts)
   opts = check_opts(opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)

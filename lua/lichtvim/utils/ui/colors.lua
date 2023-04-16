@@ -147,10 +147,13 @@ function M.generate_user_config_highlights()
     LichtSLGitBranch = { fg = pal.yellow, bg = pal.sl.bg },
     -- tabline
     LichtTLHead = { fg = pal.fill.bg, bg = pal.cyan },
+    LichtTLTAIL = { fg = pal.fill.bg, bg = pal.magenta },
     LichtTLHeadSep = { fg = pal.cyan, bg = pal.fill.bg },
     LichtTLActive = { fg = pal.sel.fg, bg = pal.sel.bg, style = "bold" },
     LichtTLActiveSep = { fg = pal.sel.bg, bg = pal.fill.bg },
-    LichtTLBoldLine = { fg = pal.tab.fg, bg = pal.tab.bg, style = "bold" },
+    LichtTLUnActive = { fg = pal.sel.fg, bg = pal.sel.bg },
+    LichtTLActiveTab = { fg = pal.tab.fg, bg = pal.cyan, style = "bold" },
+    LichtTLActiveWin = { fg = pal.black, bg = pal.magenta, stru = "bold" },
     LichtTLLineSep = { fg = pal.tab.bg, bg = pal.fill.bg },
   }
 
