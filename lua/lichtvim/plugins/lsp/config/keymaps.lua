@@ -170,8 +170,9 @@ function M.get()
 end
 
 function M.on_attach(client, buffer)
-  local keymaps = {}
+  vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
+  local keymaps = {}
   for _, value in ipairs(M.get()) do
     local keys = Keys.parse(value)
     if keys[2] == vim.NIL or keys[2] == false then
