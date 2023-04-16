@@ -7,6 +7,7 @@ return {
   { import = "lichtvim.plugins.ui.trouble" },
   { -- lsp progress
     "j-hui/fidget.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     enabled = function()
       return vim.g.neovide
     end,
