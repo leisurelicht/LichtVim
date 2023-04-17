@@ -4,23 +4,30 @@ return {
   {
     "nanozuki/tabby.nvim",
     config = function()
+      local t_name = require("tabby.feature.tab_name")
+      local t_api = require("tabby.module.api")
       require("tabby.tabline").set(function(line)
         return {
           { { "  ", hl = "LichtTLHead" }, line.sep("", "LichtTLHead", "LichtTLLineSep") },
           line.tabs().foreach(function(tab)
-            if vim.api.nvim_win_get_config(0).relative ~= "" then
+            local tab_name = tab.name()
+
+            if t_api.is_float_win(0) then
               return
             end
 
-            local tab_name = tab.name()
+            local tnl = vim.fn.tolower(tab_name)
+            if str.starts_with(tnl, "nvimtree") or str.starts_with(tnl, "neo-tree") then
+              tab_name = "File Explorer"
+            end
 
-            local ft = vim.api.nvim_buf_get_option(0, "filetype")
-            if ft == "alpha" then
-              tab_name = "Alpha"
-            else
-              local tnl = vim.fn.tolower(tab_name)
-              if str.starts_with(tnl, "nvimtree") or str.starts_with(tnl, "neo-tree") then
-                tab_name = "File Explorer"
+            if #tab.wins() == 0 then
+              local buf = tab.current_win().buf().id
+              local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+              if ft == "alpha" then
+                tab_name = "Alpha"
+              elseif ft == "checkhealth" then
+                tab_name = "CheckHealth"
               end
             end
 
@@ -38,7 +45,7 @@ return {
           end),
           line.spacer(),
           line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
-            if vim.api.nvim_win_get_config(0).relative ~= "" then
+            if t_api.is_float_win(0) then
               return
             end
 
@@ -47,6 +54,8 @@ return {
             local ft = vim.api.nvim_buf_get_option(0, "filetype")
             if ft == "alpha" then
               win_name = "Alpha"
+            elseif ft == "checkhealth" then
+              win_name = "CheckHealth"
             end
 
             local wnl = vim.fn.tolower(win_name)
