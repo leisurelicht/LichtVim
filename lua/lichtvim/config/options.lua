@@ -80,5 +80,7 @@ if vim.g.neovide then
   vim.g.neovide_remember_window_size = true
   if sys.IsMacOS() then
     vim.g.neovide_input_macos_alt_is_meta = true
+    map.set("n", "<D-v>", "p")
+    map.set("i", "<D-v>", "<esc>pa")
   end
 end
