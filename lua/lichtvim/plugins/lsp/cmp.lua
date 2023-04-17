@@ -21,6 +21,7 @@ return {
     enabled = true,
     version = false,
     event = "LspAttach",
+
     dependencies = {
       "nvim-lua/plenary.nvim",
       "onsails/lspkind-nvim",
@@ -58,6 +59,10 @@ return {
             return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
           end
         end,
+        preselect = cmp.PreselectMode.None,
+        experimental = {
+          ghost_text = false, -- this feature conflict with copilot.vim's preview.
+        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -98,7 +103,7 @@ return {
                 fallback()
               end
             end,
-            s = cmp.mapping.confirm({ select = true }),
+            s = cmp.mapping.confirm({ select = false }),
             -- c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
           }),
         }),
@@ -124,14 +129,6 @@ return {
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
-        },
-        window = {
-          completion = cmp.config.window.bordered({
-            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-          }),
-          documentation = cmp.config.window.bordered({
-            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-          }),
         },
         formatting = {
           fields = {
