@@ -1,10 +1,10 @@
 local function _smart_add_term()
-  local direction = require("toggleterm.ui").guess_direction()
-
   if vim.b.toggle_number == nil then
-    vim.notify("Create First Term Please")
+    vim.notify("Create A Terminal And Move In Please")
     return
   end
+
+  local direction = require("toggleterm.ui").guess_direction()
 
   if direction == nil then
     if vim.g._term_direction == 1 then
@@ -12,7 +12,7 @@ local function _smart_add_term()
     elseif vim.g._term_direction == 2 then
       direction = "horizontal"
     elseif vim.g._term_direction == 0 then
-      vim.notify("Can Not Add Term Window", vim.log.levels.WARN)
+      vim.notify("Can Not Add A Terminal Window", vim.log.levels.INFO)
       return
     end
   end
@@ -95,29 +95,15 @@ return {
       },
     },
     keys = function()
-      -- TODO: 自动调用 glow 预览 markdown 文件
-      -- api.autocmd({ "FileType" }, {
-      --   group = api.augroup("Runner", { clear = true }),
-      --   pattern = { "markdown" },
-      --   callback = function()
-      --     local file_name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-      --     map.set("n", "<leader>r", function()
-      --       _glow(file_name)
-      --     end, "Run", { buffer = vim.api.nvim_get_current_buf() })
-      --   end,
-      -- })
-
       return {
-        { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-        -- { "<C-T>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-        -- { "<C-T>", "<ESC><CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Term Toggle" },
-        { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle In Float" },
-        { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle In Tab" },
-        { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle In Horizontal" },
-        { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle In Vertical" },
-        { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send Current Line" },
-        { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send Visual Lines" },
-        { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send Visual Selection" },
+        { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Toggle terminal" },
+        { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle in float" },
+        { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle in tab" },
+        { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle in horizontal" },
+        { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle in vertical" },
+        { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send current line" },
+        { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send visual lines" },
+        { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send visual selection" },
         { "<leader>uh", _htop, desc = "Htop" },
         { "<leader>gl", _lazygit, desc = "Lazygit" },
       }
@@ -131,15 +117,29 @@ return {
         pattern = { "term://*" },
         callback = function()
           local opts = { buffer = 0 }
-          map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opt)
+          map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opts)
           map.set("t", "jk", [[<C-\><C-n>]], opts)
           map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", opts)
           map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
           map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
           map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
-          map.set("t", "<C-n>", _smart_add_term, "New", opts)
+          map.set("t", "<C-n>", _smart_add_term, "Add new terminal", opts)
+          map.set("n", "<leader>oa", _smart_add_term, "Add new terminal", opts)
         end,
       })
+
+      -- TODO: 自动调用 glow 预览 markdown 文件
+      -- api.autocmd({ "FileType" }, {
+      --   group = api.augroup("Runner", { clear = true }),
+      --   pattern = { "markdown" },
+      --   callback = function()
+      --     local buf = vim.api.nvim_get_current_buf()
+      --     local file_name = vim.api.nvim_buf_get_name(buf)
+      --     map.set("n", "<leader>r", function()
+      --       _glow(file_name)
+      --     end, "Run", { buffer = buf })
+      --   end,
+      -- })
     end,
   },
 }
