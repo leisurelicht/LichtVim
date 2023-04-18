@@ -323,7 +323,6 @@ return {
                 ["<C-f>"] = fb_actions.goto_parent_dir,
                 ["<C-r>"] = fb_actions.rename,
                 ["<C-a>"] = fb_actions.create,
-                -- ["<C-b>"] = fb_actions.move,
                 ["<C-y>"] = fb_actions.copy,
                 ["<C-d>"] = fb_actions.remove,
                 -- your custom insert mode mappings
