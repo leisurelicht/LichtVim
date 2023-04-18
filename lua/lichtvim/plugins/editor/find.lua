@@ -147,13 +147,7 @@ return {
       {
         "<leader>fe",
         function()
-          require("telescope").extensions.file_browser.file_browser({
-            sorting_strategy = "ascending",
-            layout_config = {
-              -- preview_cutoff = 0.5,
-              prompt_position = "top",
-            },
-          })
+          require("telescope").extensions.file_browser.file_browser({})
         end,
         desc = "File Browser",
       },
@@ -165,6 +159,7 @@ return {
       local previewers = require("telescope.previewers")
       local themes = require("telescope.themes")
       local sorters = require("telescope.sorters")
+      local fb_actions = require("telescope").extensions.file_browser.actions
 
       local new_maker = function(filepath, bufnr, opts)
         filepath = vim.fn.expand(filepath)
@@ -242,22 +237,21 @@ return {
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
-              ["<C-g>"] = function(prompt_bufnr)
-                vim.notify(vim.inspect(prompt_bufnr))
-                -- Use nvim-window-picker to choose the window by dynamically attaching a function
-                local action_set = require("telescope.actions.set")
-                local action_state = require("telescope.actions.state")
+              -- ["<C-g>"] = function(prompt_bufnr)
+              --   -- Use nvim-window-picker to choose the window by dynamically attaching a function
+              --   local action_set = require("telescope.actions.set")
+              --   local action_state = require("telescope.actions.state")
 
-                local picker = action_state.get_current_picker(prompt_bufnr)
-                picker.get_selection_window = function(picker, entry)
-                  local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
-                  -- Unbind after using so next instance of the picker acts normally
-                  picker.get_selection_window = nil
-                  return picked_window_id
-                end
+              --   local picker = action_state.get_current_picker(prompt_bufnr)
+              --   picker.get_selection_window = function(picker, entry)
+              --     local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
+              --     -- Unbind after using so next instance of the picker acts normally
+              --     picker.get_selection_window = nil
+              --     return picked_window_id
+              --   end
 
-                return action_set.edit(prompt_bufnr, "edit")
-              end,
+              --   return action_set.edit(prompt_bufnr, "edit")
+              -- end,
             },
             n = {
               ["q"] = actions.close,
@@ -306,6 +300,38 @@ return {
               -- open_lazy_root_live_grep = "<C-r>g",
             },
             -- Other telescope configuration options
+          }),
+          file_browser = vim.tbl_extend("force", center_list, {
+            theme = "ivy",
+            -- disables netrw and use telescope-file-browser in its place
+            hijack_netrw = true,
+            sorting_strategy = "ascending",
+            layout_config = {
+              -- preview_cutoff = 0.5,
+              prompt_position = "top",
+            },
+            mappings = {
+              ["i"] = {
+                ["<A-y>"] = false,
+                ["<A-m>"] = false,
+                ["<A-c>"] = false,
+                ["<A-r>"] = false,
+                ["<A-d>"] = false,
+                ["<A-q>"] = false,
+                ["<C-Q>"] = false,
+                ["<C-G>"] = false,
+                ["<C-f>"] = fb_actions.goto_parent_dir,
+                ["<C-r>"] = fb_actions.rename,
+                ["<C-a>"] = fb_actions.create,
+                -- ["<C-b>"] = fb_actions.move,
+                ["<C-y>"] = fb_actions.copy,
+                ["<C-d>"] = fb_actions.remove,
+                -- your custom insert mode mappings
+              },
+              ["n"] = {
+                -- your custom normal mode mappings
+              },
+            },
           }),
         },
       }

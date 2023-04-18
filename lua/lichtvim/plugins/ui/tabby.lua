@@ -18,9 +18,9 @@ return {
         return {
           { { "  ", hl = "LichtTLHead" }, line.sep("", "LichtTLHead", "LichtTLLineSep") },
           line.tabs().foreach(function(tab)
-            -- if t_api.is_float_win(0) then
-            --   return
-            -- end
+            if t_api.is_float_win(0) then
+              return
+            end
 
             local buf = tab.current_win().buf().id
             local ft = vim.api.nvim_buf_get_option(buf, "filetype")
@@ -40,9 +40,9 @@ return {
           end),
           line.spacer(),
           line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
-            -- if t_api.is_float_win(0) then
-            --   return
-            -- end
+            if t_api.is_float_win(0) then
+              return
+            end
 
             local buf = win.buf().id
             local ft = vim.api.nvim_buf_get_option(buf, "filetype")
