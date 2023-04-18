@@ -118,7 +118,6 @@ return {
         callback = function()
           local opts = { buffer = 0 }
           map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opts)
-          map.set("t", "jk", [[<C-\><C-n>]], opts)
           map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", opts)
           map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
           map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
