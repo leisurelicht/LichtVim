@@ -147,7 +147,9 @@ return {
       {
         "<leader>fe",
         function()
-          require("telescope").extensions.file_browser.file_browser({})
+          require("telescope").extensions.file_browser.file_browser({
+            path = vim.fn.expand("~/Code"),
+          })
         end,
         desc = "File Browser",
       },
