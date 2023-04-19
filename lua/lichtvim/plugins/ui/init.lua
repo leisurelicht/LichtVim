@@ -8,9 +8,9 @@ return {
   { -- lsp progress
     "j-hui/fidget.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    enabled = function()
-      return vim.g.neovide
-    end,
+    -- enabled = function()
+    --   return vim.g.neovide
+    -- end,
     dependencies = {
       "neovim/nvim-lspconfig",
     },

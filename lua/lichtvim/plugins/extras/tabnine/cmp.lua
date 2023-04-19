@@ -13,7 +13,12 @@ return {
             sort = true,
             run_on_every_keystroke = false,
             show_prediction_strength = true,
-            ignored_file_types = { TelescopePrompt = true },
+            ignored_file_types = {
+              TelescopePrompt = true,
+              NvimTree = true,
+              ["neo-tree"] = true,
+              toggleterm = true,
+            },
           })
         end,
       },
