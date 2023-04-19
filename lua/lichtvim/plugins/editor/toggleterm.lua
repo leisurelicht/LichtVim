@@ -122,8 +122,8 @@ return {
           map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
           map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
           map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
-          map.set("t", "<C-n>", _smart_add_term, "Add new terminal", opts)
-          map.set("n", "<leader>oa", _smart_add_term, "Add new terminal", opts)
+          map.set("t", "<C-o>", _smart_add_term, "Add new terminal", opts)
+          -- map.set("n", "<leader>oa", _smart_add_term, "Add new terminal", opts)
         end,
       })
 
