@@ -37,7 +37,8 @@ return {
             vim.notify("Exiting Resize Mode. Bye")
           end,
         },
-      }, },
+      },
+    },
     config = function(_, opts)
       require("smart-splits").setup(opts)
       map.set("n", "<leader>ur", function()
@@ -97,4 +98,5 @@ return {
       vim.g.startuptime_tries = 10
     end,
   },
+  { "wakatime/vim-wakatime" },
 }
