@@ -267,7 +267,7 @@ return {
           oldfiles = { theme = "dropdown" },
           buffers = vim.deepcopy(center_list),
           marks = { theme = "dropdown" },
-          commands = { theme = "dropdown" },
+          commands = { theme = "ivy" },
           command_history = { theme = "dropdown" },
           search_history = { theme = "dropdown" },
           git_commits = { theme = "ivy" },
