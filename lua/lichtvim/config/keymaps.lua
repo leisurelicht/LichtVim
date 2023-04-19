@@ -33,19 +33,19 @@ map.set("v", ">", ">gv", "Move right continuously")
 
 -- 分屏
 -- map.set("n", "<leader>v", "<cmd>vsp<cr>", "Vsplit")
--- map.set("n", "<leader>s", "<cmd>sp<cr>", "Split")
-map.set("n", "<leader>sh", "<cmd>vertical leftabove sbuffer<cr>", "Left")
-map.set("n", "<leader>sl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
-map.set("n", "<leader>sk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
-map.set("n", "<leader>sj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
+-- map.set("n", "<leader>p", "<cmd>sp<cr>", "Split")
+map.set("n", "<leader>ph", "<cmd>vertical leftabove sbuffer<cr>", "Left")
+map.set("n", "<leader>pl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
+map.set("n", "<leader>pk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
+map.set("n", "<leader>pj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
 
-map.set("n", "<leader>si", "<cmd>vertical topleft sbuffer<cr>", "Far left")
-map.set("n", "<leader>su", "<cmd>vertical botright sbuffer<cr>", "Far right")
-map.set("n", "<leader>sy", "<cmd>horizontal topleft sbuffer<cr>", "Top")
-map.set("n", "<leader>so", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
+map.set("n", "<leader>pi", "<cmd>vertical topleft sbuffer<cr>", "Far left")
+map.set("n", "<leader>pu", "<cmd>vertical botright sbuffer<cr>", "Far right")
+map.set("n", "<leader>py", "<cmd>horizontal topleft sbuffer<cr>", "Top")
+map.set("n", "<leader>po", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
 
-map.set("n", "<leader>sd", "<C-w>c", "Close current window") -- 关闭当前分屏
-map.set("n", "<leader>sc", "<C-w>o", "Close other window") -- 关闭其他分屏
+map.set("n", "<leader>pd", "<C-w>c", "Close current window") -- 关闭当前分屏
+map.set("n", "<leader>pc", "<C-w>o", "Close other window") -- 关闭其他分屏
 
 -- 窗口快速跳转
 map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1")
@@ -131,15 +131,3 @@ local function switch_mouse()
 end
 
 map.set("n", "<leader>a", switch_mouse, "Switch mouse mode")
-
-if lazy.has("which-key.nvim") then
-  require("which-key").register({
-    c = { name = "ShortCuts" },
-    b = { name = "Buffer" },
-    s = { name = "Split" },
-    t = { name = "Tab" },
-    to = { name = "Close Only" },
-    mode = "n",
-    prefix = "<leader>",
-  })
-end

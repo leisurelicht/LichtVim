@@ -4,6 +4,10 @@ return {
     version = false,
     build = ":TSUpdate",
     event = { "BufRead", "BufNewFile" },
+    keys = {
+      { "<leader>ut", "<cmd>TSUpdate all<cr>", desc = "treesitter update" },
+      { "<leader>uT", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
+    },
     dependencies = {
       "p00f/nvim-ts-rainbow",
       "RRethy/nvim-treesitter-endwise",
@@ -82,12 +86,6 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
-
-      if lazy.has("which-key.nvim") then
-        require("which-key").register({ T = { name = "Treesitter" }, mode = "n", prefix = "<leader>" })
-        map.set("n", "<leader>Tu", "<cmd>TSUpdate all<cr>", "Update All")
-        map.set("n", "<leader>Ts", "<cmd>TSModuleInfo<cr>", "Module Info")
-      end
     end,
   },
 }

@@ -12,6 +12,11 @@ return {
   {
     "nvimdev/dbsession.nvim",
     cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
+    keys = {
+      { "<leader>ss", "Save Session", desc = "Save session" },
+      { "<leader>sd", "Delete Session", desc = "Delete session" },
+      { "<leader>sl", "Load Session", desc = "Load session" },
+    },
     opts = {
       auto_save_on_exit = true,
     },

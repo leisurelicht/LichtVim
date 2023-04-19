@@ -43,16 +43,6 @@ return {
       map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char")
       map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
       map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
-
-      local wk_ok, wk = pcall(require, "which-key")
-      if wk_ok then
-        wk.register({
-          h = { name = "+Hop" },
-          ha = { name = "+All Windows" },
-          mode = "n",
-          prefix = "<leader>",
-        })
-      end
     end,
   },
   {
