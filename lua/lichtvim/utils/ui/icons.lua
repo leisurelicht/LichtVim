@@ -12,7 +12,7 @@ M.lsp = {
 M.diagnostics = {
   Error = " ",
   Warn = " ",
-  Hint = " ",
+  Hint = "",
   Info = " ",
 }
 

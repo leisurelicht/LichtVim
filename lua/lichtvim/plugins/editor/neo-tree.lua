@@ -32,8 +32,6 @@ return {
     },
     keys = { { "<leader>e", "<cmd>Neotree filesystem focus reveal float toggle<cr>", desc = "Explorer" } },
     opts = function()
-      local icons = require("lichtvim.utils.ui.icons").diagnostics
-
       return {
         default_component_configs = {},
         window = {
@@ -83,6 +81,11 @@ return {
           },
         },
       }
+    end,
+    config = function(_, opts)
+      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+      require("neo-tree").setup(opts)
     end,
   },
 }
