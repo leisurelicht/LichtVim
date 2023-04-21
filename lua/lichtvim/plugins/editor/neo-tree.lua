@@ -50,10 +50,6 @@ return {
             handler = function()
               -- This effectively hides the cursor
               vim.cmd("highlight! Cursor blend=100")
-              -- This effectively disable the keymap '<leader>;'
-              -- if map.has("n", "<leader>;", { buffer = vim.api.nvim_get_current_buf() }) then
-              --   map.del("n", "<leader>;")
-              -- end
             end,
           },
           {
@@ -61,7 +57,6 @@ return {
             handler = function()
               -- Make this whatever your current Cursor highlight group is.
               vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
-              -- map.set("n", "<leader>;", "<cmd>Alpha<cr>", "Alpha")
             end,
           },
         },
