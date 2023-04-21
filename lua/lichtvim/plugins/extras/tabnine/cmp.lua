@@ -17,6 +17,7 @@ return {
               TelescopePrompt = true,
               NvimTree = true,
               ["neo-tree"] = true,
+              ["neo-tree-popup"] = true,
               toggleterm = true,
             },
           })
