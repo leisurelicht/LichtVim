@@ -11,6 +11,7 @@ return {
   { import = "lichtvim.plugins.editor.find" },
   {
     "nvimdev/dbsession.nvim",
+    enable = false,
     cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
     keys = {
       { "<leader>ss", "<cmd>SessionSave<cr>", desc = "Save session" },
