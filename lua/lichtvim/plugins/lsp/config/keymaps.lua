@@ -33,7 +33,7 @@ function M.get()
     { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
-    { "<leader>lo", "<cmd>SymbolsOutline<cr>", desc = "Open outline" },
+    { "<leader>lO", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
     { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
     { "<leader>lt", vim.lsp.buf.type_definition, desc = "Goto type definition" },
@@ -111,7 +111,7 @@ function M.get()
       {
         "<leader>ld",
         function()
-          builtin.lsp_definitions({ reuse_win = true })
+          builtin.lsp_definitions({ reuse_win = true, show_line = false })
         end,
         desc = "Goto definition",
         has = "definition",
@@ -119,7 +119,7 @@ function M.get()
       {
         "<leader>lf",
         function()
-          builtin.lsp_references({})
+          builtin.lsp_references({ show_line = false })
         end,
         desc = "Goto references",
         has = "references",
@@ -127,7 +127,7 @@ function M.get()
       {
         "<leader>li",
         function()
-          builtin.lsp_implementations({})
+          builtin.lsp_implementations({ show_line = false })
         end,
         desc = "Goto implementation",
         has = "implementation",
@@ -135,7 +135,7 @@ function M.get()
       {
         "<leader>lt",
         function()
-          builtin.lsp_type_definitions({})
+          builtin.lsp_type_definitions({ show_line = false })
         end,
         desc = "Goto type definition",
         has = "typeDefinition",
