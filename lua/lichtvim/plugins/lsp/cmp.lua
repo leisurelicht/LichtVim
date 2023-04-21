@@ -112,7 +112,7 @@ return {
           { name = "buffer" },
         }, {
           { name = "path" },
-          { name = "luasnip" },
+          { name = "luasnip", option = { use_show_condition = true } },
           { name = "fuzzy_buffer" },
         }),
         sorting = {

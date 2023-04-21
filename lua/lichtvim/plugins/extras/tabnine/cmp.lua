@@ -7,12 +7,12 @@ return {
         "tzachar/cmp-tabnine",
         build = "./install.sh",
         config = function()
-          require("cmp_tabnine.config").setup({
+          require("cmp_tabnine.config"):setup({
             max_lines = 1000,
-            max_num_results = 20,
+            max_num_results = 5,
             sort = true,
-            run_on_every_keystroke = false,
-            show_prediction_strength = false,
+            run_on_every_keystroke = true,
+            snippet_placeholder = "..",
             ignored_file_types = {
               TelescopePrompt = true,
               NvimTree = true,
@@ -20,6 +20,15 @@ return {
               ["neo-tree-popup"] = true,
               toggleterm = true,
             },
+            show_prediction_strength = false,
+          })
+
+          api.autocmd("BufRead", {
+            group = api.augroup("prefetch", { clear = true }),
+            pattern = { "*.py", "*.go", "*.lua", "*.sh" },
+            callback = function()
+              require("cmp_tabnine"):prefetch(vim.fn.expand("%:p"))
+            end,
           })
         end,
       },
