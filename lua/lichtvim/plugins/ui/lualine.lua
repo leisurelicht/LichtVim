@@ -68,8 +68,6 @@ return {
               cond = require("lazy.status").has_updates,
               color = fg("Special"),
             },
-          },
-          lualine_y = {
             {
               "diagnostics",
               sources = { "nvim_diagnostic", "nvim_lsp" },
@@ -89,8 +87,9 @@ return {
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.
-              separator = { left = "" },
             },
+          },
+          lualine_y = {
             { "progress", separator = { left = "" } },
           },
         },
@@ -112,6 +111,26 @@ return {
             {
               "location",
               color = { fg = "grey" },
+            },
+            {
+              "diagnostics",
+              sources = { "nvim_diagnostic", "nvim_lsp" },
+              sections = { "error", "warn", "info", "hint" },
+              diagnostics_color = {
+                error = "DiagnosticError", -- Changes diagnostics' error color.
+                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+                info = "DiagnosticInfo", -- Changes diagnostics' info color.
+                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+              },
+              symbols = {
+                error = icons_d.Error,
+                warn = icons_d.Warn,
+                info = icons_d.Info,
+                hint = icons_d.Hint,
+              },
+              colored = true, -- Displays diagnostics status in color if set to true.
+              update_in_insert = false, -- Update diagnostics in insert mode.
+              always_visible = false, -- Show diagnostics even if there are none.
             },
           },
         },
