@@ -71,6 +71,21 @@ api.autocmd("FileType", {
   end,
 })
 
+api.autocmd("FileType", {
+  group = api.augroup("find"),
+  pattern = { "TelescopePrompt" },
+  callback = function()
+    for _, win in pairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+      -- close telescope prompt window
+      if ft == "lazy" or ft == "mason" then
+        vim.api.nvim_win_close(win, true)
+      end
+    end
+  end,
+})
+
 -- resize splits if window got resized
 -- api.autocmd({ "VimResized" }, {
 --   group = api.augroup("resize_splits"),

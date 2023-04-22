@@ -62,7 +62,6 @@ function M.get()
       end,
       desc = "Diagnostic (line)",
     },
-    { "<leader>lg", vim.lsp.buf.references, desc = "Diagnostic (buffer)" },
   }
 
   if lazy.has("actions-preview.nvim") then

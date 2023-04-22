@@ -70,7 +70,7 @@ return {
         f = { name = "Find" },
         g = { name = "Git" },
         o = { name = "Term" },
-        s = { name = "Session" },
+        -- s = { name = "Session" },
         c = { name = "ShortCuts" },
         b = { name = "Buffer" },
         p = { name = "Split" },
