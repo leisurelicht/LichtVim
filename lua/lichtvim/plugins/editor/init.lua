@@ -50,6 +50,7 @@ return {
       map.set("n", "<leader>ur", function()
         require("smart-splits").start_resize_mode()
       end, "Resize Mode")
+      map.set("n", "<leader>uR", "<cmd>tabdo wincmd =<cr>", "Resume size")
     end,
   },
   {
@@ -71,8 +72,8 @@ return {
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
       end
-      map.set("n", "<leader>ue", "<cmd>ImSelectEnable<cr>", "ImSelect Enable")
-      map.set("n", "<leader>ud", "<cmd>ImSelectDisable<cr>", "ImSelect Disable")
+      map.set("n", "<leader>ue", "<cmd>ImSelectEnable<cr>", "Enable imselect")
+      map.set("n", "<leader>ud", "<cmd>ImSelectDisable<cr>", "Disable imselect")
     end,
   },
   {

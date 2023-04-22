@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     enabled = true,
     cmd = "Mason",
-    keys = { { "<leader>um", "<cmd>Mason<cr>", desc = "Mason" } },
+    keys = { { "<leader>ul", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
       ui = {
         icons = {

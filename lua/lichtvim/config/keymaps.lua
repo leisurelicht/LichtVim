@@ -130,4 +130,4 @@ local function switch_mouse()
   end
 end
 
-map.set("n", "<leader>a", switch_mouse, "Switch mouse mode")
+map.set("n", "<leader>a", switch_mouse, "Mouse mode")
