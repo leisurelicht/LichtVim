@@ -29,6 +29,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      "ray-x/cmp-treesitter",
       {
         "tzachar/cmp-fuzzy-buffer",
         dependencies = {
@@ -110,6 +111,7 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "buffer" },
+          { name = "treesitter" },
         }, {
           { name = "path" },
           { name = "luasnip", option = { use_show_condition = true } },
