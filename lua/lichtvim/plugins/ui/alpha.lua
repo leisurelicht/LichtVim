@@ -66,7 +66,7 @@ return {
             button("SPC f f", "  Find File"),
             button("SPC f j", "  Find Project"),
             button("SPC f o", "  Recently Opened Files"),
-            button("SPC s l", "  Load Session"),
+            -- button("SPC s l", "  Load Session"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
           },
           opts = { spacing = 1 },
@@ -77,7 +77,7 @@ return {
           val = {
             { type = "text", val = "Tools", opts = { hl = "Keyword", position = "center" } },
             button("SPC u p", "󰒲  Lazy", "<cmd>Lazy<cr>", { desc = "Lazy" }),
-            button("SPC u m", "  Mason"),
+            button("SPC u l", "  Mason"),
             button("SPC u t", "  Tressitter Update"),
           },
           opts = { spacing = 1 },
