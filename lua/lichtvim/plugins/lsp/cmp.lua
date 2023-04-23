@@ -26,6 +26,7 @@ return {
       "nvim-lua/plenary.nvim",
       "onsails/lspkind-nvim",
       "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",

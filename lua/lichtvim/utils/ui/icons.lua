@@ -51,12 +51,12 @@ M.kind = {
   Property = "",
   Reference = " ",
   Snippet = "",
-  String = " ",
+  String = "",
   Struct = "פּ",
   Text = "",
   TypeParameter = " ",
   Unit = "塞",
-  Value = " ",
+  Value = "",
   Variable = "",
   TabNine = "",
 }
@@ -74,6 +74,7 @@ M.source = {
   fuzzy_buffer = "󱁴 ",
   copilot = "",
   luasnip = "󰾁",
+  treesitter = " ",
 }
 
 return M
