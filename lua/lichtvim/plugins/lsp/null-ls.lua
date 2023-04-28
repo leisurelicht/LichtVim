@@ -54,10 +54,9 @@ return {
 
           null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.completion.luasnip,
-
         },
       }
     end,
     config = true,
-  }
+  },
 }
