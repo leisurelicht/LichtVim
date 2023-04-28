@@ -19,6 +19,7 @@ return {
         "luacheck",
         "gofumpt",
         "goimports",
+        "shellcheck",
       },
     },
     config = function(_, opts)

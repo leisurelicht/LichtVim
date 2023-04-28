@@ -48,11 +48,15 @@ return {
             "--indent-type=Spaces",
             "--indent-width=2",
           }),
+
+          -- null_ls.builtins.diagnostics.shellcheck,
+          -- null_ls.builtins.code_actions.shellcheck,
           null_ls.builtins.formatting.shfmt,
+
           -- null_ls.builtins.formatting.goimports,
           -- null_ls.builtins.formatting.gofumpt,
 
-          null_ls.builtins.code_actions.refactoring,
+          -- null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.completion.luasnip,
         },
       }

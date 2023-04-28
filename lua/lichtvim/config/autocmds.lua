@@ -79,7 +79,7 @@ api.autocmd("FileType", {
       local buf = vim.api.nvim_win_get_buf(win)
       local ft = vim.api.nvim_buf_get_option(buf, "filetype")
       -- close telescope prompt window
-      if ft == "lazy" or ft == "mason" then
+      if ft == "lazy" then
         vim.api.nvim_win_close(win, true)
       end
     end
