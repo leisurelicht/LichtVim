@@ -1,5 +1,10 @@
+<h1 align="center">
+  LichtVim
+</h1>
 
-LichtVim is a Custom Neovim config like [LazyVim](https://github.com/LazyVim/LazyVim).
+<h4 align="center">
+  LichtVim is a Custom Neovim config like <a href="https://github.com/LazyVim/LazyVim">LazyVim</a>
+</h4>
 
 ## ⚡️ Requirements
 
