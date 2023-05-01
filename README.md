@@ -14,8 +14,8 @@
 - im-select (if you use macOS or windows)
 - luarocks
 - Lazygit
-- fzf
 - npm
+- fzf
 - go
 - rg
 - fd
