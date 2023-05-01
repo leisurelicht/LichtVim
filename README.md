@@ -23,17 +23,16 @@
 
 ## ⚡️ Requirements
 
-- Neovim >= **0.9.0** (needs to be built with **LuaJIT**)
-- a [Nerd Font](https://www.nerdfonts.com/) **_(optional)_**
-- Git >= **2.19.0** (for partial clones support)
-- im-select (if you use macOS or windows)
-- luarocks
-- Lazygit
-- npm
-- fzf
-- go
-- rg
-- fd
+- [Neovim](https://github.com/neovim/neovim) >= **0.9.0** (needs to be built with **LuaJIT**)
+- [Nerd Font](https://www.nerdfonts.com/)
+- [git](https://git-scm.com) >= **2.19.0** (for partial clones support)
+- [im-select](https://github.com/daipeihust/im-select) (if you use macOS or windows)
+- [fzf](https://github.com/junegunn/fzf) (for fuzzy search)
+- [lazygit](https://github.com/jesseduffield/lazygit) 
+- [luarocks](https://github.com/luarocks/luarocks) (for install lsp)
+- [npm](https://github.com/npm/cli) (for install lsp)
+- [go](https://go.dev) (for install lsp)
+
 
 ## 🚀 Getting Started
 
