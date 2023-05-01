@@ -85,7 +85,7 @@ return {
         { type = "padding", val = 1 },
         {
           type = "text",
-          val = "- Licht -",
+          val = "- LichtVim -",
           opts = { position = "center", hl = "Number" },
         },
       },
