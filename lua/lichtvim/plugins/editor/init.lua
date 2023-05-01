@@ -63,7 +63,11 @@ return {
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
-        api.autocmd({ "cmdlineLeave" }, {
+        api.autocmd({ "CmdlineEnter" }, {
+          pattern = { "*" },
+          command = "call system('im-select com.apple.keylayout.ABC')",
+        })
+        api.autocmd({ "CmdlineLeave" }, {
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
