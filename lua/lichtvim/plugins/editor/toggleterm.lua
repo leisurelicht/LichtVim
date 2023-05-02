@@ -48,20 +48,6 @@ local function _htop()
   require("toggleterm.terminal").Terminal:new({ cmd = "htop", hidden = true, direction = "float" }):toggle({})
 end
 
-local function _glow(file_name)
-  local cmd = "glow " .. file_name .. "&& zsh"
-  vim.notify(cmd)
-  require("toggleterm.terminal").Terminal
-    :new({
-      cmd = cmd,
-      hidden = false,
-      direction = "float",
-      close_on_exit = false,
-      auto_scroll = false,
-    })
-    :toggle({})
-end
-
 return {
   {
     "akinsho/toggleterm.nvim",
@@ -108,7 +94,6 @@ return {
         { "<leader>gl", _lazygit, desc = "Lazygit" },
       }
     end,
-
     config = function(_, opts)
       require("toggleterm").setup(opts)
 
@@ -126,19 +111,6 @@ return {
           -- map.set("n", "<leader>oa", _smart_add_term, "Add new terminal", opts)
         end,
       })
-
-      -- TODO: 自动调用 glow 预览 markdown 文件
-      -- api.autocmd({ "FileType" }, {
-      --   group = api.augroup("Runner", { clear = true }),
-      --   pattern = { "markdown" },
-      --   callback = function()
-      --     local buf = vim.api.nvim_get_current_buf()
-      --     local file_name = vim.api.nvim_buf_get_name(buf)
-      --     map.set("n", "<leader>r", function()
-      --       _glow(file_name)
-      --     end, "Run", { buffer = buf })
-      --   end,
-      -- })
     end,
   },
 }
