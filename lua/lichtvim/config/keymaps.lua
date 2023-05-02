@@ -39,10 +39,10 @@ map.set("n", "<leader>sl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
 map.set("n", "<leader>sk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
 map.set("n", "<leader>sj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
 
-map.set("n", "<leader>si", "<cmd>vertical topleft sbuffer<cr>", "Far left")
-map.set("n", "<leader>su", "<cmd>vertical botright sbuffer<cr>", "Far right")
-map.set("n", "<leader>sy", "<cmd>horizontal topleft sbuffer<cr>", "Top")
-map.set("n", "<leader>so", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
+map.set("n", "<leader>sy", "<cmd>vertical topleft sbuffer<cr>", "Far left")
+map.set("n", "<leader>so", "<cmd>vertical botright sbuffer<cr>", "Far right")
+map.set("n", "<leader>si", "<cmd>horizontal topleft sbuffer<cr>", "Top")
+map.set("n", "<leader>su", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
 
 map.set("n", "<leader>sd", "<C-w>c", "Close current window") -- 关闭当前分屏
 map.set("n", "<leader>sc", "<C-w>o", "Close other window") -- 关闭其他分屏
