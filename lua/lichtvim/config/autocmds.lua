@@ -71,13 +71,13 @@ api.autocmd("FileType", {
   end,
 })
 
--- 实现一个自动命令组，当光标从 buffer type 为 lazy 的 buffer 离开时，自动关闭该 window
+-- auto close lazy and notify buffers when leaving them
 api.autocmd("BufLeave", {
   group = api.augroup("close_lazy"),
   callback = function(event)
     local buf = event.buf
     local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-    if ft == "lazy" then
+    if ft == "lazy" or ft == "notify" then
       local winids = vim.fn.win_findbuf(buf)
       for _, win in pairs(winids) do
         vim.api.nvim_win_close(win, true)

@@ -3,7 +3,6 @@
 -- Note: config init
 -- =================
 --
---
 require("lichtvim.utils.G")
 local icons = require("lichtvim.utils.ui.icons")
 
