@@ -71,15 +71,15 @@ api.autocmd("FileType", {
   end,
 })
 
-api.autocmd("FileType", {
-  group = api.augroup("find"),
-  pattern = { "TelescopePrompt" },
-  callback = function()
-    for _, win in pairs(vim.api.nvim_list_wins()) do
-      local buf = vim.api.nvim_win_get_buf(win)
-      local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-      -- close telescope prompt window
-      if ft == "lazy" then
+-- 实现一个自动命令组，当光标从 buffer type 为 lazy 的 buffer 离开时，自动关闭该 window
+api.autocmd("BufLeave", {
+  group = api.augroup("close_lazy"),
+  callback = function(event)
+    local buf = event.buf
+    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if ft == "lazy" then
+      local winids = vim.fn.win_findbuf(buf)
+      for _, win in pairs(winids) do
         vim.api.nvim_win_close(win, true)
       end
     end
