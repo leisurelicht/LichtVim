@@ -76,7 +76,7 @@ return {
           type = "group",
           val = {
             { type = "text", val = "Tools", opts = { hl = "Keyword", position = "center" } },
-            button("SPC u p", "󰒲  Lazy", "<cmd>Lazy<cr>", { desc = "Lazy" }),
+            button("SPC u p", "󰒲  Lazy"),
             button("SPC u l", "  Mason"),
             button("SPC u t", "  Tressitter Update"),
           },

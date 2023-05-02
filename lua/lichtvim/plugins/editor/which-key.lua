@@ -67,6 +67,7 @@ return {
       wk.register({
         [";"] = { "<cmd>Alpha<cr>", "Dashboard" },
         u = { name = "Utils" },
+        up = { "<cmd>Lazy<cr>", "Lazy" },
         f = { name = "Find" },
         g = { name = "Git" },
         o = { name = "Term" },
