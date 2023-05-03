@@ -68,15 +68,6 @@ return {
           end
         end
       end
-      for k, v in pairs(opts.mapping["<S-Tab>"]) do
-        opts.mapping["<S-Tab>"][k] = function(...)
-          if suggestion.is_visible() then
-            suggestion.dismiss()
-          else
-            v(...)
-          end
-        end
-      end
     end,
   },
 }
