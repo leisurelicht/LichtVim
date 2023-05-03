@@ -69,12 +69,9 @@ return {
 
       local s_names = {}
       local s_opts = {}
-      for _, lsp_servers in ipairs(opts.servers) do
-        for _, name in pairs(lsp_servers) do
-          s_names[#s_names + 1] = name
-          modname = "lichtvim.plugins.extras.lang.servers." .. name
-          s_opts[name] = require(modname)
-        end
+      for lsp_name, lsp_opts in pairs(opts.servers) do
+        s_names[#s_names + 1] = lsp_name
+        s_opts[lsp_name] = lsp_opts
       end
 
       -- setup autoformat
