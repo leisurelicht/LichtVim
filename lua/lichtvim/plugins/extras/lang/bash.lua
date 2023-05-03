@@ -16,7 +16,6 @@ return {
       })
     end,
   },
-
   {
     "jose-elias-alvarez/null-ls.nvim",
     opts = function(_, opts)
@@ -26,7 +25,6 @@ return {
       })
     end,
   },
-
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
