@@ -22,6 +22,7 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
+    event = "VeryLazy",
     dependencies = { "telescope.nvim" },
     opts = {
       manual_mode = true,
