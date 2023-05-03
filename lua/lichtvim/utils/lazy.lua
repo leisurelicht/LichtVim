@@ -74,4 +74,17 @@ function M.opts(name)
   return Plugin.values(plugin, "opts", false)
 end
 
+function M.lsmod(modname, fn)
+  local root = require("lazy.core.util").find_root(modname)
+  if not root then
+    return
+  end
+
+  require("lichtvim.utils").path.ls(root, function(_, name, type)
+    if (type == "file" or type == "link") and name:sub(-4) == ".lua" then
+      fn(modname .. "." .. name:sub(1, -5), name:sub(1, -5))
+    end
+  end)
+end
+
 return M

@@ -35,9 +35,6 @@ function M.get()
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
     { "<leader>lO", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
-    { "<leader>ld", vim.lsp.buf.definition, desc = "Goto definition" },
-    { "<leader>lt", vim.lsp.buf.type_definition, desc = "Goto type definition" },
-    { "<leader>li", vim.lsp.buf.implementation, desc = "Goto implementation", has = "implementation" },
     { "<leader>lf", vim.lsp.buf.references, desc = "Goto references" },
     {
       "<leader>la",
