@@ -49,7 +49,7 @@ return {
           severity_sort = true,
           update_in_insert = false,
           float = { source = "always" },
-          virtual_text = { prefix = "●", source = "always" },
+          virtual_text = { prefix = "icons", source = "if_many", spacing = 4 },
         },
         autoformat = true,
         format = {
@@ -65,7 +65,20 @@ return {
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
-      vim.diagnostic.config(opts.diagnostics)
+
+      if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
+        opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
+          or function(diagnostic)
+            local icons = require("lichtvim.utils.ui.icons").diagnostics
+            for d, icon in pairs(icons) do
+              if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+                return icon
+              end
+            end
+          end
+      end
+
+      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
       local s_names = {}
       local s_opts = {}
