@@ -44,7 +44,7 @@ return {
           init_selection = "<C-space>",
           node_incremental = "<C-space>",
           node_decremental = "<BS>",
-          scope_incremental = "<nop>",
+          scope_incremental = false,
         },
       },
       indent = { enable = true, disable = { "python", "lua", "go" } },
