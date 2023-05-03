@@ -35,7 +35,7 @@ return {
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      table.insert(opts.sources, 2, { name = "cmp_tabnine", group_index = 1 })
+      table.insert(opts.sources, 1, { name = "cmp_tabnine", group_index = 1 })
       table.insert(opts.sorting.comparators, 5, require("cmp_tabnine.compare"))
     end,
   },

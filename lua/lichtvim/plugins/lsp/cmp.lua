@@ -24,13 +24,11 @@ return {
 
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "onsails/lspkind-nvim",
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "ray-x/cmp-treesitter",
       {
         "tzachar/cmp-fuzzy-buffer",
         dependencies = {
@@ -107,48 +105,42 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "buffer" },
-          { name = "treesitter" },
-        }, {
           { name = "path" },
           { name = "luasnip", option = { use_show_condition = true } },
           { name = "fuzzy_buffer" },
+          -- { name = "treesitter" },
         }),
         sorting = {
           priority_weight = 2,
           comparators = {
-            require("cmp_fuzzy_buffer.compare"),
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
-            cmp.config.compare.kind,
+            require("cmp_fuzzy_buffer.compare"),
             cmp.config.compare.locality,
+            cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
         },
         formatting = {
-          fields = {
-            "abbr",
-            "kind",
-            "menu",
-          },
-          format = require("lspkind").cmp_format({
-            mode = "symbol_text",
-            maxwidth = 50,
-            symbol_map = icons.kind,
-            before = function(entry, vim_item)
-              vim_item.menu = (function()
-                local m = icons.source[entry.source.name]
-                if m == nil then
-                  m = "[" .. string.upper(entry.source.name) .. "]"
-                end
-                return m
-              end)()
-              return vim_item
-            end,
-          }),
+          format = function(entry, item)
+            local kinds = icons.kinds
+            local sources = icons.sources
+            if kinds[item.kind] then
+              item.kind = kinds[item.kind] .. item.kind
+            end
+            item.menu = (function()
+              local m = sources[entry.source.name]
+              if m == nil then
+                m = "[" .. string.upper(entry.source.name) .. "]"
+              end
+              return m
+            end)()
+            return item
+          end,
         },
         experimental = {
           ghost_text = {
