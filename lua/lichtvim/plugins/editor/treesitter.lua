@@ -35,10 +35,7 @@ return {
     },
     opts = {
       ensure_installed = {
-        "markdown",
-        "markdown_inline",
         "comment",
-        "gitignore",
       },
       highlight = { enable = true, additional_vim_regex_highlighting = false },
       incremental_selection = {

@@ -12,15 +12,7 @@ return {
           package_uninstalled = "✗",
         },
       },
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-        "flake8",
-        "luacheck",
-        "gofumpt",
-        "goimports",
-        "shellcheck",
-      },
+      ensure_installed = {},
     },
     config = function(_, opts)
       require("mason").setup(opts)

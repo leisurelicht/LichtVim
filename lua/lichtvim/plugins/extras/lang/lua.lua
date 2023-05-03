@@ -8,6 +8,31 @@ return {
     end,
   },
   {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "luacheck",
+        "stylua",
+      })
+    end,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local null_ls = require("null-ls")
+      vim.list_extend(opts.sources, {
+        null_ls.builtins.diagnostics.luacheck.with({
+          extra_args = { "--globals=vim" },
+        }),
+        null_ls.builtins.formatting.stylua.with({
+          "--indent-type=Spaces",
+          "--indent-width=2",
+        }),
+        null_ls.builtins.completion.luasnip,
+      })
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       table.insert(opts.servers, 1, { "lua_ls" })
