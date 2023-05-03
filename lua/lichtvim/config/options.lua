@@ -60,14 +60,14 @@ opt.showcmd = true -- 右下角显示正在输入的命令
 opt.showtabline = 2 -- always show tabline
 opt.completeopt = "menu,menuone,noselect" -- 自动补全不自动选中
 opt.wildmenu = true -- 补全增强
-opt.wildmode = "longest:full"
+opt.wildmode = "longest:full,full"
 opt.termguicolors = true -- 样式
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10
 opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示控制
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
-opt.list = true -- 不可见字符不显示
+opt.list = false -- 不可见字符不显示
 opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if vim.g.neovide then

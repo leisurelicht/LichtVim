@@ -39,6 +39,33 @@ api.autocmd("FileType", {
   end,
 })
 
+-- go to last loc when opening a buffer
+api.autocmd("BufReadPost", {
+  group = api.augroup("last_loc"),
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
+-- auto close lazy and notify buffers when leaving them
+api.autocmd("BufLeave", {
+  group = api.augroup("close_lazy"),
+  callback = function(event)
+    local buf = event.buf
+    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if ft == "lazy" or ft == "notify" then
+      local winids = vim.fn.win_findbuf(buf)
+      for _, win in pairs(winids) do
+        vim.api.nvim_win_close(win, true)
+      end
+    end
+  end,
+})
+
 -- close some filetypes with <esc>
 -- api.autocmd("FileType", {
 --   group = api.augroup("close_with_esc"),
@@ -62,29 +89,14 @@ api.autocmd("FileType", {
 -- })
 
 -- wrap and check for spell in text filetypes
-api.autocmd("FileType", {
-  group = api.augroup("wrap_spell"),
-  pattern = { "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
-
--- auto close lazy and notify buffers when leaving them
-api.autocmd("BufLeave", {
-  group = api.augroup("close_lazy"),
-  callback = function(event)
-    local buf = event.buf
-    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-    if ft == "lazy" or ft == "notify" then
-      local winids = vim.fn.win_findbuf(buf)
-      for _, win in pairs(winids) do
-        vim.api.nvim_win_close(win, true)
-      end
-    end
-  end,
-})
+-- api.autocmd("FileType", {
+--   group = api.augroup("wrap_spell"),
+--   pattern = { "gitcommit", "markdown" },
+--   callback = function()
+--     vim.opt_local.wrap = true
+--     vim.opt_local.spell = true
+--   end,
+-- })
 
 -- resize splits if window got resized
 -- api.autocmd({ "VimResized" }, {
@@ -93,15 +105,3 @@ api.autocmd("BufLeave", {
 --     vim.cmd("tabdo wincmd =")
 --   end,
 -- })
-
--- go to last loc when opening a buffer
-api.autocmd("BufReadPost", {
-  group = api.augroup("last_loc"),
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
