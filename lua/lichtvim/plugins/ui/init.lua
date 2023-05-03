@@ -28,7 +28,7 @@ return {
         function()
           require("notify").dismiss({ silent = true, pending = true })
         end,
-        desc = "Clear notify",
+        desc = "Clear notifications",
       },
     },
     opts = {

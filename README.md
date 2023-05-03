@@ -19,6 +19,7 @@
 
 <h4 align="center">
   A Custom Neovim Config Like <a href="https://github.com/LazyVim/LazyVim">LazyVim</a>
+  一个仿造 <a href="https://github.com/LazyVim/LazyVim">LazyVim</a> 的 Neovim 配置
 </h4>
 
 ## ⚡️ Requirements
