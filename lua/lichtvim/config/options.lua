@@ -21,7 +21,7 @@ vim.g.maplocalleader = ","
 local opt = vim.opt
 
 -- utf8
-opt.mouse:append("a") -- 开启鼠标控制
+opt.mouse = "a" -- 开启鼠标控制
 opt.clipboard:append("unnamedplus") -- 系统剪贴板
 opt.autowrite = true -- 自动写入
 opt.confirm = true -- 确认写入

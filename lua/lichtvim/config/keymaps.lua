@@ -122,12 +122,14 @@ map.set("n", "<leader>cu", "viwUe", "Upper word")
 map.set("n", "<leader>co", "wb~ea", "Upper first word")
 
 -- 切换 mouse 模式
-local function switch_mouse()
-  if vim.opt.mouse == "" then
-    vim.opt.mouse = "a"
+local function toggle_mouse()
+  if vim.o.mouse == "a" then
+    vim.o.mouse = ""
+    vim.notify("Mouse mode: off", "info", { title = "Mouse" })
   else
-    vim.opt.mouse = ""
+    vim.o.mouse = "a"
+    vim.notify("Mouse mode: on", "info", { title = "Mouse" })
   end
 end
 
-map.set("n", "<leader>a", switch_mouse, "Mouse mode")
+map.set("n", "<leader>a", toggle_mouse, "Mouse mode")
