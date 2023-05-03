@@ -8,7 +8,7 @@ return {
     end,
   },
   {
-    "nvim-lspconfig",
+    "neovim/nvim-lspconfig",
     opts = function(_, opts)
       opts.servers = {
         sqlls = {

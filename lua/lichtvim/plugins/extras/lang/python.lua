@@ -8,7 +8,7 @@ return {
     end,
   },
   {
-    "nvim-lspconfig",
+    "neovim/nvim-lspconfig",
     opts = function(_, opts)
       local function filter_publish_diagnostics(a, params, client_id, c, config)
         local new_index = 1
