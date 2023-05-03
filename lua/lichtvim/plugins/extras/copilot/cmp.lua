@@ -71,7 +71,7 @@ return {
       })
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<cr>"] = function(...)
+        ["<CR>"] = function(...)
           local entry = cmp.get_selected_entry()
           if entry and entry.source.name == "copilot" then
             return confirm_copilot(...)
