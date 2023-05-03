@@ -5,6 +5,11 @@
 --
 M = {}
 
+local start = vim.health.start or vim.health.report_start
+local ok = vim.health.ok or vim.health.report_ok
+local warn = vim.health.warn or vim.health.report_warn
+local error = vim.health.error or vim.health.report_error
+
 local check_list = {
   "git",
   "rg",
@@ -21,12 +26,12 @@ local check_list = {
 }
 
 function M.check()
-  vim.health.report_start("LichtVim")
+  start("LichtVim")
 
   if vim.fn.has("nvim-0.9.0") == 1 then
-    vim.health.report_ok("Using Neovim >= 0.9.0")
+    ok("Using Neovim >= 0.9.0")
   else
-    vim.health.report_error("Neovim >= 0.9.0 is required")
+    error("Neovim >= 0.9.0 is required")
   end
 
   for _, cmd in ipairs(check_list) do
@@ -43,9 +48,9 @@ function M.check()
     end
 
     if found then
-      vim.health.report_ok(("`%s` is installed"):format(name))
+      ok(("`%s` is installed"):format(name))
     else
-      vim.health.report_warn(("`%s` is not installed"):format(name))
+      warn(("`%s` is not installed"):format(name))
     end
   end
 end

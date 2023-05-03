@@ -46,10 +46,10 @@ return {
     dependencies = { "nvim-web-devicons" },
     opts = {
       layout = {
-        { type = "padding", val = 5 },
+        { type = "padding", val = 10 },
         {
           type = "text",
-          val = require("lichtvim.utils.ui.header").panda,
+          val = require("lichtvim.utils.ui.header").lichtvim,
           opts = { position = "center", hl = pick_color() },
         },
         { type = "padding", val = 2 },
@@ -63,9 +63,9 @@ return {
           type = "group",
           val = {
             button("e", "  New File", "<cmd>ene <cr>"),
-            button("SPC f f", "  Find File"),
-            button("SPC f j", "  Find Project"),
-            button("SPC f o", "  Recently Opened Files"),
+            button("SPC f f", "  Find File"),
+            button("SPC f j", "  Find Project"),
+            button("SPC f o", "  Recently Opened Files"),
             -- button("SPC s l", "  Load Session"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
           },
