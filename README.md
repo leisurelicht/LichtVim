@@ -18,8 +18,9 @@
 </div>
 
 <h4 align="center">
+  一个仿造 <a href="https://github.com/LazyVim/LazyVim">LazyVim</a> 的个人用 Neovim 配置</br>
+  
   A Custom Neovim Config Like <a href="https://github.com/LazyVim/LazyVim">LazyVim</a>
-  一个仿造 <a href="https://github.com/LazyVim/LazyVim">LazyVim</a> 的 Neovim 配置
 </h4>
 
 ## ⚡️ Requirements
@@ -31,12 +32,13 @@
 - [fzf](https://github.com/junegunn/fzf) (for fuzzy search)
 - [sqlite](https://github.com/sqlite/sqlite)
 - [lazygit](https://github.com/jesseduffield/lazygit) 
-- [luarocks](https://github.com/luarocks/luarocks) (for install lsp)
-- [npm](https://github.com/npm/cli) (for install lsp)
-- [go](https://go.dev) (for install lsp)
+- [luarocks](https://github.com/luarocks/luarocks) (**option** for install lsp) 
+- [npm](https://github.com/npm/cli) (**option** for install lsp) 
+- [go](https://go.dev) ( **option** for install lsp)
 
 
 
 ## 🚀 Getting Started
 
-You can find a starter template for **LichtVim** [here](https://github.com/LazyVim/starter)
+可以直接使用 LazyVim 的 [start](https://github.com/LazyVim/starter) 或者参考我的 Neovim 启动配置文件[在这](https://github.com/leisurelicht/.config_file/tree/lazy/vi)。 这两是一样的。</br>
+you can just use LazyVim's [starter](https://github.com/LazyVim/starter) or you can refer to my Neovim start config file [here](https://github.com/leisurelicht/.config_file/tree/lazy/vi). they are the same. 
