@@ -10,19 +10,6 @@ return {
   { import = "lichtvim.plugins.editor.toggleterm" },
   { import = "lichtvim.plugins.editor.find" },
   {
-    "nvimdev/dbsession.nvim",
-    enabled = false,
-    cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
-    keys = {
-      { "<leader>ss", "<cmd>SessionSave<cr>", desc = "Save session" },
-      { "<leader>sd", "<cmd>SessionDelete<cr>", desc = "Delete session" },
-      { "<leader>sl", "<cmd>SessionLoad<cr>", desc = "Load session" },
-    },
-    opts = {
-      auto_save_on_exit = true,
-    },
-  },
-  {
     "mrjones2014/smart-splits.nvim",
     event = { "BufRead", "BufNewFile" },
     opts = {

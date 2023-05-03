@@ -7,7 +7,7 @@ end
 
 local function info()
   local total_plugins = require("lazy").stats().count
-  local datetime = os.date(" %d-%m-%Y   %H:%M:%S")
+  local datetime = os.date(" %d-%m-%Y")
   local version = vim.version()
   local version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
