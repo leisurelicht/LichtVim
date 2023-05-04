@@ -27,7 +27,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts =  {
+    opts = {
       servers = {
         bashls = {
           settings = {
@@ -39,7 +39,7 @@ return {
             ignoredRootPaths = { "~" },
           },
         },
-      }
-    }
+      },
+    },
   },
 }
