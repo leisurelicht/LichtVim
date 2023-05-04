@@ -166,8 +166,7 @@ function M.get()
 end
 
 function M.on_attach(client, buffer)
-  vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-  -- vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local keymaps = {}
   for _, value in ipairs(M.get()) do
