@@ -1,7 +1,7 @@
 return {
   {
     "ThePrimeagen/refactoring.nvim",
-    enabled = false,
+    enabled = true,
     lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {

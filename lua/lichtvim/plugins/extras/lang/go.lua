@@ -11,9 +11,9 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        "gomodifytags",
+        -- "gomodifytags",
         -- "impl",
-        "goimports",
+        -- "goimports",
       })
     end,
   },
@@ -22,24 +22,24 @@ return {
     opts = function(_, opts)
       local null_ls = require("null-ls")
       vim.list_extend(opts.sources, {
-        null_ls.builtins.code_actions.gomodifytags,
-        null_ls.builtins.code_actions.impl,
-        null_ls.builtins.code_actions.refactoring,
-        null_ls.builtins.formatting.goimports,
+        -- null_ls.builtins.formatting.goimports,
+        -- null_ls.builtins.code_actions.gomodifytags,
+        -- null_ls.builtins.code_actions.impl,
+        -- null_ls.builtins.code_actions.refactoring,
       })
     end,
   },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    opts = {
-      prompt_func_return_type = {
-        go = true,
-      },
-      prompt_func_param_type = {
-        go = true,
-      },
-    },
-  },
+  -- {
+  --   "ThePrimeagen/refactoring.nvim",
+  --   opts = {
+  --     prompt_func_return_type = {
+  --       go = true,
+  --     },
+  --     prompt_func_param_type = {
+  --       go = true,
+  --     },
+  --   },
+  -- },
   {
     "neovim/nvim-lspconfig",
     opts = {
