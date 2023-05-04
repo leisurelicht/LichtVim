@@ -49,6 +49,7 @@ function M.get()
         vim.lsp.buf.definition({ jump_type = "tab" })
       end,
       desc = "Goto definition (tab)",
+      has = "definition",
     },
     {
       "<leader>ll",
@@ -58,6 +59,7 @@ function M.get()
         })
       end,
       desc = "Diagnostic (line)",
+      has = "diagnostic",
     },
   }
 
