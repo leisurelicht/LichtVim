@@ -35,7 +35,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      table.insert(opts.servers, 1, { "lua_ls" })
       opts.servers = {
         lua_ls = {
           settings = {
