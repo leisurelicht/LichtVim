@@ -130,7 +130,7 @@ return {
         if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
           lsp_handlers["textDocument/publishDiagnostics"] = function(...) end
         end
-        options["handlers"] = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
+        options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         if lazy.has("cmp_nvim_lsp") then
