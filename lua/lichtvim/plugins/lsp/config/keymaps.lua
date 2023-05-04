@@ -34,8 +34,7 @@ function M.get()
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
     { "<leader>lO", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
-    { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
-    { "<leader>lf", vim.lsp.buf.references, desc = "Goto references" },
+    { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
     {
       "<leader>la",
       vim.lsp.buf.code_action,
@@ -59,7 +58,6 @@ function M.get()
         })
       end,
       desc = "Diagnostic (line)",
-      has = "diagnostic",
     },
   }
 
@@ -78,7 +76,7 @@ function M.get()
     list.extend(M._keys, _keys)
   end
 
-  if lazy.has("lspsaga.nvim") and false then
+  if lazy.has("lspsaga.nvim") then
     _keys = {
       {
         "<leader>la",
@@ -87,8 +85,8 @@ function M.get()
         desc = "Code action",
         has = "codeAction",
       },
-      { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover" },
-      { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover" },
+      { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
+      { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover", has = "hover" },
       {
         "<leader>ll",
         "<cmd>Lspsaga show_line_diagnostics<CR>",
@@ -168,7 +166,8 @@ function M.get()
 end
 
 function M.on_attach(client, buffer)
-  vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+  -- vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local keymaps = {}
   for _, value in ipairs(M.get()) do

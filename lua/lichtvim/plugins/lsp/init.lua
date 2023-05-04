@@ -20,7 +20,7 @@ return {
   },
   {
     "nvimdev/lspsaga.nvim",
-    enabled = false,
+    enabled = true,
     event = "LspAttach",
     dependencies = {
       "neovim/nvim-lspconfig",
