@@ -9,8 +9,8 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      opts.servers = {
+    opts = {
+      servers = {
         gopls = {
           settings = {
             document_diagnostics = true,
@@ -34,7 +34,7 @@ return {
             },
           },
         },
-      }
-    end,
+      },
+    },
   },
 }

@@ -47,7 +47,7 @@ return {
         vim.lsp.diagnostic.on_publish_diagnostics(a, params, client_id, c, config)
       end
 
-      opts.servers = {
+      vim.tbl_extend("force", opts.servers, {
         pyright = {
           settings = {
             document_diagnostics = true,
@@ -94,7 +94,7 @@ return {
           },
           options = {},
         },
-      }
+      })
     end,
   },
 }
