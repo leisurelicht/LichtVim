@@ -5,7 +5,7 @@ return {
   { import = "lichtvim.plugins.lsp.cmp" },
   {
     "aznhe21/actions-preview.nvim",
-    enabled = true,
+    enabled = false,
     event = "LspAttach",
     dependencies = { "nui.nvim" },
     config = function()
