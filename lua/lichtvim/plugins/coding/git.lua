@@ -1,9 +1,15 @@
 local function git_keymaps(gs, bufnr)
   map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
   map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
-  map.set({ "n", "v" }, "<leader>ga", ":Gitsigns stage_hunk<cr>", "Add hunk", { buffer = bufnr })
+  map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
+  map.set("v", "<leader>ga", function()
+    gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, "Add hunk", { buffer = bufnr })
+  map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
+  map.set("v", "<leader>gr", function()
+    gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, "Reset hunk", { buffer = bufnr })
   map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
-  map.set({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<cr>", "Reset hunk", { buffer = bufnr })
   map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
   map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
   map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
@@ -18,7 +24,7 @@ local function git_keymaps(gs, bufnr)
 
   map.set("n", "]g", function()
     if vim.wo.diff then
-      return "gn"
+      return "]g"
     end
     vim.schedule(function()
       gs.next_hunk()
@@ -28,7 +34,7 @@ local function git_keymaps(gs, bufnr)
 
   map.set("n", "[g", function()
     if vim.wo.diff then
-      return "gp"
+      return "[g"
     end
     vim.schedule(function()
       gs.prev_hunk()
