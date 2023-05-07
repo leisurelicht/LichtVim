@@ -30,7 +30,7 @@ return {
         end,
       },
     },
-    keys = { { "<leader>e", "<cmd>Neotree filesystem focus reveal float toggle<cr>", desc = "Explorer" } },
+    keys = { { "<leader>e", "<cmd>Neotree filesystem focus reveal toggle<cr>", desc = "Explorer" } },
     opts = function()
       return {
         default_component_configs = {},

@@ -9,9 +9,9 @@ local function info()
   local total_plugins = require("lazy").stats().count
   local datetime = os.date(" %d-%m-%Y")
   local version = vim.version()
-  local version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
+  local version_info = "  " .. version.major .. "." .. version.minor .. "." .. version.patch
 
-  return datetime .. "   " .. total_plugins .. " plugins" .. version_info
+  return datetime .. "  " .. total_plugins .. " plugins" .. version_info
 end
 
 local leader = "SPC"
@@ -65,7 +65,7 @@ return {
             button("e", "  New File", "<cmd>ene <cr>"),
             button("SPC f f", "  Find File"),
             button("SPC f j", "  Find Project"),
-            button("SPC f o", "  Recently Opened Files"),
+            button("SPC f o", "  Recently Opened Files"),
             -- button("SPC s l", "  Load Session"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
           },

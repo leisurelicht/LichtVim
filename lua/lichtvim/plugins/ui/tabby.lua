@@ -28,8 +28,8 @@ return {
 
             local hl = tab.is_current() and "LichtTLActiveTab" or "LichtTLUnActive"
             return {
-              line.sep(" ", hl, "LichtTLLineSep"),
-              tab.is_current() and "" or "",
+              line.sep("", hl, "LichtTLLineSep"),
+              tab.is_current() and "" or "",
               tab.number(),
               tab_name,
               tab.is_current() and tab.close_btn("") or "",
@@ -50,7 +50,7 @@ return {
 
             local hl = win.is_current() and "LichtTLActiveWin" or "LichtTLUnActive"
             return {
-              line.sep(" ", hl, "LichtTLLineSep"),
+              line.sep("", hl, "LichtTLLineSep"),
               win.is_current() and "" or "",
               win_name,
               line.sep("", hl, "LichtTLLineSep"),
@@ -58,7 +58,7 @@ return {
               margin = " ",
             }
           end),
-          { line.sep(" ", "LichtTLTail", "LichtTLLineSep"), { " ", hl = "LichtTLTail" } },
+          { line.sep("", "LichtTLTail", "LichtTLLineSep"), { "  ", hl = "LichtTLTail" } },
           hl = "LichtTLLineSep",
         }
       end)
