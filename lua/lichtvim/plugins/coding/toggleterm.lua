@@ -26,6 +26,24 @@ local function _smart_add_term()
   end
 end
 
+local function _lazygit()
+  require("toggleterm.terminal").Terminal
+    :new({
+      cmd = "lazygit",
+      dir = "git_dir",
+      direction = "float",
+      float_opts = {
+        border = "curved", -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+      },
+      -- function to run on opening the terminal
+      on_open = function(term)
+        vim.cmd("startinsert!")
+        map.set("n", "q", "<CScutD>close<CR>", "Close Lazygit", { buffer = term.bufnr, silent = true })
+      end,
+    })
+    :toggle({})
+end
+
 return {
   {
     "akinsho/toggleterm.nvim",
@@ -68,6 +86,7 @@ return {
         { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send current line" },
         { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send visual lines" },
         { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send visual selection" },
+        { "<leader>gl", _lazygit, desc = "Lazygit" },
       }
     end,
     config = function(_, opts)
@@ -84,6 +103,7 @@ return {
           map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
           map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
           map.set("t", "<C-o>", _smart_add_term, "Add new terminal", opts)
+          -- map.set("n", "<leader>oa", _smart_add_term, "Add new terminal", opts)
         end,
       })
     end,
