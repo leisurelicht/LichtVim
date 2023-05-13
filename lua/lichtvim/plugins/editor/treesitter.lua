@@ -11,7 +11,6 @@ return {
     dependencies = {
       "p00f/nvim-ts-rainbow",
       "RRethy/nvim-treesitter-endwise",
-      "JoosepAlviste/nvim-ts-context-commentstring",
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
         init = function()
@@ -57,8 +56,6 @@ return {
         -- colors = {}, -- table of hex strings
         -- termcolors = {} -- table of colour name strings
       },
-      -- comment
-      context_commentstring = { enable = true },
       -- match % g% [% ]% z%
       matchup = { enable = true },
       endwise = { enable = true },
