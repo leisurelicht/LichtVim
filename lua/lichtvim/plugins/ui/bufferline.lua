@@ -5,41 +5,45 @@ return {
     { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
     { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
   },
-  opts = {
-    options = {
-      numbers = "ordinal",
-      color_icons = true,
-      show_buffer_icons = true,
-      show_buffer_close_icons = true,
-      show_close_icon = true,
-      show_tab_indicators = true,
-      separator_style = "thin",
-      -- stylua: ignore
-      close_command = function(n) require("mini.bufremove").delete(n, false) end,
-      -- stylua: ignore
-      right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
-      diagnostics = "nvim_lsp",
-      always_show_bufferline = false,
-      diagnostics_indicator = function(_, _, diag)
-        local icons = require("lichtvim.utils.ui.icons").diagnostics
-        local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-          .. (diag.warning and icons.Warn .. diag.warning or "")
-        return vim.trim(ret)
-      end,
-      offsets = {
-        {
-          filetype = "neo-tree",
-          text = "Neo-tree",
-          highlight = "Directory",
-          text_align = "left",
+  opts = function()
+    -- vim.opt.mousemoveevent = true
+    return {
+      options = {
+        numbers = "ordinal",
+        separator_style = "slant",
+        indicator = {
+          style = "underline",
         },
-        {
-          filetype = "NvimTree",
-          text = "File Explorer",
-          highlight = "Directory",
-          text_align = "left",
+        -- hover = {
+        --   enabled = true,
+        --   delay = 200,
+        --   reveal = { "close" },
+        -- },
+        -- stylua: ignore
+        close_command = function(n) require("mini.bufremove").delete(n, false) end,
+        -- stylua: ignore
+        right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
+        diagnostics = "nvim_lsp",
+        always_show_bufferline = false,
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+          local dig = require("lichtvim.utils.ui.icons").diagnostics
+          local s = " "
+          for e, n in pairs(diagnostics_dict) do
+            local sym = e == "error" and dig.Error
+              or (e == "warning" and dig.Warn or (e == "info" and dig.Info or dig.Hint))
+            s = s .. sym .. n
+          end
+          return s
+        end,
+        offsets = {
+          {
+            filetype = "NvimTree",
+            text = "File Explorer",
+            highlight = "Directory",
+            text_align = "left",
+          },
         },
       },
-    },
-  },
+    }
+  end,
 }
