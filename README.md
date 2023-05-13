@@ -31,7 +31,6 @@
 - [im-select](https://github.com/daipeihust/im-select) (if you use macOS or windows)
 - [fzf](https://github.com/junegunn/fzf) (for fuzzy search)
 - [sqlite](https://github.com/sqlite/sqlite)
-- [lazygit](https://github.com/jesseduffield/lazygit) 
 - [luarocks](https://github.com/luarocks/luarocks) (for install lsp **option**) 
 - [npm](https://github.com/npm/cli) (for install lsp **optional**) 
 - [go](https://go.dev) (for install lsp  **option**)
