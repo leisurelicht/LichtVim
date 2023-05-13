@@ -61,4 +61,24 @@ return {
     opts = {},
     main = "mini.comment",
   },
+  {
+    "m4xshen/smartcolumn.nvim",
+    opts = {
+      colorcolumn = "80",
+      disabled_filetypes = {
+        "help",
+        "text",
+        "markdown",
+        "lazy",
+        "mason",
+        "notify",
+        "alpha",
+      },
+      custom_colorcolumn = {
+        ["htmldjango"] = "120",
+        ["lua"] = "120",
+      },
+      scope = "file",
+    },
+  },
 }
