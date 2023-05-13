@@ -14,7 +14,7 @@ return {
         vimls = {
           settings = {
             document_diagnostics = true,
-            document_formatting = false,
+            document_formatting = true,
             formatting_on_save = false,
           },
           options = {
@@ -22,7 +22,7 @@ return {
             filetypes = { "vim" },
           },
         },
-      }
-    }
+      },
+    },
   },
 }
