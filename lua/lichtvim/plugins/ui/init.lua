@@ -4,7 +4,6 @@ return {
   { import = "lichtvim.plugins.ui.alpha" },
   { import = "lichtvim.plugins.ui.lualine" },
   { import = "lichtvim.plugins.ui.barbar" },
-  { import = "lichtvim.plugins.ui.trouble" },
   { -- lsp progress
     "j-hui/fidget.nvim",
     event = { "BufReadPre", "BufNewFile" },

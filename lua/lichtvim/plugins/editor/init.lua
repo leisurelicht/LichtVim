@@ -44,20 +44,8 @@ return {
     event = { "BufNewFile", "BufRead" },
     config = function()
       vim.g.im_select_enable_focus_eventsF = 1
-      if sys.IsMacOS() then
-        api.autocmd({ "InsertLeave" }, {
-          pattern = { "*" },
-          command = "call system('im-select com.apple.keylayout.ABC')",
-        })
-        api.autocmd({ "CmdlineEnter" }, {
-          pattern = { "*" },
-          command = "call system('im-select com.apple.keylayout.ABC')",
-        })
-        api.autocmd({ "CmdlineLeave" }, {
-          pattern = { "*" },
-          command = "call system('im-select com.apple.keylayout.ABC')",
-        })
-        api.autocmd({ "VimEnter" }, {
+      if sys.IsMacOS() or sys.IsLinux() then
+        api.autocmd({ "InsertLeave", "CmdlineEnter", "CmdlineLeave", "VimEnter" }, {
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })
@@ -89,24 +77,27 @@ return {
     end,
   },
   {
+    "folke/todo-comments.nvim",
+    lazy = true,
+    cmd = { "TodoTrouble" },
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup({})
+      if lazy.has("telescope.nvim") then
+        map.set("n", "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", "Todo")
+      else
+        map.set("n", "<leader>ft", "<cmd>TodoLocList<cr>", "Todo (LocList)")
+      end
+    end,
+  },
+  {
     "dstein64/vim-startuptime",
+    enabled = false,
     cmd = "StartupTime",
     config = function()
       vim.g.startuptime_tries = 10
     end,
   },
   { "wakatime/vim-wakatime" },
-  {
-    "folke/todo-comments.nvim",
-    lazy = true,
-    cmd = { "TodoTrouble" },
-    keys = {
-      { "<leader>ft", "<cmd>TodoTrouble <cr>", desc = "Todo" },
-    },
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("todo-comments").setup({})
-    end,
-  },
 }
