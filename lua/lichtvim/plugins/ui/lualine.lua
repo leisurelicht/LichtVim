@@ -48,7 +48,7 @@ return {
             },
           },
           lualine_c = {
-            -- "filename",
+            "filename",
           },
           lualine_x = {
             { "encoding" },
@@ -90,6 +90,9 @@ return {
             },
           },
           lualine_y = {
+            { "location", separator = { left = "" } },
+          },
+          lualine_z = {
             { "progress", separator = { left = "" } },
           },
         },
@@ -102,10 +105,10 @@ return {
             },
           },
           lualine_c = {
-            -- {
-            --   "filename",
-            --   color = { fg = "grey" },
-            -- },
+            {
+              "filename",
+              color = { fg = "grey" },
+            },
           },
           lualine_x = {
             {
