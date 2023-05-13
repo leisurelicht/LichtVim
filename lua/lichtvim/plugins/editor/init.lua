@@ -7,7 +7,7 @@ return {
   { import = "lichtvim.plugins.editor.enhance" },
   { import = "lichtvim.plugins.editor.neo-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
-  { import = "lichtvim.plugins.editor.toggleterm" },
+  -- { import = "lichtvim.plugins.editor.toggleterm" },
   { import = "lichtvim.plugins.editor.find" },
   {
     "mrjones2014/smart-splits.nvim",

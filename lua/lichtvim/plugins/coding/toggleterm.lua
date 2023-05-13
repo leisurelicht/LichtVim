@@ -44,10 +44,6 @@ local function _lazygit()
     :toggle({})
 end
 
-local function _htop()
-  require("toggleterm.terminal").Terminal:new({ cmd = "htop", hidden = true, direction = "float" }):toggle({})
-end
-
 return {
   {
     "akinsho/toggleterm.nvim",
@@ -90,7 +86,6 @@ return {
         { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send current line" },
         { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send visual lines" },
         { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send visual selection" },
-        { "<leader>uh", _htop, desc = "Htop" },
         { "<leader>gl", _lazygit, desc = "Lazygit" },
       }
     end,
