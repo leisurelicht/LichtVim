@@ -2,7 +2,6 @@ return {
   { import = "lichtvim.plugins.coding.indent" },
   { import = "lichtvim.plugins.coding.autopairs" },
   { import = "lichtvim.plugins.coding.git" },
-  { import = "lichtvim.plugins.coding.comment" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
   {
     "andymass/vim-matchup",
