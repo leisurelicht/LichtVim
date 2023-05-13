@@ -54,4 +54,10 @@ return {
       map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
     end,
   },
+  {
+    "echasnovski/mini.comment",
+    event = "VeryLazy",
+    opts = {},
+    main = "mini.comment",
+  },
 }
