@@ -48,7 +48,7 @@ return {
             },
           },
           lualine_c = {
-            "filename",
+            -- "filename",
           },
           lualine_x = {
             { "encoding" },
@@ -102,10 +102,10 @@ return {
             },
           },
           lualine_c = {
-            {
-              "filename",
-              color = { fg = "grey" },
-            },
+            -- {
+            --   "filename",
+            --   color = { fg = "grey" },
+            -- },
           },
           lualine_x = {
             {
@@ -135,7 +135,7 @@ return {
           },
         },
         extensions = {
-          -- "nvim-tree",
+          "nvim-tree",
           "symbols-outline",
           "fzf",
           "quickfix",
