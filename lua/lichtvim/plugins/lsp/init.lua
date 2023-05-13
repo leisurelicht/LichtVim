@@ -60,14 +60,4 @@ return {
       require("lspsaga").setup(opts)
     end,
   },
-  {
-    "simrat39/symbols-outline.nvim",
-    enabled = true,
-    cmd = "SymbolsOutline",
-    event = "LspAttach",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    opts = { show_numbers = true },
-  },
 }

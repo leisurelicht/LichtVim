@@ -58,19 +58,7 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "sqlite.lua" } },
-      { "tsakirist/telescope-lazy.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim" },
-      { "tsakirist/telescope-lazy.nvim" },
-      {
-        "folke/todo-comments.nvim",
-        lazy = true,
-        cmd = { "TodoTelescope" },
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-          require("todo-comments").setup({})
-        end,
-      },
       {
         "AckslD/nvim-neoclip.lua",
         lazy = true,
@@ -144,7 +132,6 @@ return {
         "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
         desc = "Paster",
       },
-      { "<leader>ft", "<cmd>TodoTelescope keywords=TODO,FIX,HACK,PERF theme=dropdown<cr>", desc = "Todo" },
       {
         "<leader>fe",
         function()
@@ -154,7 +141,6 @@ return {
         end,
         desc = "File Browser",
       },
-      { "<leader>fz", "<cmd>Telescope lazy<cr>", desc = "Lazy" },
     },
     opts = function(_, opts)
       local Job = require("plenary.job")
@@ -356,7 +342,6 @@ return {
       telescope.load_extension("neoclip")
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
-      telescope.load_extension("lazy")
 
       if lazy.has("noice.nvim") then
         telescope.load_extension("noice")

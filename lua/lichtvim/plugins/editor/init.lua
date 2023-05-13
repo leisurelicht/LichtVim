@@ -5,9 +5,8 @@ return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { import = "lichtvim.plugins.editor.treesitter" },
   { import = "lichtvim.plugins.editor.enhance" },
-  { import = "lichtvim.plugins.editor.neo-tree" },
+  { import = "lichtvim.plugins.editor.nvim-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
-  -- { import = "lichtvim.plugins.editor.toggleterm" },
   { import = "lichtvim.plugins.editor.find" },
   {
     "mrjones2014/smart-splits.nvim",
@@ -97,4 +96,17 @@ return {
     end,
   },
   { "wakatime/vim-wakatime" },
+  {
+    "folke/todo-comments.nvim",
+    lazy = true,
+    cmd = { "TodoTrouble" },
+    keys = {
+      { "<leader>ft", "<cmd>TodoTrouble <cr>", desc = "Todo" },
+    },
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup({})
+    end,
+  },
 }
