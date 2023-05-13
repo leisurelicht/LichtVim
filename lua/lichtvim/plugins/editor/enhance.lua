@@ -12,26 +12,17 @@ return {
     "phaazon/hop.nvim",
     enabled = true,
     event = { "BufRead", "BufNewFile" },
+    -- stylua: ignore
     config = function()
       local hop = require("hop")
       local directions = require("hop.hint").HintDirection
 
       hop.setup({ keys = "etovxqpdygfblzhckisuran" })
 
-      map.set("", "f", function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-      end, "Jump forward", { remap = true })
-
-      map.set("", "F", function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-      end, "Jump backward", { remap = true })
-
-      map.set("", "t", function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-      end, "Jump forward", { remap = true })
-      map.set("", "T", function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-      end, "Jump backward", { remap = true })
+      map.set("", "f", function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true }) end, "Jump forward", { remap = true })
+      map.set("", "F", function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true }) end, "Jump backward", { remap = true })
+      map.set("", "t", function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 }) end, "Jump forward", { remap = true })
+      map.set("", "T", function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }) end, "Jump backward", { remap = true })
 
       map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
       map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
@@ -52,20 +43,10 @@ return {
     config = function()
       require("hlslens").setup()
       local kopts = { noremap = true, silent = true }
-      map.set(
-        "n",
-        "n",
-        [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]],
-        "Next",
-        kopts
-      )
-      map.set(
-        "n",
-        "N",
-        [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]],
-        "Prev",
-        kopts
-      )
+      -- stylua: ignore
+      map.set( "n", "n", [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]], "Next", kopts )
+      -- stylua: ignore
+      map.set( "n", "N", [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]], "Prev", kopts )
       map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search", kopts)
       map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search", kopts)
       map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search", kopts)
@@ -74,7 +55,9 @@ return {
   },
   {
     "karb94/neoscroll.nvim",
-    enabled = false,
+    enabled = function()
+      return not vim.g.neovide
+    end,
     event = { "BufNewFile", "BufRead" },
     config = function()
       require("neoscroll").setup({ easing_function = "quadratic" })
@@ -84,14 +67,8 @@ return {
       t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "20", [['cubic']] } }
       t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "20", [['cubic']] } }
       -- Use the "circular" easing function
-      t["<C-b>"] = {
-        "scroll",
-        { "-vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] },
-      }
-      t["<C-f>"] = {
-        "scroll",
-        { "vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] },
-      }
+      t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
+      t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "50", [['cubic']] } }
       -- Pass "nil" to disable the easing animation (constant scrolling speed)
       t["<C-y>"] = { "scroll", { "-0.10", "false", "100", nil } }
       t["<C-e>"] = { "scroll", { "0.10", "false", "100", nil } }
@@ -102,5 +79,12 @@ return {
 
       require("neoscroll.config").set_mappings(t)
     end,
+  },
+  {
+    "echasnovski/mini.bufremove",
+    -- stylua: ignore
+    keys = {
+      { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
+    },
   },
 }

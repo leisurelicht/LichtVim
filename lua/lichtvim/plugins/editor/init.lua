@@ -22,12 +22,10 @@ return {
       resize_mode = {
         silent = true,
         hooks = {
-          on_enter = function()
-            vim.notify("Entering Resize Mode. Welcome")
-          end,
-          on_leave = function()
-            vim.notify("Exiting Resize Mode. Bye")
-          end,
+          -- stylua: ignore
+          on_enter = function() vim.notify("Entering Resize Mode. Welcome") end,
+          -- stylua: ignore
+          on_leave = function() vim.notify("Exiting Resize Mode. Bye") end,
         },
       },
     },

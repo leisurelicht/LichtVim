@@ -3,17 +3,13 @@ return {
   { "MunifTanjim/nui.nvim", lazy = true },
   { import = "lichtvim.plugins.ui.alpha" },
   { import = "lichtvim.plugins.ui.lualine" },
-  { import = "lichtvim.plugins.ui.barbar" },
+  { import = "lichtvim.plugins.ui.bufferline" },
   { -- lsp progress
     "j-hui/fidget.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
+    dependencies = { "neovim/nvim-lspconfig" },
     config = function()
-      require("fidget").setup({
-        window = { blend = 0 },
-      })
+      require("fidget").setup({ window = { blend = 0 } })
     end,
   },
   { -- notify
@@ -107,5 +103,34 @@ return {
         },
       }
     end,
+  },
+  {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = { use_diagnostic_signs = true },
+    keys = {
+      {
+        "[q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").previous({ skip_groups = true, jump = true })
+          else
+            vim.cmd.cprev()
+          end
+        end,
+        desc = "Previous trouble/quickfix item",
+      },
+      {
+        "]q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").next({ skip_groups = true, jump = true })
+          else
+            vim.cmd.cnext()
+          end
+        end,
+        desc = "Next trouble/quickfix item",
+      },
+    },
   },
 }

@@ -47,17 +47,10 @@ return {
     opts = {
       layout = {
         { type = "padding", val = 10 },
-        {
-          type = "text",
-          val = require("lichtvim.utils.ui.header").lichtvim,
-          opts = { position = "center", hl = pick_color() },
-        },
+        -- stylua: ignore
+        { type = "text", val = require("lichtvim.utils.ui.header").lichtvim, opts = { position = "center", hl = pick_color() }, },
         { type = "padding", val = 2 },
-        {
-          type = "text",
-          val = info,
-          opts = { position = "center", hl = "Number" },
-        },
+        { type = "text", val = info, opts = { position = "center", hl = "Number" } },
         { type = "padding", val = 2 },
         {
           type = "group",
@@ -83,11 +76,7 @@ return {
           opts = { spacing = 1 },
         },
         { type = "padding", val = 1 },
-        {
-          type = "text",
-          val = "- LichtVim -",
-          opts = { position = "center", hl = "Number" },
-        },
+        { type = "text", val = "- LichtVim -", opts = { position = "center", hl = "Number" } },
       },
       opts = { margin = 5 },
     },

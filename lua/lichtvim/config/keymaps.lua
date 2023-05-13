@@ -107,13 +107,14 @@ else
   map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
 end
 
--- map.set("n", "<leader>bh ", "<cmd>ball<cr>", "Horizontally list all")
--- map.set("n", "<leader>bv", "<cmd>vertical ball<cr>", "Vertically list all")
+if not lazy.has("mini.bufremove") then
+  map.set("n", "<leader>bd", "<cmd>bdelete<cr>", "Delete buffer")
+end
+
 map.set("n", "<leader>bf", "<cmd>bfirst<cr>", "First buffer")
 map.set("n", "<leader>bl", "<cmd>blast<cr>", "Last buffer")
 map.set("n", "<leader>bp", "<cmd>bprev<cr>", "Previous buffer")
 map.set("n", "<leader>bn", "<cmd>bnext<cr>", "Next buffer")
-map.set("n", "<leader>bd", "<cmd>bd<cr>", "Delete buffer")
 map.set("n", "[b", "<cmd>bprev<cr>", "Previous buffer")
 map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer")
 

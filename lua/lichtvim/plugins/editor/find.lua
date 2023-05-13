@@ -117,27 +117,17 @@ return {
       { "<leader>fk", ts_b("keymaps"), desc = "Key maps" },
       { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
       { "<leader>fJ", ts_b("jumplist"), desc = "Jump list" },
-      {
-        "<leader>fC",
-        ts_b("colorscheme", { enable_preview = true }),
-        desc = "Colorscheme",
-      },
+      { "<leader>fC", ts_b("colorscheme", { enable_preview = true }), desc = "Colorscheme" },
       { "<leader>gC", ts_b("git_bcommits"), desc = "Buffer's Commits" },
       { "<leader>gc", ts_b("git_commits"), desc = "Commits" },
       { "<leader>gS", ts_b("git_stash"), desc = "Stash" },
       { "<leader>gn", ts_b("git_branches"), desc = "Branches" },
       { "<leader>gs", ts_b("git_status"), desc = "Status" },
-      {
-        "<leader>fp",
-        "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>",
-        desc = "Paster",
-      },
+      { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
       {
         "<leader>fe",
         function()
-          require("telescope").extensions.file_browser.file_browser({
-            path = vim.fn.expand("~/Code"),
-          })
+          require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
         end,
         desc = "File Browser",
       },
