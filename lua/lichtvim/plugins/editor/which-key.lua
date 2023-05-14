@@ -110,6 +110,9 @@ return {
         zk = "Previous fold end",
         zn = "Disable fold",
         zN = "Enable fold ",
+        zt = "Make cursor top",
+        zz = "Make cursor medium",
+        zb = "Make cursor bottom",
         mode = "n",
         prefix = "",
       })
