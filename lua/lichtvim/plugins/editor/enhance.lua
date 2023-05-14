@@ -55,12 +55,12 @@ return {
   },
   {
     "karb94/neoscroll.nvim",
-    enabled = function()
-      return not vim.g.neovide
-    end,
     event = { "BufNewFile", "BufRead" },
-    config = function()
-      require("neoscroll").setup({ easing_function = "quadratic" })
+    opts = {
+      easing_function = "quadratic",
+    },
+    config = function(_, opts)
+      require("neoscroll").setup(opts)
       local t = {}
       -- Syntax: t[keys] = {function, {function arguments}}
       -- Use the "sine" easing function
@@ -78,6 +78,14 @@ return {
       t["zb"] = { "zb", { "10" } }
 
       require("neoscroll.config").set_mappings(t)
+      if lazy.has("which-key.nvim") then
+        require("which-key").register({
+          zt = { name = "Make cursor top" },
+          zz = { name = "Make cursor medium" },
+          zb = { name = "Make cursor bottom" },
+          mode = "n",
+        })
+      end
     end,
   },
   {

@@ -1,12 +1,16 @@
+local path = require("lichtvim.utils").path
+
 local function git_keymaps(gs, bufnr)
   map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
   map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
   map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
-  -- stylua: ignore
-  map.set("v", "<leader>ga", function() gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Add hunk", { buffer = bufnr })
+  map.set("v", "<leader>ga", function()
+    gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, "Add hunk", { buffer = bufnr })
   map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
-  -- stylua: ignore
-  map.set("v", "<leader>gr", function() gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Reset hunk", { buffer = bufnr })
+  map.set("v", "<leader>gr", function()
+    gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, "Reset hunk", { buffer = bufnr })
   map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
   map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
   map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
@@ -37,6 +41,12 @@ local function git_keymaps(gs, bufnr)
     end)
     return "<Ignore>"
   end, "Previous git hunk", { buffer = bufnr, expr = true })
+  map.set("n", "<leader>gg", function()
+    require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = path.git_dir() })
+  end, "Lazygit", { buffer = bufnr })
+  map.set("n", "<leader>gl", function()
+    require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = path.git_dir() })
+  end, "Lazygit log", { buffer = bufnr })
 
   -- Text object
   map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")

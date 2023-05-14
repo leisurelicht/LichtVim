@@ -50,7 +50,7 @@ opt.softtabstop = 4 --
 opt.shiftwidth = 4 --
 opt.shiftround = true -- 缩进取整为shiftwidth的倍数
 opt.smarttab = true -- 智能tab
-opt.foldmethod = "syntax" -- 折叠方式
+opt.foldmethod = "indent" -- 折叠方式
 opt.foldlevelstart = 99 -- 没有折叠
 opt.spell = false -- 是否开启单词拼写检查
 opt.spelllang = "en_us,cjk" -- 设定单词拼写检查的语言
@@ -68,7 +68,7 @@ opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = false -- 不可见字符不显示
--- opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if vim.g.neovide then
   vim.notify("Use Neovide Configure", vim.log.levels.INFO, { title = "LichtVim" })

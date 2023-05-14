@@ -76,10 +76,15 @@ return {
         s = { name = "Split" },
         t = { name = "Tab" },
         to = { name = "Close Only" },
-        h = { name = "+Hop" },
-        ha = { name = "+All Windows" },
+        h = { name = "Hop" },
+        ha = { name = "All Windows" },
+        w = { name = "Switch" },
         mode = "n",
         prefix = "<leader>",
+      })
+      wk.register({
+        mode = "n",
+        prefix = "<localleader>",
       })
       wk.register({
         g = { name = "Git" },
@@ -88,6 +93,23 @@ return {
       })
       wk.register({
         ga = "Print ascii code",
+        za = "Toggle fold",
+        zc = "Fold",
+        zC = "Fold all",
+        zm = "Increase foldlevel one",
+        zM = "Close all folds",
+        zo = "Open fold at cursor",
+        zO = "Open all fold at cursor",
+        zr = "Decrease foldlevel one",
+        zR = "Open all folds",
+        zd = "Delete fold at cursor",
+        zE = "Delete all folds",
+        ["]z"] = "Move to start of open fold",
+        ["[z"] = "Move to end of open fold",
+        zj = "Next fold begin",
+        zk = "Previous fold end",
+        zn = "Disable fold",
+        zN = "Enable fold ",
         mode = "n",
         prefix = "",
       })

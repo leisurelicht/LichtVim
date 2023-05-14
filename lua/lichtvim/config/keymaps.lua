@@ -73,10 +73,6 @@ map.set("n", "<leader>tN", "<cmd>+tabmove<cr>", "Move backward")
 -- map.set("n", "<leader>ts", "<cmd>tabs<cr>", "Show tabs")
 -- map.set("n", "<leader>ts", ":tab split ", "Split Tab")
 
-if lazy.has("tabby.nvim") then
-  map.set("n", "<leader>tr", ":TabRename ", "Rename tab")
-end
-
 -- 关闭tab页
 map.set("n", "<leader>too", "<cmd>tabonly<cr>", "Close all")
 map.set("n", "<leader>to1", "<cmd>tabonly 1<cr>", "Close all except 1")
@@ -106,11 +102,9 @@ if lazy.has("telescope.nvim") then
 else
   map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
 end
-
 if not lazy.has("mini.bufremove") then
   map.set("n", "<leader>bd", "<cmd>bdelete<cr>", "Delete buffer")
 end
-
 map.set("n", "<leader>bf", "<cmd>bfirst<cr>", "First buffer")
 map.set("n", "<leader>bl", "<cmd>blast<cr>", "Last buffer")
 map.set("n", "<leader>bp", "<cmd>bprev<cr>", "Previous buffer")
@@ -133,4 +127,103 @@ local function toggle_mouse()
   end
 end
 
-map.set("n", "<leader>a", toggle_mouse, "Mouse mode")
+local function toggle_spell()
+  if vim.wo.spell then
+    vim.wo.spell = false
+    vim.notify("Spell check: off", "info", { title = "Spell" })
+  else
+    vim.wo.spell = true
+    vim.notify("Spell check: on", "info", { title = "Spell" })
+  end
+end
+
+local function toggle_wrap()
+  if vim.wo.wrap then
+    vim.wo.wrap = false
+    vim.notify("Wrap: off", "info", { title = "Wrap" })
+  else
+    vim.wo.wrap = true
+    vim.notify("Wrap: on", "info", { title = "Wrap" })
+  end
+end
+
+local function toggle_number()
+  if vim.wo.number then
+    vim.wo.number = false
+    vim.notify("Number: off", "info", { title = "Number" })
+  else
+    vim.wo.number = true
+    vim.notify("Number: on", "info", { title = "Number" })
+  end
+end
+
+local function toggle_relativenumber()
+  if vim.wo.relativenumber then
+    vim.wo.relativenumber = false
+    vim.notify("RelativeNumber: off", "info", { title = "RelativeNumber" })
+  else
+    vim.wo.relativenumber = true
+    vim.notify("RelativeNumber: on", "info", { title = "RelativeNumber" })
+  end
+end
+
+local function toggle_cursorline()
+  if vim.wo.cursorline then
+    vim.wo.cursorline = false
+    vim.notify("CursorLine: off", "info", { title = "CursorLine" })
+  else
+    vim.wo.cursorline = true
+    vim.notify("CursorLine: on", "info", { title = "CursorLine" })
+  end
+end
+
+local function toggle_cursorcolumn()
+  if vim.wo.cursorcolumn then
+    vim.wo.cursorcolumn = false
+    vim.notify("CursorColumn: off", "info", { title = "CursorColumn" })
+  else
+    vim.wo.cursorcolumn = true
+    vim.notify("CursorColumn: on", "info", { title = "CursorColumn" })
+  end
+end
+
+local function toggle_foldcolumn()
+  if vim.wo.foldcolumn == "0" then
+    vim.wo.foldcolumn = "1"
+    vim.notify("FoldColumn: on", "info", { title = "FoldColumn" })
+  else
+    vim.wo.foldcolumn = "0"
+    vim.notify("FoldColumn: off", "info", { title = "FoldColumn" })
+  end
+end
+
+local function toggle_foldenable()
+  if vim.wo.foldenable then
+    vim.wo.foldenable = false
+    vim.notify("FoldEnable: off", "info", { title = "FoldEnable" })
+  else
+    vim.wo.foldenable = true
+    vim.notify("FoldEnable: on", "info", { title = "FoldEnable" })
+  end
+end
+
+local function toggle_list()
+  if vim.wo.list then
+    vim.wo.list = false
+    vim.notify("List: off", "info", { title = "List" })
+  else
+    vim.wo.list = true
+    vim.notify("List: on", "info", { title = "List" })
+  end
+end
+
+map.set("n", "<leader>wa", toggle_mouse, "Mouse")
+map.set("n", "<leader>wp", toggle_spell, "Spell check")
+map.set("n", "<leader>ww", toggle_wrap, "Wrap")
+map.set("n", "<leader>wn", toggle_number, "Number")
+map.set("n", "<leader>wr", toggle_relativenumber, "RelativeNumber")
+map.set("n", "<leader>wc", toggle_cursorline, "CursorLine")
+map.set("n", "<leader>wv", toggle_cursorcolumn, "CursorColumn")
+map.set("n", "<leader>wf", toggle_foldenable, "FoldEnable")
+map.set("n", "<leader>wd", toggle_foldcolumn, "FoldColumn")
+map.set("n", "<leader>wl", toggle_list, "List")

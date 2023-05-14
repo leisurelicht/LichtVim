@@ -116,6 +116,15 @@ function M.path.get_root()
   return root
 end
 
+function M.path.git_dir()
+  local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
+  local is_git_dir = vim.fn.matchstr(git_dir, "^fatal:.*") == ""
+  if not is_git_dir then
+    return
+  end
+  return vim.trim(git_dir)
+end
+
 function M.path.join(...)
   return table.concat(vim.tbl_flatten({ ... }), "/")
 end
