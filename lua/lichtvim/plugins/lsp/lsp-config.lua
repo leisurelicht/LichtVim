@@ -26,20 +26,11 @@ return {
     enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      -- stylua: ignore
+      { "hrsh7th/cmp-nvim-lsp", cond = function() return lazy.has("nvim-cmp") end },
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      {
-        "folke/neoconf.nvim",
-        enabled = false,
-        cmd = "Neoconf",
-        config = true,
-      },
+      { "folke/neoconf.nvim", enabled = true, cmd = "Neoconf", config = true },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
-      {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return lazy.has("nvim-cmp")
-        end,
-      },
     },
     opts = function()
       return {
@@ -52,10 +43,7 @@ return {
           virtual_text = { prefix = "icons", source = "if_many", spacing = 4 },
         },
         autoformat = true,
-        format = {
-          formatting_options = nil,
-          timeout_ms = nil,
-        },
+        format = { formatting_options = nil, timeout_ms = nil },
         setup = {},
         servers = {},
       }
