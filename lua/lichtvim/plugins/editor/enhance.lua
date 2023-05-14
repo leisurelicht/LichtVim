@@ -5,11 +5,13 @@ return {
   { "karb94/neoscroll.nvim", event = { "BufNewFile", "BufRead" }, config = true },
   {
     "echasnovski/mini.bufremove",
+    event = { "BufNewFile", "BufRead" },
     -- stylua: ignore
     keys = { { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" }, },
   },
   {
     "junegunn/vim-easy-align",
+    event = { "BufNewFile", "BufRead" },
     -- stylua: ignore
     config = function() map.set({ "x", "n" }, "ga", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false }) end,
   },

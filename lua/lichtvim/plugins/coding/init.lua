@@ -57,12 +57,13 @@ return {
   },
   {
     "echasnovski/mini.comment",
-    event = "VeryLazy",
+    event = { "BufNewFile", "BufRead" },
     opts = {},
     main = "mini.comment",
   },
   {
     "m4xshen/smartcolumn.nvim",
+    event = { "BufNewFile", "BufRead" },
     opts = {
       colorcolumn = "80",
       disabled_filetypes = {
