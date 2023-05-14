@@ -87,4 +87,10 @@ return {
       { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
     },
   },
+  {
+    "junegunn/vim-easy-align",
+    config = function()
+      map.set({ "x", "n" }, "ga", "<Plug>(EasyAlign)", "EasyAlign" { noremap = false })
+    end,
+  },
 }
