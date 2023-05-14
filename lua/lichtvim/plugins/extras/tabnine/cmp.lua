@@ -2,22 +2,23 @@ return {
   {
     "tzachar/cmp-tabnine",
     build = "./install.sh",
-    config = function()
-      require("cmp_tabnine.config"):setup({
-        max_lines = 1000,
-        max_num_results = 5,
-        sort = true,
-        run_on_every_keystroke = true,
-        snippet_placeholder = "..",
-        ignored_file_types = {
-          TelescopePrompt = true,
-          NvimTree = true,
-          ["neo-tree"] = true,
-          ["neo-tree-popup"] = true,
-          toggleterm = true,
-        },
-        show_prediction_strength = false,
-      })
+    opts = {
+      max_lines = 1000,
+      max_num_results = 5,
+      sort = true,
+      run_on_every_keystroke = true,
+      snippet_placeholder = "..",
+      ignored_file_types = {
+        TelescopePrompt = true,
+        NvimTree = true,
+        ["neo-tree"] = true,
+        ["neo-tree-popup"] = true,
+        toggleterm = true,
+      },
+      show_prediction_strength = false,
+    },
+    config = function(_, opts)
+      require("cmp_tabnine.config"):setup(opts)
 
       api.autocmd("BufRead", {
         group = api.augroup("prefetch", { clear = true }),
