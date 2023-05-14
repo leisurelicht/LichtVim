@@ -90,7 +90,7 @@ return {
   {
     "junegunn/vim-easy-align",
     config = function()
-      map.set({ "x", "n" }, "ga", "<Plug>(EasyAlign)", "EasyAlign" { noremap = false })
+      map.set({ "x", "n" }, "ga", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
     end,
   },
 }
