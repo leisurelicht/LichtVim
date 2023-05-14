@@ -1,22 +1,5 @@
 return {
   {
-    "L3MON4D3/LuaSnip",
-    event = "LspAttach",
-    build = (not jit.os:find("Windows"))
-        and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-  },
-  {
     "hrsh7th/nvim-cmp",
     enabled = true,
     version = false,
@@ -24,7 +7,8 @@ return {
 
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "saadparwaiz1/cmp_luasnip",
+      "dcampos/nvim-snippy",
+      "dcampos/cmp-snippy",
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -44,7 +28,7 @@ return {
       end
 
       local cmp = require("cmp")
-      local luasnip = require("luasnip")
+      local snippy = require("snippy")
       local context = require("cmp.config.context")
       local icons = require("lichtvim.utils.ui.icons")
       return {
@@ -65,7 +49,7 @@ return {
         },
         snippet = {
           expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            require("snippy").expand_snippet(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -78,8 +62,8 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
+            elseif snippy.can_expand_or_advance() then
+              snippy.expand_or_advance()
             elseif has_words_before() then
               cmp.complete()
             else
@@ -106,17 +90,17 @@ return {
           { name = "nvim_lsp" },
           { name = "buffer" },
           { name = "path" },
-          { name = "luasnip", option = { use_show_condition = true } },
+          { name = "snippy" },
           { name = "fuzzy_buffer" },
         }),
         sorting = {
           priority_weight = 2,
           comparators = {
-            require("cmp_fuzzy_buffer.compare"),
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
+            require("cmp_fuzzy_buffer.compare"),
             cmp.config.compare.locality,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,

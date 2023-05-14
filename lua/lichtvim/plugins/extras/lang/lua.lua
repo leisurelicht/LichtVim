@@ -28,7 +28,6 @@ return {
           "--indent-type=Spaces",
           "--indent-width=2",
         }),
-        null_ls.builtins.completion.luasnip,
       })
     end,
   },
