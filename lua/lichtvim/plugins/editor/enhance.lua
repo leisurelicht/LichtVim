@@ -13,7 +13,7 @@ return {
     "junegunn/vim-easy-align",
     event = { "BufNewFile", "BufRead" },
     -- stylua: ignore
-    config = function() map.set({ "x", "n" }, "ga", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false }) end,
+    config = function() map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false }) end,
   },
   {
     "phaazon/hop.nvim",

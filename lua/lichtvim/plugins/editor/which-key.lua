@@ -1,4 +1,5 @@
 return {
+  { "leisurelicht/show-keybinds.nvim", dependencies = { "folke/which-key.nvim" }, config = true },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -90,31 +91,6 @@ return {
         g = { name = "Git" },
         mode = "v",
         prefix = "<leader>",
-      })
-      wk.register({
-        ga = "Print ascii code",
-        za = "Toggle fold",
-        zc = "Fold",
-        zC = "Fold all",
-        zm = "Increase foldlevel one",
-        zM = "Close all folds",
-        zo = "Open fold at cursor",
-        zO = "Open all fold at cursor",
-        zr = "Decrease foldlevel one",
-        zR = "Open all folds",
-        zd = "Delete fold at cursor",
-        zE = "Delete all folds",
-        ["]z"] = "Move to start of open fold",
-        ["[z"] = "Move to end of open fold",
-        zj = "Next fold begin",
-        zk = "Previous fold end",
-        zn = "Disable fold",
-        zN = "Enable fold ",
-        zt = "Make cursor top",
-        zz = "Make cursor medium",
-        zb = "Make cursor bottom",
-        mode = "n",
-        prefix = "",
       })
     end,
   },
