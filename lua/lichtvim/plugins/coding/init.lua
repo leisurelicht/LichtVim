@@ -1,9 +1,7 @@
 return {
   { import = "lichtvim.plugins.coding.indent" },
-  { import = "lichtvim.plugins.coding.autopairs" },
   { import = "lichtvim.plugins.coding.git" },
   { import = "lichtvim.plugins.coding.toggleterm" },
-  -- { import = "lichtvim.plugins.coding.nvterm" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
   {
     "andymass/vim-matchup",
@@ -81,5 +79,11 @@ return {
       },
       scope = "file",
     },
+  },
+  { -- 自动配对
+    "windwp/nvim-autopairs",
+    enabled = true,
+    event = { "BufNewFile", "BufRead" },
+    opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
   },
 }
