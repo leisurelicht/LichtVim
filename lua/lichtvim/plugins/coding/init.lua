@@ -3,6 +3,12 @@ return {
   { import = "lichtvim.plugins.coding.git" },
   { import = "lichtvim.plugins.coding.toggleterm" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
+  { -- 自动配对
+    "windwp/nvim-autopairs",
+    enabled = true,
+    event = { "BufNewFile", "BufRead" },
+    opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
+  },
   {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },
@@ -18,6 +24,26 @@ return {
         })
       end
     end,
+  },
+  {
+    "numToStr/Comment.nvim",
+    event = { "BufRead", "BufNewFile" },
+    opts = {
+      toggler = {
+        line = "gcc", -- 切换行注释
+        block = "gCC", --- 切换块注释
+      },
+      opleader = {
+        line = "gc", -- 可视模式下的行注释
+        block = "gC", -- 可视模式下的块注释
+      },
+      extra = {
+        above = "gcO", -- 在当前行上方新增行注释
+        below = "gco", -- 在当前行下方新增行注释
+        eol = "gcl", -- 在当前行行尾新增行注释
+      },
+      ignore = "^$",
+    },
   },
   {
     "ahmedkhalf/project.nvim",
@@ -54,12 +80,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.comment",
-    event = { "BufNewFile", "BufRead" },
-    opts = {},
-    main = "mini.comment",
-  },
-  {
     "m4xshen/smartcolumn.nvim",
     event = { "BufNewFile", "BufRead" },
     opts = {
@@ -79,11 +99,5 @@ return {
       },
       scope = "file",
     },
-  },
-  { -- 自动配对
-    "windwp/nvim-autopairs",
-    enabled = true,
-    event = { "BufNewFile", "BufRead" },
-    opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
   },
 }
