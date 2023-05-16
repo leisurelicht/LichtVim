@@ -6,20 +6,28 @@
 local M = {}
 
 M.lsp = {
-  Action = "💡",
+  Action = "",
 }
 
 M.diagnostics = {
-  Error = " ",
-  Warn = " ",
-  Hint = " ",
+  Hint = " ",
   Info = " ",
+  Warn = " ",
+  Error = " ",
 }
 
 M.git = {
-  added = " ",
-  modified = " ",
-  removed = " ",
+  Git = "󰊢",
+  Add = "",
+  Branch = "",
+  Change = "",
+  Conflict = "",
+  Delete = "",
+  Ignored = "◌",
+  Renamed = "➜",
+  Staged = "✓",
+  Unstaged = "✗",
+  Untracked = "★",
 }
 
 M.kinds = {
@@ -53,7 +61,7 @@ M.kinds = {
   Snippet = " ",
   String = " ",
   Struct = " ",
-  Text = " ",
+  Text = "󰊄 ",
   TypeParameter = " ",
   Unit = " ",
   Value = " ",
@@ -61,19 +69,19 @@ M.kinds = {
 }
 
 M.sources = {
-  nvim_lsp = "󰘐 ",
-  path = "󰴠 ",
-  buffer = "󱁹 ",
-  nvim_lua = " ",
-  look = "󰍄 ",
-  vsnip = " ",
-  spell = "󰓆 ",
-  cmp_tabnine = "󰐭 ",
-  cmdline = " ",
-  fuzzy_buffer = "󱁴 ",
+  nvim_lsp = "󰘐",
+  path = "󰴠",
+  buffer = "󱁹",
+  nvim_lua = "",
+  look = "󰍄",
+  vsnip = "",
+  spell = "󰓆",
+  cmp_tabnine = "󰐭",
+  cmdline = "",
+  fuzzy_buffer = "󱁴",
   copilot = "",
   luasnip = "󰾁",
-  treesitter = "󰔱 ",
+  treesitter = "󰔱",
 }
 
 return M

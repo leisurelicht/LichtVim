@@ -30,67 +30,40 @@ return {
           section_separators = { left = "", right = "" },
         },
         sections = {
-          lualine_a = {
-            { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-            {
-              "mode",
-              fmt = function(s)
-                return s:sub(1, 1)
-              end,
-              separator = { right = "" },
-            },
-          },
+          lualine_a = { { "mode", fmt = window_num, separator = { right = "" } } },
           lualine_b = {
             { "branch" },
-            {
-              "diff",
-              symbols = { added = icons_g.added, modified = icons_g.modified, removed = icons_g.removed },
-            },
+            { "diff", symbols = { added = icons_g.Add, modified = icons_g.Change, removed = icons_g.Delete } },
           },
-          lualine_c = {
-            "filename",
-          },
+          lualine_c = {},
           lualine_x = {
-            { "encoding" },
+            { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
+            {
+              "diagnostics",
+              sources = { "nvim_diagnostic" },
+              sections = { "error", "warn", "info", "hint" },
+              diagnostics_color = {
+                error = "DiagnosticError", -- Changes diagnostics' error color.
+                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+                info = "DiagnosticInfo", -- Changes diagnostics' info color.
+                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+              },
+              symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint },
+              colored = true, -- Displays diagnostics status in color if set to true.
+              update_in_insert = false, -- Update diagnostics in insert mode.
+              always_visible = false, -- Show diagnostics even if there are none.
+            },
             { "filetype" },
             { "fileformat" },
-            {
-              require("lazy.status").updates,
-              cond = require("lazy.status").has_updates,
-              color = fg("Special"),
-            },
-            {
-              "diagnostics",
-              sources = { "nvim_diagnostic" },
-              sections = { "error", "warn", "info", "hint" },
-              diagnostics_color = {
-                error = "DiagnosticError", -- Changes diagnostics' error color.
-                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-                info = "DiagnosticInfo", -- Changes diagnostics' info color.
-                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
-              },
-              symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint },
-              colored = true, -- Displays diagnostics status in color if set to true.
-              update_in_insert = false, -- Update diagnostics in insert mode.
-              always_visible = false, -- Show diagnostics even if there are none.
-            },
+            { "encoding" },
           },
-          lualine_y = {
-            { "location" },
-          },
-          lualine_z = {
-            { "progress" },
-          },
+          lualine_y = { { "location" } },
+          lualine_z = { { "progress" } },
         },
         inactive_sections = {
-          lualine_a = {
-            { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-          },
-          lualine_c = {
-            { "filename" },
-          },
+          lualine_a = { { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } } },
+          lualine_c = {},
           lualine_x = {
-            { "location" },
             {
               "diagnostics",
               sources = { "nvim_diagnostic" },
@@ -106,7 +79,12 @@ return {
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.
             },
+            { "filetype" },
+            { "fileformat" },
+            { "encoding" },
           },
+          lualine_y = { { "location" } },
+          lualine_z = {},
         },
         extensions = {
           "quickfix",
