@@ -33,111 +33,36 @@ function M.get()
     { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
-    { "<leader>lO", "<cmd>SymbolsOutline<cr>", desc = "Outline" },
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
-    {
-      "<leader>la",
-      vim.lsp.buf.code_action,
-      mode = { "v", "n" },
-      desc = "Code action",
-      has = "codeAction",
-    },
-    {
-      "<leader>lD",
-      function()
-        vim.lsp.buf.definition({ jump_type = "tab" })
-      end,
-      desc = "Goto definition (tab)",
-      has = "definition",
-    },
-    {
-      "<leader>ll",
-      function()
-        vim.diagnostic.open_float({
-          border = "rounded",
-        })
-      end,
-      desc = "Diagnostic (line)",
-    },
+    { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
+    { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
+    -- stylua: ignore
+    { "<leader>ll", function() vim.diagnostic.open_float({ border = "rounded" }) end, desc = "Diagnostic (line)" },
+    -- stylua: ignore
+    { "<leader>lD", function() vim.lsp.buf.definition({ jump_type = "tab" }) end, desc = "Goto definition (tab)", has = "definition" },
   }
 
   if lazy.has("lspsaga.nvim") then
     _keys = {
       { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
       { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover", has = "hover" },
-      {
-        "<leader>ll",
-        "<cmd>Lspsaga show_line_diagnostics<CR>",
-        desc = "Diagnostic (line)",
-      },
-      {
-        "<leader>lc",
-        "<cmd>Lspsaga show_cursor_diagnostics<CR>",
-        desc = "Diagnostic (cursor)",
-      },
+      { "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Diagnostic (line)" },
+      { "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Diagnostic (cursor)" },
     }
     list.extend(M._keys, _keys)
   end
 
   if lazy.has("telescope.nvim") then
     local builtin = require("telescope.builtin")
+    -- stylua: ignore
     local _keys = {
-      {
-        "<leader>ld",
-        function()
-          builtin.lsp_definitions({ reuse_win = true, show_line = false })
-        end,
-        desc = "Goto definition",
-        has = "definition",
-      },
-      {
-        "<leader>lf",
-        function()
-          builtin.lsp_references({ show_line = false })
-        end,
-        desc = "Goto references",
-        has = "references",
-      },
-      {
-        "<leader>li",
-        function()
-          builtin.lsp_implementations({ show_line = false })
-        end,
-        desc = "Goto implementation",
-        has = "implementation",
-      },
-      {
-        "<leader>lt",
-        function()
-          builtin.lsp_type_definitions({ show_line = false })
-        end,
-        desc = "Goto type definition",
-        has = "typeDefinition",
-      },
-      {
-        "<leader>lL",
-        function()
-          builtin.diagnostics({})
-        end,
-        desc = "Diagnostic (project)",
-      },
+      { "<leader>lL", function() builtin.diagnostics({}) end, desc = "Diagnostic (project)" },
+      { "<leader>lf", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
+      { "<leader>li", function() builtin.lsp_implementations({ show_line = false }) end, desc = "Goto implementation", has = "implementation" },
+      { "<leader>lt", function() builtin.lsp_type_definitions({ show_line = false }) end, desc = "Goto type definition", has = "typeDefinition" },
+      { "<leader>ld", function() builtin.lsp_definitions({ reuse_win = true, show_line = false }) end, desc = "Goto definition", has = "definition" },
     }
     list.extend(M._keys, _keys)
-  end
-
-  if lazy.has("inc-rename.nvim") then
-    M._keys[#M._keys + 1] = {
-      "<leader>lr",
-      function()
-        require("inc_rename")
-        return ":IncRename " .. vim.fn.expand("<cword>")
-      end,
-      expr = true,
-      desc = "Rename",
-      has = "rename",
-    }
-  else
-    M._keys[#M._keys + 1] = { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
   end
 
   return M._keys
