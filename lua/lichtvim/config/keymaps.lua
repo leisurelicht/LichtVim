@@ -218,7 +218,7 @@ local function toggle_list()
 end
 
 map.set("n", "<leader>wa", toggle_mouse, "Mouse")
-map.set("n", "<leader>wp", toggle_spell, "Spell check")
+map.set("n", "<leader>wp", toggle_spell, "SpellCheck")
 map.set("n", "<leader>ww", toggle_wrap, "Wrap")
 map.set("n", "<leader>wn", toggle_number, "Number")
 map.set("n", "<leader>wr", toggle_relativenumber, "RelativeNumber")
