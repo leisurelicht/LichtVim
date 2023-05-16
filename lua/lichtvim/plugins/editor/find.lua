@@ -288,6 +288,8 @@ return {
             layout_config = {
               -- preview_cutoff = 0.5,
               prompt_position = "top",
+              width = 0.5,
+              height = 0.5,
             },
             mappings = {
               ["i"] = {
