@@ -120,100 +120,100 @@ map.set("n", "<leader>co", "wb~ea", "Upper first word")
 local function toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
-    vim.notify("Mouse mode: off", "info", { title = "Mouse" })
+    vim.notify("Mouse mode: off", "info", { title = LichtVimTitle })
   else
     vim.o.mouse = "a"
-    vim.notify("Mouse mode: on", "info", { title = "Mouse" })
+    vim.notify("Mouse mode: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_spell()
   if vim.wo.spell then
     vim.wo.spell = false
-    vim.notify("Spell check: off", "info", { title = "Spell" })
+    vim.notify("Spell check: off", "info", { title = LichtVimTitle })
   else
     vim.wo.spell = true
-    vim.notify("Spell check: on", "info", { title = "Spell" })
+    vim.notify("Spell check: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_wrap()
   if vim.wo.wrap then
     vim.wo.wrap = false
-    vim.notify("Wrap: off", "info", { title = "Wrap" })
+    vim.notify("Wrap: off", "info", { title = LichtVimTitle })
   else
     vim.wo.wrap = true
-    vim.notify("Wrap: on", "info", { title = "Wrap" })
+    vim.notify("Wrap: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_number()
   if vim.wo.number then
     vim.wo.number = false
-    vim.notify("Number: off", "info", { title = "Number" })
+    vim.notify("Number: off", "info", { title = LichtVimTitle })
   else
     vim.wo.number = true
-    vim.notify("Number: on", "info", { title = "Number" })
+    vim.notify("Number: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_relativenumber()
   if vim.wo.relativenumber then
     vim.wo.relativenumber = false
-    vim.notify("RelativeNumber: off", "info", { title = "RelativeNumber" })
+    vim.notify("RelativeNumber: off", "info", { title = LichtVimTitle })
   else
     vim.wo.relativenumber = true
-    vim.notify("RelativeNumber: on", "info", { title = "RelativeNumber" })
+    vim.notify("RelativeNumber: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_cursorline()
   if vim.wo.cursorline then
     vim.wo.cursorline = false
-    vim.notify("CursorLine: off", "info", { title = "CursorLine" })
+    vim.notify("CursorLine: off", "info", { title = LichtVimTitle })
   else
     vim.wo.cursorline = true
-    vim.notify("CursorLine: on", "info", { title = "CursorLine" })
+    vim.notify("CursorLine: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_cursorcolumn()
   if vim.wo.cursorcolumn then
     vim.wo.cursorcolumn = false
-    vim.notify("CursorColumn: off", "info", { title = "CursorColumn" })
+    vim.notify("CursorColumn: off", "info", { title = LichtVimTitle })
   else
     vim.wo.cursorcolumn = true
-    vim.notify("CursorColumn: on", "info", { title = "CursorColumn" })
+    vim.notify("CursorColumn: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_foldcolumn()
   if vim.wo.foldcolumn == "0" then
     vim.wo.foldcolumn = "1"
-    vim.notify("FoldColumn: on", "info", { title = "FoldColumn" })
+    vim.notify("FoldColumn: on", "info", { title = LichtVimTitle })
   else
     vim.wo.foldcolumn = "0"
-    vim.notify("FoldColumn: off", "info", { title = "FoldColumn" })
+    vim.notify("FoldColumn: off", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_foldenable()
   if vim.wo.foldenable then
     vim.wo.foldenable = false
-    vim.notify("FoldEnable: off", "info", { title = "FoldEnable" })
+    vim.notify("FoldEnable: off", "info", { title = LichtVimTitle })
   else
     vim.wo.foldenable = true
-    vim.notify("FoldEnable: on", "info", { title = "FoldEnable" })
+    vim.notify("FoldEnable: on", "info", { title = LichtVimTitle })
   end
 end
 
 local function toggle_list()
   if vim.wo.list then
     vim.wo.list = false
-    vim.notify("List: off", "info", { title = "List" })
+    vim.notify("List: off", "info", { title = LichtVimTitle })
   else
     vim.wo.list = true
-    vim.notify("List: on", "info", { title = "List" })
+    vim.notify("List: on", "info", { title = LichtVimTitle })
   end
 end
 

@@ -3,7 +3,7 @@
 -- Note: config init
 -- =================
 --
-require("lichtvim.utils.G")
+require("lichtvim.config.global")
 local icons = require("lichtvim.utils.ui.icons")
 
 local M = {}
@@ -39,14 +39,14 @@ function M.setup(opts)
         .. M.lazy_version
         .. " to work properly.\n"
         .. "Please upgrade **lazy.nvim**",
-      { title = "LichtVim" }
+      { title = LichtVimTitle }
     )
     error("Exiting")
   end
 
   if vim.fn.argc(-1) == 0 then
     api.autocmd("User", {
-      group = api.augroup("LichtVim"),
+      group = api.augroup(LichtVimTitle),
       pattern = "VeryLazy",
       callback = function()
         M.load("autocmds")
