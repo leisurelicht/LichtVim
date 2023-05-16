@@ -12,25 +12,6 @@ local function open_nvim_tree_dir(data)
 end
 api.autocmd({ "VimEnter" }, { group = api.augroup("explorer"), callback = open_nvim_tree_dir })
 
--- vim.api.nvim_create_autocmd("QuitPre", {
---   callback = function()
---     local invalid_win = {}
---     local wins = vim.api.nvim_list_wins()
---     for _, w in ipairs(wins) do
---       local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
---       if bufname:match("NvimTree_") ~= nil then
---         table.insert(invalid_win, w)
---       end
---     end
---     if #invalid_win == #wins - 1 then
---       -- Should quit, so we close all invalid windows.
---       for _, w in ipairs(invalid_win) do
---         vim.api.nvim_win_close(w, true)
---       end
---     end
---   end,
--- })
-
 local function on_attach(bufnr)
   local api = require("nvim-tree.api")
 
@@ -68,10 +49,14 @@ local function on_attach(bufnr)
   vim.keymap.del("n", "g?", { buffer = bufnr })
   vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
 
-  vim.keymap.set("n", "P", function()
-    local node = api.tree.get_node_under_cursor()
-    print(node.absolute_path)
-  end, opts("Print Node Path"))
+  vim.keymap.set("n", "<2-RightMouse>", "", { buffer = bufnr })
+  vim.keymap.del("n", "<2-RightMouse>", { buffer = bufnr })
+  vim.keymap.set("n", "<C-T>", "", { buffer = bufnr })
+  vim.keymap.del("n", "<C-T>", { buffer = bufnr })
+  vim.keymap.set("n", "<C-X>", "", { buffer = bufnr })
+  vim.keymap.del("n", "<C-X>", { buffer = bufnr })
+  vim.keymap.set("n", "<C-V>", "", { buffer = bufnr })
+  vim.keymap.del("n", "<C-V>", { buffer = bufnr })
 end
 
 return {
@@ -89,7 +74,7 @@ return {
       vim.opt.termguicolors = true
     end,
     opts = function()
-      local icons = require("lichtvim.utils.ui.icons").diagnostics
+      local diag = require("lichtvim.utils.ui.icons").diagnostics
       return {
         on_attach = on_attach,
         open_on_tab = false,
@@ -99,25 +84,31 @@ return {
         diagnostics = {
           enable = true,
           show_on_dirs = true,
-          icons = {
-            hint = icons.Hint,
-            info = icons.Info,
-            warning = icons.Warn,
-            error = icons.Error,
-          },
+          show_on_open_dirs = false,
         },
         select_prompts = true,
         view = {
-          centralize_selection = true,
-          width = 30,
+          centralize_selection = false,
+          width = 35,
           signcolumn = "auto",
-          number = true,
-          float = {
-            enable = false,
-            open_win_config = {
-              border = "rounded",
-              width = 35,
-              height = 50,
+          number = false,
+        },
+        renderer = {
+          indent_markers = {
+            enable = true,
+          },
+          icons = {
+            git_placement = "after",
+            glyphs = {
+              git = {
+                unstaged = diag.Unstaged,
+                staged = diag.Staged,
+                unmerged = diag.Conflict,
+                renamed = diag.Renamed,
+                untracked = diag.Untracked,
+                deleted = diag.Deleted,
+                ignored = diag.ignored,
+              },
             },
           },
         },
