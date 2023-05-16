@@ -31,11 +31,10 @@ return {
         },
         sections = {
           lualine_a = { { "mode", fmt = window_num, separator = { right = "" } } },
-          lualine_b = {
-            { "branch" },
+          lualine_b = { { "branch" } },
+          lualine_c = {
             { "diff", symbols = { added = icons_g.Add, modified = icons_g.Change, removed = icons_g.Delete } },
           },
-          lualine_c = {},
           lualine_x = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
             {
