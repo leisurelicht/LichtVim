@@ -181,7 +181,7 @@ return {
 
       opts = {
         defaults = {
-          prompt_prefix = "🔍 ",
+          prompt_prefix = "  ",
           selection_caret = " ",
           file_sorter = sorters.get_fuzzy_file,
           generic_sorter = sorters.get_generic_fuzzy_sorter,
