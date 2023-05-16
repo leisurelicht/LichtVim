@@ -61,30 +61,8 @@ function M.get()
     },
   }
 
-  if lazy.has("actions-preview.nvim") then
-    _keys = {
-      {
-        "<leader>la",
-        function()
-          require("actions-preview").code_actions()
-        end,
-        mode = { "v", "n" },
-        desc = "Code action (preview)",
-        has = "codeAction",
-      },
-    }
-    list.extend(M._keys, _keys)
-  end
-
   if lazy.has("lspsaga.nvim") then
     _keys = {
-      {
-        "<leader>la",
-        "<cmd>Lspsaga code_action<CR>",
-        mode = { "v", "n" },
-        desc = "Code action",
-        has = "codeAction",
-      },
       { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
       { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover", has = "hover" },
       {

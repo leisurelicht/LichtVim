@@ -4,21 +4,6 @@ return {
   { import = "lichtvim.plugins.lsp.null-ls" },
   { import = "lichtvim.plugins.lsp.cmp" },
   {
-    "aznhe21/actions-preview.nvim",
-    enabled = false,
-    event = "LspAttach",
-    dependencies = { "nui.nvim" },
-    config = function()
-      require("actions-preview").setup({
-        diff = {
-          algorithm = "patience",
-          ignore_whitespace = true,
-        },
-        telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
-      })
-    end,
-  },
-  {
     "nvimdev/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
