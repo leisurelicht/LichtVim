@@ -110,8 +110,8 @@ return {
         },
         formatting = {
           format = function(entry, item)
-            local kinds = icons.kinds
-            local sources = icons.sources
+            local kinds = icons.Kinds
+            local sources = icons.Sources
             if kinds[item.kind] then
               item.kind = kinds[item.kind] .. item.kind
             end

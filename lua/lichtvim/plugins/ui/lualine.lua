@@ -1,5 +1,4 @@
-local icons_g = require("lichtvim.utils.ui.icons").git
-local icons_d = require("lichtvim.utils.ui.icons").diagnostics
+local icons = require("lichtvim.utils").icons
 local fg = require("lichtvim.utils.ui.colors").fg
 
 local function window_num()
@@ -33,7 +32,10 @@ return {
           lualine_a = { { "mode", fmt = window_num, separator = { right = "" } } },
           lualine_b = { { "branch" } },
           lualine_c = {
-            { "diff", symbols = { added = icons_g.Add, modified = icons_g.Change, removed = icons_g.Delete } },
+            {
+              "diff",
+              symbols = { added = icons.get("ADD"), modified = icons.get("Change"), removed = icons.get("Delete") },
+            },
           },
           lualine_x = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
@@ -47,7 +49,12 @@ return {
                 info = "DiagnosticInfo", -- Changes diagnostics' info color.
                 hint = "DiagnosticHint", -- Changes diagnostics' hint color.
               },
-              symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint },
+              symbols = {
+                error = icons.get("Error"),
+                warn = icons.get("Warn"),
+                info = icons.get("Info"),
+                hint = icons.get("Hint"),
+              },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.
@@ -73,7 +80,12 @@ return {
                 info = "DiagnosticInfo", -- Changes diagnostics' info color.
                 hint = "DiagnosticHint", -- Changes diagnostics' hint color.
               },
-              symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint },
+              symbols = {
+                error = icons.get("Error"),
+                warn = icons.get("Warn"),
+                info = icons.get("Info"),
+                hint = icons.get("Hint"),
+              },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.

@@ -23,10 +23,13 @@ local defaults = {
   },
   -- icons used by other plugins
   icons = {
-    diagnostics = icons.diagnostics,
-    git = icons.git,
-    kinds = icons.kinds,
+    diagnostics = icons.Diagnostics,
+    git = icons.Git,
+    kinds = icons.Kinds,
+    source = icons.Source,
   },
+  ---@type string
+  lang = "en",
 }
 
 local options

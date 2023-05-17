@@ -1,4 +1,4 @@
-local utils = require("lichtvim.utils")
+local icons = require("lichtvim.utils").icons
 
 -- 为 lsp hover 添加文件类型
 local function lsp_hover(_, result, ctx, config)
@@ -27,9 +27,14 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- stylua: ignore
-      { "hrsh7th/cmp-nvim-lsp", cond = function() return lazy.has("nvim-cmp") end },
+      { "hrsh7th/cmp-nvim-lsp",              cond = function() return lazy.has("nvim-cmp") end },
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      { "folke/neoconf.nvim", enabled = true, cmd = "Neoconf", config = true },
+      {
+        "folke/neoconf.nvim",
+        enabled = true,
+        cmd = "Neoconf",
+        config = true,
+      },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
     },
     opts = function()
@@ -49,7 +54,7 @@ return {
       }
     end,
     config = function(_, opts)
-      for name, icon in pairs(require("lichtvim.utils.ui.icons").diagnostics) do
+      for name, icon in pairs(icons.group("Diagnostics")) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
@@ -57,8 +62,7 @@ return {
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
         opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
           or function(diagnostic)
-            local icons = require("lichtvim.utils.ui.icons").diagnostics
-            for d, icon in pairs(icons) do
+            for d, icon in pairs(icons.group("Diagnostics")) do
               if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
                 return icon
               end

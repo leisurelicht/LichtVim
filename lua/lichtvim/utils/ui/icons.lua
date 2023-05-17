@@ -5,18 +5,18 @@
 --
 local M = {}
 
-M.lsp = {
-  Action = "",
+M.Lsp = {
+  Codeaction = "",
 }
 
-M.diagnostics = {
+M.Diagnostics = {
   Hint = " ",
   Info = " ",
   Warn = " ",
   Error = " ",
 }
 
-M.git = {
+M.Git = {
   Git = "󰊢",
   Add = "",
   Branch = "",
@@ -30,7 +30,7 @@ M.git = {
   Untracked = "★",
 }
 
-M.kinds = {
+M.Kinds = {
   Array = " ",
   Boolean = " ",
   Class = " ",
@@ -68,7 +68,7 @@ M.kinds = {
   Variable = " ",
 }
 
-M.sources = {
+M.Sources = {
   nvim_lsp = "󰘐",
   path = "󰴠",
   buffer = "󱁹",
