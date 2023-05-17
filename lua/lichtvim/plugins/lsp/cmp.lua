@@ -30,7 +30,7 @@ return {
       local cmp = require("cmp")
       local snippy = require("snippy")
       local context = require("cmp.config.context")
-      local icons = require("lichtvim.utils.ui.icons")
+      local icons = require("lichtvim.config").icons
       return {
         enabled = function()
           -- disable completion in comments
@@ -110,8 +110,8 @@ return {
         },
         formatting = {
           format = function(entry, item)
-            local kinds = icons.Kinds
-            local sources = icons.Sources
+            local kinds = icons.kinds
+            local sources = icons.sources
             if kinds[item.kind] then
               item.kind = kinds[item.kind] .. item.kind
             end

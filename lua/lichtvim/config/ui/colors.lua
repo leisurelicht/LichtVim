@@ -167,7 +167,7 @@ M.generate_user_config_highlights()
 local api = require("lichtvim.utils").api
 api.autocmd({ "SessionLoadPost", "ColorScheme" }, {
   callback = function()
-    require("lichtvim.utils.ui.colors").generate_user_config_highlights()
+    require("lichtvim.config.ui.colors").generate_user_config_highlights()
   end,
 })
 

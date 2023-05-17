@@ -1,5 +1,5 @@
-local icons = require("lichtvim.utils").icons
-local fg = require("lichtvim.utils.ui.colors").fg
+local icons = require("lichtvim.config").icons
+local fg = require("lichtvim.config.ui.colors").fg
 
 local function window_num()
   -- local num = vim.inspect([[%{tabpagewinnr(tabpagenr())}]])
@@ -34,7 +34,7 @@ return {
           lualine_c = {
             {
               "diff",
-              symbols = { added = icons.get("ADD"), modified = icons.get("Change"), removed = icons.get("Delete") },
+              symbols = { added = icons.git.Add, modified = icons.git.Change, removed = icons.git.Delete },
             },
           },
           lualine_x = {
@@ -50,10 +50,10 @@ return {
                 hint = "DiagnosticHint", -- Changes diagnostics' hint color.
               },
               symbols = {
-                error = icons.get("Error"),
-                warn = icons.get("Warn"),
-                info = icons.get("Info"),
-                hint = icons.get("Hint"),
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
               },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
@@ -81,10 +81,10 @@ return {
                 hint = "DiagnosticHint", -- Changes diagnostics' hint color.
               },
               symbols = {
-                error = icons.get("Error"),
-                warn = icons.get("Warn"),
-                info = icons.get("Info"),
-                hint = icons.get("Hint"),
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
               },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.

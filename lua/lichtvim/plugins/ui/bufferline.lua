@@ -26,7 +26,7 @@ return {
         diagnostics = "nvim_lsp",
         always_show_bufferline = false,
         diagnostics_indicator = function(count, level, diagnostics_dict, context)
-          local dig = require("lichtvim.utils.ui.icons").diagnostics
+          local dig = require("lichtvim.config").icons.diagnostics
           local s = " "
           for e, n in pairs(diagnostics_dict) do
             local sym = e == "error" and dig.Error

@@ -222,25 +222,5 @@ function M.buf.full_path()
   return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
 end
 
-M.icons = {}
-
-local icons = require("lichtvim.utils.ui.icons")
-
-function M.icons.group(group)
-  if not group then
-    return {}
-  end
-
-  return icons[group] or {}
-end
-
-function M.icons.get(group, name)
-  if not group or not name then
-    return " "
-  end
-
-  return icons[group][name] or ""
-end
-
 
 return M

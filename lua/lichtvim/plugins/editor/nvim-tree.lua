@@ -74,7 +74,7 @@ return {
       vim.opt.termguicolors = true
     end,
     opts = function()
-      local icons = require("lichtvim.utils").icons
+      local icons = require("lichtvim.config").icons
       return {
         on_attach = on_attach,
         open_on_tab = false,
@@ -101,13 +101,13 @@ return {
             git_placement = "after",
             glyphs = {
               git = {
-                unstaged = icons.get("Git", "Unstaged"),
-                staged = icons.get("Git", "Staged"),
-                unmerged = icons.get("Git", "Conflict"),
-                renamed = icons.get("Git", "Renamed"),
-                untracked = icons.get("Git", "Untracked"),
-                deleted = icons.get("Git", "Deleted"),
-                ignored = icons.get("Git", "Ignored"),
+                unstaged = icons.git.Unstaged,
+                staged = icons.git.Staged,
+                unmerged = icons.git.Conflict,
+                renamed = icons.git.Renamed,
+                untracked = icons.git.Untracked,
+                deleted = icons.git.Deleted,
+                ignored = icons.git.Ignored,
               },
             },
           },

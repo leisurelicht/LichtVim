@@ -4,7 +4,7 @@
 -- =================
 --
 require("lichtvim.config.global")
-local icons = require("lichtvim.utils.ui.icons")
+local icons = require("lichtvim.config.ui.icons")
 
 local M = {}
 
@@ -26,7 +26,7 @@ local defaults = {
     diagnostics = icons.Diagnostics,
     git = icons.Git,
     kinds = icons.Kinds,
-    source = icons.Source,
+    sources = icons.Sources,
   },
   ---@type string
   lang = "en",

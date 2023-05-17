@@ -1,5 +1,3 @@
-local icons = require("lichtvim.utils").icons
-
 -- 为 lsp hover 添加文件类型
 local function lsp_hover(_, result, ctx, config)
   -- Add file type for LSP hover
@@ -54,7 +52,9 @@ return {
       }
     end,
     config = function(_, opts)
-      for name, icon in pairs(icons.group("Diagnostics")) do
+      local icons = require("lichtvim.config").icons
+
+      for name, icon in pairs(icons.diagnostics) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
@@ -62,7 +62,7 @@ return {
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
         opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
           or function(diagnostic)
-            for d, icon in pairs(icons.group("Diagnostics")) do
+            for d, icon in pairs(icons.diagnostics) do
               if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
                 return icon
               end
