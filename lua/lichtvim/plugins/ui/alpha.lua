@@ -5,53 +5,70 @@ local function pick_color()
   return colors[math.random(#colors)]
 end
 
-local function info()
-  local total_plugins = require("lazy").stats().count
-  local datetime = os.date(" %d-%m-%Y")
-  local version = vim.version()
-  local version_info = "  " .. version.major .. "." .. version.minor .. "." .. version.patch
-
-  return datetime .. "  " .. total_plugins .. " plugins" .. version_info
-end
-
-local leader = "SPC"
-
 local function button(sc, txt, keybind, keybind_opts)
-  local sc_ = sc:gsub("%s", ""):gsub(leader, "<leader>")
-
   local opts = {
     position = "center",
     shortcut = sc,
     cursor = 5,
     width = 50,
     align_shortcut = "right",
+    hl = "Dashboard",
     hl_shortcut = "Keyword",
   }
+
   if keybind then
     keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
-    opts.keymap = { "n", sc_, keybind, keybind_opts }
+    opts.keymap = { "n", sc:gsub("%s", ""):gsub("SPC", "<leader>"), keybind, keybind_opts }
   end
 
-  local function on_press()
-    local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false, true)
-    vim.api.nvim_feedkeys(key, "t", false)
-  end
-
-  return { type = "button", val = txt, on_press = on_press, opts = opts }
+  return {
+    type = "button",
+    val = txt,
+    on_press = function()
+      local key = vim.api.nvim_replace_termcodes(sc .. "<Ignore>", true, false, true)
+      vim.api.nvim_feedkeys(key, "t", false)
+    end,
+    opts = opts,
+  }
 end
 
 return {
   {
     "goolord/alpha-nvim",
+    event = "VimEnter",
     dependencies = { "nvim-web-devicons" },
     opts = {
       layout = {
         { type = "padding", val = 10 },
-        -- stylua: ignore
-        { type = "text", val = require("lichtvim.utils.ui.header").lichtvim, opts = { position = "center", hl = pick_color() }, },
-        { type = "padding", val = 2 },
-        { type = "text", val = info, opts = { position = "center", hl = "Number" } },
-        { type = "padding", val = 2 },
+        {
+          type = "text",
+          val = {
+            [[  ██╗     ██╗ ██████╗██╗  ██╗████████╗██╗   ██╗██╗███╗   ███╗ ]],
+            [[  ██║     ██║██╔════╝██║  ██║╚══██╔══╝██║   ██║██║████╗ ████║ ]],
+            [[  ██║     ██║██║     ███████║   ██║   ██║   ██║██║██╔████╔██║ ]],
+            [[  ██║     ██║██║     ██╔══██║   ██║   ╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
+            [[  ███████╗██║╚██████╗██║  ██║   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
+            [[  ╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝ ]],
+          },
+          opts = { position = "center", hl = pick_color() },
+        },
+        { type = "padding", val = 1 },
+        {
+          type = "text",
+          val = function()
+            local version = vim.version()
+            return string.format(
+              [[ Date %s |  Version %s.%s.%s |  Plugins %s]],
+              os.date("%Y-%m-%d"),
+              version.major,
+              version.minor,
+              version.patch,
+              require("lazy").stats().count
+            )
+          end,
+          opts = { position = "center", hl = "Number" },
+        },
+        { type = "padding", val = 1 },
         {
           type = "group",
           val = {
@@ -59,7 +76,6 @@ return {
             button("SPC f f", "  Find File"),
             button("SPC f j", "  Find Project"),
             button("SPC f o", "  Recently Opened Files"),
-            -- button("SPC s l", "  Load Session"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
           },
           opts = { spacing = 1 },
@@ -68,7 +84,8 @@ return {
         {
           type = "group",
           val = {
-            { type = "text", val = "Tools", opts = { hl = "Keyword", position = "center" } },
+
+            { type = "text", val = "- Tools -", opts = { position = "center", hl = "Number" } },
             button("SPC u p", "󰒲  Lazy"),
             button("SPC u l", "  Mason"),
             button("SPC u t", "  Tressitter Update"),
@@ -76,7 +93,7 @@ return {
           opts = { spacing = 1 },
         },
         { type = "padding", val = 1 },
-        { type = "text", val = "- LichtVim -", opts = { position = "center", hl = "Number" } },
+        { type = "text", val = " - LichtVim -", opts = { position = "center", hl = "Number" } },
       },
       opts = { margin = 5 },
     },
