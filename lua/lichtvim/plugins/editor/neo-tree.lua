@@ -51,7 +51,7 @@ return {
             untracked = icons.git.Untracked,
             ignored = icons.git.Ignored,
             unstaged = icons.git.Unstaged,
-            staged = icons.git.Stagd,
+            staged = icons.git.Staged,
             conflict = icons.git.conflict,
           },
         },

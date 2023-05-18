@@ -6,39 +6,39 @@
 local M = {}
 
 M.Other = {
-  DefaultFile = "󰈙",
-  FileModified = "",
-  FileReadOnly = "",
-  FoldClosed = "",
-  FoldOpened = "",
+  DefaultFile = "󰈙 ",
+  FileModified = " ",
+  FileReadOnly = " ",
+  FoldClosed = " ",
+  FoldOpened = " ",
   FoldSeparator = " ",
-  FolderClosed = "",
-  FolderEmpty = "",
-  FolderOpen = "",
+  FolderClosed = " ",
+  FolderEmpty = " ",
+  FolderOpen = " ",
 
   Codeaction = "",
 }
 
 M.Diagnostics = {
-  Logo = "󰒡",
-  Hint = " ",
-  Info = " ",
-  Warn = " ",
-  Error = " ",
+  Logo = "󰒡 ",
+  Hint = " ",
+  Info = " ",
+  Warn = " ",
+  Error = " ",
 }
 
 M.Git = {
-  Logo = "󰊢",
-  Add = "",
-  Branch = "",
-  Change = "",
-  Conflict = "",
-  Delete = "",
-  Ignored = "◌",
-  Renamed = "➜",
-  Staged = "✓",
-  Unstaged = "",
-  Untracked = "",
+  Logo = "󰊢 ",
+  Branch = "󰘬 ",
+  Add = " ",
+  Change = " ",
+  Delete = " ",
+  Staged = " ",
+  Unstaged = " ",
+  Conflict = " ",
+  Ignored = " ",
+  Renamed = "➜ ",
+  Untracked = " ",
 }
 
 M.Kinds = {
