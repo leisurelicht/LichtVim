@@ -22,6 +22,7 @@ return {
         "toggleterm",
         "TelescopePrompt",
       },
+      buftype_exclude = { "terminal" },
     },
   },
   {
