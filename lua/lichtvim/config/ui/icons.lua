@@ -5,11 +5,22 @@
 --
 local M = {}
 
-M.Lsp = {
+M.Other = {
+  DefaultFile = "󰈙",
+  FileModified = "",
+  FileReadOnly = "",
+  FoldClosed = "",
+  FoldOpened = "",
+  FoldSeparator = " ",
+  FolderClosed = "",
+  FolderEmpty = "",
+  FolderOpen = "",
+
   Codeaction = "",
 }
 
 M.Diagnostics = {
+  Logo = "󰒡",
   Hint = " ",
   Info = " ",
   Warn = " ",
@@ -17,7 +28,7 @@ M.Diagnostics = {
 }
 
 M.Git = {
-  Git = "󰊢",
+  Logo = "󰊢",
   Add = "",
   Branch = "",
   Change = "",
@@ -26,8 +37,8 @@ M.Git = {
   Ignored = "◌",
   Renamed = "➜",
   Staged = "✓",
-  Unstaged = "✗",
-  Untracked = "★",
+  Unstaged = "",
+  Untracked = "",
 }
 
 M.Kinds = {

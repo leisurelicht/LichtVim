@@ -5,7 +5,8 @@ return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { import = "lichtvim.plugins.editor.treesitter" },
   { import = "lichtvim.plugins.editor.enhance" },
-  { import = "lichtvim.plugins.editor.nvim-tree" },
+  -- { import = "lichtvim.plugins.editor.nvim-tree" },
+  { import = "lichtvim.plugins.editor.neo-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
   { import = "lichtvim.plugins.editor.find" },
   {
