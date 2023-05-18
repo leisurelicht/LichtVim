@@ -253,7 +253,8 @@ return {
           find_files = { theme = "dropdown", find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
           git_files = { theme = "dropdown" },
           oldfiles = { theme = "dropdown" },
-          buffers = vim.deepcopy(center_list),
+          -- buffers = vim.deepcopy(center_list),
+          buffers = { theme = "dropdown" },
           marks = { theme = "dropdown" },
           commands = { theme = "ivy" },
           command_history = { theme = "dropdown" },
@@ -274,23 +275,6 @@ return {
           lsp_outgoing_calls = {},
         },
         extensions = {
-          lazy = vim.tbl_extend("force", center_list, {
-            -- Optional theme (the extension doesn't set a default theme)
-            theme = "dropdown",
-            -- Whether or not to show the icon in the first column
-            show_icon = true,
-            -- Mappings for the actions
-            mappings = {
-              open_in_browser = "<C-o>",
-              open_in_file_browser = "<C-b>",
-              open_in_find_files = "<C-f>",
-              open_in_live_grep = "<C-g>",
-              -- open_plugins_picker = "<C-b>", -- Works only after having called first another action
-              -- open_lazy_root_find_files = "<C-r>f",
-              -- open_lazy_root_live_grep = "<C-r>g",
-            },
-            -- Other telescope configuration options
-          }),
           file_browser = vim.tbl_extend("force", center_list, {
             theme = "ivy",
             -- disables netrw and use telescope-file-browser in its place
@@ -299,7 +283,7 @@ return {
             layout_config = {
               -- preview_cutoff = 0.5,
               prompt_position = "top",
-              width = 0.5,
+              width = 0.4,
               height = 0.5,
             },
             mappings = {
