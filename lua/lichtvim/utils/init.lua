@@ -5,14 +5,6 @@
 --
 local M = {}
 
-M.api = {}
-
-M.api.autocmd = vim.api.nvim_create_autocmd
-
-function M.api.augroup(name)
-  return vim.api.nvim_create_augroup("lichtvim_" .. name, { clear = true })
-end
-
 M.list = {}
 
 function M.list.extend(l1, l2)
@@ -178,29 +170,29 @@ end
 
 M.sys = {}
 
-function M.sys.IsMacOS()
+function M.sys.is_macos()
   return vim.fn.has("mac")
 end
 
-function M.sys.IsLinux()
+function M.sys.is_linux()
   -- return vim.fn.has("unix") and not fn.has("macunix") and not fn.has("win32unix")
   return vim.loop.os_uname().sysname() == "Linux"
 end
 
-function M.sys.IsWindows()
+function M.sys.is_windows()
   -- return vim.fn.has("win16") or fn.has("win32") or fn.has("win64")
   return vim.loop.os_uname().sysname == "Windows_NT"
 end
 
-function M.sys.IsGUI()
+function M.sys.is_gui()
   return vim.fn.has("gui_running")
 end
 
-function M.sys.IsNeovide()
-  return vim.fn.exists("g:neovide")
+function M.sys.is_neovide()
+  return vim.g.neovide
 end
 
-function M.sys.IsTerm()
+function M.sys.is_term()
   return vim.fn.exists("g:termguicolors")
 end
 
@@ -221,6 +213,5 @@ end
 function M.buf.full_path()
   return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
 end
-
 
 return M

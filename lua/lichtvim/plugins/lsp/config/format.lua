@@ -54,8 +54,8 @@ function M.on_attach(client, buf)
   end
 
   if client.supports_method("textDocument/formatting") then
-    api.autocmd("BufWritePre", {
-      group = api.augroup("LSPFormat." .. buf, {}),
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup(add_title("formatting.") .. buf, {}),
       buffer = buf,
       callback = function()
         if M.autoformat then

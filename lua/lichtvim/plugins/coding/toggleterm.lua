@@ -74,8 +74,8 @@ return {
     config = function(_, opts)
       require("toggleterm").setup(opts)
 
-      api.autocmd({ "TermOpen" }, {
-        group = api.augroup("term_keymap"),
+      vim.api.nvim_create_autocmd({ "TermOpen" }, {
+        group = vim.api.nvim_create_augroup(add_title("term_keymap"), { clear = true }),
         pattern = { "term://*" },
         callback = function()
           local opts = { buffer = 0 }

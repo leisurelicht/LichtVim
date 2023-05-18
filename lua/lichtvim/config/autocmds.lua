@@ -4,22 +4,22 @@
 -- =================
 --
 -- Check if we need to reload the file when it changed
-api.autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = api.augroup("checktime"),
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = vim.api.nvim_create_augroup(add_title("checktime"), { clear = true }),
   command = "checktime",
 })
 
 -- Highlight on yank
-api.autocmd("TextYankPost", {
-  group = api.augroup("highlight_yank"),
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup(add_title("highlight_yank"), { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
 })
 
 -- close some filetypes with <q>
-api.autocmd("FileType", {
-  group = api.augroup("close_with_q"),
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup(add_title("close_with_q"), { clear = true }),
   pattern = {
     "PlenaryTestPopup",
     "help",
@@ -40,8 +40,8 @@ api.autocmd("FileType", {
 })
 
 -- go to last loc when opening a buffer
-api.autocmd("BufReadPost", {
-  group = api.augroup("last_loc"),
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = vim.api.nvim_create_augroup(add_title("last_loc"), { clear = true }),
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -52,8 +52,8 @@ api.autocmd("BufReadPost", {
 })
 
 -- auto close lazy and notify buffers when leaving them
-api.autocmd("BufLeave", {
-  group = api.augroup("close_lazy"),
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = vim.api.nvim_create_augroup(add_title("close_lazy"), { clear = true }),
   callback = function(event)
     local buf = event.buf
     local ft = vim.api.nvim_buf_get_option(buf, "filetype")
@@ -66,9 +66,19 @@ api.autocmd("BufLeave", {
   end,
 })
 
+-- wrap and check for spell in text filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup(add_title("wrap_spell"), { clear = true }),
+  pattern = { "gitcommit", "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
 -- close some filetypes with <esc>
--- api.autocmd("FileType", {
---   group = api.augroup("close_with_esc"),
+-- vim.api.nvim_create_autocmd("FileType", {
+--   group = vim.api.nvim_create_augroup(add_title"close_with_esc", { clear = true }),
 --   pattern = {
 --     "PlenaryTestPopup",
 --     "help",
@@ -88,19 +98,9 @@ api.autocmd("BufLeave", {
 --   end,
 -- })
 
--- wrap and check for spell in text filetypes
--- api.autocmd("FileType", {
---   group = api.augroup("wrap_spell"),
---   pattern = { "gitcommit", "markdown" },
---   callback = function()
---     vim.opt_local.wrap = true
---     vim.opt_local.spell = true
---   end,
--- })
-
 -- resize splits if window got resized
--- api.autocmd({ "VimResized" }, {
---   group = api.augroup("resize_splits"),
+-- vim.api.nvim_create_autocmd({ "VimResized" }, {
+--   group = vim.api.nvim_create_augroup(add_title"resize_splits", { clear = true }),
 --   callback = function()
 --     vim.cmd("tabdo wincmd =")
 --   end,

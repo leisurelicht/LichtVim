@@ -5,9 +5,9 @@
 --
 local sys = require("lichtvim.utils").sys
 
-if sys.IsMacOS() then
+if sys.is_macos() then
   vim.api.nvim_set_var("python3_host_prog", "/opt/homebrew/bin/python3")
-elseif sys.IsLinux() then
+elseif sys.is_linux() then
   vim.api.nvim_set_var("python3_host_prog", "python3")
 end
 
@@ -70,7 +70,7 @@ opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 不可见字符不显示
 opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
-if vim.g.neovide then
+if sys.is_neovide() then
   vim.notify("Use Neovide Configure", vim.log.levels.INFO, { title = LichtVimTitle })
   opt.mouse = ""
   vim.g.neovide_cursor_vfx_mode = "railgun"
@@ -78,7 +78,7 @@ if vim.g.neovide then
   -- vim.g.neovide_fullscreen = false
   vim.g.neovide_hide_mouse_when_typing = false
   vim.g.neovide_remember_window_size = true
-  if sys.IsMacOS() then
+  if sys.is_macos() then
     vim.g.neovide_input_macos_alt_is_meta = true
     map.set("n", "<D-v>", "p")
     map.set("i", "<D-v>", "<esc>pa")

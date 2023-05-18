@@ -164,8 +164,7 @@ M.generate_user_config_highlights()
 
 -- Define autocmd that generates the highlight groups from the new colorscheme
 -- Then reset the highlights for feline
-local api = require("lichtvim.utils").api
-api.autocmd({ "SessionLoadPost", "ColorScheme" }, {
+vim.api.nvim_create_autocmd({ "SessionLoadPost", "ColorScheme" }, {
   callback = function()
     require("lichtvim.config.ui.colors").generate_user_config_highlights()
   end,

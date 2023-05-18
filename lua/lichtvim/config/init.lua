@@ -48,8 +48,8 @@ function M.setup(opts)
   end
 
   if vim.fn.argc(-1) == 0 then
-    api.autocmd("User", {
-      group = api.augroup(LichtVimTitle),
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup(add_title("setup"), { clear = true }),
       pattern = "VeryLazy",
       callback = function()
         M.load("autocmds")
