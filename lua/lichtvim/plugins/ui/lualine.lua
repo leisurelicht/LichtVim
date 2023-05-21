@@ -7,12 +7,8 @@ local function window_num()
   return "[" .. num .. "]"
 end
 
-local function file_explorer()
-  return [[File Explorer]]
-end
-
-local function toggleterm()
-  return [[Terminal]]
+local function title(title)
+  return string.format("[[%s]]", title)
 end
 
 return {
@@ -24,19 +20,21 @@ return {
       return {
         options = {
           theme = "auto",
-          disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
+          disabled_filetypes = { statusline = { "dashboard", "alpha" } },
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
+          globalstatus = true,
         },
         sections = {
-          lualine_a = { { "mode", fmt = window_num, separator = { right = "" } } },
-          lualine_b = { { "branch" } },
-          lualine_c = {
+          lualine_a = { { "mode", separator = { right = "" } } },
+          lualine_b = {
+            { "branch" },
             {
               "diff",
               symbols = { added = icons.git.Add, modified = icons.git.Change, removed = icons.git.Delete },
             },
           },
+          lualine_c = {},
           lualine_x = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
             {
@@ -66,71 +64,36 @@ return {
           lualine_y = { { "location" } },
           lualine_z = { { "progress" } },
         },
-        inactive_sections = {
-          lualine_a = { { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } } },
-          lualine_c = {},
-          lualine_x = {
-            {
-              "diagnostics",
-              sources = { "nvim_diagnostic" },
-              sections = { "error", "warn", "info", "hint" },
-              diagnostics_color = {
-                error = "DiagnosticError", -- Changes diagnostics' error color.
-                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-                info = "DiagnosticInfo", -- Changes diagnostics' info color.
-                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
-              },
-              symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warn,
-                info = icons.diagnostics.Info,
-                hint = icons.diagnostics.Hint,
-              },
-              colored = true, -- Displays diagnostics status in color if set to true.
-              update_in_insert = false, -- Update diagnostics in insert mode.
-              always_visible = false, -- Show diagnostics even if there are none.
-            },
-            { "filetype" },
-            { "fileformat" },
-            { "encoding" },
-          },
-          lualine_y = { { "location" } },
-          lualine_z = {},
-        },
         extensions = {
-          "quickfix",
-          "lazy",
-          "nvim-dap-ui",
-          "trouble",
-          "man",
-          {
-            filetypes = { "NvimTree", "neo-tree" },
-            sections = {
-              lualine_a = {
-                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-                { file_explorer, separator = { right = "" } },
-              },
-            },
-            inactive_sections = {
-              lualine_a = {
-                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-                { file_explorer, separator = { right = "" } },
-              },
-            },
-          },
+          -- "quickfix",
+          -- "nvim-dap-ui",
+          -- "man",
           {
             filetypes = { "toggleterm" },
             sections = {
-              lualine_a = {
-                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-                { toggleterm, separator = { right = "" } },
-              },
+              lualine_a = { { title("Terminal"), separator = { right = "" } } },
+              lualine_z = { { title("Terminal"), separator = { left = "" } } },
             },
-            inactive_sections = {
-              lualine_a = {
-                { window_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-                { toggleterm, separator = { right = "" } },
-              },
+          },
+          {
+            filetypes = { "Trouble" },
+            sections = {
+              lualine_a = { { title("Trouble"), separator = { right = "" } } },
+              lualine_z = { { title("Trouble"), separator = { left = "" } } },
+            },
+          },
+          {
+            filetypes = { "TelescopePrompt" },
+            sections = {
+              lualine_a = { { title("Telescope"), separator = { right = "" } } },
+              lualine_z = { { title("Telescope"), separator = { left = "" } } },
+            },
+          },
+          {
+            filetypes = { "lazy" },
+            sections = {
+              lualine_a = { { title("Lazy"), separator = { right = "" } } },
+              lualine_z = { { title("Lazy"), separator = { left = "" } } },
             },
           },
         },
