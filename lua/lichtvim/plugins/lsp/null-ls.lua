@@ -26,6 +26,7 @@ return {
         sources = {
           null_ls.builtins.completion.spell,
         },
+        on_attach = require("lichtvim.plugins.lsp.config.format").on_attach,
       }
     end,
     config = true,

@@ -24,56 +24,33 @@ return {
         null_ls.builtins.diagnostics.luacheck.with({
           extra_args = { "--globals=vim" },
         }),
-        null_ls.builtins.formatting.stylua.with({
-          "--indent-type=Spaces",
-          "--indent-width=2",
-        }),
+        null_ls.builtins.formatting.stylua,
       })
     end,
   },
   {
     "neovim/nvim-lspconfig",
+    ft = "lua",
     opts = {
       servers = {
         lua_ls = {
+          disable_diagnostics = true,
+          cmd = { "lua-language-server" },
+          -- cmd = { "lua-language-server", "--locale=zh-CN" },
+          filetypes = { "lua" },
+          log_level = 2,
           settings = {
-            document_diagnostics = false,
-            document_formatting = false,
-            formatting_on_save = true,
-          },
-          options = {
-            -- cmd = { "lua-language-server", "--locale=zh-CN" },
-            cmd = { "lua-language-server" },
-            filetypes = { "lua" },
-            log_level = 2,
-            settings = {
-              Lua = {
-                runtime = {
-                  version = "LuaJIT",
-                },
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                workspace = {
-                  -- library = vim.api.nvim_get_runtime_file("", true),
-                  library = "checkThirdParty",
-                },
-                telemetry = {
-                  enable = false,
-                },
-                completion = {
-                  callSnippet = "Replace",
-                },
-                format = {
-                  enable = true,
-                  -- Put format options here
-                  -- NOTE: the value should be STRING!!
-                  defaultConfig = {
-                    indent_style = "space",
-                    indent_size = "2",
-                  },
-                },
+            Lua = {
+              runtime = {
+                version = "LuaJIT",
               },
+              workspace = {
+                library = "checkThirdParty",
+              },
+              completion = { callSnippet = "Replace" },
+              diagnostics = { enable = false },
+              telemetry = { enable = false },
+              format = { enable = false },
             },
           },
         },
