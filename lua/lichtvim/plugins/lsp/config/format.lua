@@ -33,13 +33,13 @@ function M.format()
 end
 
 function M.on_attach(client, buf)
-  -- if
-  --   client.config
-  --   and client.config.capabilities
-  --   and client.config.capabilities.documentFormattingProvider == false
-  -- then
-  --   return false
-  -- end
+  if
+    client.config
+    and client.config.capabilities
+    and client.config.capabilities.documentFormattingProvider == false
+  then
+    return false
+  end
 
   if client.supports_method("textDocument/formatting") then
     vim.api.nvim_create_autocmd("BufWritePre", {
