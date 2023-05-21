@@ -90,6 +90,10 @@ return {
 
       -- setup autoformat
       require("lichtvim.plugins.lsp.config.format").autoformat = opts.autoformat
+      lazy.on_attach(function(client, buffer)
+        require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
+        require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
+      end)
 
       local capabilities = vim.tbl_deep_extend(
         "force",
@@ -109,18 +113,6 @@ return {
         options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
         options = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, options or {})
-
-        options.on_attach = function(client, buffer)
-          if opts.on_attach then
-            opts.on_attach(client, buffer)
-          end
-
-          if opts.autoformat then
-            require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
-          end
-
-          require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
-        end
 
         if opts.setup[server] then
           if opts.setup[server](server, options) then
