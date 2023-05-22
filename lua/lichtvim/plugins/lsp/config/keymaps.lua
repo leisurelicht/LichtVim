@@ -1,5 +1,6 @@
 local Keys = require("lazy.core.handler.keys")
 local format = require("lichtvim.plugins.lsp.config.format").format
+local toggle = require("lichtvim.plugins.lsp.config.format").toggle
 local list = require("lichtvim.utils").list
 
 local M = {}
@@ -29,6 +30,7 @@ function M.get()
     { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Previous diagnostic (error)" },
     { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next diagnostic (warning)" },
     { "[w", M.diagnostic_goto(false, "WARN"), desc = "Previous diagnostic (warning)" },
+    { "<leader>lf", toggle, desc = "Toggle format", has = "documentFormatting" },
     { "<leader>lF", format, desc = "Format document", has = "documentFormatting" },
     { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
@@ -57,7 +59,7 @@ function M.get()
     -- stylua: ignore
     local _keys = {
       { "<leader>lL", function() builtin.diagnostics({}) end, desc = "Diagnostic (project)" },
-      { "<leader>lf", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
+      { "<leader>le", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
       { "<leader>li", function() builtin.lsp_implementations({ show_line = false }) end, desc = "Goto implementation", has = "implementation" },
       { "<leader>lt", function() builtin.lsp_type_definitions({ show_line = false }) end, desc = "Goto type definition", has = "typeDefinition" },
       { "<leader>ld", function() builtin.lsp_definitions({ reuse_win = true, show_line = false }) end, desc = "Goto definition", has = "definition" },

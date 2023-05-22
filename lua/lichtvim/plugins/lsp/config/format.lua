@@ -19,29 +19,17 @@ function M.toggle()
 end
 
 function M.format()
-  local buf = vim.api.nvim_get_current_buf()
   if vim.b.autoformat == false then
     return
   end
 
-  local ft = vim.bo[buf].filetype
-  local have_nls = package.loaded["null-ls"]
-    and (#require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0)
-
-  vim.lsp.buf.format(vim.tbl_deep_extend("force", {
+  vim.lsp.buf.format({
     bufnr = buf,
     filter = function(client)
-      if client.name == "copilot" then
-        return false
-      end
-
-      if have_nls then
-        return client.name == "null-ls"
-      end
-      return client.name ~= "null-ls"
+      return client.name == "null-ls"
     end,
     async = true,
-  }, require("lichtvim.utils.lazy").opts("nvim-lspconfig").format or {}))
+  })
 end
 
 function M.on_attach(client, buf)
@@ -55,7 +43,7 @@ function M.on_attach(client, buf)
 
   if client.supports_method("textDocument/formatting") then
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = vim.api.nvim_create_augroup(add_title("formatting.") .. buf, {}),
+      group = vim.api.nvim_create_augroup(add_title("formatting"), { clear = true }),
       buffer = buf,
       callback = function()
         if M.autoformat then

@@ -18,22 +18,32 @@ local function lsp_signature_help(_, result, ctx, config)
   end
 end
 
+-- 设置浮动样式(兜底方案)
+local lsp_handlers = {
+  ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
+    border = "rounded",
+    filetype = "lsp-hover",
+  }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
+    border = "rounded",
+    filetype = "lsp-signature-help",
+  }),
+}
+
 return {
   {
     "neovim/nvim-lspconfig",
     enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- stylua: ignore
-      { "hrsh7th/cmp-nvim-lsp",              cond = function() return lazy.has("nvim-cmp") end },
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      {
-        "folke/neoconf.nvim",
-        enabled = true,
-        cmd = "Neoconf",
-        config = true,
-      },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+      {
+        "hrsh7th/cmp-nvim-lsp",
+        cond = function()
+          return lazy.has("nvim-cmp")
+        end,
+      },
     },
     opts = function()
       return {
@@ -46,7 +56,6 @@ return {
           virtual_text = { prefix = "icons", source = "if_many", spacing = 4 },
         },
         autoformat = true,
-        format = { formatting_options = nil, timeout_ms = nil },
         setup = {},
         servers = {},
       }
@@ -82,53 +91,28 @@ return {
       -- setup autoformat
       require("lichtvim.plugins.lsp.config.format").autoformat = opts.autoformat
       lazy.on_attach(function(client, buffer)
-        if s_opts[client.name] ~= nil then
-          local settings = s_opts[client.name].settings
-
-          -- FIX: did not work
-          if settings.document_formatting ~= nil then
-            client.server_capabilities.document_formatting = settings.document_formatting
-            client.server_capabilities.document_range_formatting = settings.document_formatting
-          end
-
-          if settings.formatting_on_save ~= nil and settings.formatting_on_save then
-            require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
-          end
-        end
-
+        require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
         require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
       end)
 
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities(),
+        opts.capabilities or {}
+      )
+
       local function setup(server)
-        if s_opts[server] == nil then
-          return
-        end
+        local options = s_opts[server]
 
-        local options = s_opts[server].options
-        local settings = s_opts[server].settings
-
-        -- 设置浮动样式(兜底方案)
-        local lsp_handlers = {
-          ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
-            border = "rounded",
-            filetype = "lsp-hover",
-          }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
-            border = "rounded",
-            filetype = "lsp-signature-help",
-          }),
-        }
-
-        if settings.document_diagnostics ~= nil and not settings.document_diagnostics then
+        if options.disable_diagnostics ~= nil and options.disable_agnostics then
           lsp_handlers["textDocument/publishDiagnostics"] = function(...) end
         end
+
         options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        if lazy.has("cmp_nvim_lsp") then
-          capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-        end
-        options = vim.tbl_deep_extend("force", { capabilities = capabilities }, options or {})
+        options = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, options or {})
 
         if opts.setup[server] then
           if opts.setup[server](server, options) then

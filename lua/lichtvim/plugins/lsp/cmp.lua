@@ -4,9 +4,7 @@ return {
     enabled = true,
     version = false,
     event = "LspAttach",
-
     dependencies = {
-      "nvim-lua/plenary.nvim",
       "dcampos/nvim-snippy",
       "dcampos/cmp-snippy",
       "rafamadriz/friendly-snippets",
@@ -15,9 +13,7 @@ return {
       "hrsh7th/cmp-path",
       {
         "tzachar/cmp-fuzzy-buffer",
-        dependencies = {
-          "tzachar/fuzzy.nvim",
-        },
+        dependencies = { "tzachar/fuzzy.nvim" },
       },
     },
     opts = function()
