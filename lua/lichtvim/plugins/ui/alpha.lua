@@ -52,7 +52,7 @@ return {
           },
           opts = { position = "center", hl = pick_color() },
         },
-        { type = "padding", val = 1 },
+        { type = "padding", val = 2 },
         {
           type = "text",
           val = function()
@@ -68,7 +68,7 @@ return {
           end,
           opts = { position = "center", hl = "Number" },
         },
-        { type = "padding", val = 1 },
+        { type = "padding", val = 2 },
         {
           type = "group",
           val = {
@@ -80,19 +80,19 @@ return {
           },
           opts = { spacing = 1 },
         },
-        { type = "padding", val = 1 },
+        { type = "padding", val = 2 },
         {
           type = "group",
           val = {
 
             { type = "text", val = "- Tools -", opts = { position = "center", hl = "Number" } },
-            button("SPC u p", "󰒲  Lazy"),
-            button("SPC u l", "  Mason"),
-            button("SPC u t", "  Tressitter Update"),
+            button("SPC p l", "󰒲  Lazy"),
+            button("SPC p m", "  Mason"),
+            button("SPC p t", "  Tressitter Update"),
           },
           opts = { spacing = 1 },
         },
-        { type = "padding", val = 1 },
+        { type = "padding", val = 2 },
         { type = "text", val = " - LichtVim -", opts = { position = "center", hl = "Number" } },
       },
       opts = { margin = 5 },

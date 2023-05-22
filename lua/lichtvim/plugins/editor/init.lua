@@ -32,10 +32,10 @@ return {
     },
     config = function(_, opts)
       require("smart-splits").setup(opts)
-      map.set("n", "<leader>ur", function()
+      map.set("n", "<leader>us", function()
         require("smart-splits").start_resize_mode()
       end, "Resize Mode")
-      map.set("n", "<leader>uR", "<cmd>tabdo wincmd =<cr>", "Resume size")
+      map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
     end,
   },
   {
@@ -51,7 +51,7 @@ return {
         })
       end
       map.set("n", "<leader>ue", "<cmd>ImSelectEnable<cr>", "Enable imselect")
-      map.set("n", "<leader>ud", "<cmd>ImSelectDisable<cr>", "Disable imselect")
+      map.set("n", "<leader>uE", "<cmd>ImSelectDisable<cr>", "Disable imselect")
     end,
   },
   {

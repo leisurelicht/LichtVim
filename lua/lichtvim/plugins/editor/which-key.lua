@@ -4,7 +4,7 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      icons = { breadcrumb = "»", separator = " ➜ ", group = "+" },
+      icons = { breadcrumb = "»", separator = "", group = "" },
       disable = { filetypes = { "TelescopePrompt", "lazy", "mason" } },
       plugins = {
         marks = false, -- shows a list of your marks on ' and `
@@ -63,36 +63,9 @@ return {
         filetypes = { "TelescopePrompt", "lazy", "NvimTree", "mason", "lspinfo", "toggleterm", "neo-tree" },
       },
     },
-    config = function(_, opts)
-      local wk = require("which-key")
-      wk.setup(opts)
-      wk.register({
-        [";"] = { "<cmd>Alpha<cr>", "Dashboard" },
-        u = { name = "Utils" },
-        up = { "<cmd>Lazy<cr>", "Lazy" },
-        f = { name = "Find" },
-        g = { name = "Git" },
-        o = { name = "Term" },
-        c = { name = "ShortCuts" },
-        b = { name = "Buffer" },
-        s = { name = "Split" },
-        t = { name = "Tab" },
-        to = { name = "Close Only" },
-        h = { name = "Hop" },
-        ha = { name = "All Windows" },
-        w = { name = "Switch" },
-        mode = "n",
-        prefix = "<leader>",
-      })
-      wk.register({
-        mode = "n",
-        prefix = "<localleader>",
-      })
-      wk.register({
-        g = { name = "Git" },
-        mode = "v",
-        prefix = "<leader>",
-      })
-    end,
+    config = true,
+    -- config = function(_, opts)
+    --   require("which-key").setup(opts)
+    -- end,
   },
 }

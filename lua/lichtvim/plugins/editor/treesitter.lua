@@ -5,8 +5,8 @@ return {
     build = ":TSUpdate",
     event = { "BufRead", "BufNewFile" },
     keys = {
-      { "<leader>ut", "<cmd>TSUpdate all<cr>", desc = "treesitter update" },
-      { "<leader>uT", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
+      { "<leader>pT", "<cmd>TSUpdate all<cr>", desc = "Treesitter update" },
+      { "<leader>pt", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
     },
     dependencies = {
       "p00f/nvim-ts-rainbow",

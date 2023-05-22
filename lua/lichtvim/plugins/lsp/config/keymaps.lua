@@ -95,7 +95,7 @@ function M.on_attach(client, buffer)
 
   if lazy.has("which-key.nvim") then
     require("which-key").register({
-      l = { name = "LSP" },
+      l = { name = " LSP" },
       mode = { "n", "v" },
       prefix = "<leader>",
     })
