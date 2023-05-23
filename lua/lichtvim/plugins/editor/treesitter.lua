@@ -4,10 +4,7 @@ return {
     version = false,
     build = ":TSUpdate",
     event = { "BufRead", "BufNewFile" },
-    keys = {
-      { "<leader>pT", "<cmd>TSUpdate all<cr>", desc = "Treesitter update" },
-      { "<leader>pt", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
-    },
+    cmd = { "TSInstall", "TSUpdate", "TSModuleInfo" },
     dependencies = {
       "p00f/nvim-ts-rainbow",
       "RRethy/nvim-treesitter-endwise",

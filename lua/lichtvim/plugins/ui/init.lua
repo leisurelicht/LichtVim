@@ -14,15 +14,6 @@ return {
   },
   { -- notify
     "rcarriga/nvim-notify",
-    keys = {
-      {
-        "<leader>uq",
-        function()
-          require("notify").dismiss({ silent = true, pending = true })
-        end,
-        desc = "Clear notifications",
-      },
-    },
     opts = {
       timeout = 3000,
       max_height = function()
@@ -34,6 +25,10 @@ return {
     },
     init = function()
       vim.notify = require("notify")
+
+      if lazy.has("telescope.nvim") then
+        require("telescope").load_extension("notify")
+      end
     end,
   },
   { -- better vim.ui

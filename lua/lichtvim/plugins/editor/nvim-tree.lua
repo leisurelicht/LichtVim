@@ -68,7 +68,6 @@ return {
     vertions = "nightly",
     dependencies = { "ahmedkhalf/project.nvim" },
     cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
-    keys = { { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", desc = "Explorer" } },
     init = function()
       -- disable netrw
       vim.g.loaded_netrw = 1

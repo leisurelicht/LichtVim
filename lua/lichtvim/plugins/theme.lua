@@ -1,8 +1,8 @@
 return {
   {
     "folke/tokyonight.nvim",
-    event = "VeryLazy",
-    -- opts = { style = "moon" },
+    lazy = true,
+    opts = { style = "moon" },
   },
   { -- catppuccin
     "catppuccin/nvim",
@@ -14,6 +14,6 @@ return {
   },
   {
     "Mofiqul/vscode.nvim",
-    event = "VeryLazy",
+    lazy = true,
   },
 }

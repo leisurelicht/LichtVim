@@ -11,49 +11,12 @@ local function all(tbl, check)
   return true
 end
 
-local function ts_b(builtin, opts)
-  local params = { builtin = builtin, opts = opts }
-  return function()
-    builtin = params.builtin
-    opts = params.opts
-    opts = vim.tbl_deep_extend("force", {
-      cwd = require("lichtvim.utils").path.get_root(),
-    }, opts or {})
-    if builtin == "files" then
-      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
-        opts.show_untracked = true
-        builtin = "git_files"
-      else
-        builtin = "find_files"
-      end
-    end
-    require("telescope.builtin")[builtin](opts)
-  end
-end
-
 return {
   { "kkharji/sqlite.lua", lazy = true },
-  {
-    "nvim-pack/nvim-spectre",
-    -- stylua: ignore
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    keys = {
-      {
-        "<leader>fr",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace in files (Spectre)",
-      },
-    },
-  },
+  { "nvim-pack/nvim-spectre", lazy = true, dependencies = { "nvim-lua/plenary.nvim" } },
   {
     "leisurelicht/telescope.nvim",
-    -- dir = "~/Code/neovim/plugins/telescope.nvim",
     version = false,
-    lazy = true,
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -62,9 +25,7 @@ return {
       {
         "AckslD/nvim-neoclip.lua",
         lazy = true,
-        dependencies = {
-          { "sqlite.lua", module = "sqlite" },
-        },
+        dependencies = { { "sqlite.lua", module = "sqlite" } },
         opts = {
           history = 1000,
           enable_persistent_history = true,
@@ -94,42 +55,6 @@ return {
             },
           },
         },
-      },
-    },
-    keys = {
-      { "<leader>fT", ts_b("builtin"), desc = "Builtin" },
-      { "<leader>f<tab>", ts_b("commands"), desc = "Commands" },
-      { "<leader>fc", ts_b("command_history"), desc = "Commands history" },
-      { "<leader>fs", ts_b("search_history"), desc = "Search history" },
-      { "<leader>fA", ts_b("autocommands"), desc = "AutoCommands" },
-      { "<leader>ff", ts_b("files"), desc = "Files (root dir)" },
-      { "<leader>ff", ts_b("files", { cwd = false }), desc = "Files (cwd)" },
-      { "<leader>fH", ts_b("help_tags"), desc = "Help tags" },
-      { "<leader>fm", ts_b("marks"), desc = "Marks" },
-      { "<leader>fM", ts_b("man_pages"), desc = "Man pages" },
-      { "<leader>fo", ts_b("oldfiles"), desc = "Recently files" },
-      { "<leader>fO", ts_b("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
-      { "<leader>fP", ts_b("vim_options"), desc = "Vim option" },
-      { "<leader>fg", ts_b("live_grep"), desc = "Grep (root dir)" },
-      { "<leader>fG", ts_b("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-      { "<leader>fw", ts_b("grep_string"), desc = "Word (root dir)" },
-      { "<leader>fW", ts_b("grep_string", { cwd = false }), desc = "Word (cwd)" },
-      { "<leader>fk", ts_b("keymaps"), desc = "Key maps" },
-      { "<leader>fb", ts_b("buffers"), desc = "Buffers" },
-      { "<leader>fJ", ts_b("jumplist"), desc = "Jump list" },
-      { "<leader>fC", ts_b("colorscheme", { enable_preview = true }), desc = "Colorscheme" },
-      { "<leader>gC", ts_b("git_bcommits"), desc = "Buffer's Commits" },
-      { "<leader>gc", ts_b("git_commits"), desc = "Commits" },
-      { "<leader>gS", ts_b("git_stash"), desc = "Stash" },
-      { "<leader>gn", ts_b("git_branches"), desc = "Branches" },
-      { "<leader>gs", ts_b("git_status"), desc = "Status" },
-      { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
-      {
-        "<leader>fe",
-        function()
-          require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
-        end,
-        desc = "File Browser",
       },
     },
     opts = function(_, opts)
@@ -301,7 +226,6 @@ return {
                 ["<C-a>"] = fb_actions.create,
                 ["<C-y>"] = fb_actions.copy,
                 ["<C-d>"] = fb_actions.remove,
-                -- your custom insert mode mappings
               },
               ["n"] = {
                 -- your custom normal mode mappings
@@ -329,16 +253,6 @@ return {
       telescope.load_extension("neoclip")
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
-
-      if lazy.has("noice.nvim") then
-        telescope.load_extension("noice")
-        map.set("n", "<leader>fN", "<cmd>Telescope noice theme=dropdown<cr>", "Noice")
-      end
-
-      if lazy.has("nvim-notify") then
-        telescope.load_extension("notify")
-        map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
-      end
     end,
   },
 }

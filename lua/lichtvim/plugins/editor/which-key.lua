@@ -1,5 +1,10 @@
 return {
-  { "leisurelicht/show-keybinds.nvim", dependencies = { "folke/which-key.nvim" }, config = true },
+  {
+    "leisurelicht/show-keybinds.nvim",
+    event = "VeryLazy",
+    dependencies = { "folke/which-key.nvim" },
+    config = true,
+  },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",

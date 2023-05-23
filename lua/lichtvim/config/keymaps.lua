@@ -4,6 +4,32 @@
 -- =================
 --
 local fn = require("lichtvim.config.function")
+local table = require("lichtvim.utils").table
+
+if lazy.has("which-key.nvim") then
+  local wk = require("which-key")
+  wk.register({
+    [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
+    d = { name = " Debugger" },
+    f = { name = "󰛔 Find & Replace" },
+    g = { name = "󰊢 Git" },
+    o = { name = " Terminal" },
+    c = { name = " ShortCuts" },
+    b = { name = "󰓩 Buffers" },
+    s = { name = " Split" },
+    t = { name = "󱏈 Tab" },
+    to = { name = "Close Only" },
+    h = { name = "󱖹 Hop" },
+    ha = { name = "All Windows" },
+    u = { name = "󰨙 UI" },
+    p = { desc = "󰏖 Packages" },
+    pl = { "<cmd>Lazy<cr>", "Lazy" },
+  }, { mode = "n", prefix = "<leader>" })
+  wk.register({}, { mode = "n", prefix = "<localleader>" })
+  wk.register({
+    g = { name = "󰊢 Git" },
+  }, { mode = "v", prefix = "<leader>" })
+end
 
 map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
 map.set("i", "<C-u>", "<esc>viwUea", "Upper word") -- 一键大写
@@ -85,9 +111,14 @@ map.set("n", "<leader>bn", "<cmd>bnext<cr>", "Next buffer")
 map.set("n", "[b", "<cmd>bprev<cr>", "Previous buffer")
 map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer")
 map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
+-- map.set("n", "<leader>bd", "<cmd>bdelete<cr>", "Delete buffer")
+-- shortcuts
+map.set("n", "<leader>cl", "viwue", "Lower word")
+map.set("n", "<leader>cu", "viwUe", "Upper word")
+map.set("n", "<leader>co", "wb~ea", "Upper first word")
 -- toggle
 map.set("n", "<leader>ua", fn.toggle_mouse, "Toggle mouse")
-map.set("n", "<leader>us", fn.toggle_spell, "Toggle spell check")
+map.set("n", "<leader>ue", fn.toggle_spell, "Toggle spell check")
 map.set("n", "<leader>uw", fn.toggle_wrap, "Toggle wrap")
 map.set("n", "<leader>un", fn.toggle_number, "Toggle number")
 map.set("n", "<leader>ur", fn.toggle_relativenumber, "Toggle relative number")
@@ -96,40 +127,173 @@ map.set("n", "<leader>uv", fn.toggle_cursorcolumn, "Toggle cursorcolumn")
 map.set("n", "<leader>uf", fn.toggle_foldenable, "Toggle foldenable")
 map.set("n", "<leader>ud", fn.toggle_foldcolumn, "Toggle foldcolumn")
 map.set("n", "<leader>ul", fn.toggle_list, "Toggle list")
--- shortcuts
-map.set("n", "<leader>cl", "viwue", "Lower word")
-map.set("n", "<leader>cu", "viwUe", "Upper word")
-map.set("n", "<leader>co", "wb~ea", "Upper first word")
+map.set("n", "<leader>up", fn.toggle_paste, "Toggle paste")
+
+if lazy.has("mini.bufremove") then
+  map.set("n", "<leader>bd", function()
+    require("mini.bufremove").delete(0, false)
+  end, "Delete buffer")
+end
+
+if lazy.has("bufferline.nvim") then
+  map.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin")
+  map.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers")
+end
+
+if lazy.has("vim-im-select") then
+  map.set("n", "<leader>ui", "<cmd>ImSelectEnable<cr>", "Enable imselect")
+  map.set("n", "<leader>uI", "<cmd>ImSelectDisable<cr>", "Disable imselect")
+end
+
+if lazy.has("smart-splits.nvim") then
+  map.set("n", "<leader>us", function()
+    require("smart-splits").start_resize_mode()
+  end, "Resize Mode")
+  map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
+end
+
+if lazy.has("todo-comments.nvim") then
+  if lazy.has("telescope.nvim") then
+    map.set("n", "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", "Todo")
+  else
+    map.set("n", "<leader>ft", "<cmd>TodoLocList<cr>", "Todo (LocList)")
+  end
+end
 
 if lazy.has("telescope.nvim") then
-  map.set("n", "<leader>bs", require("telescope.builtin").buffers, "Buffers")
+  local function ts_b(builtin, opts)
+    local params = { builtin = builtin, opts = opts }
+    return function()
+      builtin = params.builtin
+      opts = params.opts
+      opts = vim.tbl_deep_extend("force", {
+        cwd = require("lichtvim.utils").path.get_root(),
+      }, opts or {})
+      if builtin == "files" then
+        if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
+          opts.show_untracked = true
+          builtin = "git_files"
+        else
+          builtin = "find_files"
+        end
+      end
+      require("telescope.builtin")[builtin](opts)
+    end
+  end
+
+  map.set("n", "<leader>fT", ts_b("builtin"), "Builtin")
+  map.set("n", "<leader>f<tab>", ts_b("commands"), "Commands")
+  map.set("n", "<leader>fc", ts_b("command_history"), "Commands history")
+  map.set("n", "<leader>fs", ts_b("search_history"), "Search history")
+  map.set("n", "<leader>fA", ts_b("autocommands"), "AutoCommands")
+  map.set("n", "<leader>ff", ts_b("files"), "Files (root dir)")
+  map.set("n", "<leader>ff", ts_b("files", { cwd = false }), "Files (cwd)")
+  map.set("n", "<leader>fH", ts_b("help_tags"), "Help tags")
+  map.set("n", "<leader>fm", ts_b("marks"), "Marks")
+  map.set("n", "<leader>fM", ts_b("man_pages"), "Man pages")
+  map.set("n", "<leader>fo", ts_b("oldfiles"), "Recently files")
+  map.set("n", "<leader>fO", ts_b("oldfiles", { cwd = vim.loop.cwd() }), "Recently files (cwd)")
+  map.set("n", "<leader>fP", ts_b("vim_options"), "Vim option")
+  map.set("n", "<leader>fg", ts_b("live_grep"), "Grep (root dir)")
+  map.set("n", "<leader>fG", ts_b("live_grep", { cwd = false }), "Grep (cwd)")
+  map.set("n", "<leader>fw", ts_b("grep_string"), "Word (root dir)")
+  map.set("n", "<leader>fW", ts_b("grep_string", { cwd = false }), "Word (cwd)")
+  map.set("n", "<leader>fk", ts_b("keymaps"), "Key maps")
+  map.set("n", "<leader>fb", ts_b("buffers"), "Buffers")
+  map.set("n", "<leader>fJ", ts_b("jumplist"), "Jump list")
+  map.set("n", "<leader>fC", ts_b("colorscheme", { enable_preview = true }), "Colorscheme")
+  map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
+  map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
+  map.set("n", "<leader>fe", function()
+    require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
+  end, "File Browser")
+
+  map.set("n", "<leader>bs", ts_b("buffers"), "Buffers")
+
+  map.set("n", "<leader>gC", ts_b("git_bcommits"), "Buffer's Commits")
+  map.set("n", "<leader>gc", ts_b("git_commits"), "Commits")
+  map.set("n", "<leader>gS", ts_b("git_stash"), "Stash")
+  map.set("n", "<leader>gn", ts_b("git_branches"), "Branches")
+  map.set("n", "<leader>gs", ts_b("git_status"), "Status")
 end
 
-if not lazy.has("mini.bufremove") then
-  map.set("n", "<leader>bd", "<cmd>bdelete<cr>", "Delete buffer")
+if lazy.has("nvim-spectre") then
+  map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
+  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search current word")
+  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Search current word")
+  map.set(
+    "n",
+    "<leader>frs",
+    "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
+    "Search on current file"
+  )
 end
 
-if lazy.has("which-key.nvim") then
-  local wk = require("which-key")
-  wk.register({
-    [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
-    d = { name = " Debugger" },
-    f = { name = "󰛔 Find & Replace" },
-    g = { name = "󰊢 Git" },
-    o = { name = " Terminal" },
-    c = { name = " ShortCuts" },
-    b = { name = "󰓩 Buffers" },
-    s = { name = " Split" },
-    t = { name = "󱏈 Tab" },
-    to = { name = "Close Only" },
-    h = { name = "󱖹 Hop" },
-    ha = { name = "All Windows" },
-    u = { name = "󰨙 UI" },
-    p = { desc = "󰏖 Packages" },
-    pl = { "<cmd>Lazy<cr>", "Lazy" },
-  }, { mode = "n", prefix = "<leader>" })
-  wk.register({}, { mode = "n", prefix = "<localleader>" })
-  wk.register({
-    g = { name = "󰊢 Git" },
-  }, { mode = "v", prefix = "<leader>" })
+if lazy.has("vim-easy-align") then
+  map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
+end
+
+if lazy.has("hop.nvim") then
+  local hop = require("hop")
+  local dt = require("hop.hint").HintDirection
+  local opt = { current_line_only = true }
+
+  -- stylua: ignore
+  map.set("", "f", function() hop.hint_char1(table.extend(opt, { direction = dt.AFTER_CURSOR })) end, "Jump forward")
+  -- stylua: ignore
+  map.set("", "F", function() hop.hint_char1(table.extend(opt, { direction = dt.BEFORE_CURSOR })) end, "Jump backward")
+  -- stylua: ignore
+  map.set("", "t", function() hop.hint_char1(table.extend(opt, { direction = dt.AFTER_CURSOR, hint_offset = -1 })) end, "Jump forward")
+  -- stylua: ignore
+  map.set("", "T", function() hop.hint_char1(table.extend(opt, { direction = dt.BEFORE_CURSOR, hint_offset = 1 })) end, "Jump backward")
+
+  map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
+  map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
+  map.set("n", "<leader>hc", "<cmd>HopChar1<cr>", "Char")
+  map.set("n", "<leader>hp", "<cmd>HopPattern<cr>", "Pattern")
+  map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line start")
+  map.set("n", "<leader>haw", "<cmd>HopWordMW<cr>", "Word")
+  map.set("n", "<leader>hal", "<cmd>HopLineMW<cr>", "Line")
+  map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char")
+  map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
+  map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
+end
+
+if lazy.has("nvim-hlslens") then
+  map.set("n", "n", [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]], "Next")
+  map.set("n", "N", [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]], "Prev")
+  map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search")
+  map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search")
+  map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search")
+  map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search")
+end
+
+if lazy.has("neo-tree.nvim") then
+  map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")
+elseif lazy.has("nvim-tree.lua") then
+  map.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", " Explorer")
+end
+
+if lazy.has("nvim-treesitter") then
+  map.set("n", "<leader>pT", "<cmd>TSUpdate all<cr>", "Treesitter update")
+  map.set("n", "<leader>pt", "<cmd>TSModuleInfo<cr>", "Treesitter info")
+end
+
+if lazy.has("vim-matchup") and lazy.has("which-key.nvim") then
+  require("which-key").register({
+    ["]%"] = "Jump to next matchup",
+    ["[%"] = "Jump to previous matchup",
+    ["g%"] = "Jump to close matchup",
+    ["z%"] = "Jump inside matchup",
+  }, { mode = "n" })
+end
+
+if lazy.has("nvim-notify") then
+  map.set("n", "<leader>uq", function()
+    require("notify").dismiss({ silent = true, pending = true })
+  end, "Clear notifications")
+
+  if lazy.has("telescope.nvim") then
+    map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
+  end
 end

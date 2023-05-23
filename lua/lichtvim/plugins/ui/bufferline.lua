@@ -1,12 +1,7 @@
 return {
   "akinsho/bufferline.nvim",
   event = "VimEnter",
-  keys = {
-    { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-    { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-  },
   opts = function()
-    -- vim.opt.mousemoveevent = true
     return {
       options = {
         numbers = "ordinal",
@@ -14,11 +9,6 @@ return {
         indicator = {
           style = "underline",
         },
-        -- hover = {
-        --   enabled = true,
-        --   delay = 200,
-        --   reveal = { "close" },
-        -- },
         -- stylua: ignore
         close_command = function(n) require("mini.bufremove").delete(n, false) end,
         -- stylua: ignore

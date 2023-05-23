@@ -12,17 +12,8 @@ return {
   {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },
-    config = function()
+    init = function()
       vim.g.matchup_matchparen_offscreen = { method = "poopup" }
-      if lazy.has("which-key.nvim") then
-        require("which-key").register({
-          ["]%"] = "Jump to next matchup",
-          ["[%"] = "Jump to previous matchup",
-          ["g%"] = "Jump to close matchup",
-          ["z%"] = "Jump inside matchup",
-          mode = "n",
-        })
-      end
     end,
   },
   {
@@ -47,7 +38,8 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    cmd = { "Telescope", "ProjectRoot", "AddProject" },
     dependencies = { "telescope.nvim" },
     opts = {
       manual_mode = true,
@@ -74,9 +66,7 @@ return {
     },
     config = function(_, opts)
       require("project_nvim").setup(opts)
-
       require("telescope").load_extension("projects")
-      map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
     end,
   },
   {

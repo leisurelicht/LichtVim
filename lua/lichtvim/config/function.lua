@@ -1,4 +1,16 @@
+local table = require("lichtvim.utils").table
+
 M = {}
+
+local function bool2str(bool)
+  return bool and "on" or "off"
+end
+
+function notify(msg, type, opts)
+  vim.schedule(function()
+    vim.notify(msg, type, table.extend({ title = LichtVimTitle }, opts))
+  end)
+end
 
 -- 切换 mouse 模式
 function M.toggle_mouse()
@@ -12,63 +24,33 @@ function M.toggle_mouse()
 end
 
 function M.toggle_spell()
-  if vim.wo.spell then
-    vim.wo.spell = false
-    vim.notify("Spell check: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.spell = true
-    vim.notify("Spell check: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.spell = not vim.wo.spell -- local to window
+  notify(string.format("Spell Check : %s", bool2str(vim.wo.spell)))
 end
 
 function M.toggle_wrap()
-  if vim.wo.wrap then
-    vim.wo.wrap = false
-    vim.notify("Wrap: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.wrap = true
-    vim.notify("Wrap: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.wrap = not vim.wo.wrap
+  notify(string.format("Wrap : %s", bool2str(vim.wo.wrap)))
 end
 
 function M.toggle_number()
-  if vim.wo.number then
-    vim.wo.number = false
-    vim.notify("Number: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.number = true
-    vim.notify("Number: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.number = not vim.wo.number
+  notify(string.format("Number : %s", bool2str(vim.wo.number)))
 end
 
 function M.toggle_relativenumber()
-  if vim.wo.relativenumber then
-    vim.wo.relativenumber = false
-    vim.notify("RelativeNumber: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.relativenumber = true
-    vim.notify("RelativeNumber: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.relativenumber = not vim.wo.relativenumber
+  notify(string.format("Relative Number : %s", bool2str(vim.wo.relativenumber)))
 end
 
 function M.toggle_cursorline()
-  if vim.wo.cursorline then
-    vim.wo.cursorline = false
-    vim.notify("CursorLine: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.cursorline = true
-    vim.notify("CursorLine: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.cursorline = not vim.wo.cursorline
+  notify(string.format("Cursor Line : %s", bool2str(vim.wo.cursorline)))
 end
 
 function M.toggle_cursorcolumn()
-  if vim.wo.cursorcolumn then
-    vim.wo.cursorcolumn = false
-    vim.notify("CursorColumn: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.cursorcolumn = true
-    vim.notify("CursorColumn: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.cursorcolumn = not vim.wo.cursorcolumn
+  notify(string.format("Cursor Column : %s", bool2str(vim.wo.cursorcolumn)))
 end
 
 function M.toggle_foldcolumn()
@@ -82,23 +64,18 @@ function M.toggle_foldcolumn()
 end
 
 function M.toggle_foldenable()
-  if vim.wo.foldenable then
-    vim.wo.foldenable = false
-    vim.notify("FoldEnable: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.foldenable = true
-    vim.notify("FoldEnable: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.foldenable = not vim.wo.foldenable
+  notify(string.format("Fold : %s", bool2str(vim.wo.cursorline)))
 end
 
 function M.toggle_list()
-  if vim.wo.list then
-    vim.wo.list = false
-    vim.notify("List: off", "info", { title = LichtVimTitle })
-  else
-    vim.wo.list = true
-    vim.notify("List: on", "info", { title = LichtVimTitle })
-  end
+  vim.wo.list = not vim.wo.list
+  notify(string.format("List : %s", bool2str(vim.wo.list)))
+end
+
+function M.toggle_paste()
+  vim.opt.paste = not vim.opt.paste:get() -- local to window
+  notify(string.format("Paste %s", bool2str(vim.opt.paste:get())))
 end
 
 return M

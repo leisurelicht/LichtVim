@@ -5,7 +5,7 @@
 --
 local M = {}
 
-M.opts = { silent = true }
+M.opts = { noremap = true, silent = true }
 
 local function check_opts(opts)
   if opts == nil then
