@@ -87,7 +87,7 @@ map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer")
 map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers")
 -- toggle
 map.set("n", "<leader>ua", fn.toggle_mouse, "Toggle mouse")
-map.set("n", "<leader>up", fn.toggle_spell, "Toggle spell check")
+map.set("n", "<leader>us", fn.toggle_spell, "Toggle spell check")
 map.set("n", "<leader>uw", fn.toggle_wrap, "Toggle wrap")
 map.set("n", "<leader>un", fn.toggle_number, "Toggle number")
 map.set("n", "<leader>ur", fn.toggle_relativenumber, "Toggle relative number")
