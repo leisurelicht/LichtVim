@@ -5,6 +5,7 @@
 --
 local fn = require("lichtvim.config.function")
 local table = require("lichtvim.utils").table
+local git = require("lichtvim.utils").git
 
 if lazy.has("which-key.nvim") then
   local wk = require("which-key")
@@ -12,9 +13,8 @@ if lazy.has("which-key.nvim") then
     [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
     -- d = { name = " Debugger" },
     f = { name = "󰛔 Find & Replace" },
-    g = { name = "󰊢 Git" },
     o = { name = " Terminal" },
-    c = { name = " ShortCuts" },
+    c = { name = " ShortCuts" },
     b = { name = "󰓩 Buffers" },
     s = { name = " Split" },
     t = { name = "󱏈 Tab" },
@@ -23,10 +23,12 @@ if lazy.has("which-key.nvim") then
     p = { desc = "󰏖 Packages" },
     pl = { "<cmd>Lazy<cr>", "Lazy" },
   }, { mode = "n", prefix = "<leader>" })
-  wk.register({}, { mode = "n", prefix = "<localleader>" })
+
   wk.register({
-    g = { name = "󰊢 Git" },
+    f = { name = "󰛔 Find & Replace" },
   }, { mode = "v", prefix = "<leader>" })
+
+  wk.register({}, { mode = "n", prefix = "<localleader>" })
 else
   vim.notify("Need to install which-key.nvim", vim.log.levels.ERROR)
 end
@@ -155,14 +157,18 @@ end
 
 if lazy.has("nvim-spectre") then
   map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
-  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search current word")
-  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Search current word")
+  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace current word")
+  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Replace current word")
   map.set(
     "n",
     "<leader>frs",
     "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
-    "Search on current file"
+    "Replace current word in current file"
   )
+
+  require("which-key").register({
+    fr = { name = "Replace" },
+  }, { mode = { "n", "v" }, prefix = "<leader>" })
 end
 
 if lazy.has("telescope.nvim") then
@@ -214,11 +220,17 @@ if lazy.has("telescope.nvim") then
 
   map.set("n", "<leader>bs", ts_b("buffers"), "Buffers")
 
-  map.set("n", "<leader>gC", ts_b("git_bcommits"), "Buffer's Commits")
-  map.set("n", "<leader>gc", ts_b("git_commits"), "Commits")
-  map.set("n", "<leader>gS", ts_b("git_stash"), "Stash")
-  map.set("n", "<leader>gn", ts_b("git_branches"), "Branches")
-  map.set("n", "<leader>gs", ts_b("git_status"), "Status")
+  if git.is_repo() then
+    map.set("n", "<leader>gC", ts_b("git_bcommits"), "Buffer's Commits")
+    map.set("n", "<leader>gc", ts_b("git_commits"), "Commits")
+    map.set("n", "<leader>gS", ts_b("git_stash"), "Stash")
+    map.set("n", "<leader>gn", ts_b("git_branches"), "Branches")
+    map.set("n", "<leader>gs", ts_b("git_status"), "Status")
+
+    require("which-key").register({
+      g = { name = "󰊢 Git" },
+    }, { mode = { "n", "v" }, prefix = "<leader>" })
+  end
 end
 
 if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
@@ -338,6 +350,68 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
         require("smart-splits").start_resize_mode()
       end, "Resize Mode")
       map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "User" }, {
+  group = vim.api.nvim_create_augroup(add_title("git"), { clear = true }),
+  pattern = "Git",
+  callback = function(event)
+    if git.is_repo() then
+      local gs = package.loaded.gitsigns
+      local bufnr = event.buf
+      map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
+      map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
+      map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
+      map.set("v", "<leader>ga", function()
+        gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, "Add hunk", { buffer = bufnr })
+      map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
+      map.set("v", "<leader>gr", function()
+        gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, "Reset hunk", { buffer = bufnr })
+      map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
+      map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
+      map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
+      map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
+      map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = bufnr })
+      map.set("n", "<leader>gb", function()
+        gs.blame_line({ full = true })
+      end, "Show blame line", { buffer = bufnr })
+      map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = bufnr })
+      map.set("n", "<leader>gD", function()
+        gs.diffthis("~")
+      end, "Diff this?", { buffer = bufnr })
+
+      map.set("n", "]g", function()
+        if vim.wo.diff then
+          return "]g"
+        end
+        vim.schedule(function()
+          gs.next_hunk()
+        end)
+        return "<Ignore>"
+      end, "Next git hunk", { buffer = bufnr, expr = true })
+      map.set("n", "[g", function()
+        if vim.wo.diff then
+          return "[g"
+        end
+        vim.schedule(function()
+          gs.prev_hunk()
+        end)
+        return "<Ignore>"
+      end, "Previous git hunk", { buffer = bufnr, expr = true })
+
+      map.set("n", "<leader>gg", function()
+        require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
+      end, "Lazygit", { buffer = bufnr })
+      map.set("n", "<leader>gl", function()
+        require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
+      end, "Lazygit log", { buffer = bufnr })
+
+      -- Text object
+      map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
     end
   end,
 })

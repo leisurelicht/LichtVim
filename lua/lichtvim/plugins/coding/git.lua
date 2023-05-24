@@ -1,6 +1,7 @@
 local path = require("lichtvim.utils").path
 
-local function git_keymaps(gs, bufnr)
+local function git_keymaps(bufnr)
+  local gs = package.loaded.gitsigns
   map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
   map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
   map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
@@ -73,8 +74,8 @@ return {
         changedelete = { text = "~" },
       },
       on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
-        git_keymaps(gs, bufnr)
+        -- git_keymaps(gs, bufnr)
+        vim.api.nvim_command("doautocmd User Git")
       end,
     },
     config = function(_, opts)

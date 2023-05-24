@@ -117,7 +117,13 @@ function M.path.get_root()
   return root
 end
 
-function M.path.git_dir()
+function M.path.join(...)
+  return table.concat(vim.tbl_flatten({ ... }), "/")
+end
+
+M.git = {}
+
+function M.git.dir()
   local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
   local is_git_dir = vim.fn.matchstr(git_dir, "^fatal:.*") == ""
   if not is_git_dir then
@@ -126,8 +132,18 @@ function M.path.git_dir()
   return vim.trim(git_dir)
 end
 
-function M.path.join(...)
-  return table.concat(vim.tbl_flatten({ ... }), "/")
+-- returns is git repo
+---@return bool
+function M.git.is_repo()
+  local handle = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null")
+  local result = handle:read("*a")
+  handle:close()
+
+  if result:match("true") then
+    return true
+  else
+    return false
+  end
 end
 
 M.hi = {}
