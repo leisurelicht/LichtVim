@@ -74,6 +74,15 @@ function M.opts(name)
   return Plugin.values(plugin, "opts", false)
 end
 
+function M.keys(name)
+  local plugin = require("lazy.core.config").plugins[name]
+  if not plugin then
+    return {}
+  end
+  local Plugin = require("lazy.core.plugin")
+  return Plugin.values(plugin, "keys", false)
+end
+
 function M.lsmod(modname, fn)
   local root = require("lazy.core.util").find_root(modname)
   if not root then

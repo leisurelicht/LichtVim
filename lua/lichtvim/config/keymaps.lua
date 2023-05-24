@@ -10,7 +10,7 @@ if lazy.has("which-key.nvim") then
   local wk = require("which-key")
   wk.register({
     [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
-    d = { name = " Debugger" },
+    -- d = { name = " Debugger" },
     f = { name = "󰛔 Find & Replace" },
     g = { name = "󰊢 Git" },
     o = { name = " Terminal" },
@@ -19,8 +19,6 @@ if lazy.has("which-key.nvim") then
     s = { name = " Split" },
     t = { name = "󱏈 Tab" },
     to = { name = "Close Only" },
-    h = { name = "󱖹 Hop" },
-    ha = { name = "All Windows" },
     u = { name = "󰨙 UI" },
     p = { desc = "󰏖 Packages" },
     pl = { "<cmd>Lazy<cr>", "Lazy" },
@@ -131,27 +129,20 @@ map.set("n", "<leader>ud", fn.toggle_foldcolumn, "Toggle foldcolumn")
 map.set("n", "<leader>ul", fn.toggle_list, "Toggle list")
 map.set("n", "<leader>up", fn.toggle_paste, "Toggle paste")
 
-if lazy.has("mini.bufremove") then
-  map.set("n", "<leader>bd", function()
-    require("mini.bufremove").delete(0, false)
-  end, "Delete buffer")
+if lazy.has("neo-tree.nvim") then
+  map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")
+elseif lazy.has("nvim-tree.lua") then
+  map.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", " Explorer")
 end
 
-if lazy.has("bufferline.nvim") then
-  map.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin")
-  map.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers")
+if lazy.has("nvim-treesitter") then
+  map.set("n", "<leader>pT", "<cmd>TSUpdate all<cr>", "Treesitter update")
+  map.set("n", "<leader>pt", "<cmd>TSModuleInfo<cr>", "Treesitter info")
 end
 
 if lazy.has("vim-im-select") then
   map.set("n", "<leader>ui", "<cmd>ImSelectEnable<cr>", "Enable imselect")
   map.set("n", "<leader>uI", "<cmd>ImSelectDisable<cr>", "Disable imselect")
-end
-
-if lazy.has("smart-splits.nvim") then
-  map.set("n", "<leader>us", function()
-    require("smart-splits").start_resize_mode()
-  end, "Resize Mode")
-  map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
 end
 
 if lazy.has("todo-comments.nvim") then
@@ -160,6 +151,18 @@ if lazy.has("todo-comments.nvim") then
   else
     map.set("n", "<leader>ft", "<cmd>TodoLocList<cr>", "Todo (LocList)")
   end
+end
+
+if lazy.has("nvim-spectre") then
+  map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
+  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search current word")
+  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Search current word")
+  map.set(
+    "n",
+    "<leader>frs",
+    "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
+    "Search on current file"
+  )
 end
 
 if lazy.has("telescope.nvim") then
@@ -232,84 +235,6 @@ if lazy.has("nvim-notify") then
   end
 end
 
-if lazy.has("nvim-spectre") then
-  map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
-  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Search current word")
-  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Search current word")
-  map.set(
-    "n",
-    "<leader>frs",
-    "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
-    "Search on current file"
-  )
-end
-
-if lazy.has("vim-easy-align") then
-  map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
-end
-
-if lazy.has("hop.nvim") then
-  local hop = require("hop")
-  local dt = require("hop.hint").HintDirection
-  local opt = { current_line_only = true }
-
-  -- stylua: ignore
-  map.set("", "f", function() hop.hint_char1(table.extend(opt, { direction = dt.AFTER_CURSOR })) end, "Jump forward")
-  -- stylua: ignore
-  map.set("", "F", function() hop.hint_char1(table.extend(opt, { direction = dt.BEFORE_CURSOR })) end, "Jump backward")
-  -- stylua: ignore
-  map.set("", "t", function() hop.hint_char1(table.extend(opt, { direction = dt.AFTER_CURSOR, hint_offset = -1 })) end, "Jump forward")
-  -- stylua: ignore
-  map.set("", "T", function() hop.hint_char1(table.extend(opt, { direction = dt.BEFORE_CURSOR, hint_offset = 1 })) end, "Jump backward")
-
-  map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
-  map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
-  map.set("n", "<leader>hc", "<cmd>HopChar1<cr>", "Char")
-  map.set("n", "<leader>hp", "<cmd>HopPattern<cr>", "Pattern")
-  map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line start")
-  map.set("n", "<leader>haw", "<cmd>HopWordMW<cr>", "Word")
-  map.set("n", "<leader>hal", "<cmd>HopLineMW<cr>", "Line")
-  map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char")
-  map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
-  map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
-end
-
-if lazy.has("nvim-hlslens") then
-  map.set("n", "n", [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]], "Next")
-  map.set("n", "N", [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]], "Prev")
-  map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search")
-  map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search")
-  map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search")
-  map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search")
-end
-
-if lazy.has("neo-tree.nvim") then
-  map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")
-elseif lazy.has("nvim-tree.lua") then
-  map.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", " Explorer")
-end
-
-if lazy.has("nvim-treesitter") then
-  map.set("n", "<leader>pT", "<cmd>TSUpdate all<cr>", "Treesitter update")
-  map.set("n", "<leader>pt", "<cmd>TSModuleInfo<cr>", "Treesitter info")
-end
-
-if lazy.has("vim-matchup") then
-  require("which-key").register({
-    ["]%"] = "Jump to next matchup",
-    ["[%"] = "Jump to previous matchup",
-    ["g%"] = "Jump to close matchup",
-    ["z%"] = "Jump inside matchup",
-  }, { mode = "n" })
-end
-
-if lazy.has("mini.indentscope") then
-  require("which-key").register({
-    ["]i"] = "Goto indent scope bottom",
-    ["[i"] = "Goto indent scope top",
-  }, { mode = "n" })
-end
-
 if lazy.has("toggleterm.nvim") then
   map.set("n", "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", "Toggle terminal")
   map.set("n", "<leader>of", "<CMD>ToggleTerm direction=float<CR>", "Toggle in float")
@@ -334,3 +259,85 @@ if lazy.has("toggleterm.nvim") then
     end,
   })
 end
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = vim.api.nvim_create_augroup(add_title("keybind"), { clear = true }),
+  callback = function()
+    if lazy.has("vim-easy-align") then
+      map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
+    end
+
+    if lazy.has("hop.nvim") then
+      opts = lazy.opts("hop.nvim")
+
+      local opt = { current_line_only = true }
+      -- stylua: ignore
+      map.set("", "f", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.AFTER_CURSOR })) end, "Jump forward")
+      -- stylua: ignore
+      map.set("", "F", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.BEFORE_CURSOR })) end, "Jump backward")
+      -- stylua: ignore
+      map.set("", "t", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.AFTER_CURSOR, hint_offset = -1 })) end, "Jump forward")
+      -- stylua: ignore
+      map.set("", "T", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.BEFORE_CURSOR, hint_offset = 1 })) end, "Jump backward")
+
+      map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
+      map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
+      map.set("n", "<leader>hc", "<cmd>HopChar1<cr>", "Char")
+      map.set("n", "<leader>hp", "<cmd>HopPattern<cr>", "Pattern")
+      map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line start")
+      map.set("n", "<leader>haw", "<cmd>HopWordMW<cr>", "Word")
+      map.set("n", "<leader>hal", "<cmd>HopLineMW<cr>", "Line")
+      map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char")
+      map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
+      map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
+
+      require("which-key").register({
+        h = { name = "󱖹 Hop" },
+        ha = { name = "All Windows" },
+      }, { mode = "n", prefix = "<leader>" })
+    end
+
+    if lazy.has("nvim-hlslens") then
+      map.set("n", "n", [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]], "Next")
+      map.set("n", "N", [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]], "Prev")
+      map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search")
+      map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search")
+      map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search")
+      map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search")
+    end
+
+    if lazy.has("vim-matchup") then
+      require("which-key").register({
+        ["]%"] = "Jump to next matchup",
+        ["[%"] = "Jump to previous matchup",
+        ["g%"] = "Jump to close matchup",
+        ["z%"] = "Jump inside matchup",
+      }, { mode = "n" })
+    end
+
+    if lazy.has("mini.indentscope") then
+      require("which-key").register({
+        ["]i"] = "Goto indent scope bottom",
+        ["[i"] = "Goto indent scope top",
+      }, { mode = "n" })
+    end
+
+    if lazy.has("mini.bufremove") then
+      map.set("n", "<leader>bd", function()
+        require("mini.bufremove").delete(0, false)
+      end, "Delete buffer")
+    end
+
+    if lazy.has("bufferline.nvim") then
+      map.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin")
+      map.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers")
+    end
+
+    if lazy.has("smart-splits.nvim") then
+      map.set("n", "<leader>us", function()
+        require("smart-splits").start_resize_mode()
+      end, "Resize Mode")
+      map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
+    end
+  end,
+})

@@ -5,7 +5,7 @@ return {
   { "karb94/neoscroll.nvim", lazy = true, config = true },
   { "echasnovski/mini.bufremove", lazy = true },
   { "junegunn/vim-easy-align", lazy = true },
-  { "phaazon/hop.nvim", lazy = true, config = { keys = "etovxqpdygfblzhckisuran" } },
+  { "phaazon/hop.nvim", lazy = true, opts = { keys = "etovxqpdygfblzhckisuran" } },
   {
     "kevinhwang91/nvim-hlslens",
     lazy = true,
