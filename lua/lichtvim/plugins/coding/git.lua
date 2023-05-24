@@ -65,19 +65,20 @@ return {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead", "BufNewFile" },
     dependencies = { "f-person/git-blame.nvim" },
-    config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = { text = "+" },
-          change = { text = "!" },
-          delete = { text = "-" },
-          changedelete = { text = "~" },
-        },
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-          git_keymaps(gs, bufnr)
-        end,
-      })
+    opts = {
+      signs = {
+        add = { text = "+" },
+        change = { text = "!" },
+        delete = { text = "-" },
+        changedelete = { text = "~" },
+      },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+        git_keymaps(gs, bufnr)
+      end,
+    },
+    config = function(_, opts)
+      require("gitsigns").setup(opts)
     end,
   },
 }

@@ -15,7 +15,6 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    dependencies = { "gitsigns.nvim" },
     opts = function()
       return {
         options = {
