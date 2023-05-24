@@ -37,7 +37,7 @@ return {
   },
   {
     "ahmedkhalf/project.nvim",
-    cmd = { "Telescope", "ProjectRoot", "AddProject" },
+    -- cmd = { "Telescope", "ProjectRoot", "AddProject" },
     dependencies = { "telescope.nvim" },
     opts = {
       manual_mode = true,
@@ -62,9 +62,11 @@ return {
       scope_chdir = "tab",
       datapath = vim.fn.stdpath("data"),
     },
+    init = function()
+      require("telescope").load_extension("projects")
+    end,
     config = function(_, opts)
       require("project_nvim").setup(opts)
-      require("telescope").load_extension("projects")
     end,
   },
   {

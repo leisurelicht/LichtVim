@@ -205,7 +205,6 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fJ", ts_b("jumplist"), "Jump list")
   map.set("n", "<leader>fC", ts_b("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
-  map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
   map.set("n", "<leader>fe", function()
     require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
   end, "File Browser")
@@ -217,6 +216,20 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>gS", ts_b("git_stash"), "Stash")
   map.set("n", "<leader>gn", ts_b("git_branches"), "Branches")
   map.set("n", "<leader>gs", ts_b("git_status"), "Status")
+end
+
+if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
+  map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
+end
+
+if lazy.has("nvim-notify") then
+  map.set("n", "<leader>uq", function()
+    require("notify").dismiss({ silent = true, pending = true })
+  end, "Clear notifications")
+
+  if lazy.has("telescope.nvim") then
+    map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
+  end
 end
 
 if lazy.has("nvim-spectre") then
@@ -288,16 +301,6 @@ if lazy.has("vim-matchup") then
     ["g%"] = "Jump to close matchup",
     ["z%"] = "Jump inside matchup",
   }, { mode = "n" })
-end
-
-if lazy.has("nvim-notify") then
-  map.set("n", "<leader>uq", function()
-    require("notify").dismiss({ silent = true, pending = true })
-  end, "Clear notifications")
-
-  if lazy.has("telescope.nvim") then
-    map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
-  end
 end
 
 if lazy.has("mini.indentscope") then
