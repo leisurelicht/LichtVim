@@ -29,6 +29,8 @@ if lazy.has("which-key.nvim") then
   wk.register({
     g = { name = "󰊢 Git" },
   }, { mode = "v", prefix = "<leader>" })
+else
+  vim.notify("Need to install which-key.nvim", vim.log.levels.ERROR)
 end
 
 map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
@@ -279,7 +281,7 @@ if lazy.has("nvim-treesitter") then
   map.set("n", "<leader>pt", "<cmd>TSModuleInfo<cr>", "Treesitter info")
 end
 
-if lazy.has("vim-matchup") and lazy.has("which-key.nvim") then
+if lazy.has("vim-matchup") then
   require("which-key").register({
     ["]%"] = "Jump to next matchup",
     ["[%"] = "Jump to previous matchup",
@@ -296,4 +298,36 @@ if lazy.has("nvim-notify") then
   if lazy.has("telescope.nvim") then
     map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
   end
+end
+
+if lazy.has("mini.indentscope") then
+  require("which-key").register({
+    ["]i"] = "Goto indent scope bottom",
+    ["[i"] = "Goto indent scope top",
+  }, { mode = "n" })
+end
+
+if lazy.has("toggleterm.nvim") then
+  map.set("n", "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", "Toggle terminal")
+  map.set("n", "<leader>of", "<CMD>ToggleTerm direction=float<CR>", "Toggle in float")
+  map.set("n", "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", "Toggle in tab")
+  map.set("n", "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", "Toggle in horizontal")
+  map.set("n", "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", "Toggle in vertical")
+  map.set("n", "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", "Send current line")
+  map.set("n", "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", "Send visual lines")
+  map.set("n", "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", "Send visual selection")
+
+  vim.api.nvim_create_autocmd({ "TermOpen" }, {
+    group = vim.api.nvim_create_augroup(add_title("term_keymap"), { clear = true }),
+    pattern = { "term://*" },
+    callback = function()
+      local opts = { buffer = 0 }
+      map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opts)
+      map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", opts)
+      map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
+      map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
+      map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
+      map.set("t", "<C-o>", fn.smart_add_term, "Add new terminal", opts)
+    end,
+  })
 end

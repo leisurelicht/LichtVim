@@ -56,15 +56,6 @@ return {
         end,
       })
     end,
-    config = function(_, opts)
-      require("mini.indentscope").setup(opts)
-      if lazy.has("which-key.nvim") then
-        require("which-key").register({
-          ["]i"] = "Goto indent scope bottom",
-          ["[i"] = "Goto indent scope top",
-          mode = "n",
-        })
-      end
-    end,
+    config = true,
   },
 }
