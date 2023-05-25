@@ -17,6 +17,7 @@ return {
   {
     "leisurelicht/telescope.nvim",
     version = false,
+    lazy = true,
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -253,6 +254,12 @@ return {
       telescope.load_extension("neoclip")
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
+      if lazy.has("project.nvim") then
+        telescope.load_extension("projects")
+      end
+      if lazy.has("nvim-notify") then
+        telescope.load_extension("notify")
+      end
     end,
   },
 }

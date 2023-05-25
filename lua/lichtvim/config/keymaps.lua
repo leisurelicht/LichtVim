@@ -171,6 +171,9 @@ if lazy.has("nvim-spectre") then
   }, { mode = { "n", "v" }, prefix = "<leader>" })
 end
 
+if git.is_repo() then
+end
+
 if lazy.has("telescope.nvim") then
   local telescope = require("lichtvim.utils").plugs.telescope
 
@@ -201,18 +204,6 @@ if lazy.has("telescope.nvim") then
   end, "File Browser")
 
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
-
-  if git.is_repo() then
-    map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
-    map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
-    map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
-    map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
-    map.set("n", "<leader>gs", telescope("git_status"), "Status")
-
-    require("which-key").register({
-      g = { name = "󰊢 Git" },
-    }, { mode = { "n", "v" }, prefix = "<leader>" })
-  end
 end
 
 if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
@@ -357,11 +348,31 @@ if lazy.has("mason.nvim") then
   map.set("n", "<leader>pm", "<cmd>Mason<cr>", "Mason")
 end
 
-vim.api.nvim_create_autocmd({ "User" }, {
-  group = vim.api.nvim_create_augroup(add_title("git"), { clear = true }),
-  pattern = "Gitsigns",
-  callback = function(event)
-    if git.is_repo() then
+if git.is_repo() then
+  map.set("n", "<leader>gg", function()
+    require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
+  end, "Lazygit", { buffer = bufnr })
+  map.set("n", "<leader>gl", function()
+    require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
+  end, "Lazygit log", { buffer = bufnr })
+
+  require("which-key").register({
+    g = { name = "󰊢 Git" },
+  }, { mode = { "n", "v" }, prefix = "<leader>" })
+
+  if lazy.has("telescope.nvim") then
+    local telescope = require("lichtvim.utils").plugs.telescope
+    map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
+    map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
+    map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
+    map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
+    map.set("n", "<leader>gs", telescope("git_status"), "Status")
+  end
+
+  vim.api.nvim_create_autocmd({ "User" }, {
+    group = vim.api.nvim_create_augroup(add_title("git"), { clear = true }),
+    pattern = "Gitsigns",
+    callback = function(event)
       local gs = package.loaded.gitsigns
       local bufnr = event.buf
       map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
@@ -406,15 +417,8 @@ vim.api.nvim_create_autocmd({ "User" }, {
         return "<Ignore>"
       end, "Previous git hunk", { buffer = bufnr, expr = true })
 
-      map.set("n", "<leader>gg", function()
-        require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
-      end, "Lazygit", { buffer = bufnr })
-      map.set("n", "<leader>gl", function()
-        require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
-      end, "Lazygit log", { buffer = bufnr })
-
       -- Text object
       map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
-    end
-  end,
-})
+    end,
+  })
+end

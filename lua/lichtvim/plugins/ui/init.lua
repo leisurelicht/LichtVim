@@ -25,10 +25,6 @@ return {
     },
     init = function()
       vim.notify = require("notify")
-
-      if lazy.has("telescope.nvim") then
-        require("telescope").load_extension("notify")
-      end
     end,
   },
   { -- better vim.ui
