@@ -172,7 +172,7 @@ if lazy.has("nvim-spectre") then
 end
 
 if lazy.has("telescope.nvim") then
-  local telescope  = require("lichtvim.utils").plugs.telescope
+  local telescope = require("lichtvim.utils").plugs.telescope
 
   map.set("n", "<leader>fT", telescope("builtin"), "Builtin")
   map.set("n", "<leader>f<tab>", telescope("commands"), "Commands")
@@ -335,6 +335,27 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
   end,
 })
+
+if lazy.has("trouble.nvim") then
+  map.set("n", "[q", function()
+    if require("trouble").is_open() then
+      require("trouble").previous({ skip_groups = true, jump = true })
+    else
+      vim.cmd.cprev()
+    end
+  end, "Previous trouble/quickfix item")
+  map.set("n", "]q", function()
+    if require("trouble").is_open() then
+      require("trouble").next({ skip_groups = true, jump = true })
+    else
+      vim.cmd.cnext()
+    end
+  end, "Next trouble/quickfix item")
+end
+
+if lazy.has("mason.nvim") then
+  map.set("n", "<leader>pm", "<cmd>Mason<cr>", "Mason")
+end
 
 vim.api.nvim_create_autocmd({ "User" }, {
   group = vim.api.nvim_create_augroup(add_title("git"), { clear = true }),
