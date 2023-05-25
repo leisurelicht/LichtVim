@@ -31,6 +31,8 @@ local defaults = {
   },
   ---@type string
   lang = "en",
+
+  auto_save = false,
 }
 
 local options

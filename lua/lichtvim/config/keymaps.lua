@@ -172,60 +172,42 @@ if lazy.has("nvim-spectre") then
 end
 
 if lazy.has("telescope.nvim") then
-  local function ts_b(builtin, opts)
-    local params = { builtin = builtin, opts = opts }
-    return function()
-      builtin = params.builtin
-      opts = params.opts
-      opts = vim.tbl_deep_extend("force", {
-        cwd = require("lichtvim.utils").path.get_root(),
-      }, opts or {})
-      if builtin == "files" then
-        if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
-          opts.show_untracked = true
-          builtin = "git_files"
-        else
-          builtin = "find_files"
-        end
-      end
-      require("telescope.builtin")[builtin](opts)
-    end
-  end
+  local telescope  = require("lichtvim.utils").plugs.telescope
 
-  map.set("n", "<leader>fT", ts_b("builtin"), "Builtin")
-  map.set("n", "<leader>f<tab>", ts_b("commands"), "Commands")
-  map.set("n", "<leader>fc", ts_b("command_history"), "Commands history")
-  map.set("n", "<leader>fs", ts_b("search_history"), "Search history")
-  map.set("n", "<leader>fA", ts_b("autocommands"), "AutoCommands")
-  map.set("n", "<leader>ff", ts_b("files"), "Files (root dir)")
-  map.set("n", "<leader>ff", ts_b("files", { cwd = false }), "Files (cwd)")
-  map.set("n", "<leader>fH", ts_b("help_tags"), "Help tags")
-  map.set("n", "<leader>fm", ts_b("marks"), "Marks")
-  map.set("n", "<leader>fM", ts_b("man_pages"), "Man pages")
-  map.set("n", "<leader>fo", ts_b("oldfiles"), "Recently files")
-  map.set("n", "<leader>fO", ts_b("oldfiles", { cwd = vim.loop.cwd() }), "Recently files (cwd)")
-  map.set("n", "<leader>fP", ts_b("vim_options"), "Vim option")
-  map.set("n", "<leader>fg", ts_b("live_grep"), "Grep (root dir)")
-  map.set("n", "<leader>fG", ts_b("live_grep", { cwd = false }), "Grep (cwd)")
-  map.set("n", "<leader>fw", ts_b("grep_string"), "Word (root dir)")
-  map.set("n", "<leader>fW", ts_b("grep_string", { cwd = false }), "Word (cwd)")
-  map.set("n", "<leader>fk", ts_b("keymaps"), "Key maps")
-  map.set("n", "<leader>fb", ts_b("buffers"), "Buffers")
-  map.set("n", "<leader>fJ", ts_b("jumplist"), "Jump list")
-  map.set("n", "<leader>fC", ts_b("colorscheme", { enable_preview = true }), "Colorscheme")
+  map.set("n", "<leader>fT", telescope("builtin"), "Builtin")
+  map.set("n", "<leader>f<tab>", telescope("commands"), "Commands")
+  map.set("n", "<leader>fc", telescope("command_history"), "Commands history")
+  map.set("n", "<leader>fs", telescope("search_history"), "Search history")
+  map.set("n", "<leader>fA", telescope("autocommands"), "AutoCommands")
+  map.set("n", "<leader>ff", telescope("files"), "Files (root dir)")
+  map.set("n", "<leader>ff", telescope("files", { cwd = false }), "Files (cwd)")
+  map.set("n", "<leader>fH", telescope("help_tags"), "Help tags")
+  map.set("n", "<leader>fm", telescope("marks"), "Marks")
+  map.set("n", "<leader>fM", telescope("man_pages"), "Man pages")
+  map.set("n", "<leader>fo", telescope("oldfiles"), "Recently files")
+  map.set("n", "<leader>fO", telescope("oldfiles", { cwd = vim.loop.cwd() }), "Recently files (cwd)")
+  map.set("n", "<leader>fP", telescope("vim_options"), "Vim option")
+  map.set("n", "<leader>fg", telescope("live_grep"), "Grep (root dir)")
+  map.set("n", "<leader>fG", telescope("live_grep", { cwd = false }), "Grep (cwd)")
+  map.set("n", "<leader>fw", telescope("grep_string"), "Word (root dir)")
+  map.set("n", "<leader>fW", telescope("grep_string", { cwd = false }), "Word (cwd)")
+  map.set("n", "<leader>fk", telescope("keymaps"), "Key maps")
+  map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
+  map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
+  map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set("n", "<leader>fe", function()
     require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
   end, "File Browser")
 
-  map.set("n", "<leader>bs", ts_b("buffers"), "Buffers")
+  map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
 
   if git.is_repo() then
-    map.set("n", "<leader>gC", ts_b("git_bcommits"), "Buffer's Commits")
-    map.set("n", "<leader>gc", ts_b("git_commits"), "Commits")
-    map.set("n", "<leader>gS", ts_b("git_stash"), "Stash")
-    map.set("n", "<leader>gn", ts_b("git_branches"), "Branches")
-    map.set("n", "<leader>gs", ts_b("git_status"), "Status")
+    map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
+    map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
+    map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
+    map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
+    map.set("n", "<leader>gs", telescope("git_status"), "Status")
 
     require("which-key").register({
       g = { name = "󰊢 Git" },

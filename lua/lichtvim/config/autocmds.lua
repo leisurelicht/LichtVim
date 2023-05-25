@@ -3,6 +3,18 @@
 -- Note: 自动命令配置
 -- =================
 --
+
+local options = require("lichtvim.config")
+
+-- auto save when leaving insert mode or when the buffer is changed
+if options.auto_save then
+  vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+    pattern = { "*" },
+    command = "silent! wall",
+    nested = true,
+  })
+end
+
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = vim.api.nvim_create_augroup(add_title("checktime"), { clear = true }),
@@ -75,6 +87,17 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = true
   end,
 })
+
+vim.api.nvim_create_user_command("MakeDirectory", function()
+  ---@diagnostic disable-next-line: missing-parameter
+  local path = vim.fn.expand("%")
+  local dir = vim.fn.fnamemodify(path, ":p:h")
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.fn.mkdir(dir, "p")
+  else
+    vim.notify("Directory already exists", "WARN", { title = "Nvim" })
+  end
+end, { desc = "Create directory if it doesn't exist" })
 
 -- close some filetypes with <esc>
 -- vim.api.nvim_create_autocmd("FileType", {
