@@ -75,7 +75,7 @@ return {
       },
       on_attach = function(bufnr)
         -- git_keymaps(gs, bufnr)
-        vim.api.nvim_command("doautocmd User Git")
+        vim.api.nvim_command("doautocmd User Gitsigns")
       end,
     },
     config = function(_, opts)

@@ -338,7 +338,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 
 vim.api.nvim_create_autocmd({ "User" }, {
   group = vim.api.nvim_create_augroup(add_title("git"), { clear = true }),
-  pattern = "Git",
+  pattern = "Gitsigns",
   callback = function(event)
     if git.is_repo() then
       local gs = package.loaded.gitsigns
