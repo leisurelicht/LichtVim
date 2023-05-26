@@ -38,5 +38,5 @@
 
 ## 🚀 Getting Started
 
-可以直接使用 LazyVim 的 [start](https://github.com/LazyVim/starter) 或者参考我的 Neovim 启动配置文件[在这](https://github.com/leisurelicht/.config_file/tree/lazy/vi)。这两是一样的。</br>
+可以直接使用 LazyVim 的 [starter](https://github.com/LazyVim/starter) 或者参考我的 Neovim 启动配置文件[在这](https://github.com/leisurelicht/.config_file/tree/lazy/vi)。这两是一样的。</br>
 you can just use LazyVim's [starter](https://github.com/LazyVim/starter) or you can refer to my Neovim start config file [here](https://github.com/leisurelicht/.config_file/tree/lazy/vi). they are the same. 
