@@ -33,8 +33,21 @@ return {
               symbols = { added = icons.git.Add, modified = icons.git.Change, removed = icons.git.Delete },
             },
           },
-          lualine_c = {},
-          lualine_x = {
+          lualine_c = {
+            {
+              "filename",
+              newfile_status = false,
+              path = 1,
+              symbols = {
+                modified = "[Modified]", -- Text to show when the file is modified.
+                readonly = "[Read Only]", -- Text to show when the file is non-modifiable or readonly.
+                unnamed = "[No Name]", -- Text to show for unnamed buffers.
+                newfile = "[New]", -- Text to show for newly created file before first write
+              },
+            },
+          },
+          lualine_x = {},
+          lualine_y = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
             {
               "diagnostics",
@@ -60,8 +73,7 @@ return {
             { "fileformat" },
             { "encoding" },
           },
-          lualine_y = { { "location" } },
-          lualine_z = { { "progress" } },
+          lualine_z = { { "location" }, { "progress" } },
         },
         extensions = {
           -- "quickfix",
