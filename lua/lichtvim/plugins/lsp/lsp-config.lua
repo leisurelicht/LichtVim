@@ -92,7 +92,6 @@ return {
       require("lichtvim.plugins.lsp.config.format").autoformat = opts.autoformat
       lazy.on_attach(function(client, buffer)
         require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
-        require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
       end)
 
       local capabilities = vim.tbl_deep_extend(
