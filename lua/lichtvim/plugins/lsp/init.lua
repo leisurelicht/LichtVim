@@ -30,6 +30,9 @@ return {
           exec = "<CR>",
         },
       },
+      symbol_in_winbar = {
+        enable = false,
+      },
       lightbulb = {
         enable = true,
         enable_in_insert = false,

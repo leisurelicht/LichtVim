@@ -239,6 +239,16 @@ function M.buf.full_path()
   return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
 end
 
+M.win = {}
+
+function M.win.num()
+  -- local num = vim.inspect([[%{tabpagewinnr(tabpagenr())}]])
+  -- local num = [[%{winnr()}]]
+
+  local num = vim.api.nvim_eval("winnr()")
+  return "[" .. num .. "]"
+end
+
 M.keybind = {}
 
 ---@param silent boolean?
