@@ -16,6 +16,7 @@ if lazy.has("which-key.nvim") then
   local wk = require("which-key")
   wk.register({
     [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
+    ["q"] = { "<cmd>confirm q<cr>", " Quit" },
     -- d = { name = " Debugger" },
     f = { name = "󰛔 Find & Replace" },
     o = { name = " Terminal" },
@@ -25,7 +26,7 @@ if lazy.has("which-key.nvim") then
     t = { name = "󱏈 Tab" },
     to = { name = "Close Only" },
     u = { name = "󰨙 UI" },
-    p = { desc = "󰏖 Packages" },
+    p = { name = "󰏖 Packages" },
     pl = { "<cmd>Lazy<cr>", "Lazy" },
   }, { mode = "n", prefix = "<leader>" })
 
@@ -143,8 +144,8 @@ elseif lazy.has("nvim-tree.lua") then
 end
 
 if lazy.has("nvim-treesitter") then
-  map.set("n", "<leader>pT", "<cmd>TSUpdate all<cr>", "Treesitter update")
-  map.set("n", "<leader>pt", "<cmd>TSModuleInfo<cr>", "Treesitter info")
+  map.set("n", "<leader>pt", "<cmd>TSUpdate all<cr>", "Treesitter update")
+  map.set("n", "<leader>pT", "<cmd>TSModuleInfo<cr>", "Treesitter info")
 end
 
 if lazy.has("vim-im-select") then
@@ -174,9 +175,6 @@ if lazy.has("nvim-spectre") then
   require("which-key").register({
     fr = { name = "Replace" },
   }, { mode = { "n", "v" }, prefix = "<leader>" })
-end
-
-if git.is_repo() then
 end
 
 if lazy.has("telescope.nvim") then
@@ -356,10 +354,10 @@ end
 if git.is_repo() then
   map.set("n", "<leader>gg", function()
     require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
-  end, "Lazygit", { buffer = bufnr })
+  end, "Lazygit")
   map.set("n", "<leader>gl", function()
     require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
-  end, "Lazygit log", { buffer = bufnr })
+  end, "Lazygit log")
 
   require("which-key").register({
     g = { name = "󰊢 Git" },
@@ -453,7 +451,7 @@ _keys = {
 }
 
 if lazy.has("lspsaga.nvim") then
-  keys = {
+  local keys = {
     { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
     { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover", has = "hover" },
     { "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Diagnostic (line)" },
@@ -464,14 +462,14 @@ end
 
 if lazy.has("telescope.nvim") then
   local builtin = require("telescope.builtin")
-    -- stylua: ignore
-    local keys = {
-      { "<leader>lL", function() builtin.diagnostics({}) end, desc = "Diagnostic (project)" },
-      { "<leader>le", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
-      { "<leader>li", function() builtin.lsp_implementations({ show_line = false }) end, desc = "Goto implementation", has = "implementation" },
-      { "<leader>lt", function() builtin.lsp_type_definitions({ show_line = false }) end, desc = "Goto type definition", has = "typeDefinition" },
-      { "<leader>ld", function() builtin.lsp_definitions({ reuse_win = true, show_line = false }) end, desc = "Goto definition", has = "definition" },
-    }
+  -- stylua: ignore
+  local keys = {
+    { "<leader>lL", function() builtin.diagnostics({}) end, desc = "Diagnostic (project)" },
+    { "<leader>le", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
+    { "<leader>li", function() builtin.lsp_implementations({ show_line = false }) end, desc = "Goto implementation", has = "implementation" },
+    { "<leader>lt", function() builtin.lsp_type_definitions({ show_line = false }) end, desc = "Goto type definition", has = "typeDefinition" },
+    { "<leader>ld", function() builtin.lsp_definitions({ reuse_win = true, show_line = false }) end, desc = "Goto definition", has = "definition" },
+  }
   list.extend(_keys, keys)
 end
 
@@ -492,7 +490,6 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
         keymaps[keys.id] = keys
       end
     end
-
 
     for _, keys in pairs(keymaps) do
       if not keys.has or client.server_capabilities[keys.has .. "Provider"] then

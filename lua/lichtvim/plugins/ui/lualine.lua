@@ -1,9 +1,8 @@
 local icons = require("lichtvim.config").icons
-local fg = require("lichtvim.config.ui.colors").fg
 local win_num = require("lichtvim.utils").win.num
 
-local function title(title)
-  return string.format("[[%s]]", title)
+local function title(t)
+  return string.format("[[%s]]", t)
 end
 
 return {
@@ -14,10 +13,13 @@ return {
       return {
         options = {
           theme = "auto",
-          disabled_filetypes = { statusline = { "dashboard", "alpha" }, winbar = { "neo-tree" } },
+          disabled_filetypes = { statusline = { "alpha" }, winbar = { "alpha", "neo-tree" } },
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
           globalstatus = true,
+          refresh = {
+            statusline = 100,
+          },
         },
         tabline = {},
         winbar = {
@@ -57,7 +59,7 @@ return {
           },
         },
         sections = {
-          lualine_a = { { "mode", separator = { right = "" } } },
+          lualine_a = { { "mode" } },
           lualine_b = {
             { "branch" },
             {
@@ -66,19 +68,16 @@ return {
             },
           },
           lualine_c = {},
-          lualine_x = {},
+          lualine_x = {
+            { "filetype" },
+            { "fileformat" },
+            { "encoding" },
+          },
           lualine_y = {
-            { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
             {
               "diagnostics",
               sources = { "nvim_diagnostic" },
               sections = { "error", "warn", "info", "hint" },
-              diagnostics_color = {
-                error = "DiagnosticError", -- Changes diagnostics' error color.
-                warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-                info = "DiagnosticInfo", -- Changes diagnostics' info color.
-                hint = "DiagnosticHint", -- Changes diagnostics' hint color.
-              },
               symbols = {
                 error = icons.diagnostics.Error,
                 warn = icons.diagnostics.Warn,
@@ -89,11 +88,13 @@ return {
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.
             },
-            { "filetype" },
-            { "fileformat" },
-            { "encoding" },
+            { require("lazy.status").updates, cond = require("lazy.status").has_updates },
+            -- { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
           },
-          lualine_z = { { "location" }, { "progress" } },
+          lualine_z = {
+            { "location" },
+            { "progress" },
+          },
         },
         extensions = {
           -- "quickfix",
@@ -114,17 +115,10 @@ return {
             },
           },
           {
-            filetypes = { "TelescopePrompt" },
+            filetypes = { "lazy", "TelescopePrompt", "mason" },
             sections = {
-              lualine_a = { { title("Telescope"), separator = { right = "" } } },
-              lualine_z = { { title("Telescope"), separator = { left = "" } } },
-            },
-          },
-          {
-            filetypes = { "lazy" },
-            sections = {
-              lualine_a = { { title("Lazy"), separator = { right = "" } } },
-              lualine_z = { { title("Lazy"), separator = { left = "" } } },
+              lualine_a = { { title("   "), separator = { right = "" } } },
+              lualine_z = { { title("   "), separator = { left = "" } } },
             },
           },
         },

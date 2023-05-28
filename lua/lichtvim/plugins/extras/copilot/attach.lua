@@ -12,7 +12,7 @@ return {
     event = { "BufNewFile", "BufRead" },
     opts = {
       panel = {
-        enabled = true,
+        enabled = false,
         auto_refresh = true,
         keymap = {
           jump_prev = "[[",
@@ -68,6 +68,15 @@ return {
           end
         end
       end
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "leisurelicht/lualine-copilot.nvim",
+    },
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_y, 1, { "copilot" })
     end,
   },
 }

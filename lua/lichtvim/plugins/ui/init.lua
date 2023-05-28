@@ -8,9 +8,12 @@ return {
     "j-hui/fidget.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "neovim/nvim-lspconfig" },
-    config = function()
-      require("fidget").setup({ window = { blend = 0 } })
-    end,
+    opts = {
+      window = {
+        relative = "editor",
+      },
+    },
+    config = true,
   },
   { -- notify
     "rcarriga/nvim-notify",
