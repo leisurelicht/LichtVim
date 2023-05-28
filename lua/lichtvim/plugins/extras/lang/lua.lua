@@ -9,7 +9,6 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        "luacheck",
         "stylua",
       })
     end,
@@ -19,9 +18,6 @@ return {
     opts = function(_, opts)
       local null_ls = require("null-ls")
       vim.list_extend(opts.sources, {
-        null_ls.builtins.diagnostics.luacheck.with({
-          extra_args = { "--globals=vim" },
-        }),
         null_ls.builtins.formatting.stylua,
       })
     end,
@@ -32,21 +28,48 @@ return {
     opts = {
       servers = {
         lua_ls = {
-          disable_diagnostics = true,
-          cmd = { "lua-language-server" },
-          -- cmd = { "lua-language-server", "--locale=zh-CN" },
+          disable_diagnostics = false,
+          -- cmd = { "lua-language-server" },
+          cmd = { "lua-language-server", "--locale=zh-CN" },
           filetypes = { "lua" },
-          log_level = 2,
+          root_dir = function(fname)
+            local util = require("lspconfig.util")
+
+            local root_files = {
+              ".luarc.json",
+              ".luarc.jsonc",
+              ".luacheckrc",
+              ".stylua.toml",
+              "stylua.toml",
+              "selene.toml",
+              "selene.yml",
+            }
+
+            local root = util.root_pattern(unpack(root_files))(fname)
+            if root and root ~= vim.env.HOME then
+              return root
+            end
+            root = util.root_pattern("lua/")(fname)
+            if root then
+              return root .. "/lua/"
+            end
+            return util.find_git_ancestor(fname)
+          end,
+          single_file_support = true,
+          log_level = vim.lsp.protocol.MessageType.Warning,
           settings = {
             Lua = {
               runtime = {
                 version = "LuaJIT",
               },
               workspace = {
-                library = "checkThirdParty",
+                library = vim.api.nvim_get_runtime_file("", true),
               },
               completion = { callSnippet = "Replace" },
-              diagnostics = { enable = false },
+              diagnostics = {
+                enable = true,
+                globals = { "vim" },
+              },
               telemetry = { enable = false },
               format = { enable = false },
             },
