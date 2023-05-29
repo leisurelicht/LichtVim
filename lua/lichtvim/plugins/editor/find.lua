@@ -251,15 +251,17 @@ return {
       telescope.setup(opts)
 
       telescope.load_extension("fzf")
-      telescope.load_extension("neoclip")
       telescope.load_extension("frecency")
-      telescope.load_extension("file_browser")
+
       if lazy.has("project.nvim") then
         telescope.load_extension("projects")
       end
       if lazy.has("nvim-notify") then
         telescope.load_extension("notify")
       end
+
+      telescope.load_extension("file_browser")
+      telescope.load_extension("neoclip")
     end,
   },
 }
