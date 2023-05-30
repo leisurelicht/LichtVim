@@ -37,7 +37,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+      { "folke/neodev.nvim" },
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()

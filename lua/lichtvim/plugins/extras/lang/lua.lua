@@ -64,10 +64,12 @@ return {
               },
               workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
               },
-              completion = { callSnippet = "Replace" },
+              completion = {
+                callSnippet = "Replace",
+              },
               diagnostics = {
-                enable = true,
                 globals = { "vim" },
               },
               telemetry = { enable = false },
