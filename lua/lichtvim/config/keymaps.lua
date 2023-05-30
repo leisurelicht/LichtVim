@@ -510,3 +510,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     end
   end,
 })
+
+if lazy.has("null-ls.nvim") then
+  map.set("n", "<leader>pn", "<cmd>NullLsInfo<cr>", "Null-ls info")
+end

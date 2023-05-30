@@ -77,10 +77,10 @@ return {
         "mason",
         "notify",
         "alpha",
+        "checkhealth",
       },
       custom_colorcolumn = {
         ["htmldjango"] = "120",
-        ["lua"] = "120",
       },
       scope = "file",
     },

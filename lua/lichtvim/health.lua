@@ -10,7 +10,7 @@ local ok = vim.health.ok or vim.health.report_ok
 local warn = vim.health.warn or vim.health.report_warn
 local error = vim.health.error or vim.health.report_error
 
-local check_list = {
+M.check_list = {
   "rg",
   "fd",
   "git",
@@ -31,7 +31,7 @@ function M.check()
     error("Neovim >= 0.9.0 is required")
   end
 
-  for _, cmd in ipairs(check_list) do
+  for _, cmd in ipairs(M.check_list) do
     local name = type(cmd) == "string" and cmd or vim.inspect(cmd)
     local commands = type(cmd) == "string" and { cmd } or cmd
     ---@cast commands string[]
