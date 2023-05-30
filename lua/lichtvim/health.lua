@@ -11,18 +11,15 @@ local warn = vim.health.warn or vim.health.report_warn
 local error = vim.health.error or vim.health.report_error
 
 local check_list = {
-  "git",
   "rg",
   "fd",
-  "lazygit",
+  "git",
   "fzf",
   "sed",
+  "npm",
   "curl",
   "unzip",
-  "go",
-  "lua",
-  "luarocks",
-  "npm",
+  "lazygit",
 }
 
 function M.check()

@@ -5,12 +5,13 @@
 --
 local sys = require("lichtvim.utils").sys
 
-if sys.is_macos() then
-  vim.api.nvim_set_var("python3_host_prog", "/opt/homebrew/bin/python3")
-elseif sys.is_linux() then
-  vim.api.nvim_set_var("python3_host_prog", "python3")
-end
+-- if sys.is_macos() then
+--   vim.api.nvim_set_var("python3_host_prog", "/opt/homebrew/bin/python3")
+-- elseif sys.is_linux() then
+--   vim.api.nvim_set_var("python3_host_prog", "python3")
+-- end
 
+vim.g.loaded_python_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
