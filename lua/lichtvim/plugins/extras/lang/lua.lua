@@ -7,9 +7,11 @@ return {
   },
   {
     "m4xshen/smartcolumn.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.custom_colorcolumn, { ["lua"] = "120" })
-    end,
+    opts = {
+      custom_colorcolumn = {
+        ["lua"] = "120",
+      },
+    },
   },
   {
     "williamboman/mason.nvim",

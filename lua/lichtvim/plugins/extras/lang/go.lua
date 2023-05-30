@@ -6,6 +6,15 @@ return {
     end,
   },
   {
+    "m4xshen/smartcolumn.nvim",
+    opts = {
+      custom_colorcolumn = {
+        ["go"] = "120",
+      },
+    },
+  },
+
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {

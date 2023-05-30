@@ -38,6 +38,7 @@ return {
       endwise = { enable = true },
     },
     config = function(_, opts)
+      Dump(opts.ensure_installed)
       require("nvim-treesitter.configs").setup(opts)
       require("nvim-treesitter.install").prefer_git = true
     end,
