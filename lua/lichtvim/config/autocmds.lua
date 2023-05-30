@@ -51,6 +51,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- close some filetypes with <esc>
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup(add_title("close_with_esc"), { clear = true }),
+  pattern = {
+    "lazy",
+    "help",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
+
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup(add_title("last_loc"), { clear = true }),
@@ -95,31 +108,9 @@ vim.api.nvim_create_user_command("MakeDirectory", function()
   if vim.fn.isdirectory(dir) == 0 then
     vim.fn.mkdir(dir, "p")
   else
-    vim.notify("Directory already exists", "WARN", { title = "Nvim" })
+    vim.notify("Directory already exists", vim.log.levels.WARN, { title = LichtVimTitle })
   end
 end, { desc = "Create directory if it doesn't exist" })
-
--- close some filetypes with <esc>
--- vim.api.nvim_create_autocmd("FileType", {
---   group = vim.api.nvim_create_augroup(add_title"close_with_esc", { clear = true }),
---   pattern = {
---     "PlenaryTestPopup",
---     "help",
---     "lspinfo",
---     "man",
---     "notify",
---     "qf",
---     "query", -- :InspectTree
---     "spectre_panel",
---     "startuptime",
---     "tsplayground",
---     "noice",
---   },
---   callback = function(event)
---     vim.bo[event.buf].buflisted = false
---     vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
---   end,
--- })
 
 -- resize splits if window got resized
 -- vim.api.nvim_create_autocmd({ "VimResized" }, {

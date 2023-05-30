@@ -6,7 +6,7 @@ local function bool2str(bool)
   return bool and "on" or "off"
 end
 
-function notify(msg, type, opts)
+local function notify(msg, type, opts)
   vim.schedule(function()
     vim.notify(msg, type, table.extend({ title = LichtVimTitle }, opts))
   end)
@@ -16,10 +16,10 @@ end
 function M.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
-    vim.notify("Mouse mode: off", "info", { title = LichtVimTitle })
+    vim.notify("Mouse mode: off", vim.log.levels.INFO, { title = LichtVimTitle })
   else
     vim.o.mouse = "a"
-    vim.notify("Mouse mode: on", "info", { title = LichtVimTitle })
+    vim.notify("Mouse mode: on", vim.log.levels.INFO, { title = LichtVimTitle })
   end
 end
 

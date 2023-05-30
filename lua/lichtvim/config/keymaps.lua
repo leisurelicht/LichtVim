@@ -426,7 +426,7 @@ if git.is_repo() then
   })
 end
 
-_keys = {
+local _keys = {
   { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
   { "<leader>ln", lsp.diagnostic_goto(true), desc = "Next diagnostic" },
   { "<leader>lp", lsp.diagnostic_goto(false), desc = "Previous diagnostic" },
