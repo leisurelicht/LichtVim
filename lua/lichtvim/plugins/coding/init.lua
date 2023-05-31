@@ -85,7 +85,6 @@ return {
       scope = "file",
     },
     config = function(_, opts)
-      Dump(opts)
       require("smartcolumn").setup(opts)
     end,
   },
