@@ -27,16 +27,32 @@
 
 - [Neovim](https://github.com/neovim/neovim) >= **0.9.0** (needs to be built with **LuaJIT**)
 - [Nerd Font](https://www.nerdfonts.com/)
-- [git](https://git-scm.com) >= **2.19.0** (for partial clones support)
-- [im-select](https://github.com/daipeihust/im-select) (if you use macOS or windows)
 - [fzf](https://github.com/junegunn/fzf) (for fuzzy search)
+- [fd](https://github.com/sharkdp/fd) (for fuzzy search)
+- [ripgrep](https://github.com/BurntSushi/ripgrep) (for fuzzy search)
+- [git](https://git-scm.com) >= **2.19.0** (for partial clones support)
 - [sqlite](https://github.com/sqlite/sqlite)
 - [lazygit](https://github.com/jesseduffield/lazygit) 
+- [npm](https://github.com/npm/cli) (for install lsp) 
+- [im-select](https://github.com/daipeihust/im-select) (if you use macOS or windows)
+- [lua](https://www.lua.org/) (for install lsp **option**) 
 - [luarocks](https://github.com/luarocks/luarocks) (for install lsp **option**) 
-- [npm](https://github.com/npm/cli) (for install lsp **optional**) 
 - [go](https://go.dev) (for install lsp  **option**)
 
 ## 🚀 Getting Started
 
 可以直接使用 LazyVim 的 [starter](https://github.com/LazyVim/starter) 或者参考我的 Neovim 启动配置文件[在这](https://github.com/leisurelicht/.licht-config/tree/master/vi/nvim)。这两是一样的。</br>
 you can just use LazyVim's [starter](https://github.com/LazyVim/starter) or you can refer to my Neovim start config file [here](https://github.com/leisurelicht/.licht-config/tree/master/vi/nvim). they are the same. 
+
+或者你也可以先用 docker 试试。</br>
+or you can use docker to try first.
+
+```
+docker run -w /root -it --rm alpine:edge /bin/sh -c 'apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/config/try.lua ; bash'
+```
+
+如果你无法访问`raw.githubusercontent.com`,你可以使用[GitHub520](https://github.com/521xueweihan/GitHub520)项目里`raw.githubusercontent.com`的`host ip`替换下面命令中的`host ip`,然后再重试，就能正常访问了。
+
+```
+docker run -w /root -it --rm alpine:edge /bin/sh -c 'echo "185.199.108.133 raw.githubusercontent.com" >> /etc/hosts && apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/config/try.lua ; bash'
+```
