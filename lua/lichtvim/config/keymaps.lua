@@ -34,7 +34,21 @@ if lazy.has("which-key.nvim") then
     f = { name = "󰛔 Find & Replace" },
   }, { mode = "v", prefix = "<leader>" })
 
-  wk.register({}, { mode = "n", prefix = "<localleader>" })
+  -- wk.register({}, { mode = "n", prefix = "<localleader>" })
+
+  wk.register({
+    ["<leader>"] = "Show Custom Key Map",
+    ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show Key Map" },
+    g = { name = "Goto" },
+    z = { name = "Z" },
+    ["["] = { name = "Previous" },
+    ["]"] = { name = "Next" },
+    ["@"] = { name = "Registers" },
+    ['"'] = { name = "Registers" },
+    ["'"] = { name = "Marks" },
+    ["`"] = { name = "Marks" },
+    ["<c-w>"] = { name = "Window" },
+  }, { mode = "n", prefix = "" })
 else
   vim.notify("Need to install which-key.nvim", vim.log.levels.ERROR)
 end
