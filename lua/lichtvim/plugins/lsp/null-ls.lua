@@ -2,8 +2,7 @@ return {
   {
     "ThePrimeagen/refactoring.nvim",
     enabled = true,
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
+    event = "LspAttach",
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-treesitter/nvim-treesitter" },
@@ -18,7 +17,7 @@ return {
   {
     "jose-elias-alvarez/null-ls.nvim",
     enabled = true,
-    event = { "BufReadPre", "BufNewFile" },
+    event = "LspAttach",
     opts = function()
       local null_ls = require("null-ls")
       return {
