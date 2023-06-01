@@ -8,6 +8,7 @@ local table = require("lichtvim.utils").table
 local git = require("lichtvim.utils").git
 local lsp = require("lichtvim.utils").lsp
 local list = require("lichtvim.utils").list
+local option = require("lichtvim.utils").option
 local Keys = require("lazy.core.handler.keys")
 local format = require("lichtvim.plugins.lsp.config.format").format
 local toggle = require("lichtvim.plugins.lsp.config.format").toggle
@@ -191,16 +192,15 @@ map.set("n", "<leader>cu", "viwUe", "Upper word")
 map.set("n", "<leader>co", "wb~ea", "Upper first word")
 -- toggle
 map.set("n", "<leader>ua", fn.toggle_mouse, "Toggle mouse")
-map.set("n", "<leader>ue", fn.toggle_spell, "Toggle spell check")
-map.set("n", "<leader>uw", fn.toggle_wrap, "Toggle wrap")
-map.set("n", "<leader>un", fn.toggle_number, "Toggle number")
-map.set("n", "<leader>ur", fn.toggle_relativenumber, "Toggle relative number")
-map.set("n", "<leader>uc", fn.toggle_cursorline, "Toggle cursorline")
-map.set("n", "<leader>uv", fn.toggle_cursorcolumn, "Toggle cursorcolumn")
-map.set("n", "<leader>uf", fn.toggle_foldenable, "Toggle foldenable")
-map.set("n", "<leader>ud", fn.toggle_foldcolumn, "Toggle foldcolumn")
-map.set("n", "<leader>ul", fn.toggle_list, "Toggle list")
-map.set("n", "<leader>up", fn.toggle_paste, "Toggle paste")
+map.set("n", "<leader>ue", function() option.toggle("spell") end, "Toggle spell check")
+map.set("n", "<leader>uw", function() option.toggle("wrap") end, "Toggle wrap")
+map.set("n", "<leader>un", function() option.toggle("number") end, "Toggle number")
+map.set("n", "<leader>ur", function() option.toggle("relativenumber") end, "Toggle relative number")
+map.set("n", "<leader>uc", function() option.toggle("cursorline") end, "Toggle cursorline")
+map.set("n", "<leader>uv", function() option.toggle("cursorcolumn") end, "Toggle cursorcolumn")
+map.set("n", "<leader>uf", function() option.toggle("foldenable") end, "Toggle foldenable")
+map.set("n", "<leader>ud", function() option.toggle("foldcolumn", false, { "0", "1" }) end, "Toggle foldcolumn")
+map.set("n", "<leader>ul", function() option.toggle("list") end, "Toggle list")
 
 if lazy.has("neo-tree.nvim") then
   map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")

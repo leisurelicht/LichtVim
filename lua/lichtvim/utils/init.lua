@@ -3,6 +3,8 @@
 -- Note:
 -- =================
 --
+local Util = require("lazy.core.util")
+
 local M = {}
 
 M.list = {}
@@ -249,25 +251,28 @@ function M.win.num()
   return "[" .. num .. "]"
 end
 
-M.keybind = {}
+M.option = {}
 
 ---@param silent boolean?
 ---@param values? {[1]:any, [2]:any}
-function M.keybind.toggle(option, silent, values)
+function M.option.toggle(option, silent, values)
   if values then
     if vim.opt_local[option]:get() == values[1] then
       vim.opt_local[option] = values[2]
     else
       vim.opt_local[option] = values[1]
     end
-    return Util.info("Set " .. option .. " to " .. vim.opt_local[option]:get(), { title = "Option" })
+    return Util.info(
+      "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
+      { title = LichtVimTitle .. "Option" }
+    )
   end
   vim.opt_local[option] = not vim.opt_local[option]:get()
   if not silent then
     if vim.opt_local[option]:get() then
-      Util.info("Enabled " .. option, { title = "Option" })
+      Util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
     else
-      Util.warn("Disabled " .. option, { title = "Option" })
+      Util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
     end
   end
 end
