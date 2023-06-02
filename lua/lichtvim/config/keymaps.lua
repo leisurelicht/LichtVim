@@ -321,8 +321,6 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("hop.nvim") then
-      opts = lazy.opts("hop.nvim")
-
       local opt = { current_line_only = true }
       -- stylua: ignore
       map.set("", "f", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.AFTER_CURSOR })) end, "Jump forward")
