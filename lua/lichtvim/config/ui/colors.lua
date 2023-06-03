@@ -131,30 +131,6 @@ function M.generate_user_config_highlights()
   local status = vim.o.background == "dark" and { fg = pal.black, bg = pal.white } or { fg = pal.white, bg = pal.black }
 
   local groups = {
-    LichtSLHint = { fg = pal.sl.bg, bg = pal.hint, style = "bold" },
-    LichtSLInfo = { fg = pal.sl.bg, bg = pal.info, style = "bold" },
-    LichtSLWarn = { fg = pal.sl.bg, bg = pal.warn, style = "bold" },
-    LichtSLError = { fg = pal.sl.bg, bg = pal.error, style = "bold" },
-    LichtSLStatus = { fg = status.fg, bg = status.bg, style = "bold" },
-    LichtSLFtHint = { fg = pal.sel.bg, bg = pal.hint },
-    LichtSLHintInfo = { fg = pal.hint, bg = pal.info },
-    LichtSLInfoWarn = { fg = pal.info, bg = pal.warn },
-    LichtSLWarnError = { fg = pal.warn, bg = pal.error },
-    LichtSLErrorStatus = { fg = pal.error, bg = status.bg },
-    LichtSLStatusBg = { fg = status.bg, bg = pal.sl.bg },
-    LichtSLAlt = pal.sel,
-    LichtSLAltSep = { fg = pal.sl.bg, bg = pal.sel.bg },
-    LichtSLGitBranch = { fg = pal.yellow, bg = pal.sl.bg },
-    -- tabline
-    LichtTLHead = { fg = pal.fill.bg, bg = pal.cyan },
-    LichtTLTAIL = { fg = pal.fill.bg, bg = pal.magenta },
-    LichtTLHeadSep = { fg = pal.cyan, bg = pal.fill.bg },
-    LichtTLActive = { fg = pal.sel.fg, bg = pal.sel.bg, style = "bold" },
-    LichtTLActiveSep = { fg = pal.sel.bg, bg = pal.fill.bg },
-    LichtTLUnActive = { fg = pal.sel.fg, bg = pal.sel.bg },
-    LichtTLActiveTab = { fg = pal.tab.fg, bg = pal.cyan, style = "bold" },
-    LichtTLActiveWin = { fg = pal.black, bg = pal.magenta, stru = "bold" },
-    LichtTLLineSep = { fg = pal.tab.bg, bg = pal.fill.bg },
   }
 
   set_highlights(vim.tbl_extend("force", colors, groups))

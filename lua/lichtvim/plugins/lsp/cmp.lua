@@ -11,10 +11,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      {
-        "tzachar/cmp-fuzzy-buffer",
-        dependencies = { "tzachar/fuzzy.nvim" },
-      },
+      { "tzachar/cmp-fuzzy-buffer", dependencies = { "tzachar/fuzzy.nvim" } },
     },
     opts = function()
       local has_words_before = function()
@@ -101,22 +98,41 @@ return {
             cmp.config.compare.order,
           },
         },
+        view = {
+          entries = { name = "custom", selection_order = "near_cursor" },
+        },
         formatting = {
-          format = function(entry, item)
-            local kinds = icons.kinds
-            local sources = icons.sources
-            if kinds[item.kind] then
-              item.kind = kinds[item.kind] .. item.kind
+          fields = { "kind", "abbr", "menu" },
+          format = function(entry, vim_item)
+            if vim.tbl_contains({ "path" }, entry.source.name) then
+              local icon, hl_group = require("nvim-web-devicons").get_icon(entry:get_completion_item().label)
+              if icon then
+                vim_item.kind = icon
+                vim_item.kind_hl_group = hl_group
+                return vim_item
+              end
             end
-            item.menu = (function()
-              local m = sources[entry.source.name]
+
+            vim_item.menu = (function()
+              local m = icons.sources[entry.source.name]
               if m == nil then
                 m = "[" .. string.upper(entry.source.name) .. "]"
               end
-              return m
+              return m .. "  [" .. vim_item.kind .. "]"
             end)()
-            return item
+
+            if icons.kinds[vim_item.kind] then
+              vim_item.kind = icons.kinds[vim_item.kind]
+            end
+            return vim_item
           end,
+        },
+        window = {
+          completion = {
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+            col_offset = -3,
+            side_padding = 1,
+          },
         },
         experimental = {
           ghost_text = {
@@ -126,6 +142,8 @@ return {
       }
     end,
     config = function(_, opts)
+      require("lichtvim.config.ui.colors")
+
       local cmp = require("cmp")
       cmp.setup(opts)
 
@@ -135,25 +153,8 @@ return {
         }),
       })
 
-      if lazy.has("copilot.lua") then
-        local suggestion = require("copilot.suggestion")
-        cmp.event:on("menu_opened", function()
-          suggestion.dismiss()
-          vim.b.copilot_suggestion_hidden = true
-        end)
-
-        cmp.event:on("menu_closed", function()
-          vim.b.copilot_suggestion_hidden = false
-        end)
-
-        cmp.event:on("confirm_done", function()
-          vim.b.copilot_suggestion_hidden = false
-        end)
-      end
-
-      -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      -- local cmp = require("cmp")
-      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
 }
