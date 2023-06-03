@@ -15,7 +15,7 @@ return {
   { "kkharji/sqlite.lua", lazy = true },
   { "nvim-pack/nvim-spectre", lazy = true, dependencies = { "nvim-lua/plenary.nvim" } },
   {
-    "leisurelicht/telescope.nvim",
+    "nvim-telescope/telescope.nvim",
     version = false,
     lazy = true,
     cmd = "Telescope",
