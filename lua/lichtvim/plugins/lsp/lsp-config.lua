@@ -55,7 +55,6 @@ return {
           float = { source = "always" },
           virtual_text = { prefix = "icons", source = "if_many", spacing = 4 },
         },
-        autoformat = true,
         setup = {},
         servers = {},
       }
@@ -87,12 +86,6 @@ return {
         s_names[#s_names + 1] = lsp_name
         s_opts[lsp_name] = lsp_opts
       end
-
-      -- setup autoformat
-      require("lichtvim.plugins.lsp.config.format").autoformat = opts.autoformat
-      lazy.on_attach(function(client, buffer)
-        require("lichtvim.plugins.lsp.config.format").on_attach(client, buffer)
-      end)
 
       local capabilities = vim.tbl_deep_extend(
         "force",
