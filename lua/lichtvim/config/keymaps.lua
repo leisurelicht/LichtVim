@@ -3,12 +3,13 @@
 -- Note: 基础快捷键绑定设置
 -- =================
 --
-local fn = require("lichtvim.config.function")
+-- local fn = require("lichtvim.config.function")
 local table = require("lichtvim.utils").table
 local git = require("lichtvim.utils").git
 local lsp = require("lichtvim.utils").lsp
 local list = require("lichtvim.utils").list
 local option = require("lichtvim.utils").option
+local plugs = require("lichtvim.utils").plugs
 local Keys = require("lazy.core.handler.keys")
 local format = require("lichtvim.plugins.lsp.config.format").format
 local toggle = require("lichtvim.plugins.lsp.config.format").toggle
@@ -191,7 +192,7 @@ map.set("n", "<leader>cl", "viwue", "Lower word")
 map.set("n", "<leader>cu", "viwUe", "Upper word")
 map.set("n", "<leader>co", "wb~ea", "Upper first word")
 -- toggle
-map.set("n", "<leader>ua", fn.toggle_mouse, "Toggle mouse")
+map.set("n", "<leader>ua", option.toggle_mouse, "Toggle mouse")
 map.set("n", "<leader>ue", function() option.toggle("spell") end, "Toggle spell check")
 map.set("n", "<leader>uw", function() option.toggle("wrap") end, "Toggle wrap")
 map.set("n", "<leader>un", function() option.toggle("number") end, "Toggle number")
@@ -243,7 +244,7 @@ if lazy.has("nvim-spectre") then
 end
 
 if lazy.has("telescope.nvim") then
-  local telescope = require("lichtvim.utils").plugs.telescope
+  local telescope = plugs.telescope
 
   map.set("n", "<leader>fT", telescope("builtin"), "Builtin")
   map.set("n", "<leader>f<tab>", telescope("commands"), "Commands")
@@ -268,7 +269,7 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set("n", "<leader>fe", function()
-    require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~/Code") })
+    require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~") })
   end, "File Browser")
 
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
@@ -308,7 +309,7 @@ if lazy.has("toggleterm.nvim") then
       map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
       map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
       map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
-      map.set("t", "<C-o>", fn.smart_add_term, "Add new terminal", opts)
+      map.set("t", "<C-o>", plugs.smart_add_terminal, "Add new terminal", opts)
     end,
   })
 end

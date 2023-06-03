@@ -5,12 +5,8 @@ local M = {}
 M.autoformat = true
 
 function M.toggle()
-  if vim.b.autoformat == false then
-    vim.b.autoformat = nil
-    M.autoformat = true
-  else
-    M.autoformat = not M.autoformat
-  end
+  M.autoformat = not M.autoformat
+
   if M.autoformat then
     Util.info("Enabled format on save", { title = LichtVimTitle })
   else
@@ -19,10 +15,6 @@ function M.toggle()
 end
 
 function M.format()
-  if vim.b.autoformat == false then
-    return
-  end
-
   local buf = vim.api.nvim_get_current_buf()
 
   vim.lsp.buf.format({

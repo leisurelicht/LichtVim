@@ -3,7 +3,7 @@
 -- Note:
 -- =================
 --
-local Util = require("lazy.core.util")
+local util = require("lazy.core.util")
 
 local M = {}
 
@@ -262,7 +262,7 @@ function M.option.toggle(option, silent, values)
     else
       vim.opt_local[option] = values[1]
     end
-    return Util.info(
+    return util.info(
       "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
       { title = LichtVimTitle .. "Option" }
     )
@@ -270,10 +270,20 @@ function M.option.toggle(option, silent, values)
   vim.opt_local[option] = not vim.opt_local[option]:get()
   if not silent then
     if vim.opt_local[option]:get() then
-      Util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
+      util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
     else
-      Util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
+      util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
     end
+  end
+end
+
+function M.option.toggle_mouse()
+  if vim.o.mouse == "a" then
+    vim.o.mouse = ""
+    util.warn("Disabled mouse mode", { title = LichtVimTitle .. " Option" })
+  else
+    vim.o.mouse = "a"
+    util.info("Enabled mouse mode", { title = LichtVimTitle .. " Option" })
   end
 end
 
@@ -297,6 +307,34 @@ function M.plugs.telescope(builtin, opts)
       end
     end
     require("telescope.builtin")[builtin](opts)
+  end
+end
+
+function M.plugs.smart_add_terminal()
+  if vim.b.toggle_number == nil then
+    util.warn("Need to create a terminal and move in it first", { title = LichtVimTitle .. " Terminal" })
+    return
+  end
+
+  local direction = require("toggleterm.ui").guess_direction()
+
+  if direction == nil then
+    if vim.g._term_direction == 1 then
+      direction = "vertical"
+    elseif vim.g._term_direction == 2 then
+      direction = "horizontal"
+    elseif vim.g._term_direction == 0 then
+      util.warn("Can not add a terminal window", { title = LichtVimTitle .. " Terminal" })
+      return
+    end
+  end
+
+  if direction == "vertical" then
+    vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=vertical'")
+    vim.g._term_direction = 1
+  elseif direction == "horizontal" then
+    vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=horizontal'")
+    vim.g._term_direction = 2
   end
 end
 
