@@ -13,4 +13,12 @@ return {
       require("hlslens").setup()
     end,
   },
+  {
+    "NvChad/nvim-colorizer.lua",
+    lazy = true,
+    cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
+    config = function(_, opts)
+      require("colorizer").setup(opts)
+    end,
+  },
 }

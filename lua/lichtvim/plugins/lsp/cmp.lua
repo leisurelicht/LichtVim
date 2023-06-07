@@ -131,7 +131,7 @@ return {
           completion = {
             winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
             col_offset = -3,
-            side_padding = 1,
+            side_padding = 0,
           },
         },
         experimental = {
@@ -142,7 +142,7 @@ return {
       }
     end,
     config = function(_, opts)
-      require("lichtvim.config.ui.colors")
+      vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
 
       local cmp = require("cmp")
       cmp.setup(opts)

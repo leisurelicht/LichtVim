@@ -253,26 +253,29 @@ end
 
 M.option = {}
 
+---@param option string
 ---@param silent boolean?
 ---@param values? {[1]:any, [2]:any}
 function M.option.toggle(option, silent, values)
-  if values then
-    if vim.opt_local[option]:get() == values[1] then
-      vim.opt_local[option] = values[2]
-    else
-      vim.opt_local[option] = values[1]
+  return function()
+    if values then
+      if vim.opt_local[option]:get() == values[1] then
+        vim.opt_local[option] = values[2]
+      else
+        vim.opt_local[option] = values[1]
+      end
+      return util.info(
+        "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
+        { title = LichtVimTitle .. "Option" }
+      )
     end
-    return util.info(
-      "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
-      { title = LichtVimTitle .. "Option" }
-    )
-  end
-  vim.opt_local[option] = not vim.opt_local[option]:get()
-  if not silent then
-    if vim.opt_local[option]:get() then
-      util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
-    else
-      util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
+    vim.opt_local[option] = not vim.opt_local[option]:get()
+    if not silent then
+      if vim.opt_local[option]:get() then
+        util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
+      else
+        util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
+      end
     end
   end
 end

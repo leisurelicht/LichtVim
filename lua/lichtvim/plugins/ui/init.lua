@@ -58,42 +58,9 @@ return {
               ["<esc>"] = "close",
             },
           },
-          override = function(conf)
-            local title = vim.trim(conf.title)
-            local buf = vim.api.nvim_get_current_buf()
-            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-            if ft == "NvimTree" and title == "Rename to" then
-              if conf.relative == "editor" then
-                conf.title = " Move to "
-              else
-                conf.title = " Rename to "
-              end
-            end
-            return conf
-          end,
-          get_config = function(conf)
-            local buf = vim.api.nvim_get_current_buf()
-            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-            local prompt = vim.trim(conf.prompt)
-            local is_path = vim.fn.isdirectory(conf.default) == 1
-            local opts = {}
-            if ft == "NvimTree" and prompt == "Rename to" and is_path then
-              opts["relative"] = "editor"
-            end
-            return opts
-          end,
         },
         select = {
-          get_config = function(conf)
-            local str = require("lichtvim.utils").str
-            local buf = vim.api.nvim_get_current_buf()
-            local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-            local opts = {}
-            if ft == "NvimTree" and str.starts_with(conf.prompt, "Remove") then
-              opts["backend"] = "telescope"
-            end
-            return opts
-          end,
+          backend = { "telescope", "builtin" },
         },
       }
     end,

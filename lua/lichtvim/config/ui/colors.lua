@@ -130,8 +130,7 @@ function M.generate_user_config_highlights()
 
   local status = vim.o.background == "dark" and { fg = pal.black, bg = pal.white } or { fg = pal.white, bg = pal.black }
 
-  local groups = {
-  }
+  local groups = {}
 
   set_highlights(vim.tbl_extend("force", colors, groups))
 end
