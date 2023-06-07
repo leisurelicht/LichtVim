@@ -135,7 +135,7 @@ function M.git.dir()
 end
 
 -- returns is git repo
----@return bool
+---@return boolean
 function M.git.is_repo()
   local handle = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null")
   local result = handle:read("*a")
