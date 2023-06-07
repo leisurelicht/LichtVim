@@ -93,18 +93,6 @@ return {
         previewer = false,
       })
 
-      -- -- Settings for with preview option
-      local with_preview = {
-        winblend = 10,
-        show_line = false,
-        results_title = false,
-        preview_title = false,
-        layout_config = {
-          preview_width = 0.5,
-        },
-        sorting_strategy = "ascending",
-      }
-
       opts = {
         defaults = {
           prompt_prefix = "  ",
