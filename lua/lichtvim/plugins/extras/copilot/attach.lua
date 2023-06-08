@@ -7,13 +7,13 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    build = ":Copilot auth",
+    -- build = ":Copilot auth",
     cmd = "Copilot",
-    event = { "BufNewFile", "BufRead" },
+    event = "InsertEnter",
     opts = {
       panel = {
-        enabled = false,
-        auto_refresh = true,
+        enabled = true,
+        auto_refresh = false,
         keymap = {
           jump_prev = "[[",
           jump_next = "]]",
@@ -21,10 +21,7 @@ return {
           refresh = "gr",
           open = "<M-CR>",
         },
-        layout = {
-          position = "bottom", -- | top | left | right
-          ratio = 0.2,
-        },
+        layout = { position = "bottom", ratio = 0.4 },
       },
       suggestion = {
         enabled = true,
@@ -40,14 +37,14 @@ return {
         },
       },
       filetypes = {
-        -- yaml = false,
-        -- markdown = false,
         help = false,
         gitcommit = false,
         gitrebase = false,
         hgcommit = false,
         svn = false,
         cvs = false,
+        -- yaml = false,
+        -- markdown = false,
         -- ["."] = false,
       },
     },
@@ -69,6 +66,7 @@ return {
         end
       end
 
+      -- hide suggestion window when cmp menu is open
       local cmp = require("cmp")
       cmp.event:on("menu_opened", function()
         suggestion.dismiss()

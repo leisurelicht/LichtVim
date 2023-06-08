@@ -3,7 +3,7 @@ return {
     "hrsh7th/nvim-cmp",
     enabled = true,
     version = false,
-    event = "LspAttach",
+    event = { "LspAttach", "InsertEnter" },
     dependencies = {
       "dcampos/nvim-snippy",
       "dcampos/cmp-snippy",
