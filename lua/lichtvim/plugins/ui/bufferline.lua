@@ -2,6 +2,7 @@ return {
   "akinsho/bufferline.nvim",
   event = "VimEnter",
   opts = function()
+    local icons = require("lichtvim.config").icons
     return {
       options = {
         numbers = "ordinal",
@@ -16,7 +17,7 @@ return {
         diagnostics = "nvim_lsp",
         always_show_bufferline = false,
         diagnostics_indicator = function(count, level, diagnostics_dict, context)
-          local dig = require("lichtvim.config").icons.diagnostics
+          local dig = icons.diagnostics
           local s = " "
           for e, n in pairs(diagnostics_dict) do
             local sym = e == "error" and dig.Error
@@ -28,15 +29,15 @@ return {
         offsets = {
           {
             filetype = "NvimTree",
-            text = "󰄽󰄾 󰚀 File Explorer",
+            text = icons.get.FolderClosed .. " File Explorer",
             highlight = "Directory",
-            text_align = "left",
+            text_align = "center",
           },
           {
             filetype = "neo-tree",
-            text = "󰄽󰄾 󰚀 File Explorer",
+            text = icons.get.FolderClosed .. " File Explorer",
             highlight = "Directory",
-            text_align = "left",
+            text_align = "center",
           },
         },
       },

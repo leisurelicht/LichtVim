@@ -11,8 +11,9 @@ return {
         "s1n7ax/nvim-window-picker",
         version = "v1.*",
         opts = {
-          use_winbar = "smart",
           selection_chars = "ABFJDKSL;CMRUEIWOQP",
+          use_winbar = "always",
+          show_prompt = false,
         },
       },
     },

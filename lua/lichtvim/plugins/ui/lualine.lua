@@ -1,4 +1,4 @@
-local icons = require("lichtvim.config").icons
+local ic = require("lichtvim.config").icons
 local win_num = require("lichtvim.utils").win.num
 
 local function title(t)
@@ -62,44 +62,43 @@ return {
           lualine_a = { { "mode" } },
           lualine_b = {
             { "branch" },
-            {
-              "diff",
-              symbols = { added = icons.git.Add, modified = icons.git.Change, removed = icons.git.Delete },
-            },
+            { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
           },
           lualine_c = {},
-          lualine_x = {
-            { "filetype" },
-            { "fileformat" },
-            { "encoding" },
-          },
+          lualine_x = { { "filetype" }, { "fileformat" }, { "encoding" } },
           lualine_y = {
             {
               "diagnostics",
               sources = { "nvim_diagnostic" },
               sections = { "error", "warn", "info", "hint" },
               symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warn,
-                info = icons.diagnostics.Info,
-                hint = icons.diagnostics.Hint,
+                error = ic.diagnostics.Error,
+                warn = ic.diagnostics.Warn,
+                info = ic.diagnostics.Info,
+                hint = ic.diagnostics.Hint,
               },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = false, -- Show diagnostics even if there are none.
             },
             { require("lazy.status").updates, cond = require("lazy.status").has_updates },
-            -- { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
           },
-          lualine_z = {
-            { "location" },
-            { "progress" },
-          },
+          lualine_z = { { "location" }, { "progress" } },
         },
         extensions = {
           -- "quickfix",
           -- "nvim-dap-ui",
           -- "man",
+          {
+            filetypes = { "neo-tree" },
+            sections = {
+              lualine_a = { { "mode" } },
+              lualine_b = {
+                { "branch" },
+                { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
+              },
+            },
+          },
           {
             filetypes = { "toggleterm" },
             sections = {
