@@ -23,38 +23,24 @@ return {
         },
         tabline = {},
         winbar = {
-          lualine_a = {
-            { win_num },
-          },
+          lualine_a = { { win_num } },
           lualine_c = {
             {
               "filename",
-              newfile_status = false,
               path = 1,
-              symbols = {
-                modified = "[Modified]", -- Text to show when the file is modified.
-                readonly = "[Read Only]", -- Text to show when the file is non-modifiable or readonly.
-                unnamed = "[No Name]", -- Text to show for unnamed buffers.
-                newfile = "[New]", -- Text to show for newly created file before first write
-              },
+              newfile_status = false,
+              symbols = { modified = "[Modified]", readonly = "[Read Only]", unnamed = "[No Name]", newfile = "[New]" },
             },
           },
         },
         inactive_winbar = {
-          lualine_a = {
-            { win_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } },
-          },
+          lualine_a = { { win_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } } },
           lualine_c = {
             {
               "filename",
-              newfile_status = false,
               path = 4,
-              symbols = {
-                modified = "[Modified]", -- Text to show when the file is modified.
-                readonly = "[Read Only]", -- Text to show when the file is non-modifiable or readonly.
-                unnamed = "[No Name]", -- Text to show for unnamed buffers.
-                newfile = "[New]", -- Text to show for newly created file before first write
-              },
+              newfile_status = false,
+              symbols = { modified = "[Modified]", readonly = "[Read Only]", unnamed = "[No Name]", newfile = "[New]" },
             },
           },
         },
@@ -86,9 +72,6 @@ return {
           lualine_z = { { "location" }, { "progress" } },
         },
         extensions = {
-          -- "quickfix",
-          -- "nvim-dap-ui",
-          -- "man",
           {
             filetypes = { "neo-tree" },
             sections = {
