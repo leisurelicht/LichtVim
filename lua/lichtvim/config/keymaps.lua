@@ -416,80 +416,78 @@ if lazy.has("mason.nvim") then
   map.set("n", "<leader>pm", "<cmd>Mason<cr>", "Mason")
 end
 
-if git.is_repo() then
-  map.set("n", "<leader>gg", function()
-    require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
-  end, "Lazygit")
-  map.set("n", "<leader>gl", function()
-    require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
-  end, "Lazygit log")
+map.set("n", "<leader>gg", function()
+  require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
+end, "Lazygit")
+map.set("n", "<leader>gl", function()
+  require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
+end, "Lazygit log")
 
-  require("which-key").register({
-    g = { name = "󰊢 Git" },
-  }, { mode = { "n", "v" }, prefix = "<leader>" })
+require("which-key").register({
+  g = { name = "󰊢 Git" },
+}, { mode = { "n", "v" }, prefix = "<leader>" })
 
-  if lazy.has("telescope.nvim") then
-    local telescope = require("lichtvim.utils").plugs.telescope
-    map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
-    map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
-    map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
-    map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
-    map.set("n", "<leader>gs", telescope("git_status"), "Status")
-  end
-
-  vim.api.nvim_create_autocmd({ "User" }, {
-    group = vim.api.nvim_create_augroup(add_title("git_keybind"), { clear = true }),
-    pattern = "Gitsigns",
-    callback = function(event)
-      local gs = package.loaded.gitsigns
-      local bufnr = event.buf
-      map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
-      map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
-      map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
-      map.set("v", "<leader>ga", function()
-        gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-      end, "Add hunk", { buffer = bufnr })
-      map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
-      map.set("v", "<leader>gr", function()
-        gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-      end, "Reset hunk", { buffer = bufnr })
-      map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
-      map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
-      map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
-      map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
-      map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = bufnr })
-      map.set("n", "<leader>gb", function()
-        gs.blame_line({ full = true })
-      end, "Show blame line", { buffer = bufnr })
-      map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = bufnr })
-      map.set("n", "<leader>gD", function()
-        gs.diffthis("~")
-      end, "Diff this?", { buffer = bufnr })
-
-      map.set("n", "]g", function()
-        if vim.wo.diff then
-          return "]g"
-        end
-        vim.schedule(function()
-          gs.next_hunk()
-        end)
-        return "<Ignore>"
-      end, "Next git hunk", { buffer = bufnr, expr = true })
-      map.set("n", "[g", function()
-        if vim.wo.diff then
-          return "[g"
-        end
-        vim.schedule(function()
-          gs.prev_hunk()
-        end)
-        return "<Ignore>"
-      end, "Previous git hunk", { buffer = bufnr, expr = true })
-
-      -- Text object
-      map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
-    end,
-  })
+if lazy.has("telescope.nvim") then
+  local telescope = require("lichtvim.utils").plugs.telescope
+  map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
+  map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
+  map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
+  map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
+  map.set("n", "<leader>gs", telescope("git_status"), "Status")
 end
+
+vim.api.nvim_create_autocmd({ "User" }, {
+  group = vim.api.nvim_create_augroup(add_title("git_keybind"), { clear = true }),
+  pattern = "Gitsigns",
+  callback = function(event)
+    local gs = package.loaded.gitsigns
+    local bufnr = event.buf
+    map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
+    map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
+    map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
+    map.set("v", "<leader>ga", function()
+      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, "Add hunk", { buffer = bufnr })
+    map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
+    map.set("v", "<leader>gr", function()
+      gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, "Reset hunk", { buffer = bufnr })
+    map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
+    map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
+    map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
+    map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
+    map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = bufnr })
+    map.set("n", "<leader>gb", function()
+      gs.blame_line({ full = true })
+    end, "Show blame line", { buffer = bufnr })
+    map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = bufnr })
+    map.set("n", "<leader>gD", function()
+      gs.diffthis("~")
+    end, "Diff this?", { buffer = bufnr })
+
+    map.set("n", "]g", function()
+      if vim.wo.diff then
+        return "]g"
+      end
+      vim.schedule(function()
+        gs.next_hunk()
+      end)
+      return "<Ignore>"
+    end, "Next git hunk", { buffer = bufnr, expr = true })
+    map.set("n", "[g", function()
+      if vim.wo.diff then
+        return "[g"
+      end
+      vim.schedule(function()
+        gs.prev_hunk()
+      end)
+      return "<Ignore>"
+    end, "Previous git hunk", { buffer = bufnr, expr = true })
+
+    -- Text object
+    map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
+  end,
+})
 
 local _keys = {
   { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },

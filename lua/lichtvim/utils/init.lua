@@ -9,28 +9,15 @@ local M = {}
 
 M.list = {}
 
+--- Extend a list with another list
+---@param l1 table The list that you want to extend
+---@param l2 table The list that you want to extend with
+---@return table # The extended list
 function M.list.extend(l1, l2)
   for _, v in ipairs(l2) do
     l1[#l1 + 1] = v
   end
   return l1
-end
-
-M.table = {}
-
-function M.table.merge(t1, t2)
-  for k, v in pairs(t2) do
-    if type(v) == "table" then
-      if type(t1[k] or false) == "table" then
-        M.table.merge(t1[k] or {}, t2[k] or {})
-      else
-        t1[k] = v
-      end
-    else
-      t1[k] = v
-    end
-  end
-  return t1
 end
 
 --- Merge extended options with a default table of options
@@ -44,10 +31,16 @@ end
 
 M.file = {}
 
+--- Check if a file exists
+---@param file string The file that you want to check
+---@return boolean # True if the file exists, false if not
 function M.file.is_exist(file)
   return vim.fn.filereadable(file) == 1
 end
 
+--- Check if a file is a directory
+---@param file string The file that you want to check
+---@return boolean # True if the file is a directory, false if not
 function M.file.is_dir(file)
   return vim.fn.isdirectory(file) == 1
 end
@@ -56,7 +49,7 @@ M.path = {}
 
 M.path.root_patterns = { ".git", "lua" }
 
----@alias FileType "file"|"directory"|"link"|"fifo"|"socket"|"char"|"block"|nil
+---@alias FileType "string"|"file"|"directory"|"link"|"fifo"|"socket"|"char"|"block"|nil
 ---@param path string
 ---@param fn fun(path: string, name:string, type:FileType):boolean?
 function M.path.ls(path, fn)
@@ -98,6 +91,9 @@ function M.path.get_root()
         or {}
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
+        if r == nil then
+          r = p
+        end
         if path:find(r, 1, true) then
           roots[#roots + 1] = r
         end
@@ -119,12 +115,18 @@ function M.path.get_root()
   return root
 end
 
+
+--- Join path segments into a path
+---@vararg string
+---@return string
 function M.path.join(...)
   return table.concat(vim.tbl_flatten({ ... }), "/")
 end
 
 M.git = {}
 
+--- Get the git directory of the current buffer
+---@return string?
 function M.git.dir()
   local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
   local is_git_dir = vim.fn.matchstr(git_dir, "^fatal:.*") == ""
@@ -134,10 +136,13 @@ function M.git.dir()
   return vim.trim(git_dir)
 end
 
--- returns is git repo
+--- returns is git repo
 ---@return boolean
 function M.git.is_repo()
   local handle = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null")
+  if handle == nil then
+    return false
+  end
   local result = handle:read("*a")
   handle:close()
 
@@ -148,39 +153,19 @@ function M.git.is_repo()
   end
 end
 
-M.hi = {}
-
-function M.hi.set(name, opts)
-  local command = "highlight " .. name
-  for k, v in pairs(opts) do
-    if k ~= "gui" then
-      command = command .. " gui" .. k .. "=" .. v
-    else
-      command = command .. " " .. k .. "=" .. v
-    end
-  end
-  vim.cmd(command)
-end
-
-function M.hi.get(group, style)
-  local opts = {}
-  local output = vim.fn.execute("highlight " .. group)
-  local lines = vim.fn.trim(output)
-  for k, v in lines:gmatch("(%a+)=(#?%w+)") do
-    opts[k] = v
-  end
-  if style ~= "gui" then
-    return opts["gui" .. style]
-  end
-  return opts[style]
-end
-
 M.str = {}
 
+--- Upper case the first character of a string
+---@param str string The string that you want to upper case the first character of
+---@return string # The string with the first character upper cased
 function M.str.first_upper(str)
   return str:sub(1, 1):upper() .. str:sub(2)
 end
 
+--- Check if a string starts with a specific string
+---@param str string The string that you want to check
+---@param s string The string that you want to check if the first characters of the string match
+---@return boolean # True if the string starts with the specific string, false if not
 function M.str.starts_with(str, s)
   if #str < #s then
     return false
@@ -188,6 +173,10 @@ function M.str.starts_with(str, s)
   return str:sub(1, #s) == s
 end
 
+--- Check if a string ends with a specific string
+---@param str string The string that you want to check
+---@param e string The string that you want to check if the last characters of the string match
+---@return boolean # True if the string ends with the specific string, false if not
 function M.str.ends_with(str, e)
   if #str < #e then
     return false
@@ -197,56 +186,74 @@ end
 
 M.sys = {}
 
+--- Check if the system is macos
+---@return boolean # True if the system is macos, false if not
 function M.sys.is_macos()
-  return vim.fn.has("mac")
+  return vim.fn.has("mac") == 1
 end
 
+--- Check if the system is linux
+---@return boolean # True if the system is linux, false if not
 function M.sys.is_linux()
   -- return vim.fn.has("unix") and not fn.has("macunix") and not fn.has("win32unix")
   return vim.loop.os_uname().sysname() == "Linux"
 end
 
+--- Check if the system is windows
+---@return boolean # True if the system is windows, false if not
 function M.sys.is_windows()
   -- return vim.fn.has("win16") or fn.has("win32") or fn.has("win64")
   return vim.loop.os_uname().sysname == "Windows_NT"
 end
 
+--- Check if the system is gui
+---@return boolean # True if the system is gui, false if not
 function M.sys.is_gui()
-  return vim.fn.has("gui_running")
+  return vim.fn.has("gui_running") == 1
 end
 
+--- Check if the system is neovide
+---@return boolean # True if the system is neovide, false if not
 function M.sys.is_neovide()
   return vim.g.neovide
 end
 
+--- Check if the system is terminal
+---@return boolean # True if the system is terminal, false if not
 function M.sys.is_term()
-  return vim.fn.exists("g:termguicolors")
+  return vim.fn.exists("g:termguicolors") == 1
 end
 
 M.buf = {}
 
+--- Get the current buffer window number
+---@return number|nil # The current buffer window number
 function M.buf.winid(bufnr)
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_buf(win) == bufnr then
       return win
     end
   end
+  return nil
 end
 
+--- Get the current buffer path
+---@return string # The current buffer path
 function M.buf.path()
   return vim.fn.expand("%")
 end
 
+--- Get the current buffer full path
+---@return string # The current buffer full path
 function M.buf.full_path()
   return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
 end
 
 M.win = {}
 
+--- Get the current window number
+---@return number # The current window number
 function M.win.num()
-  -- local num = vim.inspect([[%{tabpagewinnr(tabpagenr())}]])
-  -- local num = [[%{winnr()}]]
-
   local num = vim.api.nvim_eval("winnr()")
   return "[" .. num .. "]"
 end
@@ -280,6 +287,7 @@ function M.option.toggle(option, silent, values)
   end
 end
 
+--- toggle mouse mode
 function M.option.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
@@ -313,7 +321,9 @@ function M.plugs.telescope(builtin, opts)
   end
 end
 
+--- Add a terminal window
 function M.plugs.smart_add_terminal()
+  ---@diagnostic disable-next-line: undefined-field
   if vim.b.toggle_number == nil then
     util.warn("Need to create a terminal and move in it first", { title = LichtVimTitle .. " Terminal" })
     return
@@ -343,6 +353,10 @@ end
 
 M.lsp = {}
 
+--- Go to the next or previous diagnostic
+---@param next boolean # Go to the next diagnostic
+---@param severity integer|nil # The severity of the diagnostic
+---@return function # The function to call
 function M.lsp.diagnostic_goto(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   severity = severity and vim.diagnostic.severity[severity] or nil
