@@ -45,34 +45,4 @@ function M.has(mode, lhs, opts)
   return false
 end
 
-function M.mapKey(mode, lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
-
-function M.mapcmd(lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_set_keymap("n", lhs, ":" .. rhs .. "<cr>", opts)
-end
-
-function M.mapcmdWait(lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_set_keymap("n", lhs, ":" .. rhs .. " ", opts)
-end
-
-function M.mapLua(lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_set_keymap("n", lhs, ":lua " .. rhs .. "<cr>", opts)
-end
-
-function M.mapBufKey(buf, mode, lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_buf_set_keymap(buf, mode, lhs, rhs, opts)
-end
-
-function M.mapBufLua(buf, lhs, rhs, opts)
-  opts = check_opts(opts)
-  vim.api.nvim_buf_set_keymap(buf, "n", lhs, ":lua " .. rhs .. "<cr>", opts)
-end
-
 return M
