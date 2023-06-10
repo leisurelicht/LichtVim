@@ -7,6 +7,17 @@ local util = require("lazy.core.util")
 
 local M = {}
 
+-- M.table = {}
+
+-- --- Merge extended options with a default table of options
+-- ---@param default? table The default table that you want to merge into
+-- ---@param opts? table The new options that should be merged with the default table
+-- ---@return table # The merged table
+-- function M.table.extend(default, opts)
+--   opts = opts or {}
+--   return default and vim.tbl_deep_extend("force", default, opts) or opts
+-- end
+
 M.list = {}
 
 --- Extend a list with another list
@@ -18,15 +29,6 @@ function M.list.extend(l1, l2)
     l1[#l1 + 1] = v
   end
   return l1
-end
-
---- Merge extended options with a default table of options
----@param default? table The default table that you want to merge into
----@param opts? table The new options that should be merged with the default table
----@return table # The merged table
-function M.table.extend(default, opts)
-  opts = opts or {}
-  return default and vim.tbl_deep_extend("force", default, opts) or opts
 end
 
 M.file = {}
@@ -114,7 +116,6 @@ function M.path.get_root()
   ---@cast root string
   return root
 end
-
 
 --- Join path segments into a path
 ---@vararg string
@@ -355,11 +356,11 @@ M.lsp = {}
 
 --- Go to the next or previous diagnostic
 ---@param next boolean # Go to the next diagnostic
----@param severity integer|nil # The severity of the diagnostic
+---@param level string|nil # The severity of the diagnostic
 ---@return function # The function to call
-function M.lsp.diagnostic_goto(next, severity)
+function M.lsp.diagnostic_goto(next, level)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
+  local severity = level and vim.diagnostic.severity[level] or nil
   return function()
     go({ severity = severity })
   end

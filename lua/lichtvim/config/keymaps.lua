@@ -324,14 +324,17 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 
     if lazy.has("hop.nvim") then
       local opt = { current_line_only = true }
-      -- stylua: ignore
-      map.set("", "f", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.AFTER_CURSOR })) end, "Jump forward")
-      -- stylua: ignore
-      map.set("", "F", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.BEFORE_CURSOR })) end, "Jump backward")
-      -- stylua: ignore
-      map.set("", "t", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.AFTER_CURSOR, hint_offset = -1 })) end, "Jump forward")
-      -- stylua: ignore
-      map.set("", "T", function() require("hop").hint_char1(table.extend(opt, { direction = require("hop.hint").HintDirection.BEFORE_CURSOR, hint_offset = 1 })) end, "Jump backward")
+      local hop = require("hop")
+      local hint = require("hop.hint").HintDirection
+      local function extend(ex)
+        return function()
+          hop.hint_char1(vim.tbl_deep_extend("force", opt, ex))
+        end
+      end
+      map.set("", "f", extend({ direction = hint.AFTER_CURSOR }), "Jump forward")
+      map.set("", "F", extend({ direction = hint.BEFORE_CURSOR }), "Jump backward")
+      map.set("", "t", extend({ direction = hint.AFTER_CURSOR, hint_offset = -1 }), "Jump forward")
+      map.set("", "T", extend({ direction = hint.BEFORE_CURSOR, hint_offset = 1 }), "Jump backward")
 
       map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word")
       map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line")
@@ -478,6 +481,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
       if vim.wo.diff then
         return "[g"
       end
+
       vim.schedule(function()
         gs.prev_hunk()
       end)
@@ -485,7 +489,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
     end, "Previous git hunk", { buffer = bufnr, expr = true })
 
     -- Text object
-    map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>")
+    map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>", "Select git hunk")
   end,
 })
 
