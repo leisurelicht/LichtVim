@@ -1,10 +1,8 @@
 -- =================
 -- keybindings.lua
--- Note: 基础快捷键绑定设置
+-- Note: 快捷键设置
 -- =================
 --
--- local fn = require("lichtvim.config.function")
-local table = require("lichtvim.utils").table
 local git = require("lichtvim.utils").git
 local lsp = require("lichtvim.utils").lsp
 local list = require("lichtvim.utils").list
@@ -13,107 +11,108 @@ local plugs = require("lichtvim.utils").plugs
 local Keys = require("lazy.core.handler.keys")
 local format = require("lichtvim.plugins.lsp.config.format").format
 local toggle = require("lichtvim.plugins.lsp.config.format").toggle
+local wk = require("which-key")
 
-if lazy.has("which-key.nvim") then
-  local wk = require("which-key")
-  wk.register({
-    [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
-    ["q"] = { "<cmd>confirm q<cr>", " Quit" },
-    -- d = { name = " Debugger" },
-    f = { name = "󰛔 Find & Replace" },
-    o = { name = " Terminal" },
-    c = { name = " ShortCuts" },
-    b = { name = "󰓩 Buffers" },
-    s = { name = " Split" },
-    t = { name = "󱏈 Tab" },
-    to = { name = "Close Only" },
-    u = { name = "󰨙 UI" },
-    p = { name = "󰏖 Packages" },
-    pl = { "<cmd>Lazy<cr>", "Lazy" },
-  }, { mode = "n", prefix = "<leader>" })
-
-  wk.register({
-    f = { name = "󰛔 Find & Replace" },
-  }, { mode = "v", prefix = "<leader>" })
-
-  -- wk.register({}, { mode = "n", prefix = "<localleader>" })
-
-  wk.register({
-    ["<SNR>"] = { name = "Script Number" },
-    ["<leader>"] = { name = "Show Custom Key Map" },
-    ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show Key Map" },
-
-    g = { name = "Goto" },
-    gug = { name = "Goto" },
-    gui = { name = "Inside" },
-    gua = { name = "Around" },
-    guz = { name = "Z" },
-    ["gu["] = { name = "Previous" },
-    ["gu]"] = { name = "Next" },
-    gUg = { name = "Goto" },
-    gUi = { name = "Inside" },
-    gUa = { name = "Around" },
-    gUz = { name = "Z" },
-    ["gU["] = { name = "previous" },
-    ["gU]"] = { name = "next" },
-    ["g~g"] = { name = "Goto" },
-    ["g~i"] = { name = "Inside" },
-    ["g~a"] = { name = "Around" },
-    ["g~z"] = { name = "Z" },
-    ["g~["] = { name = "Previous" },
-    ["g~]"] = { name = "Next" },
-    z = { name = "Z" },
-    zfg = { name = "Goto" },
-    zfi = { name = "Inside" },
-    zfa = { name = "Around" },
-    zfz = { name = "Z" },
-    ["zf["] = { name = "Previous" },
-    ["zf]"] = { name = "Next" },
-    yg = { name = "Goto" },
-    yi = { name = "Inside" },
-    ya = { name = "Around" },
-    yz = { name = "Z" },
-    ["y["] = { name = "Previous" },
-    ["y]"] = { name = "Next" },
-    vg = { name = "Goto" },
-    vi = { name = "Inside" },
-    va = { name = "Around" },
-    vz = { name = "Z" },
-    ["v["] = { name = "Previous" },
-    ["v]"] = { name = "Next" },
-    dg = { name = "Goto" },
-    di = { name = "Inside" },
-    da = { name = "Around" },
-    dz = { name = "Z" },
-    ["d["] = { name = "Previous" },
-    ["d]"] = { name = "Next" },
-    cg = { name = "Goto" },
-    ci = { name = "Inside" },
-    ca = { name = "Around" },
-    cz = { name = "Z" },
-    ["c["] = { name = "Previous" },
-    ["c]"] = { name = "Next" },
-
-    ["["] = { name = "Previous" },
-    ["]"] = { name = "Next" },
-    ["@"] = { name = "Registers" },
-    ['"'] = { name = "Registers" },
-    ["'"] = { name = "Marks" },
-    ["`"] = { name = "Marks" },
-    ["<c-w>"] = { name = "Window" },
-  }, { mode = "n", prefix = "" })
-else
-  vim.notify("Need to install which-key.nvim", vim.log.levels.ERROR)
+local function call(fn, ...)
+  local args = { ... }
+  return function()
+    fn(unpack(args))
+  end
 end
+
+wk.register({
+  [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
+  ["q"] = { "<cmd>confirm q<cr>", " Quit" },
+  -- d = { name = " Debugger" },
+  f = { name = "󰛔 Find & Replace" },
+  o = { name = " Terminal" },
+  c = { name = " ShortCuts" },
+  b = { name = "󰓩 Buffers" },
+  s = { name = " Split" },
+  t = { name = "󱏈 Tab" },
+  to = { name = "Close Only" },
+  u = { name = "󰨙 UI" },
+  p = { name = "󰏖 Packages" },
+  pl = { "<cmd>Lazy<cr>", "Lazy" },
+}, { mode = "n", prefix = "<leader>" })
+
+wk.register({
+  f = { name = "󰛔 Find & Replace" },
+}, { mode = "v", prefix = "<leader>" })
+
+wk.register({
+  ["<SNR>"] = { name = "Script Number" },
+  ["<leader>"] = { name = "Show Custom Key Map" },
+  ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show Key Map" },
+
+  g = { name = "Goto" },
+  gug = { name = "Goto" },
+  gui = { name = "Inside" },
+  gua = { name = "Around" },
+  guz = { name = "Z" },
+  ["gu["] = { name = "Previous" },
+  ["gu]"] = { name = "Next" },
+  gUg = { name = "Goto" },
+  gUi = { name = "Inside" },
+  gUa = { name = "Around" },
+  gUz = { name = "Z" },
+  ["gU["] = { name = "previous" },
+  ["gU]"] = { name = "next" },
+  ["g~g"] = { name = "Goto" },
+  ["g~i"] = { name = "Inside" },
+  ["g~a"] = { name = "Around" },
+  ["g~z"] = { name = "Z" },
+  ["g~["] = { name = "Previous" },
+  ["g~]"] = { name = "Next" },
+  ["g'"] = { name = "Marks" },
+  ["g`"] = { name = "Marks" },
+  z = { name = "Z" },
+  zfg = { name = "Goto" },
+  zfi = { name = "Inside" },
+  zfa = { name = "Around" },
+  zfz = { name = "Z" },
+  ["zf["] = { name = "Previous" },
+  ["zf]"] = { name = "Next" },
+  yg = { name = "Goto" },
+  yi = { name = "Inside" },
+  ya = { name = "Around" },
+  yz = { name = "Z" },
+  ["y["] = { name = "Previous" },
+  ["y]"] = { name = "Next" },
+  vg = { name = "Goto" },
+  vi = { name = "Inside" },
+  va = { name = "Around" },
+  vz = { name = "Z" },
+  ["v["] = { name = "Previous" },
+  ["v]"] = { name = "Next" },
+  dg = { name = "Goto" },
+  di = { name = "Inside" },
+  da = { name = "Around" },
+  dz = { name = "Z" },
+  ["d["] = { name = "Previous" },
+  ["d]"] = { name = "Next" },
+  cg = { name = "Goto" },
+  ci = { name = "Inside" },
+  ca = { name = "Around" },
+  cz = { name = "Z" },
+  ["c["] = { name = "Previous" },
+  ["c]"] = { name = "Next" },
+
+  ["["] = { name = "Previous" },
+  ["]"] = { name = "Next" },
+  ["@"] = { name = "Registers" },
+  ['"'] = { name = "Registers" },
+  ["'"] = { name = "Marks" },
+  ["`"] = { name = "Marks" },
+  ["<c-w>"] = { name = "Window" },
+}, { mode = "n", prefix = "" })
 
 map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
 map.set("i", "<C-u>", "<esc>viwUea", "Upper word") -- 一键大写
 map.set("i", "<C-l>", "<esc>viwuea", "Lower word") -- 一键小写
 map.set("i", "<C-O>", "<ESC>wb~ea") -- 首字母大写
 -- normal 模式下按 esc 取消高亮显示
-map.set("n", "<esc>", function()
-  vim.cmd("silent! noh")
-end, "No highlight")
+map.set("n", "<esc>", call(vim.cmd, "silent! noh"), "No highlight")
 
 -- 窗口切换组合快捷键
 map.set("n", "<C-j>", "<C-W><C-j>", "Down window")
@@ -232,14 +231,9 @@ if lazy.has("nvim-spectre") then
   map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
   map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace current word")
   map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Replace current word")
-  map.set(
-    "n",
-    "<leader>frs",
-    "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
-    "Replace current word in current file"
-  )
+  map.set("n", "<leader>frs", "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>", "Replace current word in current file")
 
-  require("which-key").register({
+  wk.register({
     fr = { name = "Replace" },
   }, { mode = { "n", "v" }, prefix = "<leader>" })
 end
@@ -268,12 +262,9 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
   map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
-  map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
-  map.set("n", "<leader>fe", function()
-    require("telescope").extensions.file_browser.file_browser({ path = vim.fn.expand("~") })
-  end, "File Browser")
-
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
+  map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
+  map.set("n", "<leader>fe", call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
 end
 
 if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
@@ -281,9 +272,7 @@ if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
 end
 
 if lazy.has("nvim-notify") then
-  map.set("n", "<leader>uq", function()
-    require("notify").dismiss({ silent = true, pending = true })
-  end, "Clear notifications")
+  map.set("n", "<leader>uq", call(require("notify").dismiss, { silent = true, pending = true }), "Clear notifications")
 
   if lazy.has("telescope.nvim") then
     map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
@@ -304,13 +293,12 @@ if lazy.has("toggleterm.nvim") then
     group = vim.api.nvim_create_augroup(add_title("term_keymap"), { clear = true }),
     pattern = { "term://*" },
     callback = function()
-      local opts = { buffer = 0 }
-      map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", opts)
-      map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", opts)
-      map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", opts)
-      map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", opts)
-      map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", opts)
-      map.set("t", "<C-o>", plugs.smart_add_terminal, "Add new terminal", opts)
+      map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", { buffer = 0 })
+      map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", { buffer = 0 })
+      map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", { buffer = 0 })
+      map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", { buffer = 0 })
+      map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", { buffer = 0 })
+      map.set("t", "<C-o>", plugs.smart_add_terminal, "Add new terminal", { buffer = 0 })
     end,
   })
 end
@@ -347,7 +335,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
       map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern")
       map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start")
 
-      require("which-key").register({
+      wk.register({
         h = { name = "󱖹 Hop" },
         ha = { name = "All Windows" },
       }, { mode = "n", prefix = "<leader>" })
@@ -363,7 +351,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("vim-matchup") then
-      require("which-key").register({
+      wk.register({
         ["]%"] = "Jump to next matchup",
         ["[%"] = "Jump to previous matchup",
         ["g%"] = "Jump to close matchup",
@@ -372,16 +360,14 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("mini.indentscope") then
-      require("which-key").register({
+      wk.register({
         ["]i"] = "Goto indent scope bottom",
         ["[i"] = "Goto indent scope top",
       }, { mode = "n" })
     end
 
     if lazy.has("mini.bufremove") then
-      map.set("n", "<leader>bd", function()
-        require("mini.bufremove").delete(0, false)
-      end, "Delete buffer")
+      map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer")
     end
 
     if lazy.has("bufferline.nvim") then
@@ -390,9 +376,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("smart-splits.nvim") then
-      map.set("n", "<leader>us", function()
-        require("smart-splits").start_resize_mode()
-      end, "Resize Mode")
+      map.set("n", "<leader>us", call(require("smart-splits").start_resize_mode), "Resize Mode")
       map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
     end
   end,
@@ -419,55 +403,42 @@ if lazy.has("mason.nvim") then
   map.set("n", "<leader>pm", "<cmd>Mason<cr>", "Mason")
 end
 
-map.set("n", "<leader>gg", function()
-  require("lazy.util").float_term({ "lazygit" }, { border = "rounded", cwd = git.dir() })
-end, "Lazygit")
-map.set("n", "<leader>gl", function()
-  require("lazy.util").float_term({ "lazygit", "log" }, { border = "rounded", cwd = git.dir() })
-end, "Lazygit log")
-
-require("which-key").register({
-  g = { name = "󰊢 Git" },
-}, { mode = { "n", "v" }, prefix = "<leader>" })
-
-if lazy.has("telescope.nvim") then
-  local telescope = require("lichtvim.utils").plugs.telescope
-  map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
-  map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
-  map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
-  map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
-  map.set("n", "<leader>gs", telescope("git_status"), "Status")
-end
-
 vim.api.nvim_create_autocmd({ "User" }, {
   group = vim.api.nvim_create_augroup(add_title("git_keybind"), { clear = true }),
   pattern = "Gitsigns",
   callback = function(event)
+    wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
+
+    local util = require("lazy.util")
+    local opts = { border = "rounded", cwd = git.dir() }
+
+    map.set("n", "<leader>gg", call(util.float_term, { "lazygit" }, opts), "Lazygit")
+    map.set("n", "<leader>gl", call(util.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+
+    if lazy.has("telescope.nvim") then
+      local telescope = require("lichtvim.utils").plugs.telescope
+      map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
+      map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
+      map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
+      map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
+      map.set("n", "<leader>gs", telescope("git_status"), "Status")
+    end
+
     local gs = package.loaded.gitsigns
-    local bufnr = event.buf
     map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
     map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
-    map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
-    map.set("v", "<leader>ga", function()
-      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Add hunk", { buffer = bufnr })
-    map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })
-    map.set("v", "<leader>gr", function()
-      gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Reset hunk", { buffer = bufnr })
-    map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
-    map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
-    map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = bufnr })
-    map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
-    map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = bufnr })
-    map.set("n", "<leader>gb", function()
-      gs.blame_line({ full = true })
-    end, "Show blame line", { buffer = bufnr })
-    map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = bufnr })
-    map.set("n", "<leader>gD", function()
-      gs.diffthis("~")
-    end, "Diff this?", { buffer = bufnr })
-
+    map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = event.buf })
+    map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = event.buf })
+    map.set("v", "<leader>ga", call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }), "Add hunk", { buffer = event.buf })
+    map.set("v", "<leader>gr", call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }), "Reset hunk", { buffer = event.buf })
+    map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = event.buf })
+    map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = event.buf })
+    map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = event.buf })
+    map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = event.buf })
+    map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = event.buf })
+    map.set("n", "<leader>gb", call(gs.blame_line, { full = true }), "Show blame line", { buffer = event.buf })
+    map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = event.buf })
+    map.set("n", "<leader>gD", call(gs.diffthis, "~"), "Diff this?", { buffer = event.buf })
     map.set("n", "]g", function()
       if vim.wo.diff then
         return "]g"
@@ -476,17 +447,16 @@ vim.api.nvim_create_autocmd({ "User" }, {
         gs.next_hunk()
       end)
       return "<Ignore>"
-    end, "Next git hunk", { buffer = bufnr, expr = true })
+    end, "Next git hunk", { buffer = event.buf, expr = true })
     map.set("n", "[g", function()
       if vim.wo.diff then
         return "[g"
       end
-
       vim.schedule(function()
         gs.prev_hunk()
       end)
       return "<Ignore>"
-    end, "Previous git hunk", { buffer = bufnr, expr = true })
+    end, "Previous git hunk", { buffer = event.buf, expr = true })
 
     -- Text object
     map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>", "Select git hunk")
@@ -511,10 +481,8 @@ local _keys = {
   { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
   { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-    -- stylua: ignore
-    { "<leader>ll", function() vim.diagnostic.open_float({ border = "rounded" }) end, desc = "Diagnostic (line)" },
-    -- stylua: ignore
-    { "<leader>lD", function() vim.lsp.buf.definition({ jump_type = "tab" }) end, desc = "Goto definition (tab)", has = "definition" },
+  { "<leader>ll", call(vim.diagnostic.open_float, { border = "rounded" }), desc = "Diagnostic (line)" },
+  { "<leader>lD", call(vim.lsp.buf.definition, { jump_type = "tab" }), desc = "Goto definition (tab)", has = "definition" },
 }
 
 if lazy.has("lspsaga.nvim") then
@@ -529,13 +497,12 @@ end
 
 if lazy.has("telescope.nvim") then
   local builtin = require("telescope.builtin")
-  -- stylua: ignore
   local keys = {
-    { "<leader>lL", function() builtin.diagnostics({}) end, desc = "Diagnostic (project)" },
-    { "<leader>le", function() builtin.lsp_references({ show_line = false }) end, desc = "Goto references", has = "references" },
-    { "<leader>li", function() builtin.lsp_implementations({ show_line = false }) end, desc = "Goto implementation", has = "implementation" },
-    { "<leader>lt", function() builtin.lsp_type_definitions({ show_line = false }) end, desc = "Goto type definition", has = "typeDefinition" },
-    { "<leader>ld", function() builtin.lsp_definitions({ reuse_win = true, show_line = false }) end, desc = "Goto definition", has = "definition" },
+    { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
+    { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
+    { "<leader>li", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
+    { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
+    { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
   }
   list.extend(_keys, keys)
 end
@@ -568,13 +535,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
       end
     end
 
-    if lazy.has("which-key.nvim") then
-      require("which-key").register({
-        l = { name = " LSP" },
-        mode = { "n", "v" },
-        prefix = "<leader>",
-      })
-    end
+    wk.register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
 
     if lazy.has("null-ls.nvim") then
       map.set("n", "<leader>pn", "<cmd>NullLsInfo<cr>", "Null-ls info")

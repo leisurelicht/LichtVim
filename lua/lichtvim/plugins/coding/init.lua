@@ -68,7 +68,7 @@ return {
     "m4xshen/smartcolumn.nvim",
     event = { "BufNewFile", "BufRead" },
     opts = {
-      colorcolumn = "80",
+      colorcolumn = "0",
       disabled_filetypes = {
         "help",
         "text",
