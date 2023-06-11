@@ -70,11 +70,11 @@ function M.path.ls(path, fn)
   end
 end
 
--- returns the root directory based on:
--- * lsp workspace folders
--- * lsp root_dir
--- * root pattern of filename of the current buffer
--- * root pattern of cwd
+--- returns the root directory based on:
+--- * lsp workspace folders
+--- * lsp root_dir
+--- * root pattern of filename of the current buffer
+--- * root pattern of cwd
 ---@return string
 function M.path.get_root()
   ---@type string?
