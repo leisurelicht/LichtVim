@@ -40,19 +40,13 @@ local options
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {})
   if not M.has() then
-    require("lazy.config.util").error(
-      "**LichtVim** needs **lazy.nvim** version "
-        .. M.lazy_version
-        .. " to work properly.\n"
-        .. "Please upgrade **lazy.nvim**",
-      { title = LichtVimTitle }
-    )
+    require("lazy.config.util").error("**LichtVim** needs **lazy.nvim** version " .. M.lazy_version .. " to work properly.\n" .. "Please upgrade **lazy.nvim**", { title = LichtVimTitle })
     error("Exiting")
   end
 
   if vim.fn.argc(-1) == 0 then
     vim.api.nvim_create_autocmd("User", {
-      group = vim.api.nvim_create_augroup(add_title("setup"), { clear = true }),
+      group = vim.api.nvim_create_augroup(add_title("Setup"), { clear = true }),
       pattern = "VeryLazy",
       callback = function()
         M.load("autocmds")

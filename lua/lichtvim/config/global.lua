@@ -6,9 +6,9 @@
 _G.LichtVimTitle = "LichtVim"
 _G.add_title = function(body)
   if body == nil then
-    return LichtVimTitle:lower()
+    return LichtVimTitle
   end
-  return string.format("%s_%s", LichtVimTitle:lower(), body)
+  return string.format("%s%s", LichtVimTitle, body)
 end
 
 _G.lazy = require("lichtvim.utils.lazy")

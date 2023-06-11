@@ -290,7 +290,7 @@ if lazy.has("toggleterm.nvim") then
   map.set("n", "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", "Send visual selection")
 
   vim.api.nvim_create_autocmd({ "TermOpen" }, {
-    group = vim.api.nvim_create_augroup(add_title("term_keymap"), { clear = true }),
+    group = vim.api.nvim_create_augroup(add_title("TermKeymap"), { clear = true }),
     pattern = { "term://*" },
     callback = function()
       map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", { buffer = 0 })
@@ -304,7 +304,7 @@ if lazy.has("toggleterm.nvim") then
 end
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = vim.api.nvim_create_augroup(add_title("keybind"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("Keybind"), { clear = true }),
   callback = function()
     if lazy.has("vim-easy-align") then
       map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
@@ -404,7 +404,7 @@ if lazy.has("mason.nvim") then
 end
 
 vim.api.nvim_create_autocmd({ "User" }, {
-  group = vim.api.nvim_create_augroup(add_title("git_keybind"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("GitKeybind"), { clear = true }),
   pattern = "Gitsigns",
   callback = function(event)
     wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
@@ -511,7 +511,7 @@ if lazy.has("telescope.nvim") then
 end
 
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
-  group = vim.api.nvim_create_augroup(add_title("lsp_keybind"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("LspKeybind"), { clear = true }),
   callback = function(event)
     local buffer = event.buf
     local client = vim.lsp.get_client_by_id(event.data.client_id)

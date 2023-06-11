@@ -17,13 +17,13 @@ end
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = vim.api.nvim_create_augroup(add_title("checktime"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("Checktime"), { clear = true }),
   command = "checktime",
 })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup(add_title("highlight_yank"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("HighlightYank"), { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("close_with_q"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("CloseWithQ"), { clear = true }),
   pattern = {
     "PlenaryTestPopup",
     "help",
@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- close some filetypes with <esc>
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("close_with_esc"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("CloseWithEsc"), { clear = true }),
   pattern = {
     "lazy",
     "help",
@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup(add_title("last_loc"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("LastLocation"), { clear = true }),
   callback = function()
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- auto close lazy and notify buffers when leaving them
 vim.api.nvim_create_autocmd("BufLeave", {
-  group = vim.api.nvim_create_augroup(add_title("close_lazy"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("CloseFloat"), { clear = true }),
   callback = function(event)
     local buf = event.buf
     local ft = vim.api.nvim_buf_get_option(buf, "filetype")
@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd("BufLeave", {
 
 -- wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("wrap_spell"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("WrapSpell"), { clear = true }),
   pattern = { "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
@@ -102,7 +102,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_user_command("MakeDirectory", function()
-  ---@diagnostic disable-next-line: missing-parameter
   local path = vim.fn.expand("%")
   local dir = vim.fn.fnamemodify(path, ":p:h")
   if vim.fn.isdirectory(dir) == 0 then

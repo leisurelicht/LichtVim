@@ -39,7 +39,7 @@ return {
       vim.g.im_select_enable_focus_eventsF = 1
       if sys.is_macos() or sys.is_linux() then
         vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineEnter", "CmdlineLeave", "VimEnter" }, {
-          group = vim.api.nvim_create_augroup(add_title("imselect"), { clear = true }),
+          group = vim.api.nvim_create_augroup(add_title("Imselect"), { clear = true }),
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
         })

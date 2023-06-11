@@ -27,17 +27,15 @@ function M.format()
 end
 
 function M.on_attach(client, buf)
-  if
-    client.config
-    and client.config.capabilities
-    and client.config.capabilities.documentFormattingProvider == false
-  then
+  if client.config and client.config.capabilities and client.config.capabilities.documentFormattingProvider == false then
     return false
   end
 
   if client.supports_method("textDocument/formatting") then
+    local augroup = vim.api.nvim_create_augroup(add_title("Formatting"), {})
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = buf })
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = vim.api.nvim_create_augroup(add_title("formatting"), { clear = true }),
+      group = augroup,
       buffer = buf,
       callback = function()
         if M.autoformat then

@@ -11,7 +11,7 @@ local function open_nvim_tree_dir(data)
   require("nvim-tree.api").tree.open()
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  group = vim.api.nvim_create_augroup(add_title("explorer"), { clear = true }),
+  group = vim.api.nvim_create_augroup(add_title("Explorer"), { clear = true }),
   callback = open_nvim_tree_dir,
 })
 
