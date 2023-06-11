@@ -51,9 +51,9 @@ M.path = {}
 
 M.path.root_patterns = { ".git", "lua" }
 
----@alias FileType "string"|"file"|"directory"|"link"|"fifo"|"socket"|"char"|"block"|nil
+---@alias filetypes "string"|"file"|"directory"|"link"|"fifo"|"socket"|"char"|"block"|nil
 ---@param path string
----@param fn fun(path: string, name:string, type:FileType):boolean?
+---@param fn fun(path: string, name:string, type:filetypes):boolean?
 function M.path.ls(path, fn)
   local handle = vim.loop.fs_scandir(path)
   while handle do
@@ -85,12 +85,9 @@ function M.path.get_root()
   if path then
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       local workspace = client.config.workspace_folders
-      local paths = workspace
-          and vim.tbl_map(function(ws)
-            return vim.uri_to_fname(ws.uri)
-          end, workspace)
-        or client.config.root_dir and { client.config.root_dir }
-        or {}
+      local paths = workspace and vim.tbl_map(function(ws)
+        return vim.uri_to_fname(ws.uri)
+      end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
         if r == nil then
@@ -244,7 +241,7 @@ function M.buf.path()
   return vim.fn.expand("%")
 end
 
---- Get the current buffer full path
+---Get the current buffer full path
 ---@return string # The current buffer full path
 function M.buf.full_path()
   return vim.fn.fnamemodify(vim.fn.expand("%"), ":p")
@@ -261,6 +258,7 @@ end
 
 M.option = {}
 
+--- Set an option
 ---@param option string
 ---@param silent boolean?
 ---@param values? {[1]:any, [2]:any}
@@ -272,10 +270,7 @@ function M.option.toggle(option, silent, values)
       else
         vim.opt_local[option] = values[1]
       end
-      return util.info(
-        "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
-        { title = LichtVimTitle .. "Option" }
-      )
+      return util.info("Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()), { title = LichtVimTitle .. "Option" })
     end
     vim.opt_local[option] = not vim.opt_local[option]:get()
     if not silent then
@@ -288,7 +283,7 @@ function M.option.toggle(option, silent, values)
   end
 end
 
---- toggle mouse mode
+--- Toggle mouse mode
 function M.option.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
@@ -301,9 +296,9 @@ end
 
 M.plugs = {}
 
--- this will return a function that calls telescope.
--- cwd will default to lazyvim.util.get_root
--- for `files`, git_files or find_files will be chosen depending on .git
+--- This will return a function that calls telescope.
+--- cwd will default to lazyvim.util.get_root
+--- for `files`, git_files or find_files will be chosen depending on .git
 function M.plugs.telescope(builtin, opts)
   local params = { builtin = builtin, opts = opts }
   return function()
@@ -362,7 +357,7 @@ function M.lsp.diagnostic_goto(next, level)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   local severity = level and vim.diagnostic.severity[level] or nil
   return function()
-    go({ severity = severity })
+    go({ severity = severity, float = { border = "rounded" } })
   end
 end
 

@@ -87,13 +87,7 @@ return {
         s_opts[lsp_name] = lsp_opts
       end
 
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities(),
-        opts.capabilities or {}
-      )
+      local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities(), opts.capabilities or {})
 
       local function setup(server)
         local options = s_opts[server]

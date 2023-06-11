@@ -478,19 +478,22 @@ local _keys = {
   { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
   { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
   { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
+  { "<leader>li", vim.lsp.buf.incoming_calls, desc = "Incoming calls", has = "callHierarchy" },
+  { "<leader>lo", vim.lsp.buf.outgoing_calls, desc = "Outgoing calls", has = "callHierarchy" },
   { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
   { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-  { "<leader>ll", call(vim.diagnostic.open_float, { border = "rounded" }), desc = "Diagnostic (line)" },
+  { "<leader>ll", call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
+  { "<leader>lc", call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }), desc = "Diagnostic (cursor)" },
   { "<leader>lD", call(vim.lsp.buf.definition, { jump_type = "tab" }), desc = "Goto definition (tab)", has = "definition" },
 }
 
 if lazy.has("lspsaga.nvim") then
   local keys = {
     { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
-    { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover", has = "hover" },
-    { "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Diagnostic (line)" },
-    { "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Diagnostic (cursor)" },
+    { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover keep", has = "hover" },
+    -- { "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Diagnostic (line)" },
+    -- { "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Diagnostic (cursor)" },
   }
   list.extend(_keys, keys)
 end
