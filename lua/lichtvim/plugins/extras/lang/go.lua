@@ -6,6 +6,20 @@ return {
     end,
   },
   {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    dependencies = { -- dependencies
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function(_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function()
+      vim.cmd([[silent! GoInstallDeps]])
+    end,
+  },
+  {
     "m4xshen/smartcolumn.nvim",
     opts = {
       custom_colorcolumn = {
@@ -13,7 +27,6 @@ return {
       },
     },
   },
-
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
