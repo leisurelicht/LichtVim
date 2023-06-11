@@ -72,16 +72,16 @@ return {
           lualine_z = { { "location" }, { "progress" } },
         },
         extensions = {
-          {
-            filetypes = { "neo-tree" },
-            sections = {
-              lualine_a = { { "mode" } },
-              lualine_b = {
-                { "branch" },
-                { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
-              },
-            },
-          },
+          -- {
+          --   filetypes = { "neo-tree" },
+          --   sections = {
+          --     lualine_a = { { "mode" } },
+          --     lualine_b = {
+          --       { "branch" },
+          --       { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
+          --     },
+          --   },
+          -- },
           {
             filetypes = { "toggleterm" },
             sections = {
