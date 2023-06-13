@@ -6,6 +6,7 @@ return {
   { import = "lichtvim.plugins.ui.bufferline" },
   { -- lsp progress
     "j-hui/fidget.nvim",
+    tag = "legacy",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "neovim/nvim-lspconfig" },
     opts = {
