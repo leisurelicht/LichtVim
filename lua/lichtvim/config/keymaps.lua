@@ -108,7 +108,7 @@ wk.register({
   ["<c-w>"] = { name = "Window" },
 }, { mode = "n", prefix = "" })
 
-map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
+-- map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
 map.set("i", "<C-u>", "<esc>viwUea", "Upper word") -- 一键大写
 map.set("i", "<C-l>", "<esc>viwuea", "Lower word") -- 一键小写
 map.set("i", "<C-O>", "<ESC>wb~ea") -- 首字母大写
