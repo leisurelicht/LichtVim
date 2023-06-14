@@ -5,7 +5,7 @@ return {
   { -- 自动配对
     "windwp/nvim-autopairs",
     enabled = true,
-    event = { "BufNewFile", "BufRead" },
+    event = "InsertEnter",
     opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
   },
   {
