@@ -24,6 +24,7 @@ wk.register({
   [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
   ["q"] = { "<cmd>confirm q<cr>", " Quit" },
   -- d = { name = " Debugger" },
+  r = { name = " Project" },
   f = { name = "󰛔 Find & Replace" },
   o = { name = " Terminal" },
   c = { name = " ShortCuts" },
@@ -258,25 +259,29 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fG", telescope("live_grep", { cwd = false }), "Grep (cwd)")
   map.set("n", "<leader>fw", telescope("grep_string"), "Word (root dir)")
   map.set("n", "<leader>fW", telescope("grep_string", { cwd = false }), "Word (cwd)")
-  map.set("n", "<leader>fk", telescope("keymaps"), "Key maps")
+  map.set("n", "<leader>fK", telescope("keymaps"), "Key maps")
   map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
   map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set("n", "<leader>fe", call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
+
+  if lazy.has("project.nvim") then
+    map.set("n", "<leader>rj", "<cmd>Telescope projects theme=dropdown<cr>", "Recent projects")
+  end
+
+  if lazy.has("nvim-notify") then
+    map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
+  end
 end
 
-if lazy.has("project.nvim") and lazy.has("telescope.nvim") then
-  map.set("n", "<leader>fj", "<cmd>Telescope projects theme=dropdown<cr>", "Projects")
+if lazy.has("project.nvim") then
+  map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add project")
 end
 
 if lazy.has("nvim-notify") then
   map.set("n", "<leader>uq", call(require("notify").dismiss, { silent = true, pending = true }), "Clear notifications")
-
-  if lazy.has("telescope.nvim") then
-    map.set("n", "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", "Notify")
-  end
 end
 
 if lazy.has("toggleterm.nvim") then
