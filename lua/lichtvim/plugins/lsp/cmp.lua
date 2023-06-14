@@ -44,8 +44,8 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
@@ -61,21 +61,11 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-          -- ["<CR>"] = cmp.mapping({
-          --   i = function(fallback)
-          --     if cmp.visible() and cmp.get_active_entry() then
-          --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-          --     else
-          --       fallback()
-          --     end
-          --   end,
-          --   s = cmp.mapping.confirm({ select = false }),
-          -- }),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<S-CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          -- ["<S-CR>"] = cmp.mapping.confirm({
+          --   behavior = cmp.ConfirmBehavior.Replace,
+          --   select = true,
+          -- }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -129,11 +119,10 @@ return {
           end,
         },
         window = {
-          completion = {
-            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-            col_offset = -3,
-            side_padding = 0,
-          },
+          completion = cmp.config.window.bordered({
+            col_offset = -4,
+          }),
+          documentation = cmp.config.window.bordered(),
         },
         experimental = {
           ghost_text = {
@@ -143,8 +132,6 @@ return {
       }
     end,
     config = function(_, opts)
-      vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
-
       local cmp = require("cmp")
       cmp.setup(opts)
 

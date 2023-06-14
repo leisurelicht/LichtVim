@@ -80,6 +80,10 @@ return {
       cmp.event:on("confirm_done", function()
         vim.b.copilot_suggestion_hidden = false
       end)
+
+      cmp.event:on("complete_done", function()
+        vim.b.copilot_suggestion_hidden = false
+      end)
     end,
   },
   {
