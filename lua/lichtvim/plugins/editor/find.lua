@@ -86,7 +86,7 @@ return {
       end
 
       local center_list = themes.get_dropdown({
-        winblend = 10,
+        winblend = 0, -- 透明度
         width = 0.5,
         prompt = " ",
         results_height = 15,
@@ -95,7 +95,7 @@ return {
 
       opts = {
         defaults = {
-          prompt_prefix = "  ",
+          prompt_prefix = "   ",
           selection_caret = " ",
           file_sorter = sorters.get_fuzzy_file,
           generic_sorter = sorters.get_generic_fuzzy_sorter,
@@ -176,9 +176,13 @@ return {
           lsp_outgoing_calls = {},
         },
         extensions = {
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+          },
           file_browser = vim.tbl_extend("force", center_list, {
-            theme = "ivy",
-            -- disables netrw and use telescope-file-browser in its place
             hijack_netrw = true,
             sorting_strategy = "ascending",
             layout_config = {
@@ -213,10 +217,8 @@ return {
 
       if lazy.has("trouble.nvim") then
         local trouble = require("trouble.providers.telescope")
-        opts.defaults.mappings.n =
-          vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
-        opts.defaults.mappings.i =
-          vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
+        opts.defaults.mappings.n = vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
+        opts.defaults.mappings.i = vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
       end
 
       return opts

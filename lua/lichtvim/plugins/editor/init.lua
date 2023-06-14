@@ -48,7 +48,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble" },
+    cmd = { "TodoTelescope", "TodoTrouble" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("todo-comments").setup({})

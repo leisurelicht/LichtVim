@@ -223,7 +223,7 @@ if lazy.has("todo-comments.nvim") then
   if lazy.has("telescope.nvim") then
     map.set("n", "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", "Todo")
   else
-    map.set("n", "<leader>ft", "<cmd>TodoLocList<cr>", "Todo (LocList)")
+    map.set("n", "<leader>ft", "<cmd>TodoTrouble<cr>", "Todo (LocList)")
   end
 end
 
@@ -506,6 +506,8 @@ if lazy.has("telescope.nvim") then
     { "<leader>li", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
     { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
     { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
+    { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
+    { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
   }
   list.extend(_keys, keys)
 end
