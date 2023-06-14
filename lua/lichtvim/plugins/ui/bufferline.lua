@@ -20,9 +20,8 @@ return {
           local dig = icons.diagnostics
           local s = " "
           for e, n in pairs(diagnostics_dict) do
-            local sym = e == "error" and dig.Error
-              or (e == "warning" and dig.Warn or (e == "info" and dig.Info or dig.Hint))
-            s = s .. sym .. n
+            local sym = e == "error" and dig.Error or (e == "warning" and dig.Warn or (e == "info" and dig.Info or dig.Hint))
+            s = s .. sym .. n .. " "
           end
           return s
         end,
