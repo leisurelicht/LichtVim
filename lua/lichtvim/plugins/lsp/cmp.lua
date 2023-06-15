@@ -120,7 +120,7 @@ return {
         },
         window = {
           completion = cmp.config.window.bordered({
-            col_offset = -4,
+            col_offset = -3,
           }),
           documentation = cmp.config.window.bordered(),
         },
