@@ -72,35 +72,11 @@ return {
           lualine_z = { { "location" }, { "progress" } },
         },
         extensions = {
-          -- {
-          --   filetypes = { "neo-tree" },
-          --   sections = {
-          --     lualine_a = { { "mode" } },
-          --     lualine_b = {
-          --       { "branch" },
-          --       { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
-          --     },
-          --   },
-          -- },
           {
-            filetypes = { "toggleterm" },
+            filetypes = { "lazy", "mason", "TelescopePrompt", "toggleterm", "Trouble", "qf" },
             sections = {
-              lualine_a = { { title("Terminal"), separator = { right = "" } } },
-              lualine_z = { { title("Terminal"), separator = { left = "" } } },
-            },
-          },
-          {
-            filetypes = { "Trouble" },
-            sections = {
-              lualine_a = { { title("Trouble"), separator = { right = "" } } },
-              lualine_z = { { title("Trouble"), separator = { left = "" } } },
-            },
-          },
-          {
-            filetypes = { "lazy", "TelescopePrompt", "mason" },
-            sections = {
-              lualine_a = { { title("   "), separator = { right = "" } } },
-              lualine_z = { { title("   "), separator = { left = "" } } },
+              lualine_a = { { title("     "), separator = { right = "" } } },
+              lualine_z = { { title("     "), separator = { left = "" } } },
             },
           },
         },
