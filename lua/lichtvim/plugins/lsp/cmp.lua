@@ -86,7 +86,7 @@ return {
           },
         },
         view = {
-          entries = { name = "custom", selection_order = "near_cursor" },
+          entries = { name = "custom", selection_order = "top_down" },
         },
         formatting = {
           fields = { "kind", "abbr", "menu" },
