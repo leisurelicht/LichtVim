@@ -66,7 +66,7 @@ return {
       local sorters = require("telescope.sorters")
       local fb_actions = require("telescope").extensions.file_browser.actions
 
-      local new_maker = function(filepath, bufnr, opts)
+      local new_maker = function(filepath, bufnr, options)
         filepath = vim.fn.expand(filepath)
         Job:new({
           command = "file",
@@ -74,7 +74,7 @@ return {
           on_exit = function(j)
             local mime_type = vim.split(j:result()[1], "/")[1]
             if mime_type == "text" then
-              previewers.buffer_previewer_maker(filepath, bufnr, opts)
+              previewers.buffer_previewer_maker(filepath, bufnr, options)
             else
               -- maybe we want to write something to the buffer here
               vim.schedule(function()
