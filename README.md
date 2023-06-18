@@ -56,3 +56,9 @@ docker run -w /root -it --rm alpine:edge /bin/sh -c 'apk update && apk add --no-
 ```
 docker run -w /root -it --rm alpine:edge /bin/sh -c 'echo "185.199.108.133 raw.githubusercontent.com" >> /etc/hosts && apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/config/try.lua ; bash'
 ```
+
+## Thanks Too
+
++ [LazyVim](https://github.com/LazyVim/LazyVim)
++ [Nvchad](https://github.com/NvChad/NvChad)
++ [AstroNvim](https://github.com/AstroNvim/AstroNvim)
