@@ -92,13 +92,15 @@ return {
       local function setup(server)
         local options = s_opts[server]
 
+        options = options or {}
+
         if options.disable_diagnostics ~= nil and options.disable_agnostics then
           lsp_handlers["textDocument/publishDiagnostics"] = function(...) end
         end
 
         options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
-        options = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, options or {})
+        options = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, options)
 
         if opts.setup[server] then
           if opts.setup[server](server, options) then
