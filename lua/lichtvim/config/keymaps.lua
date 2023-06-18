@@ -554,3 +554,19 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     end
   end,
 })
+
+if lazy.has("nvim-ufo") then
+  map.set("n", "zR", require("ufo").openAllFolds)
+  map.set("n", "zM", require("ufo").closeAllFolds)
+  map.set("n", "zr", require("ufo").openFoldsExceptKinds)
+  map.set("n", "K", function()
+    local winid = require("ufo").peekFoldedLinesUnderCursor()
+    if not winid then
+      if lazy.has("lspsaga.nvim") then
+        vim.cmd([[ Lspsaga hover_doc ]])
+      else
+        vim.lsp.buf.hover()
+      end
+    end
+  end, "Hover Document")
+end
