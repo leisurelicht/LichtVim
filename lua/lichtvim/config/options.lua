@@ -21,7 +21,6 @@ vim.g.maplocalleader = ","
 
 local opt = vim.opt
 
--- utf8
 opt.mouse = "a" -- 开启鼠标控制
 opt.clipboard:append("unnamedplus") -- 系统剪贴板
 opt.autowrite = true -- 自动写入
@@ -70,7 +69,7 @@ opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 不可见字符不显示
-opt.listchars = { tab = "▸", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
+opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if sys.is_neovide() then
   vim.notify("Use Neovide Configure", vim.log.levels.INFO, { title = LichtVimTitle })
