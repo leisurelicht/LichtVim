@@ -499,8 +499,6 @@ if lazy.has("lspsaga.nvim") then
   local keys = {
     { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
     { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover keep", has = "hover" },
-    -- { "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Diagnostic (line)" },
-    -- { "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Diagnostic (cursor)" },
   }
   list.extend(_keys, keys)
 end
@@ -551,6 +549,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 
     if lazy.has("null-ls.nvim") then
       map.set("n", "<leader>pn", "<cmd>NullLsInfo<cr>", "Null-ls info")
+      map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
     end
   end,
 })
