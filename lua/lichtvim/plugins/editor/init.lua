@@ -1,6 +1,3 @@
-local sys = require("lichtvim.utils").sys
-local path = require("lichtvim.utils").path
-
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { import = "lichtvim.plugins.editor.treesitter" },
@@ -36,6 +33,7 @@ return {
     "brglng/vim-im-select",
     event = { "BufNewFile", "BufRead" },
     config = function()
+      local sys = require("lichtvim.utils").sys
       vim.g.im_select_enable_focus_eventsF = 1
       if sys.is_macos() or sys.is_linux() then
         vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineEnter", "CmdlineLeave", "VimEnter" }, {
