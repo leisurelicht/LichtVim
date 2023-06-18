@@ -32,7 +32,7 @@ return {
             relculright = true,
             segments = {
               { text = { "%s" }, click = "v:lua.ScSa" },
-              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+              { text = { builtin.lnumfunc, " " }, condition = { true, builtin.not_empty }, click = "v:lua.ScLa" },
               { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
             },
           })
@@ -70,7 +70,7 @@ return {
       local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
         local foldedLines = endLnum - lnum
-        local suffix = (" ... %d lines"):format(foldedLines)
+        local suffix = (" 󰁂 %d lines"):format(foldedLines)
         local sufWidth = vim.fn.strdisplaywidth(suffix)
         local targetWidth = width - sufWidth
         local curWidth = 0

@@ -70,7 +70,7 @@ opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 不可见字符不显示
-opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
+opt.listchars = { tab = "▸", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if sys.is_neovide() then
   vim.notify("Use Neovide Configure", vim.log.levels.INFO, { title = LichtVimTitle })

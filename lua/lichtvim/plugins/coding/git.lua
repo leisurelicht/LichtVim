@@ -26,6 +26,14 @@ return {
         delete = { text = "-" },
         changedelete = { text = "~" },
       },
+      preview_config = {
+        -- Options passed to nvim_open_win
+        border = "rounded",
+        style = "minimal",
+        relative = "cursor",
+        row = 0,
+        col = 1,
+      },
       on_attach = function()
         vim.api.nvim_command("doautocmd User Gitsigns")
       end,
