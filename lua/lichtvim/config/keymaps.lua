@@ -546,12 +546,12 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
       end
     end
 
-    wk.register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
-
+    map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
     if lazy.has("null-ls.nvim") then
       map.set("n", "<leader>pn", "<cmd>NullLsInfo<cr>", "Null-ls info")
-      map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
     end
+
+    wk.register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
   end,
 })
 
