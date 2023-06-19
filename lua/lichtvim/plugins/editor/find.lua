@@ -13,7 +13,7 @@ end
 
 return {
   { "kkharji/sqlite.lua", lazy = true },
-  { "nvim-pack/nvim-spectre", lazy = true, dependencies = { "nvim-lua/plenary.nvim" } },
+  { "nvim-pack/nvim-spectre", lazy = true, dependencies = { "nvim-lua/plenary.nvim" }, opts = { open_cmd = "noswapfile vnew" } },
   {
     "nvim-telescope/telescope.nvim",
     version = false,
