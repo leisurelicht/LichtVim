@@ -416,9 +416,8 @@ vim.api.nvim_create_autocmd({ "User" }, {
   callback = function(event)
     wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
-    local util = require("lazy.util")
-    local opts = { border = "rounded", cwd = git.dir() }
-
+    local util = require("lichtvim.utils.lazy")
+    local opts = { border = "rounded", cwd = git.dir(), esc_esc = false, ctrl_hjkl = false }
     map.set("n", "<leader>gg", call(util.float_term, { "lazygit" }, opts), "Lazygit")
     map.set("n", "<leader>gl", call(util.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 
