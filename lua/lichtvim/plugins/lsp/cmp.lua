@@ -21,6 +21,8 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
+      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+
       local cmp = require("cmp")
       local snippy = require("snippy")
       local context = require("cmp.config.context")
@@ -119,7 +121,7 @@ return {
         },
         experimental = {
           ghost_text = {
-            hl_group = "LspCodeLens",
+            hl_group = "CmpGhostText",
           },
         },
       }
