@@ -568,5 +568,5 @@ if lazy.has("nvim-ufo") then
         vim.lsp.buf.hover()
       end
     end
-  end, "Hover Document")
+  end, "Fold preview")
 end
