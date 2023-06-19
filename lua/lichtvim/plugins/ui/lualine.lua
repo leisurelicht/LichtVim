@@ -48,7 +48,7 @@ return {
           lualine_a = { { "mode" } },
           lualine_b = {
             { "branch" },
-            { "diff", symbols = { added = ic.git.Add .. " ", modified = ic.git.Change .. " ", removed = ic.git.Delete .. " " } },
+            { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
           },
           lualine_c = {},
           lualine_x = { { "filetype" }, { "fileformat" }, { "encoding" } },

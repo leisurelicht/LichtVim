@@ -20,23 +20,23 @@ M.Other = {
 }
 
 M.Diagnostics = {
-  Logo = "󰒡",
-  Hint = "",
-  Info = "",
-  Warn = "",
-  Error = "",
+  Logo = "󰒡 ",
+  Hint = " ",
+  Info = " ",
+  Warn = " ",
+  Error = " ",
 }
 
 M.Git = {
-  Logo = "󰊢",
+  Logo = "󰊢 ",
   Branch = "󰘬",
-  Add = "",
-  Change = "",
-  Delete = "",
-  Staged = "",
-  Unstaged = "",
-  Conflict = "",
-  Ignored = "",
+  Add = " ",
+  Change = " ",
+  Delete = " ",
+  Staged = " ",
+  Unstaged = " ",
+  Conflict = " ",
+  Ignored = " ",
   Renamed = "➜",
   Untracked = "",
 }
