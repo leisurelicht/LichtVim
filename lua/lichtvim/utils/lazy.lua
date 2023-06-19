@@ -107,7 +107,7 @@ function M.float_term(cmd, opts)
     ft = "lazyterm",
     size = { width = 0.9, height = 0.9 },
   }, opts or {}, { persistent = true })
-  ---@cast opts LazyCmdOptions|{interactive?:boolean, esc_esc?:false}
+  ---@cast opts LazyCmdOptions|{interactive?:boolean, esc_esc?:false, ctrl_hjkl?:false}
 
   local termkey = vim.inspect({ cmd = cmd or "shell", cwd = opts.cwd, env = opts.env, count = vim.v.count1 })
 
