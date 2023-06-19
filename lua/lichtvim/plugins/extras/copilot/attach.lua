@@ -55,6 +55,7 @@ return {
   {
     "nvim-cmp",
     optional = true,
+    event = "VeryLazy",
     opts = function(_, opts)
       local suggestion = require("copilot.suggestion")
       for k, v in pairs(opts.mapping["<Tab>"]) do
@@ -90,6 +91,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
+    event = "VeryLazy",
     dependencies = {
       "leisurelicht/lualine-copilot.nvim",
     },
