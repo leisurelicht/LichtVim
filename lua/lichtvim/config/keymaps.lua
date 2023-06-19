@@ -117,6 +117,10 @@ map.set("i", "<C-O>", "<ESC>wb~ea") -- 首字母大写
 -- normal 模式下按 esc 取消高亮显示
 map.set("n", "<esc>", call(vim.cmd, "silent! noh"), "No highlight")
 
+-- better up/down
+map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "down", { expr = true, silent = true })
+map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "up", { expr = true, silent = true })
+
 -- 窗口切换组合快捷键
 map.set("n", "<C-j>", "<C-W><C-j>", "Down window")
 map.set("n", "<C-k>", "<C-W><C-k>", "Up window")
