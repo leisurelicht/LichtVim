@@ -568,7 +568,7 @@ if lazy.has("nvim-ufo") then
       if lazy.has("lspsaga.nvim") then
         vim.cmd([[ Lspsaga hover_doc ]])
       else
-        vim.lsp.buf.hover()
+        vim.lsp.bu.hover()
       end
     end
   end, "Fold preview")
