@@ -117,8 +117,7 @@ return {
 
       local mlsp_ok, mlsp = pcall(require, "mason-lspconfig")
       if mlsp_ok then
-        mlsp.setup({ ensure_installed = s_names })
-        mlsp.setup_handlers({ setup })
+        mlsp.setup({ ensure_installed = s_names, handlers = { setup } })
       end
     end,
   },
