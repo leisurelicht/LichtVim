@@ -398,14 +398,20 @@ if lazy.has("trouble.nvim") then
     if require("trouble").is_open() then
       require("trouble").previous({ skip_groups = true, jump = true })
     else
-      vim.cmd.cprev()
+      local ok, err = pcall(vim.cmd.cprev)
+      if not ok then
+        vim.notify(err, vim.log.levels.WARN)
+      end
     end
   end, "Previous trouble/quickfix item")
   map.set("n", "]q", function()
     if require("trouble").is_open() then
       require("trouble").next({ skip_groups = true, jump = true })
     else
-      vim.cmd.cnext()
+      local ok, err = pcall(vim.cmd.cnext)
+      if not ok then
+        vim.notify(err, vim.log.levels.WARN)
+      end
     end
   end, "Next trouble/quickfix item")
 end
