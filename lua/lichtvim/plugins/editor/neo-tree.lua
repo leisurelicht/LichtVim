@@ -22,11 +22,12 @@ return {
       vim.g.neo_tree_remove_legacy_commands = true
     end,
     opts = {
+      open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
       auto_clean_after_session_restore = true,
       close_if_last_window = true,
       source_selector = {
         winbar = true,
-        statusline = true,
+        statusline = false,
         content_layout = "center",
         sources = {
           { source = "filesystem", display_name = icons.get.FolderClosed .. " File" },
