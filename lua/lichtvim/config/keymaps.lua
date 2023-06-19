@@ -30,7 +30,7 @@ if wk_ok then
     o = { name = " Terminal" },
     c = { name = " ShortCuts" },
     b = { name = "󰓩 Buffers" },
-    s = { name = " Split" },
+    w = { name = " Window Split" },
     t = { name = "󱏈 Tab" },
     to = { name = "Close Only" },
     u = { name = "󰨙 UI" },
@@ -129,16 +129,16 @@ map.set("v", "K", ":m '<-2<cr>gv=gv", "Move line up")
 map.set("v", "<", "<gv", "Move left continuously")
 map.set("v", ">", ">gv", "Move right continuously")
 -- 分屏
-map.set("n", "<leader>sh", "<cmd>vertical leftabove sbuffer<cr>", "Left")
-map.set("n", "<leader>sl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
-map.set("n", "<leader>sk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
-map.set("n", "<leader>sj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
-map.set("n", "<leader>sy", "<cmd>vertical topleft sbuffer<cr>", "Far left")
-map.set("n", "<leader>so", "<cmd>vertical botright sbuffer<cr>", "Far right")
-map.set("n", "<leader>si", "<cmd>horizontal topleft sbuffer<cr>", "Top")
-map.set("n", "<leader>su", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
-map.set("n", "<leader>sd", "<C-w>c", "Close current window") -- 关闭当前分屏
-map.set("n", "<leader>sc", "<C-w>o", "Close other window") -- 关闭其他分屏
+map.set("n", "<leader>wh", "<cmd>vertical leftabove sbuffer<cr>", "Left")
+map.set("n", "<leader>wl", "<cmd>vertical rightbelow sbuffer<cr>", "Right")
+map.set("n", "<leader>wk", "<cmd>horizontal aboveleft sbuffer<cr>", "Above")
+map.set("n", "<leader>wj", "<cmd>horizontal belowright sbuffer<cr>", "Below")
+map.set("n", "<leader>wy", "<cmd>vertical topleft sbuffer<cr>", "Far left")
+map.set("n", "<leader>wo", "<cmd>vertical botright sbuffer<cr>", "Far right")
+map.set("n", "<leader>wi", "<cmd>horizontal topleft sbuffer<cr>", "Top")
+map.set("n", "<leader>wu", "<cmd>horizontal botright sbuffer<cr>", "Bottom")
+map.set("n", "<leader>wd", "<C-w>c", "Close current window") -- 关闭当前分屏
+map.set("n", "<leader>wc", "<C-w>o", "Close other window") -- 关闭其他分屏
 -- 窗口快速跳转
 map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1")
 map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2")
