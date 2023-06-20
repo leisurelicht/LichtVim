@@ -22,8 +22,6 @@ end
 
 if wk_ok then
   wk.register({
-    [";"] = { "<cmd>Alpha<cr>", "󰧨 Dashboard" },
-    ["q"] = { "<cmd>confirm q<cr>", " Quit" },
     -- d = { name = " Debugger" },
     r = { name = " Project" },
     f = { name = "󰛔 Find & Replace" },
@@ -209,6 +207,24 @@ map.set("n", "<leader>uf", option.toggle("foldenable"), "Toggle foldenable")
 map.set("n", "<leader>ud", option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
 map.set("n", "<leader>ul", option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
+
+map.set("n", "<leader>q", function()
+  require("spectre").close()
+  vim.cmd([[ Neotree close ]])
+  vim.cmd([[ TroubleClose ]])
+  vim.cmd([[ only ]])
+  vim.cmd([[ wa | qa ]])
+end, " Quit")
+
+map.set("n", "<leader>;", function()
+  call(require("notify").dismiss, { silent = true, pending = true })
+  require("spectre").close()
+  vim.cmd([[ Neotree close ]])
+  vim.cmd([[ TroubleClose ]])
+  vim.cmd([[silent wa | silent only ]])
+  vim.cmd([[ Alpha ]])
+  -- TODO: close all buffer
+end, "󰧨 Dashboard")
 
 if lazy.has("neo-tree.nvim") then
   map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")
