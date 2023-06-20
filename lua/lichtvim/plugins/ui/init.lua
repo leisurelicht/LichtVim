@@ -33,8 +33,6 @@ return {
   },
   { -- better vim.ui
     "stevearc/dressing.nvim",
-    enabled = true,
-    lazy = true,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
@@ -68,7 +66,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
+    event = { "BufReadPre", "BufNewFile" },
     opts = { use_diagnostic_signs = true },
   },
 }
