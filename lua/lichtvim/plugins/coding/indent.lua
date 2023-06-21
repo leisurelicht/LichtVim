@@ -1,5 +1,5 @@
 return {
-  { "vim-scripts/indentpython.vim", enabled = false, ft = { "python", "djangohtml" } },
+  { "vim-scripts/indentpython.vim", ft = { "python", "djangohtml" } },
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
     enabled = true,
