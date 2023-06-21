@@ -30,19 +30,19 @@ return {
         statusline = false,
         content_layout = "center",
         sources = {
-          { source = "filesystem", display_name = icons.get.FolderClosed .. " File" },
+          { source = "filesystem", display_name = icons.file.FolderClosed .. " File" },
           { source = "git_status", display_name = icons.git.Logo .. " Git" },
-          { source = "buffers", display_name = icons.get.DefaultFile .. " Bufs" },
+          { source = "buffers", display_name = icons.file.DefaultFile .. " Bufs" },
         },
       },
       default_component_configs = {
         indent = { padding = 0, indent_size = 1 },
         icon = {
-          folder_closed = icons.get.FolderClosed,
-          folder_open = icons.get.FolderOpen,
-          folder_empty = icons.get.FolderEmpty,
+          folder_closed = icons.file.FolderClosed,
+          folder_open = icons.file.FolderOpen,
+          folder_empty = icons.file.FolderEmpty,
         },
-        modified = { symbol = icons.get.FileModified },
+        modified = { symbol = icons.file.FileModified },
         git_status = {
           symbols = {
             added = icons.git.Add,

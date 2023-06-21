@@ -405,8 +405,21 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("bufferline.nvim") then
-      map.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin")
-      map.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers")
+      map.set("n", "<leader>bt", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin")
+      map.set("n", "<leader>bT", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers")
+      map.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer")
+      map.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>", "Next buffer")
+      map.set("n", "[b", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer")
+      map.set("n", "]b", "<cmd>BufferLineCycleNext<cr>", "Next buffer")
+      map.set("n", "<leader>bk", "<cmd>BufferLinePick<cr>", "Pick buffer")
+      map.set("n", "<leader>b1", "<cmd>BufferLineGoToBuffer 1<cr>", "Buffer 1")
+      map.set("n", "<leader>b2", "<cmd>BufferLineGoToBuffer 2<cr>", "Buffer 2")
+      map.set("n", "<leader>b3", "<cmd>BufferLineGoToBuffer 3<cr>", "Buffer 3")
+      map.set("n", "<leader>b4", "<cmd>BufferLineGoToBuffer 4<cr>", "Buffer 4")
+      map.set("n", "<leader>b5", "<cmd>BufferLineGoToBuffer 5<cr>", "Buffer 5")
+      map.set("n", "<leader>b6", "<cmd>BufferLineGoToBuffer 6<cr>", "Buffer 6")
+      map.set("n", "<leader>b7", "<cmd>BufferLineGoToBuffer 7<cr>", "Buffer 7")
+      map.set("n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", "Buffer 8")
     end
 
     if lazy.has("smart-splits.nvim") then

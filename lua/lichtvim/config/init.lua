@@ -27,7 +27,9 @@ local defaults = {
     git = icons.Git,
     kinds = icons.Kinds,
     sources = icons.Sources,
-    get = icons.Other,
+    file = icons.File,
+    other = icons.Other,
+
   },
   ---@type string
   lang = "en",

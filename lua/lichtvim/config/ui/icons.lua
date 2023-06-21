@@ -6,6 +6,10 @@
 local M = {}
 
 M.Other = {
+  Codeaction = "",
+}
+
+M.File = {
   DefaultFile = "󰈙",
   FileModified = "",
   FileReadOnly = "",
@@ -15,8 +19,6 @@ M.Other = {
   FolderClosed = "",
   FolderEmpty = "",
   FolderOpen = "",
-
-  Codeaction = "",
 }
 
 M.Diagnostics = {
