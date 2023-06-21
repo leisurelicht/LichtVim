@@ -34,10 +34,7 @@ return {
         enable = false,
       },
       lightbulb = {
-        enable = true,
-        enable_in_insert = false,
-        sign = true,
-        sign_priority = 40,
+        sign = false,
         virtual_text = true,
       },
       ui = {
