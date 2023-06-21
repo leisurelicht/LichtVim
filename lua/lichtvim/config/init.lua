@@ -29,7 +29,6 @@ local defaults = {
     sources = icons.Sources,
     file = icons.File,
     other = icons.Other,
-
   },
   ---@type string
   lang = "en",
@@ -42,7 +41,13 @@ local options
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {})
   if not M.has() then
-    require("lazy.config.util").error("**LichtVim** needs **lazy.nvim** version " .. M.lazy_version .. " to work properly.\n" .. "Please upgrade **lazy.nvim**", { title = LichtVimTitle })
+    require("lazy.config.util").error(
+      "**LichtVim** needs **lazy.nvim** version "
+        .. M.lazy_version
+        .. " to work properly.\n"
+        .. "Please upgrade **lazy.nvim**",
+      { title = LichtVimTitle }
+    )
     error("Exiting")
   end
 

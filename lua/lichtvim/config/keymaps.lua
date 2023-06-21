@@ -251,10 +251,10 @@ if lazy.has("todo-comments.nvim") then
 end
 
 if lazy.has("nvim-spectre") then
-  map.set("n", "<leader>frr", "<cmd>lua require('spectre').open()<cr>", "Spectre")
-  map.set("n", "<leader>frw", "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace current word")
-  map.set("v", "<leader>frw", "<cmd>lua require('spectre').open_visual()<cr>", "Replace current word")
-  map.set("n", "<leader>frs", "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>", "Replace current word in current file")
+  map.set("n", "<leader>frr", call(require("spectre").open), "Spectre")
+  map.set("n", "<leader>frw", call(require("spectre").open_visual, { select_word = true }), "Current word")
+  map.set("v", "<leader>frw", call(require("spectre").open_visual), "Current word")
+  map.set("n", "<leader>frs", call(require("spectre").open_file_search, { select_word = true }), "Current word in file")
 
   wk.register({
     fr = { name = "Replace" },
@@ -286,7 +286,12 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
-  map.set("n", "<leader>fe", call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
+  map.set(
+    "n",
+    "<leader>fe",
+    call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
+    "File Browser"
+  )
 
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
   -- map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
@@ -481,8 +486,20 @@ vim.api.nvim_create_autocmd({ "User" }, {
     map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
     map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = event.buf })
     map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = event.buf })
-    map.set("v", "<leader>ga", call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }), "Add hunk", { buffer = event.buf })
-    map.set("v", "<leader>gr", call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }), "Reset hunk", { buffer = event.buf })
+    map.set(
+      "v",
+      "<leader>ga",
+      call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }),
+      "Add hunk",
+      { buffer = event.buf }
+    )
+    map.set(
+      "v",
+      "<leader>gr",
+      call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }),
+      "Reset hunk",
+      { buffer = event.buf }
+    )
     map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = event.buf })
     map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = event.buf })
     map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = event.buf })
@@ -536,8 +553,17 @@ local _keys = {
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
   { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
   { "<leader>ll", call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
-  { "<leader>lc", call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }), desc = "Diagnostic (cursor)" },
-  { "<leader>lD", call(vim.lsp.buf.definition, { jump_type = "tab" }), desc = "Goto definition (tab)", has = "definition" },
+  {
+    "<leader>lc",
+    call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }),
+    desc = "Diagnostic (cursor)",
+  },
+  {
+    "<leader>lD",
+    call(vim.lsp.buf.definition, { jump_type = "tab" }),
+    desc = "Goto definition (tab)",
+    has = "definition",
+  },
 }
 
 if lazy.has("lspsaga.nvim") then
@@ -554,9 +580,24 @@ if lazy.has("telescope.nvim") then
   local keys = {
     { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
     { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
-    { "<leader>li", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
-    { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
-    { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
+    {
+      "<leader>li",
+      call(builtin.lsp_implementations, { show_line = false }),
+      desc = "Goto implementation",
+      has = "implementation",
+    },
+    {
+      "<leader>lt",
+      call(builtin.lsp_type_definitions, { show_line = false }),
+      desc = "Goto type definition",
+      has = "typeDefinition",
+    },
+    {
+      "<leader>ld",
+      call(builtin.lsp_definitions, { reuse_win = true, show_line = false }),
+      desc = "Goto definition",
+      has = "definition",
+    },
     { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
     { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
   }

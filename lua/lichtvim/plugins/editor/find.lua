@@ -13,7 +13,12 @@ end
 
 return {
   { "kkharji/sqlite.lua", lazy = true },
-  { "nvim-pack/nvim-spectre", lazy = true, dependencies = { "nvim-lua/plenary.nvim" }, opts = { open_cmd = "noswapfile vnew" } },
+  {
+    "nvim-pack/nvim-spectre",
+    lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = { open_cmd = "noswapfile vnew" },
+  },
   {
     "nvim-telescope/telescope.nvim",
     version = false,
@@ -217,8 +222,10 @@ return {
 
       if lazy.has("trouble.nvim") then
         local trouble = require("trouble.providers.telescope")
-        opts.defaults.mappings.n = vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
-        opts.defaults.mappings.i = vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
+        opts.defaults.mappings.n =
+          vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
+        opts.defaults.mappings.i =
+          vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
       end
 
       return opts
