@@ -52,6 +52,7 @@ opt.shiftround = true -- 缩进取整为shiftwidth的倍数
 opt.smarttab = true -- 智能tab
 opt.foldmethod = "indent" -- 折叠方式
 opt.foldlevelstart = 99 -- 没有折叠
+opt.foldenable = true
 opt.spell = false -- 是否开启单词拼写检查
 opt.spelllang = "en_us,cjk" -- 设定单词拼写检查的语言
 opt.spelloptions = "camel"
