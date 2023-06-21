@@ -22,7 +22,7 @@ M.File = {
 }
 
 M.Diagnostics = {
-  Logo = "󰒡 ",
+  Logo = "",
   Hint = " ",
   Info = " ",
   Warn = " ",

@@ -26,13 +26,11 @@ return {
           end,
           diagnostics = "nvim_lsp",
           diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            local dig = icons.diagnostics
-            local s = " "
-            for e, n in pairs(diagnostics_dict) do
-              local sym = e == "error" and dig.Error or (e == "warning" and dig.Warn or (e == "info" and dig.Info or dig.Hint))
-              s = s .. sym .. n .. " "
+            if count > 0 then
+              return icons.diagnostics.Logo
+            else
+              return
             end
-            return vim.trim(s)
           end,
           offsets = {
             {

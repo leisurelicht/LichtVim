@@ -57,14 +57,7 @@ return {
           type = "text",
           val = function()
             local version = vim.version()
-            return string.format(
-              [[ Date %s |  Version %s.%s.%s |  Plugins %s]],
-              os.date("%Y-%m-%d"),
-              version.major,
-              version.minor,
-              version.patch,
-              require("lazy").stats().count
-            )
+            return string.format([[ Date %s |  Version %s.%s.%s |  Plugins %s]], os.date("%Y-%m-%d"), version.major, version.minor, version.patch, require("lazy").stats().count)
           end,
           opts = { position = "center", hl = "Number" },
         },
