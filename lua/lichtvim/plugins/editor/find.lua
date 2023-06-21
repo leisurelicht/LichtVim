@@ -237,6 +237,10 @@ return {
         telescope.load_extension("notify")
       end
 
+      if lazy.has("scope.nvim") then
+        telescope.load_extension("scope")
+      end
+
       telescope.load_extension("file_browser")
       telescope.load_extension("neoclip")
     end,

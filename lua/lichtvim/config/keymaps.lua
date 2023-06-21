@@ -282,12 +282,19 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fw", telescope("grep_string"), "Word (root dir)")
   map.set("n", "<leader>fW", telescope("grep_string", { cwd = false }), "Word (cwd)")
   map.set("n", "<leader>fK", telescope("keymaps"), "Key maps")
-  map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
   map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set("n", "<leader>fe", call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
+
+  map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
+  -- map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
+  if lazy.has("scope.nvim") then
+    -- map.set("n", "<leader>fB", "<cmd>Telescope scope buffers<cr>", "All Buffers")
+    map.set("n", "<leader>bS", "<cmd>Telescope scope buffers<cr>", "All Buffers")
+  else
+  end
 
   if lazy.has("project.nvim") then
     map.set("n", "<leader>rj", "<cmd>Telescope projects theme=dropdown<cr>", "Recent projects")
