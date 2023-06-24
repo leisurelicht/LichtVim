@@ -24,7 +24,7 @@ return {
     opts = {
       open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
       auto_clean_after_session_restore = true,
-      close_if_last_window = false,
+      close_if_last_window = true,
       source_selector = {
         winbar = true,
         statusline = false,
