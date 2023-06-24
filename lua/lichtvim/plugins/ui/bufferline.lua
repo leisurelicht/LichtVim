@@ -9,7 +9,7 @@ return {
         options = {
           numbers = "ordinal",
           separator_style = "slope",
-          always_show_bufferline = false,
+          always_show_bufferline = true,
           hover = {
             enabled = true,
             delay = 200,
