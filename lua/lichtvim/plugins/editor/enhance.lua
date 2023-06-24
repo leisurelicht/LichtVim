@@ -1,5 +1,4 @@
 return {
-  { "yianwillis/vimcdoc", enabled = false },
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   { "nacro90/numb.nvim", lazy = true, config = true },
   { "karb94/neoscroll.nvim", lazy = true, config = true },

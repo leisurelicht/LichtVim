@@ -51,13 +51,4 @@ return {
       require("todo-comments").setup({})
     end,
   },
-  {
-    "dstein64/vim-startuptime",
-    enabled = false,
-    cmd = "StartupTime",
-    config = function()
-      vim.g.startuptime_tries = 10
-    end,
-  },
-  { "wakatime/vim-wakatime", enabled = false },
 }
