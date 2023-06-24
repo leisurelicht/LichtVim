@@ -36,7 +36,12 @@ return {
         },
       },
       default_component_configs = {
-        indent = { padding = 0, indent_size = 1 },
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
         icon = {
           folder_closed = icons.file.FolderClosed,
           folder_open = icons.file.FolderOpen,
