@@ -5,34 +5,8 @@ return {
     cmd = "Copilot",
     event = "LspAttach",
     opts = {
-      panel = {
-        enabled = true,
-        auto_refresh = true,
-        keymap = {
-          jump_prev = "[[",
-          jump_next = "]]",
-          accept = "<CR>",
-          refresh = "gr",
-          open = "<M-CR>",
-        },
-        layout = {
-          position = "bottom", -- | top | left | right
-          ratio = 0.2,
-        },
-      },
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        debounce = 75,
-        keymap = {
-          accept = "<M-CR>",
-          accept_word = false,
-          accept_line = false,
-          next = "<M-]>",
-          prev = "<M-[>",
-          dismiss = "<C-]>",
-        },
-      },
+      panel = { enabled = false },
+      suggestion = { enabled = false },
     },
     config = function(_, opts)
       require("copilot").setup(opts)
@@ -64,4 +38,15 @@ return {
       table.insert(opts.sorting.comparators, 1, require("copilot_cmp.comparators"))
     end,
   },
+    {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "leisurelicht/lualine-copilot.nvim",
+    },
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_y, 1, { "copilot" })
+    end,
+  },
+
 }
