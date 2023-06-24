@@ -9,8 +9,7 @@ local list = require("lichtvim.utils").list
 local option = require("lichtvim.utils").option
 local plugs = require("lichtvim.utils").plugs
 local Keys = require("lazy.core.handler.keys")
-local format = require("lichtvim.plugins.lsp.config.format").format
-local toggle = require("lichtvim.plugins.lsp.config.format").toggle
+local format = require("lichtvim.plugins.lsp.config.format")
 local wk_ok, wk = pcall(require, "which-key")
 
 local function call(fn, ...)
@@ -542,9 +541,9 @@ local _keys = {
   { "[e", lsp.diagnostic_goto(false, "ERROR"), desc = "Previous diagnostic (error)" },
   { "]w", lsp.diagnostic_goto(true, "WARN"), desc = "Next diagnostic (warning)" },
   { "[w", lsp.diagnostic_goto(false, "WARN"), desc = "Previous diagnostic (warning)" },
-  { "<leader>lf", toggle, desc = "Toggle format", has = "documentFormatting" },
-  { "<leader>lF", format, desc = "Format document", has = "documentFormatting" },
-  { "<leader>lF", format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
+  { "<leader>lf", format.toggle, desc = "Toggle format", has = "documentFormatting" },
+  { "<leader>lF", format.format, desc = "Format document", has = "documentFormatting" },
+  { "<leader>lF", format.format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
   { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
   { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
   { "<leader>li", vim.lsp.buf.incoming_calls, desc = "Incoming calls", has = "callHierarchy" },
