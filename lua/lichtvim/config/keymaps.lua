@@ -220,9 +220,9 @@ map.set("n", "<leader>;", function()
   require("spectre").close()
   vim.cmd([[ Neotree close ]])
   vim.cmd([[ TroubleClose ]])
-  vim.cmd([[silent wa | silent only ]])
+  vim.cmd([[ silent wa | silent only ]])
+  vim.cmd([[ bufdo w | bd ]])
   vim.cmd([[ Alpha ]])
-  -- TODO: close all buffer
 end, "󰧨 Dashboard")
 
 if lazy.has("neo-tree.nvim") then
