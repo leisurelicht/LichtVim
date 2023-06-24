@@ -38,7 +38,7 @@ return {
   {
     "ahmedkhalf/project.nvim",
     opts = {
-      manual_mode = true,
+      manual_mode = false,
       detection_methods = { "pattern" },
       patterns = {
         ".git",
