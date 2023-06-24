@@ -224,8 +224,14 @@ map.set("n", "<leader>;", function()
   vim.cmd([[ Neotree close ]])
   vim.cmd([[ TroubleClose ]])
   vim.cmd([[ silent wa | silent only ]])
-  vim.cmd([[ bufdo w | bd ]])
   vim.cmd([[ Alpha ]])
+  local buffers = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(buffers) do
+    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if ft ~= "alpha" then
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end
 end, "󰧨 Dashboard")
 
 if lazy.has("neo-tree.nvim") then
