@@ -206,6 +206,9 @@ map.set("n", "<leader>uf", option.toggle("foldenable"), "Toggle foldenable")
 map.set("n", "<leader>ud", option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
 map.set("n", "<leader>ul", option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
+if vim.lsp.buf.inlay_hint then
+  map("n", "<leader>uh", call(vim.lsp.buf.inlay_hint, {0, nil}), "Toggle inlay hints")
+end
 
 map.set("n", "<leader>q", function()
   require("spectre").close()

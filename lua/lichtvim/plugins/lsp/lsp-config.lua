@@ -57,6 +57,9 @@ return {
         },
         setup = {},
         servers = {},
+        inlay_hints = {
+          enabled = false,
+        }
       }
     end,
     config = function(_, opts)
@@ -65,6 +68,14 @@ return {
       for name, icon in pairs(icons.diagnostics) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      end
+
+      if opts.inlay_hints.enabled and vim.lsp.buf.inlay_hint then
+        lazy.on_attach(function(client, buffer)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.buf.inlay_hint(buffer, true)
+          end
+        end)
       end
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
