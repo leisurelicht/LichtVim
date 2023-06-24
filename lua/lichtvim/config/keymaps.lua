@@ -232,7 +232,7 @@ elseif lazy.has("nvim-tree.lua") then
 end
 
 if lazy.has("nvim-treesitter") then
-  map.set("n", "<leader>pt", "<cmd>TSUpdate all<cr>", "Treesitter update")
+  map.set("n", "<leader>pt", "<cmd>TSUpsateSync all<cr>", "Treesitter update")
   map.set("n", "<leader>pT", "<cmd>TSModuleInfo<cr>", "Treesitter info")
 end
 
