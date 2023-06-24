@@ -230,8 +230,6 @@ end, "󰧨 Dashboard")
 
 if lazy.has("neo-tree.nvim") then
   map.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", " Explorer")
-elseif lazy.has("nvim-tree.lua") then
-  map.set("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", " Explorer")
 end
 
 if lazy.has("nvim-treesitter") then
