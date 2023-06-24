@@ -54,7 +54,6 @@ return {
   },
   {
     "nvim-cmp",
-    optional = true,
     event = "VeryLazy",
     opts = function(_, opts)
       local suggestion = require("copilot.suggestion")
@@ -90,7 +89,6 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    optional = true,
     event = "VeryLazy",
     dependencies = {
       "leisurelicht/lualine-copilot.nvim",
