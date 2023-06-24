@@ -207,7 +207,7 @@ map.set("n", "<leader>ud", option.toggle("foldcolumn", false, { "0", "1" }), "To
 map.set("n", "<leader>ul", option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
 if vim.lsp.buf.inlay_hint then
-  map("n", "<leader>uh", call(vim.lsp.buf.inlay_hint, {0, nil}), "Toggle inlay hints")
+  map("n", "<leader>uh", call(vim.lsp.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
 end
 
 map.set("n", "<leader>q", function()
@@ -470,7 +470,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
     wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
     local util = require("lichtvim.utils.lazy")
-    local opts = { border = "rounded", cwd = git.dir(), esc_esc = false, ctrl_hjkl = false }
+    local opts = { border = "rounded", cwd = git.get_root(), esc_esc = false, ctrl_hjkl = false }
     map.set("n", "<leader>gg", call(util.float_term, { "lazygit" }, opts), "Lazygit")
     map.set("n", "<leader>gl", call(util.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 
