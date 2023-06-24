@@ -24,7 +24,7 @@ return {
     opts = {
       open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
       auto_clean_after_session_restore = true,
-      close_if_last_window = true,
+      close_if_last_window = false,
       source_selector = {
         winbar = true,
         statusline = false,
@@ -37,10 +37,8 @@ return {
       },
       default_component_configs = {
         indent = {
+          padding = 1,
           with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
-          expander_highlight = "NeoTreeExpander",
         },
         icon = {
           folder_closed = icons.file.FolderClosed,
