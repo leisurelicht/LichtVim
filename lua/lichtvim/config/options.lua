@@ -77,7 +77,7 @@ if sys.is_neovide() then
   opt.mouse = ""
   vim.g.neovide_cursor_vfx_mode = "railgun"
   -- vim.g.neovide_confirm_quit = true
-  -- vim.g.neovide_fullscreen = false
+  vim.g.neovide_fullscreen = true
   vim.g.neovide_hide_mouse_when_typing = false
   vim.g.neovide_remember_window_size = true
   if sys.is_macos() then
