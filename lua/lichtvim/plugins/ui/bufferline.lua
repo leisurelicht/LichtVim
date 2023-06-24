@@ -1,5 +1,5 @@
 return {
-  { "tiagovla/scope.nvim", config = true },
+  { "tiagovla/scope.nvim", opts = { restore_state = false }, config = true },
   {
     "akinsho/bufferline.nvim",
     event = "VimEnter",
