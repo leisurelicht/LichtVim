@@ -6,7 +6,6 @@ return {
     event = { "BufRead", "BufNewFile" },
     cmd = { "TSModuleInfo", "TSUpdateSync" },
     dependencies = {
-      "p00f/nvim-ts-rainbow",
       "RRethy/nvim-treesitter-endwise",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
@@ -23,15 +22,6 @@ return {
           node_decremental = "<BS>",
           scope_incremental = false,
         },
-      },
-      -- 彩虹括号
-      rainbow = {
-        enable = true,
-        disable = {},
-        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        colors = {}, -- table of hex strings
-        termcolors = {}, -- table of colour name strings
       },
       -- match % g% [% ]% z%
       matchup = { enable = true },
