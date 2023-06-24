@@ -13,12 +13,10 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    config = function(_, opts)
-      require("gopher").setup(opts)
-    end,
-    build = function()
+    init = function()
       vim.cmd([[silent! GoInstallDeps]])
     end,
+    config = true,
   },
   {
     "m4xshen/smartcolumn.nvim",
@@ -88,6 +86,28 @@ return {
             usePlaceholders = true,
           },
         },
+      },
+      setup = {
+        gopls = function()
+          -- workaround for gopls not supporting semantictokensprovider
+          -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+          lazy.on_attach(function(client, _)
+            if client.name == "gopls" then
+              if not client.server_capabilities.semanticTokensProvider then
+                local semantic = client.config.capabilities.textDocument.semanticTokens
+                client.server_capabilities.semanticTokensProvider = {
+                  full = true,
+                  legend = {
+                    tokenTypes = semantic.tokenTypes,
+                    tokenModifiers = semantic.tokenModifiers,
+                  },
+                  range = true,
+                }
+              end
+            end
+          end)
+          -- end workaround
+        end,
       },
     },
   },
