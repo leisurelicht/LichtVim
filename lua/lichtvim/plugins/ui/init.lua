@@ -59,7 +59,7 @@ return {
           },
         },
         select = {
-          backend = { "telescope", "builtin" },
+          backend = { "telescope", "nui" },
         },
       }
     end,

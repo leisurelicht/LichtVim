@@ -211,11 +211,24 @@ if vim.lsp.buf.inlay_hint then
 end
 
 map.set("n", "<leader>q", function()
-  require("spectre").close()
-  vim.cmd([[ Neotree close ]])
-  vim.cmd([[ TroubleClose ]])
-  vim.cmd([[ only ]])
-  vim.cmd([[ wa | qa ]])
+  vim.ui.select({ "Yes", "No" }, {
+    prompt = "Comfirm to quit?",
+    telescope = require("telescope.themes").get_dropdown({
+      layout_config = {
+        width = 0.20,
+        height = 0.13,
+      },
+    }),
+  }, function(choice)
+    if choice ~= "Yes" then
+      return
+    end
+    require("spectre").close()
+    vim.cmd([[ Neotree close ]])
+    vim.cmd([[ TroubleClose ]])
+    vim.cmd([[ only ]])
+    vim.cmd([[ wa | qa ]])
+  end)
 end, " Quit")
 
 map.set("n", "<leader>;", function()
@@ -487,9 +500,10 @@ vim.api.nvim_create_autocmd({ "User" }, {
       map.set("n", "<leader>gs", telescope("git_status"), "Status")
     end
 
-    local gs = package.loaded.gitsigns
     map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
     map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
+
+    local gs = package.loaded.gitsigns
     map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = event.buf })
     map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = event.buf })
     map.set(
