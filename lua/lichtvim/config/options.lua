@@ -73,7 +73,6 @@ opt.list = true -- 不可见字符不显示
 opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
 if sys.is_neovide() then
-  vim.notify("Use Neovide Configure", vim.log.levels.INFO, { title = LichtVimTitle })
   opt.mouse = ""
   vim.g.neovide_cursor_vfx_mode = "railgun"
   -- vim.g.neovide_confirm_quit = true

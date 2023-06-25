@@ -68,22 +68,17 @@ return {
     opts = {
       servers = {
         gopls = {
-          cmd = { "gopls" },
           settings = {
             gopls = {
-              experimentalPostfixCompletions = true,
+              staticcheck = true,
+              semanticTokens = true,
               analyses = {
-                shadow = true,
                 unsafeptr = true,
                 unreachable = true,
                 unusedresult = true,
                 unusedparams = true,
               },
-              staticcheck = true,
             },
-          },
-          init_options = {
-            usePlaceholders = true,
           },
         },
       },
