@@ -7,38 +7,27 @@ return {
     opts = { open_cmd = "noswapfile vnew" },
   },
   {
+    "AckslD/nvim-neoclip.lua",
+    lazy = true,
+    dependencies = { { "kkharji/sqlite.lua", module = "sqlite" } },
+    opts = {
+      enable_persistent_history = true,
+      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+      config = function(_, opts)
+        require("neoclip").setup(opts)
+        require("telescope").load_extension("neoclip")
+      end,
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
     version = false,
     lazy = true,
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "sqlite.lua" } },
+      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
       { "nvim-telescope/telescope-file-browser.nvim" },
-      {
-        "AckslD/nvim-neoclip.lua",
-        lazy = true,
-        dependencies = { { "sqlite.lua", module = "sqlite" } },
-        opts = {
-          enable_persistent_history = true,
-          filter = function(data)
-            local function is_whitespace(line)
-              return vim.fn.match(line, [[^\s*$]]) ~= -1
-            end
-
-            local function all(tbl, check)
-              for _, entry in ipairs(tbl) do
-                if not check(entry) then
-                  return false
-                end
-              end
-              return true
-            end
-
-            return not all(data.event.regcontents, is_whitespace)
-          end,
-        },
-      },
     },
     opts = function(_, opts)
       local Job = require("plenary.job")
@@ -164,6 +153,10 @@ return {
             override_file_sorter = true,
             case_mode = "smart_case",
           },
+          frecency = {
+            db_root = vim.fn.stdpath("data") .. "/databases",
+            show_scores = true,
+          },
           file_browser = vim.tbl_extend("force", center_list, {
             hijack_netrw = true,
             sorting_strategy = "ascending",
@@ -213,6 +206,7 @@ return {
 
       telescope.load_extension("fzf")
       telescope.load_extension("frecency")
+      telescope.load_extension("file_browser")
 
       if lazy.has("project.nvim") then
         telescope.load_extension("projects")
@@ -224,9 +218,6 @@ return {
       if lazy.has("scope.nvim") then
         telescope.load_extension("scope")
       end
-
-      telescope.load_extension("file_browser")
-      telescope.load_extension("neoclip")
     end,
   },
 }
