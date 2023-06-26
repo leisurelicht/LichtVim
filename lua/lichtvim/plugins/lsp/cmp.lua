@@ -1,7 +1,6 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    enabled = true,
     version = false,
     event = { "InsertEnter" },
     dependencies = {
