@@ -1,4 +1,3 @@
-local ic = require("lichtvim.config").icons
 local win_num = require("lichtvim.utils").win.num
 
 local function title(t)
@@ -10,6 +9,9 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     opts = function()
+      local ic = require("lichtvim.config").icons
+      local i_git = ic.git
+      local i_diag = ic.diagnostics
       return {
         options = {
           theme = "auto",
@@ -48,28 +50,39 @@ return {
           lualine_a = { { "mode" } },
           lualine_b = {
             { "branch" },
-            { "diff", symbols = { added = ic.git.Add, modified = ic.git.Change, removed = ic.git.Delete } },
+            { "diff", symbols = { added = i_git.Add, modified = i_git.Change, removed = i_git.Delete } },
           },
-          lualine_c = {},
-          lualine_x = { { "filetype" }, { "fileformat" }, { "encoding" } },
-          lualine_y = {
+          lualine_c = {
+            {
+              function()
+                return require("nvim-navic").get_location()
+              end,
+              cond = function()
+                return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+              end,
+            },
+          },
+          lualine_x = {
             {
               "diagnostics",
               sources = { "nvim_diagnostic" },
               sections = { "error", "warn", "info", "hint" },
-              symbols = {
-                error = ic.diagnostics.Error,
-                warn = ic.diagnostics.Warn,
-                info = ic.diagnostics.Info,
-                hint = ic.diagnostics.Hint,
-              },
+              symbols = { error = i_diag.Error, warn = i_diag.Warn, info = i_diag.Info, hint = i_diag.Hint },
               colored = true, -- Displays diagnostics status in color if set to true.
               update_in_insert = false, -- Update diagnostics in insert mode.
-              always_visible = false, -- Show diagnostics even if there are none.
+              always_visible = true, -- Show diagnostics even if there are none.
             },
+            { "encoding" },
+            { "filetype" },
+            { "fileformat" },
+          },
+          lualine_y = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates },
           },
-          lualine_z = { { "location" }, { "progress" } },
+          lualine_z = {
+            { "location" },
+            { "progress" },
+          },
         },
         extensions = {
           {
