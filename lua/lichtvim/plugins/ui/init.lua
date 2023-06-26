@@ -33,6 +33,7 @@ return {
   },
   { -- better vim.ui
     "stevearc/dressing.nvim",
+    lazy = true,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
@@ -66,11 +67,14 @@ return {
   },
   {
     "folke/trouble.nvim",
+    lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     opts = { use_diagnostic_signs = true },
   },
   {
     "kevinhwang91/nvim-ufo",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "kevinhwang91/promise-async",
       {
@@ -122,5 +126,4 @@ return {
       require("ufo").setup(opts)
     end,
   },
-
 }

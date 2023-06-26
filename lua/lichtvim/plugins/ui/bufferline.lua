@@ -2,7 +2,7 @@ return {
   { "tiagovla/scope.nvim", event = { "BufReadPre", "BufNewFile" }, opts = { restore_state = false }, config = true },
   {
     "akinsho/bufferline.nvim",
-    event = "VimEnter",
+    event = "VeryLazy",
     opts = function()
       local icons = require("lichtvim.config").icons
       return {

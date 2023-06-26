@@ -7,7 +7,7 @@ end
 return {
   {
     "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
+    event = "VeryLazy",
     opts = function()
       local ic = require("lichtvim.config").icons
       local i_git = ic.git
