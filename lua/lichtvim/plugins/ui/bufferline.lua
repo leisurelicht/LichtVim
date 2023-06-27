@@ -34,13 +34,8 @@ return {
           end,
           offsets = {
             {
-              filetype = "NvimTree",
-              text = icons.file.FolderClosed .. "  File Explorer",
-              text_align = "center",
-            },
-            {
               filetype = "neo-tree",
-              text = icons.file.FolderClosed .. "  File Explorer",
+              text = icons.file.FolderClosed .. " File Explorer",
               text_align = "center",
               separator = true,
             },

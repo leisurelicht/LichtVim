@@ -10,19 +10,19 @@ M.Other = {
 }
 
 M.File = {
-  DefaultFile = "󰈙",
+  DefaultFile = "󰈙 ",
   FileModified = "",
-  FileReadOnly = "",
+  FileReadOnly = " ",
   FoldClosed = "",
   FoldOpened = "",
   FoldSeparator = " ",
-  FolderClosed = "",
-  FolderEmpty = "",
-  FolderOpen = "",
+  FolderClosed = " ",
+  FolderEmpty = " ",
+  FolderOpen = " ",
 }
 
 M.Diagnostics = {
-  Logo = "",
+  Logo = " ",
   Hint = " ",
   Info = " ",
   Warn = " ",
@@ -31,16 +31,16 @@ M.Diagnostics = {
 
 M.Git = {
   Logo = "󰊢 ",
-  Branch = "󰘬",
+  Branch = "󰘬 ",
   Add = " ",
   Change = " ",
   Delete = " ",
-  Staged = " ",
-  Unstaged = " ",
-  Conflict = " ",
+  Staged = " ",
+  Unstaged = "󰩳 ",
+  Conflict = "󰴜 ",
   Ignored = " ",
-  Renamed = "➜",
-  Untracked = "",
+  Renamed = "󰛂 ",
+  Untracked = "󰞋 ",
 }
 
 M.Kinds = {
@@ -78,19 +78,19 @@ M.Kinds = {
 }
 
 M.Sources = {
-  nvim_lsp = "󰘐",
-  nvim_lua = "",
-  path = "󰴠",
-  buffer = "󱁹",
-  look = "󰍄",
-  spell = "󰓆",
-  cmdline = "",
-  fuzzy_buffer = "󱁴",
-  copilot = "",
-  cmp_tabnine = "󰐭",
-  luasnip = "",
-  vsnip = "",
-  treesitter = "󰔱",
+  nvim_lsp = "󰘐 ",
+  nvim_lua = " ",
+  path = "󰴠 ",
+  buffer = "󱁹 ",
+  look = "󰍄 ",
+  spell = "󰓆 ",
+  cmdline = " ",
+  fuzzy_buffer = "󱁴 ",
+  copilot = " ",
+  cmp_tabnine = "󰐭 ",
+  luasnip = " ",
+  vsnip = " ",
+  treesitter = " ",
 }
 
 return M
