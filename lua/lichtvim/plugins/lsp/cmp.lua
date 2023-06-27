@@ -89,7 +89,7 @@ return {
           entries = { name = "custom", selection_order = "top_down" },
         },
         formatting = {
-          fields = { "kind", "abbr", "menu" },
+          fields = { "abbr", "kind", "menu" },
           format = function(entry, vim_item)
             if vim.tbl_contains({ "path" }, entry.source.name) then
               local icon, hl_group = require("nvim-web-devicons").get_icon(entry:get_completion_item().label)
@@ -100,22 +100,15 @@ return {
               end
             end
 
-            vim_item.menu = (function()
-              local m = icons.sources[entry.source.name]
-              if m == nil then
-                m = "[" .. string.upper(entry.source.name) .. "]"
-              end
-              return m .. "  [" .. vim_item.kind .. "]"
-            end)()
-
             if icons.kinds[vim_item.kind] then
-              vim_item.kind = icons.kinds[vim_item.kind] .. " "
+              vim_item.kind = icons.kinds[vim_item.kind] .. " [" .. vim_item.kind .. "]"
             end
+
             return vim_item
           end,
         },
         window = {
-          completion = cmp.config.window.bordered({ col_offset = -5 }),
+          completion = cmp.config.window.bordered({ col_offset = -1 }),
           documentation = cmp.config.window.bordered(),
         },
         experimental = {
