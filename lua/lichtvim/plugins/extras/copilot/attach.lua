@@ -94,7 +94,7 @@ return {
       "leisurelicht/lualine-copilot.nvim",
     },
     opts = function(_, opts)
-      table.insert(opts.sections.lualine_y, 1, { "copilot" })
+      table.insert(opts.sections.lualine_y, 2, { "copilot" })
     end,
   },
 }

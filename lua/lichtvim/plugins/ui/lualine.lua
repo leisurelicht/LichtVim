@@ -63,6 +63,11 @@ return {
             },
           },
           lualine_x = {
+            { "encoding" },
+            { "filetype" },
+            { "fileformat" },
+          },
+          lualine_y = {
             {
               "diagnostics",
               sources = { "nvim_diagnostic" },
@@ -72,11 +77,6 @@ return {
               update_in_insert = false, -- Update diagnostics in insert mode.
               always_visible = true, -- Show diagnostics even if there are none.
             },
-            { "encoding" },
-            { "filetype" },
-            { "fileformat" },
-          },
-          lualine_y = {
             { require("lazy.status").updates, cond = require("lazy.status").has_updates },
           },
           lualine_z = {
