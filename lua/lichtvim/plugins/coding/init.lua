@@ -79,9 +79,7 @@ return {
         "alpha",
         "checkhealth",
       },
-      custom_colorcolumn = {
-        ["htmldjango"] = "120",
-      },
+      custom_colorcolumn = {},
       scope = "file",
     },
     config = function(_, opts)
