@@ -48,13 +48,13 @@ you can just use LazyVim's [starter](https://github.com/LazyVim/starter) or you 
 or you can use docker to try first.
 
 ```
-docker run -w /root -it --rm alpine:edge /bin/sh -c 'apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/config/try.lua ; bash'
+docker run -w /root -it --rm alpine:edge /bin/sh -c 'apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/develop/try.lua ; bash'
 ```
 
 如果你无法访问`raw.githubusercontent.com`,你可以使用[GitHub520](https://github.com/521xueweihan/GitHub520)项目里`raw.githubusercontent.com`的`host ip`替换下面命令中的`host ip`,然后再重试，就能正常访问了。
 
 ```
-docker run -w /root -it --rm alpine:edge /bin/sh -c 'echo "185.199.108.133 raw.githubusercontent.com" >> /etc/hosts && apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/config/try.lua ; bash'
+docker run -w /root -it --rm alpine:edge /bin/sh -c 'echo "185.199.108.133 raw.githubusercontent.com" >> /etc/hosts && apk update && apk add --no-cache curl wget git ripgrep fd fzf nodejs npm neovim neovim-doc sqlite sqlite-dev lazygit go build-base --update && mkdir -p ~/.config/nvim/ && curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/leisurelicht/.licht-config/master/vi/nvim/lua/develop/try.lua ; bash'
 ```
 
 ## Thanks Too
