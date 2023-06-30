@@ -211,24 +211,26 @@ if vim.lsp.buf.inlay_hint then
 end
 
 map.set("n", "<leader>q", function()
-  vim.ui.select({ "Yes", "No" }, {
-    prompt = "Comfirm to quit?",
-    telescope = require("telescope.themes").get_dropdown({
-      layout_config = {
-        width = 0.20,
-        height = 0.13,
-      },
-    }),
-  }, function(choice)
-    if choice ~= "Yes" then
-      return
-    end
-    require("spectre").close()
-    vim.cmd([[ Neotree close ]])
-    vim.cmd([[ TroubleClose ]])
-    vim.cmd([[ only ]])
-    vim.cmd([[ wa | qa ]])
-  end)
+  -- vim.ui.select({ "Yes", "No" }, {
+  --   prompt = "Comfirm to quit?",
+  --   telescope = require("telescope.themes").get_dropdown({
+  --     winblend = 0,
+  --     layout_config = {
+  --       width = 0.25,
+  --       height = 0.15,
+  --     },
+  --   }),
+  -- }, function(choice)
+  --   if choice ~= "Yes" then
+  --     return
+  --   end
+  --   require("spectre").close()
+  --   vim.cmd([[ Neotree close ]])
+  --   vim.cmd([[ TroubleClose ]])
+  --   vim.cmd([[ only ]])
+  --   vim.cmd([[ wa | qa ]])
+  -- end)
+  vim.cmd([[ confirm quitall ]])
 end, " Quit")
 
 map.set("n", "<leader>;", function()
@@ -491,17 +493,14 @@ vim.api.nvim_create_autocmd({ "User" }, {
     map.set("n", "<leader>gg", call(util.float_term, { "lazygit" }, opts), "Lazygit")
     map.set("n", "<leader>gl", call(util.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 
+    map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
+
     if lazy.has("telescope.nvim") then
       local telescope = require("lichtvim.utils").plugs.telescope
-      map.set("n", "<leader>gC", telescope("git_bcommits"), "Buffer's Commits")
-      map.set("n", "<leader>gc", telescope("git_commits"), "Commits")
-      map.set("n", "<leader>gS", telescope("git_stash"), "Stash")
+      map.set("n", "<leader>gc", telescope("git_bcommits"), "Buffer's Commits")
+      map.set("n", "<leader>gs", telescope("git_stash"), "Stash")
       map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
-      map.set("n", "<leader>gs", telescope("git_status"), "Status")
     end
-
-    map.set("n", "<leader>gB", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
-    map.set("n", "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", "Open commit url")
 
     local gs = package.loaded.gitsigns
     map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = event.buf })
@@ -522,12 +521,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
     )
     map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = event.buf })
     map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = event.buf })
-    map.set("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk", { buffer = event.buf })
     map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = event.buf })
-    map.set("n", "<leader>gt", gs.toggle_deleted, "Toggle deleted", { buffer = event.buf })
-    map.set("n", "<leader>gb", call(gs.blame_line, { full = true }), "Show blame line", { buffer = event.buf })
-    map.set("n", "<leader>gd", gs.diffthis, "Diff this", { buffer = event.buf })
-    map.set("n", "<leader>gD", call(gs.diffthis, "~"), "Diff this?", { buffer = event.buf })
     map.set("n", "]g", function()
       if vim.wo.diff then
         return "]g"

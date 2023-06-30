@@ -25,6 +25,7 @@ return {
     lazy = true,
     cmd = "Telescope",
     dependencies = {
+      { "folke/trouble.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
       { "nvim-telescope/telescope-file-browser.nvim" },
@@ -34,9 +35,10 @@ return {
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
       local themes = require("telescope.themes")
-      local sorters = require("telescope.sorters")
       local fb_actions = require("telescope").extensions.file_browser.actions
+      local trouble = require("trouble.providers.telescope")
 
+      -- Dont preview binaries
       local new_maker = function(filepath, bufnr, options)
         filepath = vim.fn.expand(filepath)
         Job:new({
@@ -58,9 +60,7 @@ return {
 
       local center_list = themes.get_dropdown({
         winblend = 0, -- 透明度
-        width = 0.5,
-        prompt = " ",
-        results_height = 15,
+        prompt = "",
         previewer = false,
       })
 
@@ -68,41 +68,11 @@ return {
         defaults = {
           prompt_prefix = "   ",
           selection_caret = " ",
-          file_sorter = sorters.get_fuzzy_file,
-          generic_sorter = sorters.get_generic_fuzzy_sorter,
           path_display = { "truncate" },
-          winblend = 0,
-          border = {},
-          borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-          use_less = true,
-          set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-          file_previewer = previewers.vim_buffer_cat.new,
-          grep_previewer = previewers.vim_buffer_vimgrep.new,
-          qflist_previewer = previewers.vim_buffer_qflist.new,
-          buffer_previewer_maker = new_maker, -- Dont preview binaries
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--trim", -- add this value
-          },
+          set_env = { ["COLORTERM"] = "truecolor" },
+          buffer_previewer_maker = new_maker,
           sorting_strategy = "ascending",
-          layout_config = {
-            horizontal = {
-              prompt_position = "top",
-              preview_width = 0.55,
-            },
-            vertical = {
-              mirror = false,
-            },
-            width = 0.87,
-            height = 0.80,
-            preview_cutoff = 120,
-          },
+          layout_config = { horizontal = { prompt_position = "top" } },
           mappings = {
             i = {
               ["<ESC>"] = actions.close,
@@ -110,23 +80,22 @@ return {
               ["<C-b>"] = actions.preview_scrolling_up,
               ["<C-h>"] = actions.cycle_history_prev,
               ["<C-l>"] = actions.cycle_history_next,
-              -- ["<C-k>"] = actions.move_selection_previous,
-              -- ["<C-j>"] = actions.move_selection_next,
               ["<C-p>"] = actions.move_selection_previous,
               ["<C-n>"] = actions.move_selection_next,
+              ["<C-t>"] = trouble.open_with_trouble,
             },
             n = {
-              ["q"] = actions.close,
+              -- ["q"] = actions.close,
               ["<ESC>"] = actions.close,
+              ["<C-t>"] = trouble.open_with_trouble,
             },
           },
         },
         pickers = {
           find_files = { theme = "dropdown", find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
           git_files = { theme = "dropdown" },
-          oldfiles = { theme = "dropdown" },
-          -- buffers = vim.deepcopy(center_list),
-          buffers = { theme = "dropdown" },
+          oldfiles = center_list,
+          buffers = center_list,
           marks = { theme = "dropdown" },
           commands = { theme = "ivy" },
           command_history = { theme = "dropdown" },
@@ -136,15 +105,6 @@ return {
           git_branches = { theme = "ivy" },
           git_status = { theme = "ivy" },
           git_stash = { theme = "ivy" },
-          lsp_definitions = {},
-          lsp_type_definitions = {},
-          lsp_implementations = {},
-          lsp_references = {},
-          diagnostics = {},
-          lsp_document_symbols = {},
-          lsp_workspace_symbols = {},
-          lsp_incoming_calls = {},
-          lsp_outgoing_calls = {},
         },
         extensions = {
           fzf = {
@@ -161,7 +121,6 @@ return {
             hijack_netrw = true,
             sorting_strategy = "ascending",
             layout_config = {
-              -- preview_cutoff = 0.5,
               prompt_position = "top",
               width = 0.4,
               height = 0.5,
@@ -189,14 +148,6 @@ return {
           }),
         },
       }
-
-      if lazy.has("trouble.nvim") then
-        local trouble = require("trouble.providers.telescope")
-        opts.defaults.mappings.n =
-          vim.tbl_deep_extend("force", opts.defaults.mappings.n, { ["<C-q>"] = trouble.open_with_trouble })
-        opts.defaults.mappings.i =
-          vim.tbl_extend("force", opts.defaults.mappings.i, { ["<C-q>"] = trouble.open_with_trouble })
-      end
 
       return opts
     end,
