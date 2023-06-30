@@ -3,7 +3,24 @@
 -- Note: config init
 -- =================
 --
-require("lichtvim.config.global")
+_G.LichtVimTitle = "LichtVim"
+
+-- add title to body
+_G.add_title = function(body)
+  if body == nil then
+    return LichtVimTitle
+  end
+  return string.format("%s%s", LichtVimTitle, body)
+end
+-- 展开打印各种数据
+_G.Dump = function(...)
+  local objects = vim.tbl_map(vim.inspect, { ... })
+  print(unpack(objects))
+end
+
+_G.lazy = require("lichtvim.utils.lazy")
+_G.map = require("lichtvim.utils.mapping")
+
 local icons = require("lichtvim.config.ui.icons")
 
 local M = {}
