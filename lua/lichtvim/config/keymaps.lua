@@ -285,27 +285,29 @@ end
 if lazy.has("telescope.nvim") then
   local telescope = plugs.telescope
 
-  map.set("n", "<leader>fT", telescope("builtin"), "Builtin")
+  if require("lazy.core.config").plugins["LichtVim"].dev then
+    map.set("n", "<leader>fT", telescope("builtin"), "Builtin")
+    map.set("n", "<leader>fA", telescope("autocommands"), "AutoCommands")
+    map.set("n", "<leader>fM", telescope("man_pages"), "Man pages")
+    map.set("n", "<leader>fP", telescope("vim_options"), "Vim option")
+    map.set("n", "<leader>fK", telescope("keymaps"), "Key maps")
+    map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
+    map.set("n", "<leader>fH", telescope("help_tags"), "Help tags")
+  end
+
   map.set("n", "<leader>f<tab>", telescope("commands"), "Commands")
   map.set("n", "<leader>fc", telescope("command_history"), "Commands history")
   map.set("n", "<leader>fs", telescope("search_history"), "Search history")
-  map.set("n", "<leader>fA", telescope("autocommands"), "AutoCommands")
   map.set("n", "<leader>ff", telescope("files"), "Files (root dir)")
   map.set("n", "<leader>ff", telescope("files", { cwd = false }), "Files (cwd)")
-  map.set("n", "<leader>fH", telescope("help_tags"), "Help tags")
   map.set("n", "<leader>fm", telescope("marks"), "Marks")
-  map.set("n", "<leader>fM", telescope("man_pages"), "Man pages")
   map.set("n", "<leader>fo", telescope("oldfiles"), "Recently files")
   map.set("n", "<leader>fO", telescope("oldfiles", { cwd = vim.loop.cwd() }), "Recently files (cwd)")
-  map.set("n", "<leader>fP", telescope("vim_options"), "Vim option")
   map.set("n", "<leader>fg", telescope("live_grep"), "Grep (root dir)")
   map.set("n", "<leader>fG", telescope("live_grep", { cwd = false }), "Grep (cwd)")
   map.set("n", "<leader>fw", telescope("grep_string"), "Word (root dir)")
   map.set("n", "<leader>fW", telescope("grep_string", { cwd = false }), "Word (cwd)")
-  map.set("n", "<leader>fK", telescope("keymaps"), "Key maps")
   map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
-  map.set("n", "<leader>fC", telescope("colorscheme", { enable_preview = true }), "Colorscheme")
-  map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set(
     "n",
@@ -315,9 +317,7 @@ if lazy.has("telescope.nvim") then
   )
 
   map.set("n", "<leader>bs", telescope("buffers"), "Buffers")
-  -- map.set("n", "<leader>fb", telescope("buffers"), "Buffers")
   if lazy.has("scope.nvim") then
-    -- map.set("n", "<leader>fB", "<cmd>Telescope scope buffers<cr>", "All Buffers")
     map.set("n", "<leader>bS", "<cmd>Telescope scope buffers<cr>", "All Buffers")
   else
   end
