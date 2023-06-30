@@ -35,7 +35,7 @@ return {
       },
       lightbulb = {
         sign = false,
-        virtual_text = true,
+        virtual_text = false,
       },
       ui = {
         border = "rounded",
