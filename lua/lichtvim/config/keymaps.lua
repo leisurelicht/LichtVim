@@ -495,10 +495,9 @@ vim.api.nvim_create_autocmd({ "User" }, {
     map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
 
     if lazy.has("telescope.nvim") then
-      local telescope = require("lichtvim.utils").plugs.telescope
-      map.set("n", "<leader>gc", telescope("git_bcommits"), "Buffer's Commits")
-      map.set("n", "<leader>gs", telescope("git_stash"), "Stash")
-      map.set("n", "<leader>gn", telescope("git_branches"), "Branches")
+      map.set("n", "<leader>gc", utils.plugs.telescope("git_bcommits"), "Buffer's Commits")
+      map.set("n", "<leader>gs", utils.plugs.telescope("git_stash"), "Stash")
+      map.set("n", "<leader>gn", utils.plugs.telescope("git_branches"), "Branches")
     end
 
     local gs = package.loaded.gitsigns

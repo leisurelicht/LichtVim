@@ -2,7 +2,6 @@ return {
   { "vim-scripts/indentpython.vim", ft = { "python", "djangohtml" } },
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
-    enabled = true,
     event = { "BufNewFile", "BufRead" },
     opts = {
       show_current_context = false,
@@ -29,7 +28,6 @@ return {
   },
   {
     "echasnovski/mini.indentscope",
-    enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       symbol = "│",
@@ -37,6 +35,7 @@ return {
     },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(add_title("DisableMiniIndentScope"), { clear = true }),
         pattern = {
           "log",
           "help",

@@ -9,15 +9,13 @@ return {
         options = {
           numbers = "ordinal",
           separator_style = "slope",
-          always_show_bufferline = true,
+          always_show_bufferline = false,
           hover = {
             enabled = true,
             delay = 200,
             reveal = { "close" },
           },
-          indicator = {
-            style = "underline",
-          },
+          indicator = { style = "underline" },
           close_command = function(n)
             require("mini.bufremove").delete(n, false)
           end,
@@ -26,11 +24,7 @@ return {
           end,
           diagnostics = "nvim_lsp",
           diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            if count > 0 then
-              return icons.diagnostics.Logo
-            else
-              return
-            end
+            return count > 0 and icons.diagnostics.Logo or nil
           end,
           offsets = {
             {

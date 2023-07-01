@@ -1,14 +1,14 @@
-local win_num = require("lichtvim.utils").win.num
-
-local function title(t)
-  return string.format("[[%s]]", t)
-end
-
 return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
+      local win_num = utils.win.num
+
+      local function title(t)
+        return string.format("[[%s]]", t)
+      end
+
       local ic = require("lichtvim.config").icons
       local i_git = ic.git
       local i_diag = ic.diagnostics

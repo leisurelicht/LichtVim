@@ -24,17 +24,14 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("smart-splits").setup(opts)
-    end,
+    config = true,
   },
   {
     "brglng/vim-im-select",
     event = { "BufNewFile", "BufRead" },
     config = function()
-      local sys = require("lichtvim.utils").sys
       vim.g.im_select_enable_focus_eventsF = 1
-      if sys.is_macos() or sys.is_linux() then
+      if utils.sys.is_macos() or utils.sys.is_linux() then
         vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineEnter", "CmdlineLeave", "VimEnter" }, {
           group = vim.api.nvim_create_augroup(add_title("Imselect"), { clear = true }),
           pattern = { "*" },
