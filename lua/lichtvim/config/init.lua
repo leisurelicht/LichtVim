@@ -18,6 +18,7 @@ _G.Dump = function(...)
   print(unpack(objects))
 end
 
+_G.utils = require("lichtvim.utils")
 _G.lazy = require("lichtvim.utils.lazy")
 _G.map = require("lichtvim.utils.mapping")
 

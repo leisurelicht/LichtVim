@@ -3,11 +3,11 @@
 -- Note: 快捷键设置
 -- =================
 --
-local git = require("lichtvim.utils").git
-local lsp = require("lichtvim.utils").lsp
-local list = require("lichtvim.utils").list
-local option = require("lichtvim.utils").option
-local plugs = require("lichtvim.utils").plugs
+local git = utils.git
+local lsp = utils.lsp
+local list = utils.list
+local option = utils.option
+local plugs = utils.plugs
 local Keys = require("lazy.core.handler.keys")
 local format = require("lichtvim.plugins.lsp.config.format")
 local wk_ok, wk = pcall(require, "which-key")
@@ -307,7 +307,7 @@ if lazy.has("telescope.nvim") then
   map.set("n", "<leader>fG", telescope("live_grep", { cwd = false }), "Grep (cwd)")
   map.set("n", "<leader>fw", telescope("grep_string"), "Word (root dir)")
   map.set("n", "<leader>fW", telescope("grep_string", { cwd = false }), "Word (cwd)")
-  map.set("n", "<leader>fJ", telescope("jumplist"), "Jump list")
+  map.set("n", "<leader>fj", telescope("jumplist"), "Jump list")
   map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
   map.set(
     "n",
@@ -488,10 +488,9 @@ vim.api.nvim_create_autocmd({ "User" }, {
   callback = function(event)
     wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
-    local util = require("lichtvim.utils.lazy")
-    local opts = { border = "rounded", cwd = git.get_root(), esc_esc = false, ctrl_hjkl = false }
-    map.set("n", "<leader>gg", call(util.float_term, { "lazygit" }, opts), "Lazygit")
-    map.set("n", "<leader>gl", call(util.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+    local opts = { border = "rounded", cmd = git.get_root, esc_esc = false, ctrl_hjkl = false }
+    map.set("n", "<leader>gg", call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
+    map.set("n", "<leader>gl", call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 
     map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
 
