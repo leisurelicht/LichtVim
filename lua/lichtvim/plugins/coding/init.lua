@@ -56,7 +56,7 @@ return {
       ignore_lsp = { "dockerls", "null_ls", "copilot" },
       exclude_dirs = { "/", "~" },
       show_hidden = false,
-      silent_chdir = true,
+      silent_chdir = false,
       scope_chdir = "tab",
       datapath = vim.fn.stdpath("data"),
     },
