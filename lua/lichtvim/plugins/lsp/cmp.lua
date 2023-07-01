@@ -44,9 +44,7 @@ return {
             require("snippy").expand_snippet(args.body)
           end,
         },
-        completion = {
-          completeopt = "menu,menuone,noselect",
-        },
+        completion = { completeopt = "menu,menuone,noselect" },
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -85,9 +83,7 @@ return {
             cmp.config.compare.order,
           },
         },
-        view = {
-          entries = { name = "custom", selection_order = "top_down" },
-        },
+        view = { entries = { name = "custom", selection_order = "top_down" } },
         formatting = {
           fields = { "abbr", "kind", "menu" },
           format = function(entry, vim_item)
@@ -111,11 +107,7 @@ return {
           completion = cmp.config.window.bordered({ col_offset = -1 }),
           documentation = cmp.config.window.bordered(),
         },
-        experimental = {
-          ghost_text = {
-            hl_group = "CmpGhostText",
-          },
-        },
+        experimental = { ghost_text = { hl_group = "CmpGhostText" } },
       }
     end,
     config = function(_, opts)
