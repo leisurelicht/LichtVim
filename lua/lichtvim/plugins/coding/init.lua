@@ -4,7 +4,6 @@ return {
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
   { -- 自动配对
     "windwp/nvim-autopairs",
-    enabled = true,
     event = "InsertEnter",
     opts = { enable_check_bracket_line = false, ignored_next_char = "[%w%.]" },
   },
@@ -109,7 +108,7 @@ return {
       close_on_exit = true,
       shell = vim.o.shell,
       float_opts = {
-        border = "curved", -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+        border = "rounded", -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
         winblend = 0,
         highlights = {
           border = "Normal",
