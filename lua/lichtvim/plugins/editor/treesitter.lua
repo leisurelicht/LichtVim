@@ -11,9 +11,15 @@ return {
     },
     opts = {
       ensure_installed = { "comment" },
-      context_commentstring = { enable = true },
-      highlight = { enable = true },
-      indent = { enable = true },
+      ignore_install = {},
+      highlight = {
+        enable = true,
+        disable = {},
+      },
+      indent = {
+        enable = true,
+        disable = {},
+      },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -23,6 +29,7 @@ return {
           scope_incremental = false,
         },
       },
+      context_commentstring = { enable = true },
       -- match % g% [% ]% z%
       matchup = { enable = true },
       endwise = { enable = true },

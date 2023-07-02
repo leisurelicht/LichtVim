@@ -4,20 +4,9 @@
 -- =================
 --
 local git = utils.git
-local lsp = utils.lsp
-local list = utils.list
 local option = utils.option
 local plugs = utils.plugs
-local Keys = require("lazy.core.handler.keys")
-local format = require("lichtvim.plugins.lsp.config.format")
 local wk_ok, wk = pcall(require, "which-key")
-
-local function call(fn, ...)
-  local args = { ... }
-  return function()
-    fn(unpack(args))
-  end
-end
 
 if wk_ok then
   wk.register({
@@ -112,7 +101,7 @@ map.set("i", "<C-u>", "<esc>viwUea", "Upper word") -- 一键大写
 map.set("i", "<C-l>", "<esc>viwuea", "Lower word") -- 一键小写
 map.set("i", "<C-O>", "<ESC>wb~ea") -- 首字母大写
 -- normal 模式下按 esc 取消高亮显示
-map.set("n", "<esc>", call(vim.cmd, "silent! noh"), "No highlight")
+map.set("n", "<esc>", utils.func.call(vim.cmd, "silent! noh"), "No highlight")
 
 -- better up/down
 map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "down", { expr = true, silent = true })
@@ -206,35 +195,12 @@ map.set("n", "<leader>uf", option.toggle("foldenable"), "Toggle foldenable")
 map.set("n", "<leader>ud", option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
 map.set("n", "<leader>ul", option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
-if vim.lsp.buf.inlay_hint then
-  map("n", "<leader>uh", call(vim.lsp.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
+if vim.lsp.inlay_hint then
+  map("n", "<leader>uh", utils.func.call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
 end
 
-map.set("n", "<leader>q", function()
-  -- vim.ui.select({ "Yes", "No" }, {
-  --   prompt = "Comfirm to quit?",
-  --   telescope = require("telescope.themes").get_dropdown({
-  --     winblend = 0,
-  --     layout_config = {
-  --       width = 0.25,
-  --       height = 0.15,
-  --     },
-  --   }),
-  -- }, function(choice)
-  --   if choice ~= "Yes" then
-  --     return
-  --   end
-  --   require("spectre").close()
-  --   vim.cmd([[ Neotree close ]])
-  --   vim.cmd([[ TroubleClose ]])
-  --   vim.cmd([[ only ]])
-  --   vim.cmd([[ wa | qa ]])
-  -- end)
-  vim.cmd([[ confirm quitall ]])
-end, " Quit")
-
 map.set("n", "<leader>;", function()
-  call(require("notify").dismiss, { silent = true, pending = true })
+  utils.func.call(require("notify").dismiss, { silent = true, pending = true })
   require("spectre").close()
   vim.cmd([[ Neotree close ]])
   vim.cmd([[ TroubleClose ]])
@@ -272,10 +238,15 @@ if lazy.has("todo-comments.nvim") then
 end
 
 if lazy.has("nvim-spectre") then
-  map.set("n", "<leader>frr", call(require("spectre").open), "Spectre")
-  map.set("n", "<leader>frw", call(require("spectre").open_visual, { select_word = true }), "Current word")
-  map.set("v", "<leader>frw", call(require("spectre").open_visual), "Current word")
-  map.set("n", "<leader>frs", call(require("spectre").open_file_search, { select_word = true }), "Current word in file")
+  map.set("n", "<leader>frr", utils.func.call(require("spectre").open), "Spectre")
+  map.set("n", "<leader>frw", utils.func.call(require("spectre").open_visual, { select_word = true }), "Current word")
+  map.set("v", "<leader>frw", utils.func.call(require("spectre").open_visual), "Current word")
+  map.set(
+    "n",
+    "<leader>frs",
+    utils.func.call(require("spectre").open_file_search, { select_word = true }),
+    "Current word in file"
+  )
 
   wk.register({
     fr = { name = "Replace" },
@@ -312,7 +283,7 @@ if lazy.has("telescope.nvim") then
   map.set(
     "n",
     "<leader>fe",
-    call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
+    utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
     "File Browser"
   )
 
@@ -336,7 +307,12 @@ if lazy.has("project.nvim") then
 end
 
 if lazy.has("nvim-notify") then
-  map.set("n", "<leader>uq", call(require("notify").dismiss, { silent = true, pending = true }), "Clear notifications")
+  map.set(
+    "n",
+    "<leader>uq",
+    utils.func.call(require("notify").dismiss, { silent = true, pending = true }),
+    "Clear notifications"
+  )
 end
 
 if lazy.has("toggleterm.nvim") then
@@ -350,7 +326,7 @@ if lazy.has("toggleterm.nvim") then
   map.set("n", "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", "Send visual selection")
 
   vim.api.nvim_create_autocmd({ "TermOpen" }, {
-    group = vim.api.nvim_create_augroup(add_title("TermKeymap"), { clear = true }),
+    group = vim.api.nvim_create_augroup(utils.title.add("TermKeymap"), { clear = true }),
     pattern = { "term://*" },
     callback = function()
       map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", { buffer = 0 })
@@ -364,7 +340,7 @@ if lazy.has("toggleterm.nvim") then
 end
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = vim.api.nvim_create_augroup(add_title("Keybind"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("Keybind"), { clear = true }),
   callback = function()
     if lazy.has("vim-easy-align") then
       map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { noremap = false })
@@ -427,7 +403,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("mini.bufremove") then
-      map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer")
+      map.set("n", "<leader>bd", utils.func.call(require("mini.bufremove").delete, 0, false), "Delete buffer")
     end
 
     if lazy.has("bufferline.nvim") then
@@ -449,7 +425,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     end
 
     if lazy.has("smart-splits.nvim") then
-      map.set("n", "<leader>us", call(require("smart-splits").start_resize_mode), "Resize Mode")
+      map.set("n", "<leader>us", utils.func.call(require("smart-splits").start_resize_mode), "Resize Mode")
       map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
     end
   end,
@@ -460,7 +436,7 @@ if lazy.has("trouble.nvim") then
     if require("trouble").is_open() then
       require("trouble").previous({ skip_groups = true, jump = true })
     else
-      local ok, err = pcall(vim.cmd.cprev)
+      local ok, err = utils.func.call(vim.cmd.cprev)
       if not ok then
         vim.notify(err, vim.log.levels.WARN)
       end
@@ -470,7 +446,7 @@ if lazy.has("trouble.nvim") then
     if require("trouble").is_open() then
       require("trouble").next({ skip_groups = true, jump = true })
     else
-      local ok, err = pcall(vim.cmd.cnext)
+      local ok, err = utils.func.call(vim.cmd.cnext)
       if not ok then
         vim.notify(err, vim.log.levels.WARN)
       end
@@ -483,14 +459,14 @@ if lazy.has("mason.nvim") then
 end
 
 vim.api.nvim_create_autocmd({ "User" }, {
-  group = vim.api.nvim_create_augroup(add_title("GitKeybind"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("GitKeybind"), { clear = true }),
   pattern = "Gitsigns",
   callback = function(event)
     wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
-    local opts = { border = "rounded", cmd = git.get_root, esc_esc = false, ctrl_hjkl = false }
-    map.set("n", "<leader>gg", call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
-    map.set("n", "<leader>gl", call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+    local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
+    map.set("n", "<leader>gg", utils.func.call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
+    map.set("n", "<leader>gl", utils.func.call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 
     map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
 
@@ -506,14 +482,14 @@ vim.api.nvim_create_autocmd({ "User" }, {
     map.set(
       "v",
       "<leader>ga",
-      call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }),
+      utils.func.call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }),
       "Add hunk",
       { buffer = event.buf }
     )
     map.set(
       "v",
       "<leader>gr",
-      call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }),
+      utils.func.call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }),
       "Reset hunk",
       { buffer = event.buf }
     )
@@ -541,115 +517,6 @@ vim.api.nvim_create_autocmd({ "User" }, {
 
     -- Text object
     map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>", "Select git hunk")
-  end,
-})
-
-local _keys = {
-  { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
-  { "<leader>ln", lsp.diagnostic_goto(true), desc = "Next diagnostic" },
-  { "<leader>lp", lsp.diagnostic_goto(false), desc = "Previous diagnostic" },
-  { "]d", lsp.diagnostic_goto(true), desc = "Next diagnostic" },
-  { "[d", lsp.diagnostic_goto(false), desc = "Previous diagnostic" },
-  { "]e", lsp.diagnostic_goto(true, "ERROR"), desc = "Next diagnostic (error)" },
-  { "[e", lsp.diagnostic_goto(false, "ERROR"), desc = "Previous diagnostic (error)" },
-  { "]w", lsp.diagnostic_goto(true, "WARN"), desc = "Next diagnostic (warning)" },
-  { "[w", lsp.diagnostic_goto(false, "WARN"), desc = "Previous diagnostic (warning)" },
-  { "<leader>lf", format.toggle, desc = "Toggle format", has = "documentFormatting" },
-  { "<leader>lF", format.format, desc = "Format document", has = "documentFormatting" },
-  { "<leader>lF", format.format, desc = "Format range", mode = "v", has = "documentRangeFormatting" },
-  { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature help", has = "signatureHelp" },
-  { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature help", mode = "i", has = "signatureHelp" },
-  { "<leader>li", vim.lsp.buf.incoming_calls, desc = "Incoming calls", has = "callHierarchy" },
-  { "<leader>lo", vim.lsp.buf.outgoing_calls, desc = "Outgoing calls", has = "callHierarchy" },
-  { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
-  { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
-  { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-  { "<leader>ll", call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
-  {
-    "<leader>lc",
-    call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }),
-    desc = "Diagnostic (cursor)",
-  },
-  {
-    "<leader>lD",
-    call(vim.lsp.buf.definition, { jump_type = "tab" }),
-    desc = "Goto definition (tab)",
-    has = "definition",
-  },
-}
-
-if lazy.has("lspsaga.nvim") then
-  local keys = {
-    { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
-    { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover keep", has = "hover" },
-    { "<leader>la", "<cmd>Lspsaga code_action<cr>", mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-  }
-  list.extend(_keys, keys)
-end
-
-if lazy.has("telescope.nvim") then
-  local builtin = require("telescope.builtin")
-  local keys = {
-    { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
-    { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
-    {
-      "<leader>li",
-      call(builtin.lsp_implementations, { show_line = false }),
-      desc = "Goto implementation",
-      has = "implementation",
-    },
-    {
-      "<leader>lt",
-      call(builtin.lsp_type_definitions, { show_line = false }),
-      desc = "Goto type definition",
-      has = "typeDefinition",
-    },
-    {
-      "<leader>ld",
-      call(builtin.lsp_definitions, { reuse_win = true, show_line = false }),
-      desc = "Goto definition",
-      has = "definition",
-    },
-    { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
-    { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
-  }
-  list.extend(_keys, keys)
-end
-
-vim.api.nvim_create_autocmd({ "LspAttach" }, {
-  group = vim.api.nvim_create_augroup(add_title("LspKeybind"), { clear = true }),
-  callback = function(event)
-    local buffer = event.buf
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-    vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-    local keymaps = {}
-    for _, value in ipairs(_keys) do
-      local keys = Keys.parse(value)
-      if keys[2] == vim.NIL or keys[2] == false then
-        keymaps[keys.id] = nil
-      else
-        keymaps[keys.id] = keys
-      end
-    end
-
-    for _, keys in pairs(keymaps) do
-      if not keys.has or client.server_capabilities[keys.has .. "Provider"] then
-        local opts = Keys.opts(keys)
-        opts.has = nil
-        opts.silent = opts.silent ~= false
-        opts.buffer = buffer
-        map.set(keys.mode or "n", keys[1], keys[2], nil, opts)
-      end
-    end
-
-    map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
-    if lazy.has("null-ls.nvim") then
-      map.set("n", "<leader>pn", "<cmd>NullLsInfo<cr>", "Null-ls info")
-    end
-
-    wk.register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
   end,
 })
 

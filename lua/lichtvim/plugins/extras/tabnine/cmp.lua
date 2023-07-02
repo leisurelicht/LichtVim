@@ -21,7 +21,7 @@ return {
       require("cmp_tabnine.config"):setup(opts)
 
       vim.api.nvim_create_autocmd("BufRead", {
-        group = vim.api.nvim_create_augroup(add_title("Prefetch"), { clear = true }),
+        group = vim.api.nvim_create_augroup(utils.title.add("Prefetch"), { clear = true }),
         pattern = { "*.py", "*.go", "*.lua", "*.sh" },
         callback = function()
           require("cmp_tabnine"):prefetch(vim.fn.expand("%:p"))

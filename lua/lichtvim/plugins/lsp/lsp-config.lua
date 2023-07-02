@@ -31,6 +31,7 @@ local lsp_handlers = {
 }
 
 return {
+  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     enabled = true,
@@ -44,24 +45,67 @@ return {
         end,
       },
     },
+    ---@class PluginLspOpts
     opts = function()
       return {
+        -- options for vim.diagnostic.config()
         diagnostics = {
           signs = true,
           underline = true,
           severity_sort = true,
           update_in_insert = false,
           float = { source = "always" },
-          virtual_text = { prefix = "icons", source = "if_many", spacing = 4 },
+          virtual_text = {
+            spacing = 4,
+            source = "if_many",
+            prefix = "icons",
+          },
         },
-        setup = {},
-        servers = {},
+        -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+        -- Be aware that you also will need to properly configure your LSP server to
+        -- provide the inlay hints.
         inlay_hints = {
           enabled = false,
+        },
+        -- add any global capabilities here
+        capabilities = {},
+        -- Automatically format on save
+        autoformat = true,
+        -- Enable this to show formatters used in a notification
+        -- Useful for debugging formatter issues
+        format_notify = false,
+        -- options for vim.lsp.buf.format
+        -- `bufnr` and `filter` is handled by the LazyVim formatter,
+        -- but can be also overridden when specified
+        format = {
+          formatting_options = nil,
+          timeout_ms = nil,
+        },
+
+        -- LSP Server Settings
+        ---@type lspconfig.options
+        servers = { },
+        -- you can do any additional lsp server setup here
+        -- return true if you don't want this server to be setup with lspconfig
+        ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+        setup = {
+          -- example to setup with typescript.nvim
+          -- tsserver = function(_, opts)
+          --   require("typescript").setup({ server = opts })
+          --   return true
+          -- end,
+          -- Specify * to use this function as a fallback for any server
+          -- ["*"] = function(server, opts) end,
         },
       }
     end,
     config = function(_, opts)
+      require("lichtvim.plugins.lsp.config.format").setup(opts)
+
+      lazy.on_attach(function(client, buffer)
+        require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
+      end)
+
       local icons = require("lichtvim.config").icons
 
       for name, icon in pairs(icons.diagnostics) do
@@ -69,10 +113,12 @@ return {
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
 
-      if opts.inlay_hints.enabled and vim.lsp.buf.inlay_hint then
+      local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
+
+      if opts.inlay_hints.enabled and inlay_hint then
         lazy.on_attach(function(client, buffer)
           if client.server_capabilities.inlayHintProvider then
-            vim.lsp.buf.inlay_hint(buffer, true)
+            inlay_hint(buffer, true)
           end
         end)
       end

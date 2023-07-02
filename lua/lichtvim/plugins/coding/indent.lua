@@ -35,7 +35,7 @@ return {
     },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup(add_title("DisableMiniIndentScope"), { clear = true }),
+        group = vim.api.nvim_create_augroup(utils.title.add("DisableMiniIndentScope"), { clear = true }),
         pattern = {
           "log",
           "help",

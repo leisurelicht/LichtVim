@@ -5,22 +5,15 @@
 --
 _G.LichtVimTitle = "LichtVim"
 
--- add title to body
-_G.add_title = function(body)
-  if body == nil then
-    return LichtVimTitle
-  end
-  return string.format("%s%s", LichtVimTitle, body)
-end
+_G.utils = require("lichtvim.utils")
+_G.lazy = require("lichtvim.utils.lazy")
+_G.map = require("lichtvim.utils.mapping")
+
 -- 展开打印各种数据
 _G.Dump = function(...)
   local objects = vim.tbl_map(vim.inspect, { ... })
   print(unpack(objects))
 end
-
-_G.utils = require("lichtvim.utils")
-_G.lazy = require("lichtvim.utils.lazy")
-_G.map = require("lichtvim.utils.mapping")
 
 local icons = require("lichtvim.config.ui.icons")
 
@@ -71,7 +64,7 @@ function M.setup(opts)
 
   if vim.fn.argc(-1) == 0 then
     vim.api.nvim_create_autocmd("User", {
-      group = vim.api.nvim_create_augroup(add_title("Setup"), { clear = true }),
+      group = vim.api.nvim_create_augroup(utils.title.add("Setup"), { clear = true }),
       pattern = "VeryLazy",
       callback = function()
         M.load("autocmds")

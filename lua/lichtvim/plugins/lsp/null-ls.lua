@@ -10,9 +10,6 @@ return {
         sources = {
           null_ls.builtins.completion.spell,
         },
-        on_attach = function(client, bufnr)
-          require("lichtvim.plugins.lsp.config.format").on_attach(client, bufnr)
-        end,
       }
     end,
     config = true,

@@ -3,7 +3,6 @@
 -- Note: 自动命令配置
 -- =================
 --
-
 local options = require("lichtvim.config")
 
 -- auto save when leaving insert mode or when the buffer is changed
@@ -17,13 +16,13 @@ end
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = vim.api.nvim_create_augroup(add_title("Checktime"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("Checktime"), { clear = true }),
   command = "checktime",
 })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup(add_title("HighlightYank"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("HighlightYank"), { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -31,7 +30,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("CloseWithQ"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("CloseWithQ"), { clear = true }),
   pattern = {
     "PlenaryTestPopup",
     "help",
@@ -54,7 +53,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- close some filetypes with <esc>
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("CloseWithEsc"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("CloseWithEsc"), { clear = true }),
   pattern = {
     "lazy",
     "help",
@@ -65,9 +64,37 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup(utils.title.add("CloseVim"), { clear = true }),
+  pattern = "*",
+  callback = function(event)
+    if vim.bo[event.buf].filetype == "alpha" then
+      return
+    end
+    vim.bo[event.buf].buflisted = false
+    map.set("n", "<leader>q", function()
+      vim.ui.select({ "Yes", "No" }, {
+        prompt = "Comfirm to quit?",
+        telescope = require("telescope.themes").get_dropdown({
+          winblend = 0,
+          layout_config = {
+            width = 0.22,
+            height = 0.12,
+          },
+        }),
+      }, function(choice)
+        if choice ~= "Yes" then
+          return
+        end
+        vim.cmd([[ wa | quitall ]])
+      end)
+    end, " Quit", { buffer = event.buf, silent = true })
+  end,
+})
+
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup(add_title("LastLocation"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("LastLocation"), { clear = true }),
   callback = function()
     local exclude = { "gitcommit" }
     local buf = vim.api.nvim_get_current_buf()
@@ -84,7 +111,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- auto close lazy and notify buffers when leaving them
 vim.api.nvim_create_autocmd("BufLeave", {
-  group = vim.api.nvim_create_augroup(add_title("CloseFloat"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("CloseFloat"), { clear = true }),
   callback = function(event)
     local buf = event.buf
     local ft = vim.api.nvim_buf_get_option(buf, "filetype")
@@ -99,7 +126,7 @@ vim.api.nvim_create_autocmd("BufLeave", {
 
 -- wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(add_title("WrapSpell"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("WrapSpell"), { clear = true }),
   pattern = { "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
@@ -119,7 +146,7 @@ end, { desc = "Create directory if it doesn't exist" })
 
 -- resize splits if window got resized
 -- vim.api.nvim_create_autocmd({ "VimResized" }, {
---   group = vim.api.nvim_create_augroup(add_title"resize_splits", { clear = true }),
+--   group = vim.api.nvim_create_augroup(utils.title.add"resize_splits", { clear = true }),
 --   callback = function()
 --     vim.cmd("tabdo wincmd =")
 --   end,
