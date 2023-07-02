@@ -154,7 +154,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 
     local opts = { buffer = event.buf, silent = true }
-    vim.bo[event.buf].buflisted = false
 
     wk.register({
       -- d = { name = " Debugger" },
