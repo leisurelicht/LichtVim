@@ -64,34 +64,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(utils.title.add("CloseVim"), { clear = true }),
-  pattern = "*",
-  callback = function(event)
-    if vim.bo[event.buf].filetype == "alpha" then
-      return
-    end
-    vim.bo[event.buf].buflisted = false
-    map.set("n", "<leader>q", function()
-      vim.ui.select({ "Yes", "No" }, {
-        prompt = "Comfirm to quit?",
-        telescope = require("telescope.themes").get_dropdown({
-          winblend = 0,
-          layout_config = {
-            width = 0.22,
-            height = 0.12,
-          },
-        }),
-      }, function(choice)
-        if choice ~= "Yes" then
-          return
-        end
-        vim.cmd([[ wa | quitall ]])
-      end)
-    end, " Quit", { buffer = event.buf, silent = true })
-  end,
-})
-
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup(utils.title.add("LastLocation"), { clear = true }),
@@ -140,7 +112,7 @@ vim.api.nvim_create_user_command("MakeDirectory", function()
   if vim.fn.isdirectory(dir) == 0 then
     vim.fn.mkdir(dir, "p")
   else
-    vim.notify("Directory already exists", vim.log.levels.WARN, { title = LichtVimTitle })
+    lazy.warn("Directory already exists")
   end
 end, { desc = "Create directory if it doesn't exist" })
 
