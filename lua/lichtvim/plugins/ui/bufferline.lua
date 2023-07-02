@@ -1,5 +1,13 @@
 return {
-  { "tiagovla/scope.nvim", event = { "BufReadPre", "BufNewFile" }, opts = { restore_state = false }, config = true },
+  {
+    "tiagovla/scope.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = { restore_state = false },
+    config = function(_, opts)
+      require("scope").setup(opts)
+      require("telescope").load_extension("scope")
+    end,
+  },
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",

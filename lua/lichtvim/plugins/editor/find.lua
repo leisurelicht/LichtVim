@@ -4,6 +4,28 @@ return {
     "nvim-pack/nvim-spectre",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
+    keys = function()
+      require("which-key").register({
+        fr = { name = "Replace" },
+        mode = { "n", "v" },
+        prefix = "<leader>",
+      })
+
+      return {
+        { "<leader>frr", utils.func.call(require("spectre").open), desc = "Spectre" },
+        {
+          "<leader>frw",
+          utils.func.call(require("spectre").open_visual, { select_word = true }),
+          desc = "Current word",
+        },
+        { "<leader>frw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Current word" },
+        {
+          "<leader>frs",
+          utils.func.call(require("spectre").open_file_search, { select_word = true }),
+          desc = "Current word in file",
+        },
+      }
+    end,
     opts = { open_cmd = "noswapfile vnew" },
   },
   {
@@ -30,6 +52,33 @@ return {
       { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
+    keys = function()
+      local telescope = utils.plugs.telescope
+
+      local _keys = {
+        { "<leader>f<tab>", telescope("commands"), desc = "Commands" },
+        { "<leader>fc", telescope("command_history"), desc = "Commands history" },
+        { "<leader>fs", telescope("search_history"), desc = "Search history" },
+        { "<leader>ff", telescope("files"), desc = "Files (root dir)" },
+        { "<leader>ff", telescope("files", { cwd = false }), desc = "Files (cwd)" },
+        { "<leader>fm", telescope("marks"), desc = "Marks" },
+        { "<leader>fo", telescope("oldfiles"), desc = "Recently files" },
+        { "<leader>fO", telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
+        { "<leader>fg", telescope("live_grep"), desc = "Grep (root dir)" },
+        { "<leader>fG", telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+        { "<leader>fw", telescope("grep_string"), desc = "Word (root dir)" },
+        { "<leader>fW", telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
+        { "<leader>fj", telescope("jumplist"), desc = "Jump list" },
+        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
+        {
+          "<leader>fe",
+          utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
+          desc = "File Browser",
+        },
+      }
+
+      return _keys
+    end,
     opts = function(_, opts)
       local Job = require("plenary.job")
       local actions = require("telescope.actions")
@@ -159,15 +208,14 @@ return {
       telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
 
-      if lazy.has("project.nvim") then
-        telescope.load_extension("projects")
-      end
-      if lazy.has("nvim-notify") then
-        telescope.load_extension("notify")
-      end
-
-      if lazy.has("scope.nvim") then
-        telescope.load_extension("scope")
+      if require("lazy.core.config").plugins["LichtVim"].dev then
+        map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")
+        map.set("n", "<leader>fA", utils.plugs.telescope("autocommands"), "AutoCommands")
+        map.set("n", "<leader>fM", utils.plugs.telescope("man_pages"), "Man pages")
+        map.set("n", "<leader>fP", utils.plugs.telescope("vim_options"), "Vim option")
+        map.set("n", "<leader>fK", utils.plugs.telescope("keymaps"), "Key maps")
+        map.set("n", "<leader>fC", utils.plugs.telescope("colorscheme", { enable_preview = true }), "Colorscheme")
+        map.set("n", "<leader>fH", utils.plugs.telescope("help_tags"), "Help tags")
       end
     end,
   },

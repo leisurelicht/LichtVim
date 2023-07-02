@@ -3,8 +3,6 @@
 -- Note:
 -- =================
 --
-local util = require("lazy.core.util")
-
 local M = {}
 
 -- M.table = {}
@@ -259,17 +257,14 @@ function M.option.toggle(option, silent, values)
       else
         vim.opt_local[option] = values[1]
       end
-      return util.info(
-        "Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()),
-        { title = LichtVimTitle .. "Option" }
-      )
+      return lazy.info("Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()), { "Option" })
     end
     vim.opt_local[option] = not vim.opt_local[option]:get()
     if not silent then
       if vim.opt_local[option]:get() then
-        util.info("Enabled " .. option, { title = LichtVimTitle .. " Option" })
+        lazy.info("Enabled " .. option, { "Option" })
       else
-        util.warn("Disabled " .. option, { title = LichtVimTitle .. " Option" })
+        lazy.warn("Disabled " .. option, { "Option" })
       end
     end
   end
@@ -279,10 +274,10 @@ end
 function M.option.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
-    util.warn("Disabled mouse mode", { title = LichtVimTitle .. " Option" })
+    lazy.warn("Disabled mouse mode", { title = " Option" })
   else
     vim.o.mouse = "a"
-    util.info("Enabled mouse mode", { title = LichtVimTitle .. " Option" })
+    lazy.info("Enabled mouse mode", { title = " Option" })
   end
 end
 
@@ -313,7 +308,7 @@ end
 function M.plugs.smart_add_terminal()
   ---@diagnostic disable-next-line: undefined-field
   if vim.b.toggle_number == nil then
-    util.warn("Need to create a terminal and move in it first", { title = LichtVimTitle .. " Terminal" })
+    lazy.warn("Need to create a terminal and move in it first", { title = " Terminal" })
     return
   end
 
@@ -325,7 +320,7 @@ function M.plugs.smart_add_terminal()
     elseif vim.g._term_direction == 2 then
       direction = "horizontal"
     elseif vim.g._term_direction == 0 then
-      util.warn("Can not add a terminal window", { title = LichtVimTitle .. " Terminal" })
+      lazy.warn("Can not add a terminal window", { title = " Terminal" })
       return
     end
   end

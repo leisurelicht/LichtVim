@@ -138,4 +138,38 @@ function M.float_term(cmd, opts)
   return terminals[termkey]
 end
 
+local Util = require("lazy.core.util")
+
+function M.info(msg, opts)
+  opts = opts or {}
+  if opts.title ~= nil then
+    opts.title = LichtVimTitle .. " " .. opts.title
+  end
+  Util.info(msg, opts)
+end
+
+function M.warn(msg, opts)
+  opts = opts or {}
+  if opts.title ~= nil then
+    opts.title = LichtVimTitle .. " " .. opts.title
+  end
+  Util.warn(msg, opts)
+end
+
+function M.error(msg, opts)
+  opts = opts or {}
+  if opts.title ~= nil then
+    opts.title = LichtVimTitle .. " " .. opts.title
+  end
+  Util.error(msg, opts)
+end
+
+function M.debug(msg, opts)
+  opts = opts or {}
+  if opts.title ~= nil then
+    opts.title = LichtVimTitle .. " " .. opts.title
+  end
+  Util.debug(msg, opts)
+end
+
 return M

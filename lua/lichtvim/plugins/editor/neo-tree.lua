@@ -18,6 +18,9 @@ return {
       },
     },
     cmd = "Neotree",
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = " Explorer" },
+    },
     init = function()
       vim.g.neo_tree_remove_legacy_commands = true
     end,

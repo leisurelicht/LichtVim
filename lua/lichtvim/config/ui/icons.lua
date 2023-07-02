@@ -36,11 +36,11 @@ M.Git = {
   Change = " ",
   Delete = " ",
   Staged = " ",
-  Unstaged = "󰩳 ",
-  Conflict = "󰴜 ",
+  Unstaged = " ",
+  Conflict = " ",
   Ignored = " ",
-  Renamed = "󰛂 ",
-  Untracked = "󰞋 ",
+  Renamed = " ",
+  Untracked = " ",
 }
 
 M.Kinds = {

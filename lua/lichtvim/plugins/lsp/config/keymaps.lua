@@ -115,6 +115,10 @@ function M.on_attach(client, buffer)
       vim.keymap.set(keys.mode or "n", keys[1], keys[2], opts)
     end
   end
+
+  map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
+
+  require("which-key").register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
 end
 
 function M.diagnostic_goto(next, severity)

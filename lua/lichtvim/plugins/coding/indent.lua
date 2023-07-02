@@ -29,10 +29,7 @@ return {
   {
     "echasnovski/mini.indentscope",
     event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      symbol = "│",
-      options = { try_as_border = true },
-    },
+    opts = { symbol = "│", options = { try_as_border = true } },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup(utils.title.add("DisableMiniIndentScope"), { clear = true }),
@@ -57,6 +54,10 @@ return {
           vim.b.miniindentscope_disable = true
         end,
       })
+      require("which-key").register({
+        ["]i"] = "Goto indent scope bottom",
+        ["[i"] = "Goto indent scope top",
+      }, { mode = "n" })
     end,
     config = true,
   },

@@ -12,6 +12,12 @@ return {
     event = { "BufNewFile", "BufRead" },
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = "poopup" }
+      require("which-key").register({
+        ["]%"] = "Jump to next matchup",
+        ["[%"] = "Jump to previous matchup",
+        ["g%"] = "Jump to close matchup",
+        ["z%"] = "Jump inside matchup",
+      }, { mode = "n" })
     end,
   },
   {
@@ -61,6 +67,9 @@ return {
     },
     config = function(_, opts)
       require("project_nvim").setup(opts)
+      require("telescope").load_extension("projects")
+      map.set("n", "<leader>rj", "<cmd>Telescope projects theme=dropdown<cr>", "Recent projects")
+      map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add project")
     end,
   },
   {
@@ -88,6 +97,16 @@ return {
   {
     "akinsho/toggleterm.nvim",
     cmd = "ToggleTerm",
+    keys = {
+      { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", "Toggle terminal" },
+      { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", "Toggle in float" },
+      { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", "Toggle in tab" },
+      { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", "Toggle in horizontal" },
+      { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", "Toggle in vertical" },
+      { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", "Send current line" },
+      { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", "Send visual lines" },
+      { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", "Send visual selection" },
+    },
     opts = {
       size = function(term)
         if term.direction == "horizontal" then
@@ -116,6 +135,21 @@ return {
         },
       },
     },
-    config = true,
+    config = function(_, opts)
+      require("toggleterm").setup(opts)
+
+      vim.api.nvim_create_autocmd({ "TermOpen" }, {
+        group = vim.api.nvim_create_augroup(utils.title.add("TermKeymap"), { clear = true }),
+        pattern = { "term://*" },
+        callback = function()
+          map.set("t", "<space><esc>", [[<C-\><C-n>]], "Esc", { buffer = 0 })
+          map.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], "Up", { buffer = 0 })
+          map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", { buffer = 0 })
+          map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", { buffer = 0 })
+          map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", { buffer = 0 })
+          map.set("t", "<C-o>", utils.plugs.smart_add_terminal, "Add new terminal", { buffer = 0 })
+        end,
+      })
+    end,
   },
 }

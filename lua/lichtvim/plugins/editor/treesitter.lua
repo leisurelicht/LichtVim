@@ -9,6 +9,10 @@ return {
       "RRethy/nvim-treesitter-endwise",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
+    keys = {
+      { "<leader>pt", "<cmd>TSUpdateSync all<cr>", desc = "Treesitter update" },
+      { "<leader>pT", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
+    },
     opts = {
       ensure_installed = { "comment" },
       ignore_install = {},

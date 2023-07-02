@@ -16,10 +16,10 @@ return {
         silent = true,
         hooks = {
           on_enter = function()
-            vim.notify("Entering Resize Mode. Welcome")
+            lazy.info("Entering Resize Mode. Welcome")
           end,
           on_leave = function()
-            vim.notify("Exiting Resize Mode. Bye")
+            lazy.info("Exiting Resize Mode. Bye")
           end,
         },
       },
@@ -29,6 +29,10 @@ return {
   {
     "brglng/vim-im-select",
     event = { "BufNewFile", "BufRead" },
+    keys = {
+      { "<leader>ui", "<cmd>ImSelectEnable<cr>", desc = "Enable imselect" },
+      { "<leader>uI", "<cmd>ImSelectDisable<cr>", desc = "Disable imselect" },
+    },
     config = function()
       vim.g.im_select_enable_focus_eventsF = 1
       if utils.sys.is_macos() or utils.sys.is_linux() then
@@ -44,6 +48,9 @@ return {
     "folke/todo-comments.nvim",
     cmd = { "TodoTelescope", "TodoTrouble" },
     dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", desc = "Todo (Telescope)" },
+    },
     config = function()
       require("todo-comments").setup({})
     end,

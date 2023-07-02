@@ -1,5 +1,3 @@
-local Util = require("lazy.core.util")
-
 local M = {}
 
 ---@type PluginLspOpts
@@ -17,9 +15,9 @@ function M.toggle()
     M.opts.autoformat = not M.opts.autoformat
   end
   if M.opts.autoformat then
-    Util.info("Enabled format on save", { title = LichtVimTitle })
+    lazy.info("Enabled format on save")
   else
-    Util.warn("Disabled format on save", { title = LichtVimTitle })
+    lazy.warn("Disabled format on save")
   end
 end
 
@@ -80,7 +78,7 @@ function M.notify(formatters)
   end
 
   vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
-    title = "Formatting",
+    title = utils.title.add("Formatting"),
     on_open = function(win)
       vim.api.nvim_win_set_option(win, "conceallevel", 3)
       vim.api.nvim_win_set_option(win, "spell", false)
