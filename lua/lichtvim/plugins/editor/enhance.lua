@@ -5,7 +5,6 @@ return {
   { "echasnovski/mini.bufremove", lazy = true },
   { "junegunn/vim-easy-align", lazy = true },
   { "phaazon/hop.nvim", lazy = true, opts = { keys = "etovxqpdygfblzhckisuran" } },
-  { "kevinhwang91/nvim-hlslens", lazy = true },
   {
     "NvChad/nvim-colorizer.lua",
     lazy = true,

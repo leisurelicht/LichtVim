@@ -106,16 +106,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_user_command("MakeDirectory", function()
-  local path = vim.fn.expand("%")
-  local dir = vim.fn.fnamemodify(path, ":p:h")
-  if vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir, "p")
-  else
-    lazy.warn("Directory already exists")
-  end
-end, { desc = "Create directory if it doesn't exist" })
-
 -- resize splits if window got resized
 -- vim.api.nvim_create_autocmd({ "VimResized" }, {
 --   group = vim.api.nvim_create_augroup(utils.title.add"resize_splits", { clear = true }),

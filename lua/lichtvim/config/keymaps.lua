@@ -7,8 +7,7 @@ local wk_ok, wk = pcall(require, "which-key")
 
 if wk_ok then
   wk.register({
-    -- d = { name = " Debugger" },
-    r = { name = " Project" },
+    r = { name = " Projects" },
     f = { name = "󰛔 Find & Replace" },
     o = { name = " Terminal" },
     t = { name = "󱏈 Tab" },
@@ -90,13 +89,19 @@ if wk_ok then
   }, { mode = "n", prefix = "" })
 end
 
--- map.set("c", "w!!", "w !sudo tee > /dev/null %", "saved") -- 强制保存
 -- normal 模式下按 esc 取消高亮显示
-map.set("n", "<esc>", utils.func.call(vim.cmd, "silent! noh"), "No highlight")
+map.set("n", "<leader>x", ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>", "󰽉 Redraw")
 
 -- better up/down
 map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "down", { expr = true, silent = true })
 map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "up", { expr = true, silent = true })
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+map.set("n", "n", "'Nn'[v:searchforward]", "Next search result", { expr = true })
+map.set("x", "n", "'Nn'[v:searchforward]", "Next search result", { expr = true })
+map.set("o", "n", "'Nn'[v:searchforward]", "Next search result", { expr = true })
+map.set("n", "N", "'nN'[v:searchforward]", "Prev search result", { expr = true })
+map.set("x", "N", "'nN'[v:searchforward]", "Prev search result", { expr = true })
+map.set("o", "N", "'nN'[v:searchforward]", "Prev search result", { expr = true })
 -- tab页
 map.set("n", "<leader>te", "<cmd>tab sb<cr>", "Copy current tab")
 map.set("n", "<leader>ta", "<cmd>tabnew<cr>", "New tab")
@@ -145,15 +150,31 @@ if vim.lsp.inlay_hint then
   map("n", "<leader>uh", utils.func.call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
 end
 
+map.set("n", "<leader>rj", function()
+  local buffers = vim.api.nvim_list_bufs()
+  local wins = vim.api.nvim_list_wins()
+
+  if #wins > 1 or #buffers > 1 then
+    vim.cmd([[silent wa | silent %bd | Alpha]])
+  end
+
+  vim.cmd([[Telescope projects theme=dropdown ]])
+
+  -- if vim.bo.filetype == "alpha" then
+  --   return
+  -- end
+end, "Recently")
+map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add")
+
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(utils.title.add("CloseVim"), { clear = true }),
-  pattern = "*",
+  group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = true }),
+  pattern = { "*" },
   callback = function(event)
+    local opts = { buffer = event.buf, silent = true }
+
     if vim.bo[event.buf].filetype == "alpha" then
       return
     end
-
-    local opts = { buffer = event.buf, silent = true }
 
     wk.register({
       -- d = { name = " Debugger" },
@@ -169,8 +190,13 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("n", "<C-l>", "<C-W><C-l>", "Left window", opts)
     map.set("n", "<C-h>", "<C-W><C-h>", "Right window", opts)
     -- 行移动
-    map.set("v", "J", ":m '>+1<cr>gv=gv", "Move line down", opts)
-    map.set("v", "K", ":m '<-2<cr>gv=gv", "Move line up", opts)
+    map.set("n", "<A-j>", "<cmd>m .+1<cr>==", "Move line down", opts)
+    map.set("n", "<A-k>", "<cmd>m .-2<cr>==", "Move line up", opts)
+    map.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", "Move line down", opts)
+    map.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move line up", opts)
+    map.set("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move line down", opts)
+    map.set("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move line up", opts)
+
     -- 连续缩进
     map.set("v", "<", "<gv", "Move left continuously", opts)
     map.set("v", ">", ">gv", "Move right continuously", opts)
@@ -201,7 +227,6 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("n", "<leader>bn", "<cmd>bnext<cr>", "Next buffer", opts)
     map.set("n", "[b", "<cmd>bprev<cr>", "Previous buffer", opts)
     map.set("n", "]b", "<cmd>bnext<cr>", "Next buffer", opts)
-    -- map.set("n", "<leader>bs", "<cmd>buffers<cr>", "Buffers", opts)
     map.set("n", "<leader>bs", utils.plugs.telescope("buffers"), "Buffers", opts)
     -- shortcuts
     map.set("n", "<leader>cu", "viwUe", "Upper word", opts)
@@ -234,15 +259,7 @@ vim.api.nvim_create_autocmd("FileType", {
       require("spectre").close()
       vim.cmd([[ Neotree close ]])
       vim.cmd([[ TroubleClose ]])
-      vim.cmd([[ silent wa | silent only ]])
-      vim.cmd([[ Alpha ]])
-      local buffers = vim.api.nvim_list_bufs()
-      for _, buf in ipairs(buffers) do
-        local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-        if ft ~= "alpha" then
-          vim.api.nvim_buf_delete(buf, { force = true })
-        end
-      end
+      vim.cmd([[silent wa | silent %bd | Alpha]])
     end, "󰧨 Dashboard", opts)
 
     if lazy.has("vim-easy-align") then
@@ -280,27 +297,6 @@ vim.api.nvim_create_autocmd("FileType", {
       }, { mode = "n", prefix = "<leader>", buffer = event.buf })
     end
 
-    if lazy.has("nvim-hlslens") then
-      map.set(
-        "n",
-        "n",
-        [[<cmd>execute('normal! '.v:count1.'n')<cr><cmd>lua require('hlslens').start()<cr>]],
-        "Next",
-        opts
-      )
-      map.set(
-        "n",
-        "N",
-        [[<cmd>execute('normal! '.v:count1.'N')<cr><cmd>lua require('hlslens').start()<cr>]],
-        "Prev",
-        opts
-      )
-      map.set("n", "*", [[*<cmd>lua require('hlslens').start()<cr>]], "Forward search", opts)
-      map.set("n", "#", [[#<cmd>lua require('hlslens').start()<cr>]], "Backward search", opts)
-      map.set("n", "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], "Weak forward search", opts)
-      map.set("n", "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], "Weak backward search", opts)
-    end
-
     if lazy.has("mini.bufremove") then
       map.set("n", "<leader>bd", utils.func.call(require("mini.bufremove").delete, 0, false), "Delete buffer", opts)
     end
@@ -327,67 +323,17 @@ vim.api.nvim_create_autocmd("FileType", {
       map.set("n", "<leader>us", utils.func.call(require("smart-splits").start_resize_mode), "Resize Mode", opts)
       map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size", opts)
     end
-  end,
-})
 
-vim.api.nvim_create_autocmd({ "User" }, {
-  group = vim.api.nvim_create_augroup(utils.title.add("GitKeybind"), { clear = true }),
-  pattern = "Gitsigns",
-  callback = function(event)
-    wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
-
-    local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-    map.set("n", "<leader>gg", utils.func.call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
-    map.set("n", "<leader>gl", utils.func.call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
-
-    map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame")
-
-    if lazy.has("telescope.nvim") then
-      map.set("n", "<leader>gc", utils.plugs.telescope("git_bcommits"), "Buffer's Commits")
-      map.set("n", "<leader>gs", utils.plugs.telescope("git_stash"), "Stash")
-      map.set("n", "<leader>gn", utils.plugs.telescope("git_branches"), "Branches")
+    if lazy.has("git-blame.nvim") and utils.git.is_repo() then
+      map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opts)
     end
-
-    local gs = package.loaded.gitsigns
-    map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = event.buf })
-    map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = event.buf })
-    map.set(
-      "v",
-      "<leader>ga",
-      utils.func.call(gs.stage_hunk, { vim.fn.line("."), vim.fn.line("v") }),
-      "Add hunk",
-      { buffer = event.buf }
-    )
-    map.set(
-      "v",
-      "<leader>gr",
-      utils.func.call(gs.reset_hunk, { vim.fn.line("."), vim.fn.line("v") }),
-      "Reset hunk",
-      { buffer = event.buf }
-    )
-    map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = event.buf })
-    map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = event.buf })
-    map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = event.buf })
-    map.set("n", "]g", function()
-      if vim.wo.diff then
-        return "]g"
-      end
-      vim.schedule(function()
-        gs.next_hunk()
-      end)
-      return "<Ignore>"
-    end, "Next git hunk", { buffer = event.buf, expr = true })
-    map.set("n", "[g", function()
-      if vim.wo.diff then
-        return "[g"
-      end
-      vim.schedule(function()
-        gs.prev_hunk()
-      end)
-      return "<Ignore>"
-    end, "Previous git hunk", { buffer = event.buf, expr = true })
-
-    -- Text object
-    map.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>", "Select git hunk")
   end,
 })
+
+if utils.git.is_repo() then
+  wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
+
+  local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
+  map.set("n", "<leader>gg", utils.func.call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
+  map.set("n", "<leader>gl", utils.func.call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+end

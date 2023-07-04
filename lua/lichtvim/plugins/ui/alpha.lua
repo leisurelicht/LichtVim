@@ -19,7 +19,6 @@ local function button(sc, txt, keybind, keybind_opts)
     keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
     opts.keymap = { "n", sc:gsub("%s", ""):gsub("SPC", "<leader>"), keybind, keybind_opts }
   end
-
   return {
     type = "button",
     val = txt,
@@ -34,7 +33,6 @@ end
 return {
   {
     "goolord/alpha-nvim",
-    event = "VimEnter",
     dependencies = { "nvim-web-devicons" },
     opts = {
       layout = {
@@ -72,8 +70,8 @@ return {
           type = "group",
           val = {
             button("e", "  New File", "<cmd>enew<cr>"),
+            button("SPC j", "  Projects"),
             button("SPC f f", "  Find File"),
-            button("SPC f j", "  Find Project"),
             button("SPC f o", "  Recently Opened Files"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
           },

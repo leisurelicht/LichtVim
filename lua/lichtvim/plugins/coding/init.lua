@@ -68,8 +68,6 @@ return {
     config = function(_, opts)
       require("project_nvim").setup(opts)
       require("telescope").load_extension("projects")
-      map.set("n", "<leader>rj", "<cmd>Telescope projects theme=dropdown<cr>", "Recent projects")
-      map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add project")
     end,
   },
   {
