@@ -9,7 +9,7 @@ return {
     "mrjones2014/smart-splits.nvim",
     event = { "BufRead", "BufNewFile" },
     opts = {
-      ignored_filetypes = { "nofile", "quickfix", "prompt" },
+      ignored_filetypes = { "nofile", "quickfix", "prompt", "alpha" },
       ignored_buftypes = { "NvimTree" },
       move_cursor_same_row = false,
       resize_mode = {
@@ -24,7 +24,11 @@ return {
         },
       },
     },
-    config = true,
+    config = function(_, opts)
+      require("smart-splits").setup(opts)
+      map.set("n", "<leader>us", utils.func.call(require("smart-splits").start_resize_mode), "Enable resize mode")
+      map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
+    end,
   },
   {
     "brglng/vim-im-select",

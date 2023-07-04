@@ -319,11 +319,7 @@ vim.api.nvim_create_autocmd("FileType", {
       map.set("n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", "Buffer 8", opts)
     end
 
-    if lazy.has("smart-splits.nvim") then
-      map.set("n", "<leader>us", utils.func.call(require("smart-splits").start_resize_mode), "Resize Mode", opts)
-      map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size", opts)
-    end
-
+    
     if lazy.has("git-blame.nvim") and utils.git.is_repo() then
       map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opts)
     end

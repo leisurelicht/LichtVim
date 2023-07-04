@@ -108,7 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- resize splits if window got resized
 -- vim.api.nvim_create_autocmd({ "VimResized" }, {
---   group = vim.api.nvim_create_augroup(utils.title.add"resize_splits", { clear = true }),
+--   group = vim.api.nvim_create_augroup(utils.title.add("resize_splits"), { clear = true }),
 --   callback = function()
 --     vim.cmd("tabdo wincmd =")
 --   end,
