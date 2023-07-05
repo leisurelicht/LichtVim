@@ -108,8 +108,18 @@ return {
         require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
       end)
 
-      local icons = require("lichtvim.config").icons
+      local register_capability = vim.lsp.handlers["client/registerCapability"]
 
+      vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
+        local client_id = ctx.client_id
+        ---@type lsp.Client
+        local client = vim.lsp.get_client_by_id(client_id)
+        local buffer = vim.api.nvim_get_current_buf()
+        require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
+        return register_capability(err, res, ctx)
+      end
+
+      local icons = require("lichtvim.config").icons
       for name, icon in pairs(icons.diagnostics) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
