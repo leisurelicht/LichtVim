@@ -147,6 +147,8 @@ function M.log.info(msg, opts)
   opts = opts or {}
   if opts.title ~= nil then
     opts.title = title.string .. " " .. opts.title
+  else
+    opts.title = title.string
   end
   Util.info(msg, opts)
 end
@@ -155,6 +157,9 @@ function M.log.warn(msg, opts)
   opts = opts or {}
   if opts.title ~= nil then
     opts.title = title.string .. " " .. opts.title
+  else
+    opts.title = title.string
+
   end
   Util.warn(msg, opts)
 end
@@ -163,6 +168,9 @@ function M.log.error(msg, opts)
   opts = opts or {}
   if opts.title ~= nil then
     opts.title = title.string .. " " .. opts.title
+  else
+    opts.title = title.string
+
   end
   Util.error(msg, opts)
 end
@@ -171,6 +179,9 @@ function M.log.debug(msg, opts)
   opts = opts or {}
   if opts.title ~= nil then
     opts.title = title.string .. " " .. opts.title
+  else
+    opts.title = title.string
+
   end
   Util.debug(msg, opts)
 end
