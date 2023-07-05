@@ -1,4 +1,5 @@
 local utils = require("lichtvim.utils")
+
 return {
   { "kkharji/sqlite.lua", lazy = true },
   {
@@ -196,11 +197,11 @@ return {
       return opts
     end,
     config = function(_, opts)
-      local ts = require("telescope")
-      ts.setup(opts)
-      ts.load_extension("fzf")
-      ts.load_extension("frecency")
-      ts.load_extension("file_browser")
+      local telescope = require("telescope")
+      telescope.setup(opts)
+      telescope.load_extension("fzf")
+      telescope.load_extension("frecency")
+      telescope.load_extension("file_browser")
 
       if require("lazy.core.config").plugins["LichtVim"].dev then
         map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")
