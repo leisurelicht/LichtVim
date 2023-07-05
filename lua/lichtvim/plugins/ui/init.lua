@@ -1,3 +1,5 @@
+local utils = require("lichtvim.utils")
+
 return {
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- 图标
   { "MunifTanjim/nui.nvim", lazy = true },
@@ -91,7 +93,7 @@ return {
           else
             local ok, err = utils.func.call(vim.cmd.cprev)
             if not ok then
-              lazy.warn(err)
+              log.warn(err)
             end
           end
         end,
@@ -105,7 +107,7 @@ return {
           else
             local ok, err = utils.func.call(vim.cmd.cnext)
             if not ok then
-              lazy.warn(err)
+              log.warn(err)
             end
           end
         end,
@@ -137,28 +139,6 @@ return {
         end,
       },
     },
-    -- keys = function()
-    --   local ufo = require("ufo")
-    --   return {
-    --     { "zR", ufo.openAllFolds },
-    --     { "zM", ufo.closeAllFolds },
-    --     { "zr", ufo.openFoldsExceptKinds },
-    --     {
-    --       "K",
-    --       function()
-    --         local winid = ufo.peekFoldedLinesUnderCursor()
-    --         if not winid then
-    --           if lazy.has("lspsaga.nvim") then
-    --             vim.cmd([[ Lspsaga hover_doc ]])
-    --           else
-    --             vim.lsp.bu.hover()
-    --           end
-    --         end
-    --       end,
-    --       desc = "Fold preview",
-    --     },
-    --   }
-    -- end,
     init = function()
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
       vim.o.foldcolumn = "1" -- '0' is not bad

@@ -1,3 +1,4 @@
+local utils = require("lichtvim.utils")
 return {
   { "kkharji/sqlite.lua", lazy = true },
   {
@@ -13,16 +14,12 @@ return {
 
       return {
         { "<leader>frr", utils.func.call(require("spectre").open), desc = "Spectre" },
-        {
-          "<leader>frw",
-          utils.func.call(require("spectre").open_visual, { select_word = true }),
-          desc = "Current word",
-        },
-        { "<leader>frw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Current word" },
+        { "<leader>frw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
+        { "<leader>frw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
         {
           "<leader>frs",
           utils.func.call(require("spectre").open_file_search, { select_word = true }),
-          desc = "Current word in file",
+          desc = "Word in file",
         },
       }
     end,
@@ -53,23 +50,21 @@ return {
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
     keys = function()
-      local telescope = utils.plugs.telescope
-
       local _keys = {
-        { "<leader>f<tab>", telescope("commands"), desc = "Commands" },
-        { "<leader>fc", telescope("command_history"), desc = "Commands history" },
-        { "<leader>fs", telescope("search_history"), desc = "Search history" },
-        { "<leader>ff", telescope("files"), desc = "Files (root dir)" },
-        { "<leader>ff", telescope("files", { cwd = false }), desc = "Files (cwd)" },
-        { "<leader>fm", telescope("marks"), desc = "Marks" },
-        { "<leader>fo", telescope("oldfiles"), desc = "Recently files" },
-        { "<leader>fO", telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
-        { "<leader>fg", telescope("live_grep"), desc = "Grep (root dir)" },
-        { "<leader>fG", telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-        { "<leader>fw", telescope("grep_string"), desc = "Word (root dir)" },
-        { "<leader>fW", telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
-        { "<leader>fj", telescope("jumplist"), desc = "Jump list" },
-        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
+        { "<leader>f<tab>", utils.plugs.telescope("commands"), desc = "Commands" },
+        { "<leader>fc", utils.plugs.telescope("command_history"), desc = "Commands history" },
+        { "<leader>fs", utils.plugs.telescope("search_history"), desc = "Search history" },
+        { "<leader>ff", utils.plugs.telescope("files"), desc = "Files (root dir)" },
+        { "<leader>ff", utils.plugs.telescope("files", { cwd = false }), desc = "Files (cwd)" },
+        { "<leader>fm", utils.plugs.telescope("marks"), desc = "Marks" },
+        { "<leader>fo", utils.plugs.telescope("oldfiles"), desc = "Recently files" },
+        { "<leader>fO", utils.plugs.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
+        { "<leader>fg", utils.plugs.telescope("live_grep"), desc = "Grep (root dir)" },
+        { "<leader>fG", utils.plugs.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+        { "<leader>fw", utils.plugs.telescope("grep_string"), desc = "Word (root dir)" },
+        { "<leader>fW", utils.plugs.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
+        { "<leader>fj", utils.plugs.telescope("jumplist"), desc = "Jump list" },
+        { "<leader>fp", "<cmd>utils.plugs.telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
         {
           "<leader>fe",
           utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
@@ -201,12 +196,11 @@ return {
       return opts
     end,
     config = function(_, opts)
-      local telescope = require("telescope")
-      telescope.setup(opts)
-
-      telescope.load_extension("fzf")
-      telescope.load_extension("frecency")
-      telescope.load_extension("file_browser")
+      local ts = require("telescope")
+      ts.setup(opts)
+      ts.load_extension("fzf")
+      ts.load_extension("frecency")
+      ts.load_extension("file_browser")
 
       if require("lazy.core.config").plugins["LichtVim"].dev then
         map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")

@@ -257,14 +257,14 @@ function M.option.toggle(option, silent, values)
       else
         vim.opt_local[option] = values[1]
       end
-      return lazy.info("Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()), { "Option" })
+      return log.info("Set " .. option .. " to " .. vim.inspect(vim.opt_local[option]:get()), { "Option" })
     end
     vim.opt_local[option] = not vim.opt_local[option]:get()
     if not silent then
       if vim.opt_local[option]:get() then
-        lazy.info("Enabled " .. option, { "Option" })
+        log.info("Enabled " .. option, { "Option" })
       else
-        lazy.warn("Disabled " .. option, { "Option" })
+        log.warn("Disabled " .. option, { "Option" })
       end
     end
   end
@@ -274,10 +274,10 @@ end
 function M.option.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
-    lazy.warn("Disabled mouse mode", { title = " Option" })
+    log.warn("Disabled mouse mode", { title = " Option" })
   else
     vim.o.mouse = "a"
-    lazy.info("Enabled mouse mode", { title = " Option" })
+    log.info("Enabled mouse mode", { title = " Option" })
   end
 end
 
@@ -308,7 +308,7 @@ end
 function M.plugs.smart_add_terminal()
   ---@diagnostic disable-next-line: undefined-field
   if vim.b.toggle_number == nil then
-    lazy.warn("Need to create a terminal and move in it first", { title = " Terminal" })
+    log.warn("Need to create a terminal and move in it first", { title = " Terminal" })
     return
   end
 
@@ -320,7 +320,7 @@ function M.plugs.smart_add_terminal()
     elseif vim.g._term_direction == 2 then
       direction = "horizontal"
     elseif vim.g._term_direction == 0 then
-      lazy.warn("Can not add a terminal window", { title = " Terminal" })
+      log.warn("Can not add a terminal window", { title = " Terminal" })
       return
     end
   end
@@ -359,11 +359,13 @@ end
 
 M.title = {}
 
+M.title.string = "LichtVim"
+
 function M.title.add(body)
   if body == nil then
-    return LichtVimTitle
+    return M.title.string
   end
-  return string.format("%s%s", LichtVimTitle, body)
+  return string.format("%s%s", M.title.string, body)
 end
 
 return M

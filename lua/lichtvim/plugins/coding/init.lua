@@ -136,6 +136,8 @@ return {
     config = function(_, opts)
       require("toggleterm").setup(opts)
 
+      local utils = require("lichtvim.utils")
+
       vim.api.nvim_create_autocmd({ "TermOpen" }, {
         group = vim.api.nvim_create_augroup(utils.title.add("TermKeymap"), { clear = true }),
         pattern = { "term://*" },

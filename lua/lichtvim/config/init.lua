@@ -3,11 +3,8 @@
 -- Note: config init
 -- =================
 --
-_G.LichtVimTitle = "LichtVim"
-
-_G.utils = require("lichtvim.utils")
-_G.lazy = require("lichtvim.utils.lazy")
 _G.map = require("lichtvim.utils.mapping")
+_G.log = require("lichtvim.utils.lazy").log
 
 -- 展开打印各种数据
 _G.Dump = function(...)
@@ -16,6 +13,7 @@ _G.Dump = function(...)
 end
 
 local icons = require("lichtvim.config.ui.icons")
+local utils = require("lichtvim.utils")
 
 local M = {}
 
@@ -57,7 +55,7 @@ function M.setup(opts)
         .. M.lazy_version
         .. " to work properly.\n"
         .. "Please upgrade **lazy.nvim**",
-      { title = LichtVimTitle }
+      { title = utils.title.string }
     )
     error("Exiting")
   end

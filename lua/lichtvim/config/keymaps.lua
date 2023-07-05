@@ -2,7 +2,8 @@
 -- keybindings.lua
 -- Note: 快捷键设置
 -- =================
-local option = utils.option
+local utils = require("lichtvim.utils")
+local lazyUtils = require("lichtvim.utils.lazy")
 local wk_ok, wk = pcall(require, "which-key")
 
 if wk_ok then
@@ -135,16 +136,16 @@ map.set("n", "<leader>t6", "6gt", "Tab 6")
 map.set("n", "<leader>t7", "7gt", "Tab 7")
 map.set("n", "<leader>t8", "8gt", "Tab 8")
 -- toggle
-map.set("n", "<leader>ua", option.toggle_mouse, "Toggle mouse")
-map.set("n", "<leader>ue", option.toggle("spell"), "Toggle spell check")
-map.set("n", "<leader>uw", option.toggle("wrap"), "Toggle wrap")
-map.set("n", "<leader>un", option.toggle("number"), "Toggle number")
-map.set("n", "<leader>ur", option.toggle("relativenumber"), "Toggle relative number")
-map.set("n", "<leader>uc", option.toggle("cursorline"), "Toggle cursorline")
-map.set("n", "<leader>uv", option.toggle("cursorcolumn"), "Toggle cursorcolumn")
-map.set("n", "<leader>uf", option.toggle("foldenable"), "Toggle foldenable")
-map.set("n", "<leader>ud", option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
-map.set("n", "<leader>ul", option.toggle("list"), "Toggle list")
+map.set("n", "<leader>ua", utils.option.toggle_mouse, "Toggle mouse")
+map.set("n", "<leader>ue", utils.option.toggle("spell"), "Toggle spell check")
+map.set("n", "<leader>uw", utils.option.toggle("wrap"), "Toggle wrap")
+map.set("n", "<leader>un", utils.option.toggle("number"), "Toggle number")
+map.set("n", "<leader>ur", utils.option.toggle("relativenumber"), "Toggle relative number")
+map.set("n", "<leader>uc", utils.option.toggle("cursorline"), "Toggle cursorline")
+map.set("n", "<leader>uv", utils.option.toggle("cursorcolumn"), "Toggle cursorcolumn")
+map.set("n", "<leader>uf", utils.option.toggle("foldenable"), "Toggle foldenable")
+map.set("n", "<leader>ud", utils.option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
+map.set("n", "<leader>ul", utils.option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
 if vim.lsp.inlay_hint then
   map("n", "<leader>uh", utils.func.call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
@@ -262,11 +263,11 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.cmd([[silent wa | silent %bd | Alpha]])
     end, "󰧨 Dashboard", opts)
 
-    if lazy.has("vim-easy-align") then
+    if lazyUtils.has("vim-easy-align") then
       map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { buffer = event.buf, noremap = false })
     end
 
-    if lazy.has("hop.nvim") then
+    if lazyUtils.has("hop.nvim") then
       local opt = { current_line_only = true }
       local hop = require("hop")
       local hint = require("hop.hint").HintDirection
@@ -297,11 +298,11 @@ vim.api.nvim_create_autocmd("FileType", {
       }, { mode = "n", prefix = "<leader>", buffer = event.buf })
     end
 
-    if lazy.has("mini.bufremove") then
+    if lazyUtils.has("mini.bufremove") then
       map.set("n", "<leader>bd", utils.func.call(require("mini.bufremove").delete, 0, false), "Delete buffer", opts)
     end
 
-    if lazy.has("bufferline.nvim") then
+    if lazyUtils.has("bufferline.nvim") then
       map.set("n", "<leader>bt", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin", opts)
       map.set("n", "<leader>bT", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers", opts)
       map.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer", opts)
@@ -319,8 +320,7 @@ vim.api.nvim_create_autocmd("FileType", {
       map.set("n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", "Buffer 8", opts)
     end
 
-    
-    if lazy.has("git-blame.nvim") and utils.git.is_repo() then
+    if lazyUtils.has("git-blame.nvim") and utils.git.is_repo() then
       map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opts)
     end
   end,
@@ -330,6 +330,6 @@ if utils.git.is_repo() then
   wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
   local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-  map.set("n", "<leader>gg", utils.func.call(lazy.float_term, { "lazygit" }, opts), "Lazygit")
-  map.set("n", "<leader>gl", utils.func.call(lazy.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+  map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opts), "Lazygit")
+  map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 end

@@ -1,3 +1,5 @@
+local utils = require("lichtvim.utils")
+
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { import = "lichtvim.plugins.editor.treesitter" },
@@ -16,10 +18,10 @@ return {
         silent = true,
         hooks = {
           on_enter = function()
-            lazy.info("Entering Resize Mode. Welcome")
+            log.info("Entering Resize Mode. Welcome")
           end,
           on_leave = function()
-            lazy.info("Exiting Resize Mode. Bye")
+            log.info("Exiting Resize Mode. Bye")
           end,
         },
       },

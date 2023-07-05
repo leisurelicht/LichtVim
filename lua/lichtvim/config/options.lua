@@ -70,14 +70,16 @@ opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 不可见字符不显示
 opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
 
-if utils.sys.is_neovide() then
+local sys = require("lichtvim.utils").sys
+
+if sys.is_neovide() then
   opt.mouse = ""
   vim.g.neovide_cursor_vfx_mode = "railgun"
   -- vim.g.neovide_confirm_quit = true
   vim.g.neovide_fullscreen = true
   vim.g.neovide_hide_mouse_when_typing = false
   vim.g.neovide_remember_window_size = true
-  if utils.sys.is_macos() then
+  if sys.is_macos() then
     vim.g.neovide_input_macos_alt_is_meta = true
     map.set("n", "<D-v>", "p")
     map.set("i", "<D-v>", "<esc>pa")

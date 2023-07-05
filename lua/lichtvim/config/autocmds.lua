@@ -4,6 +4,7 @@
 -- =================
 --
 local options = require("lichtvim.config")
+local utils = require("lichtvim.utils")
 
 -- auto save when leaving insert mode or when the buffer is changed
 if options.auto_save then

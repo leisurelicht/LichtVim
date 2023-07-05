@@ -1,3 +1,5 @@
+local utils = require("lichtvim.utils")
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",

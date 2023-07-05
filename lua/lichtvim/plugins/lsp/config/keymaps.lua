@@ -8,11 +8,16 @@ function M.get()
   local format = function()
     require("lichtvim.plugins.lsp.config.format").format({ force = true })
   end
+
+  local builtin = require("telescope.builtin")
+  local utils = require("lichtvim.utils")
+  local call = utils.func.call
+
   if not M._keys then
   ---@class PluginLspKeys
     -- stylua: ignore
     M._keys =  {
-      { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Info" },
+      { "<leader>pi", "<cmd>LspInfo<cr>", desc = "Info" },
       { "<leader>ln", M.diagnostic_goto(true), desc = "Next diagnostic" },
       { "<leader>lp", M.diagnostic_goto(false), desc = "Previous diagnostic" },
       { "]d", M.diagnostic_goto(true), desc = "Next diagnostic" },
@@ -31,60 +36,24 @@ function M.get()
       { "<leader>lh", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
       { "<leader>lr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
       { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-  { "<leader>ll", utils.func.call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
-        {
-    "<leader>lc",
-    utils.func.call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }),
-    desc = "Diagnostic (cursor)",
-  },
-  {
-    "<leader>lD",
-    utils.func.call(vim.lsp.buf.definition, { jump_type = "tab" }),
-    desc = "Goto definition (tab)",
-    has = "definition",
-  },
+      { "<leader>ll", call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
+      { "<leader>lc", call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }), desc = "Diagnostic (cursor)" },
+      { "<leader>lD", call(vim.lsp.buf.definition, { jump_type = "tab" }), desc = "Goto definition (tab)", has = "definition" },
 
+      { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
+      { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
+      { "<leader>li", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
+      { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
+      { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
+      { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
+      { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
     }
   end
-  if lazy.has("lspsaga.nvim") then
+  if require("lichtvim.utils.lazy").has("lspsaga.nvim") then
     local keys = {
       { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
       { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover keep", has = "hover" },
       { "<leader>la", "<cmd>Lspsaga code_action<cr>", mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-    }
-    utils.list.extend(M._keys, keys)
-  end
-
-  if lazy.has("telescope.nvim") then
-    local builtin = require("telescope.builtin")
-    local keys = {
-      { "<leader>lL", utils.func.call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
-      {
-        "<leader>le",
-        utils.func.call(builtin.lsp_references, { show_line = false }),
-        desc = "Goto references",
-        has = "references",
-      },
-      {
-        "<leader>li",
-        utils.func.call(builtin.lsp_implementations, { show_line = false }),
-        desc = "Goto implementation",
-        has = "implementation",
-      },
-      {
-        "<leader>lt",
-        utils.func.call(builtin.lsp_type_definitions, { show_line = false }),
-        desc = "Goto type definition",
-        has = "typeDefinition",
-      },
-      {
-        "<leader>ld",
-        utils.func.call(builtin.lsp_definitions, { reuse_win = true, show_line = false }),
-        desc = "Goto definition",
-        has = "definition",
-      },
-      { "<leader>li", utils.func.call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
-      { "<leader>lo", utils.func.call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
     }
     utils.list.extend(M._keys, keys)
   end
@@ -115,8 +84,6 @@ function M.on_attach(client, buffer)
       vim.keymap.set(keys.mode or "n", keys[1], keys[2], opts)
     end
   end
-
-  map.set("n", "<leader>pi", "<cmd>LspInfo<cr>", "Lsp info")
 
   require("which-key").register({ l = { name = " LSP" }, mode = { "n", "v" }, prefix = "<leader>" })
 end

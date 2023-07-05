@@ -15,9 +15,9 @@ function M.toggle()
     M.opts.autoformat = not M.opts.autoformat
   end
   if M.opts.autoformat then
-    lazy.info("Enabled format on save")
+    log.info("Enabled format on save")
   else
-    lazy.warn("Disabled format on save")
+    log.warn("Disabled format on save")
   end
 end
 
@@ -46,7 +46,7 @@ function M.format(opts)
     filter = function(client)
       return vim.tbl_contains(client_ids, client.id)
     end,
-  }, lazy.opts("nvim-lspconfig").format or {}))
+  }, require("lichtvim.utils.lazy").opts("nvim-lspconfig").format or {}))
 end
 
 ---@param formatters LazyVimFormatters
@@ -78,7 +78,7 @@ function M.notify(formatters)
   end
 
   vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
-    title = utils.title.add("Formatting"),
+    title = require("lichtvim.utils").title.add("Formatting"),
     on_open = function(win)
       vim.api.nvim_win_set_option(win, "conceallevel", 3)
       vim.api.nvim_win_set_option(win, "spell", false)

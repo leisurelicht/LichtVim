@@ -1,3 +1,5 @@
+local lazyUtils = require("lichtvim.utils.lazy")
+
 -- 为 lsp hover 添加文件类型
 local function lsp_hover(_, result, ctx, config)
   -- Add file type for LSP hover
@@ -41,7 +43,7 @@ return {
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
-          return lazy.has("nvim-cmp")
+          return lazyUtils.has("nvim-cmp")
         end,
       },
     },
@@ -84,7 +86,7 @@ return {
 
         -- LSP Server Settings
         ---@type lspconfig.options
-        servers = { },
+        servers = {},
         -- you can do any additional lsp server setup here
         -- return true if you don't want this server to be setup with lspconfig
         ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
@@ -102,7 +104,7 @@ return {
     config = function(_, opts)
       require("lichtvim.plugins.lsp.config.format").setup(opts)
 
-      lazy.on_attach(function(client, buffer)
+      lazyUtils.on_attach(function(client, buffer)
         require("lichtvim.plugins.lsp.config.keymaps").on_attach(client, buffer)
       end)
 
@@ -116,7 +118,7 @@ return {
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
       if opts.inlay_hints.enabled and inlay_hint then
-        lazy.on_attach(function(client, buffer)
+        lazyUtils.on_attach(function(client, buffer)
           if client.server_capabilities.inlayHintProvider then
             inlay_hint(buffer, true)
           end
