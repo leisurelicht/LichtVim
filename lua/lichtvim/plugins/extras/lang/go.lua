@@ -30,8 +30,6 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        -- "impl",
-        -- "gomodifytags",
         "goimports-reviser",
       })
     end,
@@ -42,12 +40,10 @@ return {
       local null_ls = require("null-ls")
       vim.list_extend(opts.sources, {
         null_ls.builtins.formatting.gofmt,
-        null_ls.builtins.formatting.goimports_reviser.with({
-          args = { "-rm-unused", "-set-alias", "-format", "$FILENAME" },
-        }),
-        -- null_ls.builtins.code_actions.gomodifytags,
-        -- null_ls.builtins.code_actions.impl,
-        -- null_ls.builtins.code_actions.refactoring,
+        null_ls.builtins.formatting.goimports_reviser,
+        -- null_ls.builtins.formatting.goimports_reviser.with({
+        --   args = { "-rm-unused", "-set-alias", "-format", "$FILENAME" },
+        -- }),
       })
     end,
   },
@@ -99,8 +95,7 @@ return {
         gopls = function(_, opts)
           -- workaround for gopls not supporting semanticTokensProvider
           -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
-          local lazyUtils = require("lichtvim.utils.lazy")
-          lazyUtils.on_attach(function(client, _)
+          require("lichtvim.utils.lazy").on_attach(function(client, _)
             if client.name == "gopls" then
               if not client.server_capabilities.semanticTokensProvider then
                 local semantic = client.config.capabilities.textDocument.semanticTokens
