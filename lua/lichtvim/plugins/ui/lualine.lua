@@ -3,7 +3,6 @@ local utils = require("lichtvim.utils")
 return {
   {
     "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
     opts = function()
       local win_num = utils.win.num
 

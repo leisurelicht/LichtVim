@@ -7,11 +7,7 @@ return {
   },
   {
     "m4xshen/smartcolumn.nvim",
-    opts = {
-      custom_colorcolumn = {
-        ["bash"] = "120",
-      },
-    },
+    opts = { custom_colorcolumn = { ["bash"] = "120" } },
   },
 
   {
@@ -19,7 +15,6 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "shfmt",
-        -- "shellcheck",
       })
     end,
   },

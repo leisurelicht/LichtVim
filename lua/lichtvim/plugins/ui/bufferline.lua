@@ -5,12 +5,11 @@ return {
     opts = { restore_state = false },
     config = function(_, opts)
       require("scope").setup(opts)
-      require("telescope").load_extension("scope")
+      -- require("telescope").load_extension("scope")
     end,
   },
   {
     "akinsho/bufferline.nvim",
-    event = "VeryLazy",
     opts = function()
       local icons = require("lichtvim.config").icons
       return {

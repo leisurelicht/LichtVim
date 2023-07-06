@@ -7,12 +7,9 @@ return {
       end
     end,
   },
+  { "b0o/SchemaStore.nvim" },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "b0o/SchemaStore.nvim",
-      version = false, -- last release is way too old
-    },
     opts = {
       -- make sure mason installs the server
       servers = {

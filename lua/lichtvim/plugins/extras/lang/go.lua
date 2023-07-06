@@ -20,11 +20,7 @@ return {
   },
   {
     "m4xshen/smartcolumn.nvim",
-    opts = {
-      custom_colorcolumn = {
-        ["go"] = "120",
-      },
-    },
+    opts = { custom_colorcolumn = { ["go"] = "120" } },
   },
   {
     "williamboman/mason.nvim",

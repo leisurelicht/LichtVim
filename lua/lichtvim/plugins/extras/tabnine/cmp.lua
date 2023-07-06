@@ -1,5 +1,3 @@
-local utils = require("lichtvim.utils")
-
 return {
   {
     "tzachar/cmp-tabnine",
@@ -22,6 +20,7 @@ return {
     config = function(_, opts)
       require("cmp_tabnine.config"):setup(opts)
 
+      local utils = require("lichtvim.utils")
       vim.api.nvim_create_autocmd("BufRead", {
         group = vim.api.nvim_create_augroup(utils.title.add("Prefetch"), { clear = true }),
         pattern = { "*.py", "*.go", "*.lua", "*.sh" },

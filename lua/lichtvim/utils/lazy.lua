@@ -159,7 +159,6 @@ function M.log.warn(msg, opts)
     opts.title = title.string .. " " .. opts.title
   else
     opts.title = title.string
-
   end
   Util.warn(msg, opts)
 end
@@ -170,7 +169,6 @@ function M.log.error(msg, opts)
     opts.title = title.string .. " " .. opts.title
   else
     opts.title = title.string
-
   end
   Util.error(msg, opts)
 end
@@ -181,7 +179,6 @@ function M.log.debug(msg, opts)
     opts.title = title.string .. " " .. opts.title
   else
     opts.title = title.string
-
   end
   Util.debug(msg, opts)
 end

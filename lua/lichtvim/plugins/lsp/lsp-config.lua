@@ -1,37 +1,3 @@
-local lazyUtils = require("lichtvim.utils.lazy")
-
--- 为 lsp hover 添加文件类型
-local function lsp_hover(_, result, ctx, config)
-  -- Add file type for LSP hover
-  local bufnr, winner = vim.lsp.handlers.hover(_, result, ctx, config)
-  if bufnr and winner then
-    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
-    return bufnr, winner
-  end
-end
-
--- 为 lsp 签名帮助添加文件类型
-local function lsp_signature_help(_, result, ctx, config)
-  -- Add file type for LSP signature help
-  local bufnr, winner = vim.lsp.handlers.signature_help(_, result, ctx, config)
-  if bufnr and winner then
-    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
-    return bufnr, winner
-  end
-end
-
--- 设置浮动样式(兜底方案)
-local lsp_handlers = {
-  ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
-    border = "rounded",
-    filetype = "lsp-hover",
-  }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
-    border = "rounded",
-    filetype = "lsp-signature-help",
-  }),
-}
-
 return {
   -- lspconfig
   {
@@ -40,12 +6,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return lazyUtils.has("nvim-cmp")
-        end,
-      },
+      { "hrsh7th/cmp-nvim-lsp", dependencies = { "hrsh7th/nvim-cmp" } },
     },
     ---@class PluginLspOpts
     opts = function()
@@ -102,6 +63,8 @@ return {
       }
     end,
     config = function(_, opts)
+      local lazyUtils = require("lichtvim.utils.lazy")
+
       require("lichtvim.plugins.lsp.config.format").setup(opts)
 
       lazyUtils.on_attach(function(client, buffer)
@@ -109,7 +72,6 @@ return {
       end)
 
       local register_capability = vim.lsp.handlers["client/registerCapability"]
-
       vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
         local ret = register_capability(err, res, ctx)
         local client_id = ctx.client_id
@@ -127,7 +89,6 @@ return {
       end
 
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-
       if opts.inlay_hints.enabled and inlay_hint then
         lazyUtils.on_attach(function(client, buffer)
           if client.server_capabilities.inlayHintProvider then
@@ -146,7 +107,6 @@ return {
             end
           end
       end
-
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
       local s_names = {}
@@ -165,15 +125,11 @@ return {
       )
 
       local function setup(server)
-        local options = s_opts[server]
-
-        options = options or {}
+        local options = s_opts[server] or {}
 
         if options.disable_diagnostics ~= nil and options.disable_agnostics then
-          lsp_handlers["textDocument/publishDiagnostics"] = function(...) end
+          options.handlers["textDocument/publishDiagnostics"] = function(...) end
         end
-
-        options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
 
         options = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, options)
 

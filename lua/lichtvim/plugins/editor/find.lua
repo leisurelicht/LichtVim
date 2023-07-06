@@ -65,7 +65,7 @@ return {
         { "<leader>fw", utils.plugs.telescope("grep_string"), desc = "Word (root dir)" },
         { "<leader>fW", utils.plugs.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
         { "<leader>fj", utils.plugs.telescope("jumplist"), desc = "Jump list" },
-        { "<leader>fp", "<cmd>utils.plugs.telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
+        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
         {
           "<leader>fe",
           utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
