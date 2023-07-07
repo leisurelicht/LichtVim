@@ -2,6 +2,17 @@ return {
   { import = "lichtvim.plugins.coding.indent" },
   { import = "lichtvim.plugins.coding.git" },
   { "tpope/vim-surround", event = { "BufRead", "BufNewFile" } },
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTelescope", "TodoTrouble" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", desc = "Todo (Telescope)" },
+    },
+    config = function()
+      require("todo-comments").setup({})
+    end,
+  },
   { -- 自动配对
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -68,6 +79,18 @@ return {
     config = function(_, opts)
       require("project_nvim").setup(opts)
       require("telescope").load_extension("projects")
+
+      map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add")
+      map.set("n", "<leader>rj", function()
+        local buffers = vim.api.nvim_list_bufs()
+        local wins = vim.api.nvim_list_wins()
+
+        if #wins > 1 or #buffers > 1 then
+          vim.cmd([[silent wa | silent %bd | Alpha]])
+        end
+
+        vim.cmd([[Telescope projects theme=dropdown ]])
+      end, "Recently")
     end,
   },
   {

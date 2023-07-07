@@ -3,10 +3,14 @@ local utils = require("lichtvim.utils")
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { import = "lichtvim.plugins.editor.treesitter" },
-  { import = "lichtvim.plugins.editor.enhance" },
   { import = "lichtvim.plugins.editor.neo-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
   { import = "lichtvim.plugins.editor.find" },
+  { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
+  { "karb94/neoscroll.nvim", lazy = true, config = true },
+  { "echasnovski/mini.bufremove", lazy = true },
+  { "junegunn/vim-easy-align", lazy = true },
+  -- { "nacro90/numb.nvim", lazy = true, config = true },
   {
     "mrjones2014/smart-splits.nvim",
     event = { "BufRead", "BufNewFile" },
@@ -17,12 +21,8 @@ return {
       resize_mode = {
         silent = true,
         hooks = {
-          on_enter = function()
-            log.info("Entering Resize Mode. Welcome")
-          end,
-          on_leave = function()
-            log.info("Exiting Resize Mode. Bye")
-          end,
+          on_enter = utils.func.call(log.info, "Entering Resize Mode. Welcome"),
+          on_leave = utils.func.call(log.info, "Exiting Resize Mode. Bye"),
         },
       },
     },
@@ -51,14 +51,39 @@ return {
     end,
   },
   {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTelescope", "TodoTrouble" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-      { "<leader>ft", "<cmd>TodoTelescope theme=ivy<cr>", desc = "Todo (Telescope)" },
+    "folke/flash.nvim",
+    event = { "BufRead", "BufNewFile" },
+    opts = {
+      modes = {
+        char = {
+          enabled = false,
+        },
+      },
     },
-    config = function()
-      require("todo-comments").setup({})
+    config = function(_, opts)
+      require("flash").setup(opts)
+
+      local Config = require("flash.config")
+      local Char = require("flash.plugins.char")
+      for _, motion in ipairs({ "f", "t", "F", "T" }) do
+        vim.keymap.set({ "n", "x", "o" }, motion, function()
+          require("flash").jump(Config.get({
+            mode = "char",
+            search = {
+              mode = Char.mode(motion),
+              max_length = 1,
+            },
+          }, Char.motions[motion]))
+        end)
+      end
+    end,
+  },
+  {
+    "NvChad/nvim-colorizer.lua",
+    lazy = true,
+    cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
+    config = function(_, opts)
+      require("colorizer").setup(opts)
     end,
   },
 }

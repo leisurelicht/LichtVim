@@ -3,6 +3,7 @@
 -- Note: 快捷键设置
 -- =================
 local utils = require("lichtvim.utils")
+local call = utils.func.call
 local lazyUtils = require("lichtvim.utils.lazy")
 
 -- normal 模式下按 esc 取消高亮显示
@@ -63,7 +64,7 @@ map.set("n", "<leader>ud", utils.option.toggle("foldcolumn", false, { "0", "1" }
 map.set("n", "<leader>ul", utils.option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
 if vim.lsp.inlay_hint then
-  map("n", "<leader>uh", utils.func.call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
+  map("n", "<leader>uh", call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
 end
 
 local wk = require("which-key")
@@ -150,20 +151,8 @@ wk.register({
   ["<c-w>"] = { name = "Window" },
 }, { mode = "n", prefix = "" })
 
-map.set("n", "<leader>rj", function()
-  local buffers = vim.api.nvim_list_bufs()
-  local wins = vim.api.nvim_list_wins()
-
-  if #wins > 1 or #buffers > 1 then
-    vim.cmd([[silent wa | silent %bd | Alpha]])
-  end
-
-  vim.cmd([[Telescope projects theme=dropdown ]])
-end, "Recently")
-map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add")
-
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = true }),
+  group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), {}),
   pattern = { "*" },
   callback = function(event)
     local opts = { buffer = event.buf, silent = true }
@@ -174,8 +163,8 @@ vim.api.nvim_create_autocmd("FileType", {
       b = { name = "󰓩 Buffers" },
       w = { name = " Window Split" },
       u = { name = "󰨙 UI" },
-      h = { name = "󱖹 Hop" },
-      ha = { name = "All Windows" },
+      -- h = { name = "󱖹 Hop" },
+      -- ha = { name = "All Windows" },
     }, { mode = "n", prefix = "<leader>", buffer = event.buf })
 
     -- 窗口切换组合快捷键
@@ -190,7 +179,6 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move line up", opts)
     map.set("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move line down", opts)
     map.set("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move line up", opts)
-
     -- 连续缩进
     map.set("v", "<", "<gv", "Move left continuously", opts)
     map.set("v", ">", ">gv", "Move right continuously", opts)
@@ -249,7 +237,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end, " Quit", opts)
 
     map.set("n", "<leader>;", function()
-      utils.func.call(require("notify").dismiss, { silent = true, pending = true })
+      call(require("notify").dismiss, { silent = true, pending = true })
       require("spectre").close()
       vim.cmd([[ Neotree close ]])
       vim.cmd([[ TroubleClose ]])
@@ -260,34 +248,16 @@ vim.api.nvim_create_autocmd("FileType", {
       map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { buffer = event.buf, noremap = false })
     end
 
-    local opt = { current_line_only = true }
-    local hop = require("hop")
-    local hint = require("hop.hint").HintDirection
-    local function extend(ex)
-      return function()
-        hop.hint_char1(vim.tbl_deep_extend("force", opt, ex))
-      end
-    end
-    map.set("", "f", extend({ direction = hint.AFTER_CURSOR }), "Jump forward", opts)
-    map.set("", "F", extend({ direction = hint.BEFORE_CURSOR }), "Jump backward", opts)
-    map.set("", "t", extend({ direction = hint.AFTER_CURSOR, hint_offset = -1 }), "Jump forward", opts)
-    map.set("", "T", extend({ direction = hint.BEFORE_CURSOR, hint_offset = 1 }), "Jump backward", opts)
+    map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "Flash", opts)
+    map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "Flash treesitter", opts)
+    map.set("o", "r", call(require("flash").remote), "Flash remote", opts)
+    map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash Treesitter Search", opts)
+    map.set({ "c" }, "<c-s>", call(require("flash").toggle), "Toggle flash search", opts)
 
-    map.set("n", "<leader>hw", "<cmd>HopWord<cr>", "Word", opts)
-    map.set("n", "<leader>hl", "<cmd>HopLine<cr>", "Line", opts)
-    map.set("n", "<leader>hc", "<cmd>HopChar1<cr>", "Char", opts)
-    map.set("n", "<leader>hp", "<cmd>HopPattern<cr>", "Pattern", opts)
-    map.set("n", "<leader>hs", "<cmd>HopLineStart<cr>", "Line start", opts)
-    map.set("n", "<leader>haw", "<cmd>HopWordMW<cr>", "Word", opts)
-    map.set("n", "<leader>hal", "<cmd>HopLineMW<cr>", "Line", opts)
-    map.set("n", "<leader>hac", "<cmd>HopChar1MW<cr>", "Char", opts)
-    map.set("n", "<leader>hap", "<cmd>HopPatternMW<cr>", "Pattern", opts)
-    map.set("n", "<leader>has", "<cmd>HopLineStartMW<cr>", "Line start", opts)
+    map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer", opts)
 
-    map.set("n", "<leader>bd", utils.func.call(require("mini.bufremove").delete, 0, false), "Delete buffer", opts)
-
-    map.set("n", "<leader>bt", "<Cmd>BufferLineTogglePin<CR>", "Toggle pin", opts)
-    map.set("n", "<leader>bT", "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers", opts)
+    map.set("n", "<leader>bt", "<cmd>BufferLineTogglePin<CR>", "Toggle pin", opts)
+    map.set("n", "<leader>bT", "<cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers", opts)
     map.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer", opts)
     map.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>", "Next buffer", opts)
     map.set("n", "[b", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer", opts)
@@ -310,6 +280,6 @@ if utils.git.is_repo() then
   wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
 
   local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-  map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opts), "Lazygit")
-  map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opts), "Lazygit log")
+  map.set("n", "<leader>gg", call(lazyUtils.float_term, { "lazygit" }, opts), "Lazygit")
+  map.set("n", "<leader>gl", call(lazyUtils.float_term, { "lazygit", "log" }, opts), "Lazygit log")
 end
