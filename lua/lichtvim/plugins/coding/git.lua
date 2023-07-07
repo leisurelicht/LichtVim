@@ -23,7 +23,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead", "BufNewFile" },
-    dependencies = { "f-person/git-blame.nvim" },
     opts = {
       signs = {
         add = { text = "│" },
@@ -34,6 +33,7 @@ return {
         untracked = { text = "┆" },
       },
       signcolumn = true,
+      numhl = true,
       preview_config = {
         -- Options passed to nvim_open_win
         border = "rounded",

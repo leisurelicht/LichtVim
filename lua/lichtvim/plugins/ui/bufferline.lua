@@ -15,7 +15,7 @@ return {
       return {
         options = {
           numbers = "ordinal",
-          separator_style = "slope",
+          separator_style = "thin",
           always_show_bufferline = false,
           hover = {
             enabled = true,
