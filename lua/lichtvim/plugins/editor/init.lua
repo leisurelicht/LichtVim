@@ -110,8 +110,8 @@ return {
         pattern = { "*" },
         callback = function(event)
           local opt = { buffer = event.buf, silent = true }
-          map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "Jump", opt)
-          map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "Select", opt)
+          map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "󱃏 Flash", opt)
+          map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "󰒅 Select", opt)
           map.set("o", "r", call(require("flash").remote), "Flash remote", opt)
           map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash Treesitter Search", opt)
           map.set({ "c" }, "<c-s>", call(require("flash").toggle), "Toggle flash search", opt)
