@@ -8,10 +8,10 @@ return {
   { import = "lichtvim.plugins.editor.which-key" },
   { import = "lichtvim.plugins.editor.find" },
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
-  { "karb94/neoscroll.nvim", lazy = true, config = true },
   {
     "echasnovski/mini.bufremove",
-    event = { "BufRead", "BufNewFile" },
+    event = "VeryLazy",
+    -- event = { "BufRead", "BufNewFile" },
     config = function(_, opts)
       require("mini.bufremove").setup(_, opts)
 
@@ -25,10 +25,10 @@ return {
       })
     end,
   },
-  -- { "nacro90/numb.nvim", lazy = true, config = true },
+  { "nacro90/numb.nvim", event = { "BufRead", "BufNewFile" }, config = true },
   {
     "mrjones2014/smart-splits.nvim",
-    event = { "BufRead", "BufNewFile" },
+    event = "VeryLazy",
     opts = {
       ignored_filetypes = { "nofile", "quickfix", "prompt", "alpha" },
       ignored_buftypes = { "NvimTree" },
@@ -49,7 +49,7 @@ return {
   },
   {
     "brglng/vim-im-select",
-    event = { "BufNewFile", "BufRead" },
+    event = "VeryLazy",
     keys = {
       { "<leader>ui", "<cmd>ImSelectEnable<cr>", desc = "Enable imselect" },
       { "<leader>uI", "<cmd>ImSelectDisable<cr>", desc = "Disable imselect" },

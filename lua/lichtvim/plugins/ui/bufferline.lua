@@ -1,7 +1,7 @@
 return {
   {
     "tiagovla/scope.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufRead", "BufNewFile" },
     opts = { restore_state = false },
     config = function(_, opts)
       require("scope").setup(opts)
