@@ -67,105 +67,11 @@ if vim.lsp.inlay_hint then
   map("n", "<leader>uh", call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")
 end
 
-local wk = require("which-key")
-
-wk.register({
-  r = { name = " Projects" },
-  f = { name = "󰛔 Find & Replace" },
-  o = { name = " Terminal" },
-  t = { name = "󱏈 Tab" },
-  to = { name = "Close Only" },
-  u = { name = "󰨙 UI" },
-  p = { name = "󰏖 Packages" },
-  pl = { "<cmd>Lazy<cr>", "Lazy" },
-}, { mode = "n", prefix = "<leader>" })
-
-wk.register({
-  f = { name = "󰛔 Find & Replace" },
-}, { mode = "v", prefix = "<leader>" })
-
-wk.register({
-  ["<SNR>"] = { name = "Script Number" },
-  ["<leader>"] = { name = "Show Custom Key Map" },
-  ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show Key Map" },
-
-  g = { name = "Goto" },
-  gug = { name = "Goto" },
-  gui = { name = "Inside" },
-  gua = { name = "Around" },
-  guz = { name = "Z" },
-  ["gu["] = { name = "Previous" },
-  ["gu]"] = { name = "Next" },
-  gUg = { name = "Goto" },
-  gUi = { name = "Inside" },
-  gUa = { name = "Around" },
-  gUz = { name = "Z" },
-  ["gU["] = { name = "previous" },
-  ["gU]"] = { name = "next" },
-  ["g~g"] = { name = "Goto" },
-  ["g~i"] = { name = "Inside" },
-  ["g~a"] = { name = "Around" },
-  ["g~z"] = { name = "Z" },
-  ["g~["] = { name = "Previous" },
-  ["g~]"] = { name = "Next" },
-  ["g'"] = { name = "Marks" },
-  ["g`"] = { name = "Marks" },
-  z = { name = "Z" },
-  zfg = { name = "Goto" },
-  zfi = { name = "Inside" },
-  zfa = { name = "Around" },
-  zfz = { name = "Z" },
-  ["zf["] = { name = "Previous" },
-  ["zf]"] = { name = "Next" },
-  yg = { name = "Goto" },
-  yi = { name = "Inside" },
-  ya = { name = "Around" },
-  yz = { name = "Z" },
-  ["y["] = { name = "Previous" },
-  ["y]"] = { name = "Next" },
-  vg = { name = "Goto" },
-  vi = { name = "Inside" },
-  va = { name = "Around" },
-  vz = { name = "Z" },
-  ["v["] = { name = "Previous" },
-  ["v]"] = { name = "Next" },
-  dg = { name = "Goto" },
-  di = { name = "Inside" },
-  da = { name = "Around" },
-  dz = { name = "Z" },
-  ["d["] = { name = "Previous" },
-  ["d]"] = { name = "Next" },
-  cg = { name = "Goto" },
-  ci = { name = "Inside" },
-  ca = { name = "Around" },
-  cz = { name = "Z" },
-  ["c["] = { name = "Previous" },
-  ["c]"] = { name = "Next" },
-
-  ["["] = { name = "Previous" },
-  ["]"] = { name = "Next" },
-  ["@"] = { name = "Registers" },
-  ['"'] = { name = "Registers" },
-  ["'"] = { name = "Marks" },
-  ["`"] = { name = "Marks" },
-  ["<c-w>"] = { name = "Window" },
-}, { mode = "n", prefix = "" })
-
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), {}),
+  group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
   pattern = { "*" },
   callback = function(event)
     local opts = { buffer = event.buf, silent = true }
-
-    wk.register({
-      -- d = { name = " Debugger" },
-      c = { name = " ShortCuts" },
-      b = { name = "󰓩 Buffers" },
-      w = { name = " Window Split" },
-      u = { name = "󰨙 UI" },
-      -- h = { name = "󱖹 Hop" },
-      -- ha = { name = "All Windows" },
-    }, { mode = "n", prefix = "<leader>", buffer = event.buf })
 
     -- 窗口切换组合快捷键
     map.set("n", "<C-j>", "<C-W><C-j>", "Down window", opts)
@@ -243,43 +149,5 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.cmd([[ TroubleClose ]])
       vim.cmd([[silent wa | silent %bd | Alpha]])
     end, "󰧨 Dashboard", opts)
-
-    if lazyUtils.has("vim-easy-align") then
-      map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { buffer = event.buf, noremap = false })
-    end
-
-    map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "Flash", opts)
-    map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "Flash treesitter", opts)
-    map.set("o", "r", call(require("flash").remote), "Flash remote", opts)
-    map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash Treesitter Search", opts)
-    map.set({ "c" }, "<c-s>", call(require("flash").toggle), "Toggle flash search", opts)
-
-    map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer", opts)
-
-    map.set("n", "<leader>bt", "<cmd>BufferLineTogglePin<CR>", "Toggle pin", opts)
-    map.set("n", "<leader>bT", "<cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers", opts)
-    map.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer", opts)
-    map.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>", "Next buffer", opts)
-    map.set("n", "[b", "<cmd>BufferLineCyclePrev<cr>", "Previous buffer", opts)
-    map.set("n", "]b", "<cmd>BufferLineCycleNext<cr>", "Next buffer", opts)
-    map.set("n", "<leader>bk", "<cmd>BufferLinePick<cr>", "Pick buffer", opts)
-    map.set("n", "<leader>b1", "<cmd>BufferLineGoToBuffer 1<cr>", "Buffer 1", opts)
-    map.set("n", "<leader>b2", "<cmd>BufferLineGoToBuffer 2<cr>", "Buffer 2", opts)
-    map.set("n", "<leader>b3", "<cmd>BufferLineGoToBuffer 3<cr>", "Buffer 3", opts)
-    map.set("n", "<leader>b4", "<cmd>BufferLineGoToBuffer 4<cr>", "Buffer 4", opts)
-    map.set("n", "<leader>b5", "<cmd>BufferLineGoToBuffer 5<cr>", "Buffer 5", opts)
-    map.set("n", "<leader>b6", "<cmd>BufferLineGoToBuffer 6<cr>", "Buffer 6", opts)
-    map.set("n", "<leader>b7", "<cmd>BufferLineGoToBuffer 7<cr>", "Buffer 7", opts)
-    map.set("n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", "Buffer 8", opts)
-
-    map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opts)
   end,
 })
-
-if utils.git.is_repo() then
-  wk.register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
-
-  local opts = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-  map.set("n", "<leader>gg", call(lazyUtils.float_term, { "lazygit" }, opts), "Lazygit")
-  map.set("n", "<leader>gl", call(lazyUtils.float_term, { "lazygit", "log" }, opts), "Lazygit log")
-end

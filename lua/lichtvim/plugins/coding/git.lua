@@ -18,7 +18,16 @@ return {
     init = function()
       vim.g.gitblame_enabled = 0
     end,
-    config = function() end,
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          local opt = { buffer = event.buf, silent = true }
+          map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opt)
+        end,
+      })
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -68,6 +77,15 @@ return {
     },
     config = function(_, opts)
       require("gitsigns").setup(opts)
+
+      if utils.git.is_repo() then
+        require("which-key").register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
+
+        local lazyUtils = require("lichtvim.utils.lazy")
+        local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
+        map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opt), "Lazygit")
+        map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opt), "Lazygit log")
+      end
     end,
   },
 }

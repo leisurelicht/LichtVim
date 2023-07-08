@@ -1,4 +1,5 @@
 local utils = require("lichtvim.utils")
+local call = utils.func.call
 
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
@@ -8,8 +9,22 @@ return {
   { import = "lichtvim.plugins.editor.find" },
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   { "karb94/neoscroll.nvim", lazy = true, config = true },
-  { "echasnovski/mini.bufremove", lazy = true },
-  { "junegunn/vim-easy-align", lazy = true },
+  {
+    "echasnovski/mini.bufremove",
+    event = { "BufRead", "BufNewFile" },
+    config = function(_, opts)
+      require("mini.bufremove").setup(_, opts)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          local opt = { buffer = event.buf, silent = true }
+          map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer", opt)
+        end,
+      })
+    end,
+  },
   -- { "nacro90/numb.nvim", lazy = true, config = true },
   {
     "mrjones2014/smart-splits.nvim",
@@ -21,8 +36,8 @@ return {
       resize_mode = {
         silent = true,
         hooks = {
-          on_enter = utils.func.call(log.info, "Entering Resize Mode. Welcome"),
-          on_leave = utils.func.call(log.info, "Exiting Resize Mode. Bye"),
+          on_enter = call(log.info, "Entering Resize Mode. Welcome"),
+          on_leave = call(log.info, "Exiting Resize Mode. Bye"),
         },
       },
     },
@@ -51,6 +66,19 @@ return {
     end,
   },
   {
+    "junegunn/vim-easy-align",
+    event = { "BufRead", "BufNewFile" },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { buffer = event.buf, noremap = false })
+        end,
+      })
+    end,
+  },
+  {
     "folke/flash.nvim",
     event = { "BufRead", "BufNewFile" },
     opts = {
@@ -76,6 +104,19 @@ return {
           }, Char.motions[motion]))
         end)
       end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          local opt = { buffer = event.buf, silent = true }
+          map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "Jump", opt)
+          map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "Select", opt)
+          map.set("o", "r", call(require("flash").remote), "Flash remote", opt)
+          map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash Treesitter Search", opt)
+          map.set({ "c" }, "<c-s>", call(require("flash").toggle), "Toggle flash search", opt)
+        end,
+      })
     end,
   },
   {
