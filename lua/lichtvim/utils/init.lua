@@ -5,6 +5,13 @@
 --
 local M = {}
 
+function M.fg(name)
+  ---@type {foreground?:number}?
+  local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name }) or vim.api.nvim_get_hl_by_name(name, true)
+  local fg = hl and hl.fg or hl.foreground
+  return fg and { fg = string.format("#%06x", fg) }
+end
+
 -- M.table = {}
 
 -- --- Merge extended options with a default table of options
@@ -331,20 +338,6 @@ function M.plugs.smart_add_terminal()
   elseif direction == "horizontal" then
     vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=horizontal'")
     vim.g._term_direction = 2
-  end
-end
-
-M.lsp = {}
-
---- Go to the next or previous diagnostic
----@param next boolean # Go to the next diagnostic
----@param level string|nil # The severity of the diagnostic
----@return function # The function to call
-function M.lsp.diagnostic_goto(next, level)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  local severity = level and vim.diagnostic.severity[level] or nil
-  return function()
-    go({ severity = severity, float = { border = "rounded" } })
   end
 end
 

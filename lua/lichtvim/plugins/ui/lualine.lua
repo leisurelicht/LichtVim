@@ -35,6 +35,17 @@ return {
               symbols = { modified = "[Modified]", readonly = "[Read Only]", unnamed = "[No Name]", newfile = "[New]" },
             },
           },
+          lualine_x = {
+            {
+              function()
+                return "󰸞 "
+              end,
+              cond = function()
+                return #vim.diagnostic.get(0) == 0
+              end,
+              color = require("lichtvim.utils").fg("DiagnosticHint"),
+            },
+          },
         },
         inactive_winbar = {
           lualine_a = { { win_num, separator = { right = "" }, color = { fg = "white", bg = "grey" } } },
@@ -44,6 +55,17 @@ return {
               path = 4,
               newfile_status = false,
               symbols = { modified = "[Modified]", readonly = "[Read Only]", unnamed = "[No Name]", newfile = "[New]" },
+            },
+          },
+          lualine_x = {
+            {
+              function()
+                return "󰸞 "
+              end,
+              cond = function()
+                return #vim.diagnostic.get(0) == 0
+              end,
+              color = require("lichtvim.utils").fg("DiagnosticHint"),
             },
           },
         },
