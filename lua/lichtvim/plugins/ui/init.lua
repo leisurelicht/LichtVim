@@ -102,7 +102,7 @@ return {
     opts = function()
       local builtin = require("statuscol.builtin")
       return {
-        ft_ignore = { "neo-tree", "neo-tree-pop", "alpha", "lazy" },
+        ft_ignore = { "neo-tree", "neo-tree-popup", "alpha", "lazy" },
         segments = {
           { sign = { name = { "Git" }, maxwidth = 1, colwidth = 1, auto = false, wrap = false }, click = "v:lua.ScSa" },
           { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
