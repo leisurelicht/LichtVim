@@ -4,7 +4,6 @@
 -- =================
 local utils = require("lichtvim.utils")
 local call = utils.func.call
-local lazyUtils = require("lichtvim.utils.lazy")
 
 -- normal 模式下按 esc 取消高亮显示
 map.set("n", "<leader>x", ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>", "󰽉 Redraw")
@@ -73,11 +72,48 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function(event)
     local opts = { buffer = event.buf, silent = true }
 
+    map.set("n", "<leader>q", function()
+      vim.ui.select({ "Yes", "No" }, {
+        prompt = "Comfirm to quit?",
+        telescope = require("telescope.themes").get_dropdown({
+          winblend = 0,
+          layout_config = { width = 0.22, height = 0.12 },
+        }),
+      }, function(choice)
+        if choice ~= "Yes" then
+          return
+        end
+        vim.cmd([[ wa | quitall ]])
+      end)
+    end, " Quit", opts)
+
+    map.set("n", "<leader>;", function()
+      call(require("notify").dismiss, { silent = true, pending = true })
+      require("spectre").close()
+      vim.cmd([[ Neotree close ]])
+      vim.cmd([[ TroubleClose ]])
+      vim.cmd([[silent wa | silent %bd | Alpha]])
+    end, "󰧨 Dashboard", opts)
+
     -- 窗口切换组合快捷键
     map.set("n", "<C-j>", "<C-W><C-j>", "Down window", opts)
     map.set("n", "<C-k>", "<C-W><C-k>", "Up window", opts)
     map.set("n", "<C-l>", "<C-W><C-l>", "Left window", opts)
     map.set("n", "<C-h>", "<C-W><C-h>", "Right window", opts)
+    -- 窗口快速跳转
+    map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1", opts)
+    map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2", opts)
+    map.set("n", "<leader>3", "<cmd>3wincmd w<cr>", "Win 3", opts)
+    map.set("n", "<leader>4", "<cmd>4wincmd w<cr>", "Win 4", opts)
+    map.set("n", "<leader>5", "<cmd>5wincmd w<cr>", "Win 5", opts)
+    map.set("n", "<leader>6", "<cmd>6wincmd w<cr>", "Win 6", opts)
+    map.set("n", "<leader>7", "<cmd>7wincmd w<cr>", "Win 7", opts)
+    map.set("n", "<leader>8", "<cmd>8wincmd w<cr>", "Win 8", opts)
+
+    if vim.bo[event.buf].filetype == "neo-tree" then
+      return
+    end
+
     -- 行移动
     map.set("n", "<A-j>", "<cmd>m .+1<cr>==", "Move line down", opts)
     map.set("n", "<A-k>", "<cmd>m .-2<cr>==", "Move line up", opts)
@@ -99,15 +135,6 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("n", "<leader>wu", "<cmd>horizontal botright sbuffer<cr>", "Bottom", opts)
     map.set("n", "<leader>wd", "<C-w>c", "Close current window", opts) -- 关闭当前分屏
     map.set("n", "<leader>wc", "<C-w>o", "Close other window", opts) -- 关闭其他分屏
-    -- 窗口快速跳转
-    map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1", opts)
-    map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2", opts)
-    map.set("n", "<leader>3", "<cmd>3wincmd w<cr>", "Win 3", opts)
-    map.set("n", "<leader>4", "<cmd>4wincmd w<cr>", "Win 4", opts)
-    map.set("n", "<leader>5", "<cmd>5wincmd w<cr>", "Win 5", opts)
-    map.set("n", "<leader>6", "<cmd>6wincmd w<cr>", "Win 6", opts)
-    map.set("n", "<leader>7", "<cmd>7wincmd w<cr>", "Win 7", opts)
-    map.set("n", "<leader>8", "<cmd>8wincmd w<cr>", "Win 8", opts)
     -- buffer
     map.set("n", "<leader>bf", "<cmd>bfirst<cr>", "First buffer", opts)
     map.set("n", "<leader>bl", "<cmd>blast<cr>", "Last buffer", opts)
@@ -123,31 +150,5 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("i", "<C-u>", "<esc>viwUea", "Upper word", opts) -- 一键大写
     map.set("i", "<C-l>", "<esc>viwuea", "Lower word", opts) -- 一键小写
     map.set("i", "<C-O>", "<ESC>wb~ea", "Upper first word", opts) -- 首字母大写
-
-    map.set("n", "<leader>q", function()
-      vim.ui.select({ "Yes", "No" }, {
-        prompt = "Comfirm to quit?",
-        telescope = require("telescope.themes").get_dropdown({
-          winblend = 0,
-          layout_config = {
-            width = 0.22,
-            height = 0.12,
-          },
-        }),
-      }, function(choice)
-        if choice ~= "Yes" then
-          return
-        end
-        vim.cmd([[ wa | quitall ]])
-      end)
-    end, " Quit", opts)
-
-    map.set("n", "<leader>;", function()
-      call(require("notify").dismiss, { silent = true, pending = true })
-      require("spectre").close()
-      vim.cmd([[ Neotree close ]])
-      vim.cmd([[ TroubleClose ]])
-      vim.cmd([[silent wa | silent %bd | Alpha]])
-    end, "󰧨 Dashboard", opts)
   end,
 })

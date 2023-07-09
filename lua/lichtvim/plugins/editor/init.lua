@@ -19,6 +19,10 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
           local opt = { buffer = event.buf, silent = true }
           map.set("n", "<leader>bd", call(require("mini.bufremove").delete, 0, false), "Delete buffer", opt)
         end,
@@ -30,8 +34,8 @@ return {
     "mrjones2014/smart-splits.nvim",
     event = "VeryLazy",
     opts = {
-      ignored_filetypes = { "nofile", "quickfix", "prompt", "alpha" },
-      ignored_buftypes = { "NvimTree" },
+      ignored_filetypes = { "nofile", "quickfix", "prompt", "alpha", "neo-tree", "toggleterm" },
+      ignored_buftypes = { "nofile", "NvimTree", "terminal" },
       move_cursor_same_row = false,
       resize_mode = {
         silent = true,
@@ -43,8 +47,19 @@ return {
     },
     config = function(_, opts)
       require("smart-splits").setup(opts)
-      map.set("n", "<leader>us", utils.func.call(require("smart-splits").start_resize_mode), "Enable resize mode")
-      map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size")
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
+          local opt = { buffer = event.buf, silent = true }
+          map.set("n", "<leader>us", call(require("smart-splits").start_resize_mode), "Enable resize mode", opt)
+          map.set("n", "<leader>uS", "<cmd>tabdo wincmd =<cr>", "Resume size", opt)
+        end,
+      })
     end,
   },
   {
@@ -73,6 +88,10 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
           map.set({ "x", "n" }, "gs", "<Plug>(EasyAlign)", "EasyAlign", { buffer = event.buf, noremap = false })
         end,
       })
@@ -109,6 +128,10 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
           local opt = { buffer = event.buf, silent = true }
           map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "󱃏 Flash", opt)
           map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "󰒅 Select", opt)

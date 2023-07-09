@@ -21,8 +21,17 @@ return {
     keys = {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = " Explorer" },
     },
+    deactivate = function()
+      vim.cmd([[Neotree close]])
+    end,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = true
+      if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("neo-tree")
+        end
+      end
     end,
     opts = {
       open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
@@ -40,8 +49,10 @@ return {
       },
       default_component_configs = {
         indent = {
-          padding = 1,
-          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          with_expanders = true,
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
         },
         icon = {
           folder_closed = icons.file.FolderClosed,
@@ -82,6 +93,12 @@ return {
         follow_current_file = true,
         hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
+        always_show = { -- remains visible even if other settings would normally hide it
+          ".gitignored",
+        },
+        never_show_by_pattern = { -- uses glob style patterns
+          ".null-ls_*",
+        },
       },
       event_handlers = {
         {

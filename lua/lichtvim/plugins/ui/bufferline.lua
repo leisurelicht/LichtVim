@@ -52,6 +52,10 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
           local opt = { buffer = event.buf, silent = true }
           map.set("n", "<leader>bt", "<cmd>BufferLineTogglePin<CR>", "Toggle pin", opt)
           map.set("n", "<leader>bT", "<cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers", opt)

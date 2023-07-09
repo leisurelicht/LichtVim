@@ -23,6 +23,10 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if vim.bo[event.buf].filetype == "neo-tree" then
+            return
+          end
+
           local opt = { buffer = event.buf, silent = true }
           map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opt)
         end,
@@ -52,6 +56,10 @@ return {
         col = 1,
       },
       on_attach = function(bufnr)
+        if vim.bo[bufnr].filetype == "neo-tree" then
+          return
+        end
+
         local gs = package.loaded.gitsigns
         map.set("n", "<leader>ga", gs.stage_hunk, "Add hunk", { buffer = bufnr })
         map.set("n", "<leader>gr", gs.reset_hunk, "Reset hunk", { buffer = bufnr })

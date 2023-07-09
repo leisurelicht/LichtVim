@@ -99,15 +99,19 @@ return {
   { -- better statusline
     "luukvbaal/statuscol.nvim",
     event = "VeryLazy",
-    config = function()
+    opts = function()
       local builtin = require("statuscol.builtin")
-      require("statuscol").setup({
+      return {
+        ft_ignore = { "neo-tree", "neo-tree-pop", "alpha", "lazy" },
         segments = {
           { text = { " ", builtin.lnumfunc }, click = "v:lua.ScLa" },
           { sign = { name = { "Git" }, maxwidth = 1, colwidth = 1, auto = false, wrap = false }, click = "v:lua.ScSa" },
           { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         },
-      })
+      }
+    end,
+    config = function(_, opts)
+      require("statuscol").setup(opts)
     end,
   },
   { -- better fold
