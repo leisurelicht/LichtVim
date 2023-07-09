@@ -104,8 +104,8 @@ return {
       return {
         ft_ignore = { "neo-tree", "neo-tree-pop", "alpha", "lazy" },
         segments = {
-          { text = { " ", builtin.lnumfunc }, click = "v:lua.ScLa" },
           { sign = { name = { "Git" }, maxwidth = 1, colwidth = 1, auto = false, wrap = false }, click = "v:lua.ScSa" },
+          { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
           { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         },
       }
