@@ -28,7 +28,9 @@ return {
           end
 
           local opt = { buffer = event.buf, silent = true }
-          map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opt)
+          if utils.git.is_repo() then
+            map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opt)
+          end
         end,
       })
     end,
