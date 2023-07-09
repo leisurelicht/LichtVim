@@ -3,18 +3,6 @@ return {
   { import = "lichtvim.plugins.lsp.mason" },
   { import = "lichtvim.plugins.lsp.null-ls" },
   { import = "lichtvim.plugins.lsp.lsp-config" },
-  { -- lsp progress
-    "j-hui/fidget.nvim",
-    tag = "legacy",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "neovim/nvim-lspconfig" },
-    opts = {
-      window = {
-        relative = "editor",
-      },
-    },
-    config = true,
-  },
   {
     "nvimdev/lspsaga.nvim",
     enabled = true,

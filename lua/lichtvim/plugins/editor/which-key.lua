@@ -114,9 +114,6 @@ return {
           ["`"] = { name = "Marks" },
           ["<c-w>"] = { name = "Window" },
 
-          ["<leader>r"] = { name = " Projects" },
-          ["<leader>f"] = { name = "󰛔 Find & Replace" },
-          ["<leader>o"] = { name = " Terminal" },
           ["<leader>t"] = { name = "󱏈 Tab" },
           ["<leader>to"] = { name = "Close Only" },
           ["<leader>u"] = { name = "󰨙 UI" },
@@ -125,7 +122,6 @@ return {
         },
         v = {
           mode = { "v" },
-          ["<leader>f"] = { name = "󰛔 Find & Replace" },
         },
       },
     },

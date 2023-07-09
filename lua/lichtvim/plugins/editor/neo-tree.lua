@@ -119,6 +119,8 @@ return {
           end
         end,
       })
+
+      vim.cmd([[delcommand Texplore]])
     end,
   },
 }

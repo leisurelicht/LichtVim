@@ -115,7 +115,7 @@ function M.on_attach(client, buffer)
     end
   end
 
-  require("which-key").register({ l = { name = "󰖳 Lsp" }, mode = { "n", "v" }, prefix = "<leader>" })
+  require("which-key").register({ ["<leader>l"] = { name = "󰖳 Lsp" }, mode = { "n", "v" } })
 end
 
 function M.diagnostic_goto(next, severity)

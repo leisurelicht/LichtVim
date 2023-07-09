@@ -80,11 +80,11 @@ return {
       require("project_nvim").setup(opts)
       require("telescope").load_extension("projects")
 
-      map.set("n", "<leader>ra", "<cmd>AddProject<cr>", "Add")
-      map.set("n", "<leader>rj", function()
+      require("which-key").register({ mode = "n", ["<leader>n"] = { name = " Projects" } })
+      map.set("n", "<leader>na", "<cmd>AddProject<cr>", "Add")
+      map.set("n", "<leader>nj", function()
         local buffers = vim.api.nvim_list_bufs()
         local wins = vim.api.nvim_list_wins()
-
         if #wins > 1 or #buffers > 1 then
           vim.cmd([[silent wa | silent %bd | Alpha]])
         end
@@ -118,16 +118,19 @@ return {
   {
     "akinsho/toggleterm.nvim",
     cmd = "ToggleTerm",
-    keys = {
-      { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Toggle terminal" },
-      { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle in float" },
-      { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle in tab" },
-      { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle in horizontal" },
-      { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle in vertical" },
-      { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send current line" },
-      { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send visual lines" },
-      { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send visual selection" },
-    },
+    keys = function()
+      require("which-key").register({ mode = { "n" }, ["<leader>o"] = { name = " Terminal" } })
+      return {
+        { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Toggle terminal" },
+        { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle in float" },
+        { "<leader>ot", "<CMD>ToggleTerm direction=tab<CR>", desc = "Toggle in tab" },
+        { "<leader>oh", "<CMD>ToggleTerm direction=horizontal<CR>", desc = "Toggle in horizontal" },
+        { "<leader>ov", "<CMD>ToggleTerm direction=vertical<CR>", desc = "Toggle in vertical" },
+        { "<leader>or", "<CMD>ToggleTermSendCurrentLine<CR>", desc = "Send current line" },
+        { "<leader>or", "<CMD>ToggleTermSendVisualLines<CR>", desc = "Send visual lines" },
+        { "<leader>os", "<CMD>ToggleTermSendVisualSelection<CR>", desc = "Send visual selection" },
+      }
+    end,
     opts = {
       size = function(term)
         if term.direction == "horizontal" then

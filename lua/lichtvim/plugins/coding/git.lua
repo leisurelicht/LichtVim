@@ -89,7 +89,7 @@ return {
       require("gitsigns").setup(opts)
 
       if utils.git.is_repo() then
-        require("which-key").register({ g = { name = "󰊢 Git" }, mode = { "n", "v" }, prefix = "<leader>" })
+        require("which-key").register({ ["<leader>g"] = { name = "󰊢 Git" }, mode = { "n", "v" } })
 
         local lazyUtils = require("lichtvim.utils.lazy")
         local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }

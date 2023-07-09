@@ -7,16 +7,11 @@ return {
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = function()
-      require("which-key").register({
-        fr = { name = "Replace" },
-        mode = { "n", "v" },
-        prefix = "<leader>",
-      })
-
+      require("which-key").register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
       return {
-        { "<leader>frr", utils.func.call(require("spectre").open), desc = "Spectre" },
-        { "<leader>frw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
-        { "<leader>frw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
+        { "<leader>rr", utils.func.call(require("spectre").open), desc = "Spectre" },
+        { "<leader>rw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
+        { "<leader>rw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
         {
           "<leader>frs",
           utils.func.call(require("spectre").open_file_search, { select_word = true }),
@@ -42,8 +37,6 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     version = false,
-    lazy = true,
-    cmd = "Telescope",
     dependencies = {
       { "folke/trouble.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -51,6 +44,7 @@ return {
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
     keys = function()
+      require("which-key").register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
       local _keys = {
         { "<leader>f<tab>", utils.plugs.telescope("commands"), desc = "Commands" },
         { "<leader>fc", utils.plugs.telescope("command_history"), desc = "Commands history" },
@@ -142,7 +136,7 @@ return {
           oldfiles = center_list,
           buffers = center_list,
           marks = { theme = "dropdown" },
-          commands = { theme = "ivy" },
+          commands = { theme = "dropdown" },
           command_history = { theme = "dropdown" },
           search_history = { theme = "dropdown" },
           git_commits = { theme = "ivy" },
