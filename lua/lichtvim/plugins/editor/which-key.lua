@@ -35,7 +35,16 @@ return {
       triggers = "auto", -- automatically setup triggers
       disable = {
         buftypes = {},
-        filetypes = { "TelescopePrompt", "lazy", "NvimTree", "mason", "lspinfo", "toggleterm", "neo-tree" },
+        filetypes = {
+          "TelescopePrompt",
+          "lazy",
+          "NvimTree",
+          "mason",
+          "lspinfo",
+          "toggleterm",
+          "neo-tree",
+          "neo-tree-popup",
+        },
       },
       defaults = {
         n = {

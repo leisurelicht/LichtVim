@@ -23,7 +23,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.bo[event.buf].filetype == "neo-tree" then
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
             return
           end
 
@@ -58,7 +58,7 @@ return {
         col = 1,
       },
       on_attach = function(bufnr)
-        if vim.bo[bufnr].filetype == "neo-tree" then
+        if utils.unset_keybind_buf(vim.bo[bufnr].filetype) then
           return
         end
 

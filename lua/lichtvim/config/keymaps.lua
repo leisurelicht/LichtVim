@@ -110,7 +110,7 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("n", "<leader>7", "<cmd>7wincmd w<cr>", "Win 7", opts)
     map.set("n", "<leader>8", "<cmd>8wincmd w<cr>", "Win 8", opts)
 
-    if vim.bo[event.buf].filetype == "neo-tree" then
+    if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
       return
     end
 

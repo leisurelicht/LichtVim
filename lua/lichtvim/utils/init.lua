@@ -5,6 +5,17 @@
 --
 local M = {}
 
+M.unset_keybind_filetypes = {
+  "neo-tree",
+  "neo-tree-popup",
+}
+
+function M.unset_keybind_buf(ft)
+  for _, filetype in ipairs(M.unset_keybind_filetypes) do
+    return ft == filetype
+  end
+end
+
 function M.fg(name)
   ---@type {foreground?:number}?
   local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name }) or vim.api.nvim_get_hl_by_name(name, true)
@@ -281,10 +292,10 @@ end
 function M.option.toggle_mouse()
   if vim.o.mouse == "a" then
     vim.o.mouse = ""
-    log.warn("Disabled mouse mode", { title = " Option" })
+    log.warn("Disabled mouse mode", { title = "Option" })
   else
     vim.o.mouse = "a"
-    log.info("Enabled mouse mode", { title = " Option" })
+    log.info("Enabled mouse mode", { title = "Option" })
   end
 end
 

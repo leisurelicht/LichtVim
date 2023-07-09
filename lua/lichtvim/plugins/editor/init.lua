@@ -19,7 +19,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.bo[event.buf].filetype == "neo-tree" then
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
             return
           end
 
@@ -51,7 +51,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.bo[event.buf].filetype == "neo-tree" then
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
             return
           end
 
@@ -66,13 +66,27 @@ return {
     "brglng/vim-im-select",
     event = "VeryLazy",
     keys = {
-      { "<leader>ui", "<cmd>ImSelectEnable<cr>", desc = "Enable imselect" },
-      { "<leader>uI", "<cmd>ImSelectDisable<cr>", desc = "Disable imselect" },
+      {
+        "<leader>ui",
+        function()
+          vim.cmd([[ImSelectEnable]])
+          log.info("Enabled im select", { title = "Option" })
+        end,
+        desc = "Enable imselect",
+      },
+      {
+        "<leader>uI",
+        function()
+          vim.cmd([[ImSelectDisable]])
+          log.warn("Disabled im select", { title = "Option" })
+        end,
+        desc = "Disable imselect",
+      },
     },
-    config = function()
-      vim.g.im_select_enable_focus_eventsF = 1
+    init = function()
+      vim.g.im_select_enable_focus_events = 1
       if utils.sys.is_macos() or utils.sys.is_linux() then
-        vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineEnter", "CmdlineLeave", "VimEnter" }, {
+        vim.api.nvim_create_autocmd({ "TermEnter" }, {
           group = vim.api.nvim_create_augroup(utils.title.add("Imselect"), { clear = true }),
           pattern = { "*" },
           command = "call system('im-select com.apple.keylayout.ABC')",
@@ -88,7 +102,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.bo[event.buf].filetype == "neo-tree" then
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
             return
           end
 
@@ -128,7 +142,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.bo[event.buf].filetype == "neo-tree" then
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
             return
           end
 
