@@ -71,9 +71,11 @@ return {
     end,
     opts = function(_, opts)
       local Job = require("plenary.job")
+      local themes = require("telescope.themes")
       local actions = require("telescope.actions")
       local previewers = require("telescope.previewers")
-      local themes = require("telescope.themes")
+      local make_entry = require("telescope.make_entry")
+      local entry_display = require("telescope.pickers.entry_display")
       local fb_actions = require("telescope").extensions.file_browser.actions
       local trouble = require("trouble.providers.telescope")
 
@@ -95,6 +97,33 @@ return {
             end
           end,
         }):sync()
+      end
+
+      local gen_from_commands = function()
+        local displayer = entry_display.create({
+          items = {
+            { width = 0.5 },
+            { remaining = true },
+          },
+        })
+
+        local make_display = function(entry)
+          return displayer({
+            { entry.name, "TelescopeResultsIdentifier" },
+            entry.definition:gsub("\n", " "),
+          })
+        end
+
+        return function(entry)
+          return make_entry.set_default_entry_mt({
+            name = entry.name,
+            definition = entry.definition,
+            --
+            value = entry,
+            ordinal = entry.name,
+            display = make_display,
+          }, opts)
+        end
       end
 
       local center_list = themes.get_dropdown({
@@ -136,7 +165,7 @@ return {
           oldfiles = center_list,
           buffers = center_list,
           marks = { theme = "dropdown" },
-          commands = { theme = "dropdown" },
+          commands = { theme = "dropdown", entry_maker = gen_from_commands() },
           command_history = { theme = "dropdown" },
           search_history = { theme = "dropdown" },
           git_commits = { theme = "ivy" },
