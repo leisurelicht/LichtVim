@@ -121,6 +121,7 @@ return {
       })
 
       vim.cmd([[delcommand Texplore]])
+      vim.cmd([[delcommand Pexplore]])
     end,
   },
 }
