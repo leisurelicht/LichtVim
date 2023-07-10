@@ -102,22 +102,30 @@ return {
       local gen_from_commands = function()
         local displayer = entry_display.create({
           items = {
-            { width = 0.5 },
-            { remaining = true },
+            { width = 0.9 },
+            { width = 0.05 },
+            { remaining = 0.05 },
           },
         })
 
+        -- stylua: ignore
         local make_display = function(entry)
+          local attrs = ""
+          if entry.bang then attrs = attrs .. " !" end
+          if entry.bar then attrs = attrs .. " |" end
+          if entry.register then attrs = attrs .. ' "' end
           return displayer({
             { entry.name, "TelescopeResultsIdentifier" },
-            entry.definition:gsub("\n", " "),
+            attrs,
+            "  " .. entry.nargs
           })
         end
 
         return function(entry)
           return make_entry.set_default_entry_mt({
             name = entry.name,
-            definition = entry.definition,
+            bang = entry.bang,
+            nargs = entry.nargs,
             --
             value = entry,
             ordinal = entry.name,
