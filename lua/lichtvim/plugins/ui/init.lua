@@ -98,14 +98,13 @@ return {
   },
   { -- better statusline
     "luukvbaal/statuscol.nvim",
-    event = "VeryLazy",
     opts = function()
       local builtin = require("statuscol.builtin")
       return {
         ft_ignore = { "neo-tree", "neo-tree-popup", "alpha", "lazy" },
         segments = {
-          { sign = { name = { "Git" }, maxwidth = 1, colwidth = 1, auto = false, wrap = false }, click = "v:lua.ScSa" },
           { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+          { sign = { name = { "Git" }, maxwidth = 1, colwidth = 1, auto = false, wrap = false }, click = "v:lua.ScSa" },
           { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         },
       }
@@ -116,7 +115,6 @@ return {
   },
   { -- better fold
     "kevinhwang91/nvim-ufo",
-    event = "VeryLazy",
     dependencies = "kevinhwang91/promise-async",
     opts = function()
       local handler = function(virtText, lnum, endLnum, width, truncate)
