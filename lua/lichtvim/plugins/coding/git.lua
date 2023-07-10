@@ -38,6 +38,16 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead", "BufNewFile" },
+    keys = function()
+      if utils.git.is_repo() then
+        require("which-key").register({ ["<leader>g"] = { name = "󰊢 Git" }, mode = { "n", "v" } })
+
+        local lazyUtils = require("lichtvim.utils.lazy")
+        local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
+        map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opt), "Lazygit")
+        map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opt), "Lazygit log")
+      end
+    end,
     opts = {
       signs = {
         add = { text = "│" },
@@ -87,15 +97,6 @@ return {
     },
     config = function(_, opts)
       require("gitsigns").setup(opts)
-
-      if utils.git.is_repo() then
-        require("which-key").register({ ["<leader>g"] = { name = "󰊢 Git" }, mode = { "n", "v" } })
-
-        local lazyUtils = require("lichtvim.utils.lazy")
-        local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-        map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opt), "Lazygit")
-        map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opt), "Lazygit log")
-      end
     end,
   },
 }
