@@ -4,7 +4,7 @@ return {
   { "vim-scripts/indentpython.vim", ft = { "python", "djangohtml" } },
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
-    event = { "BufNewFile", "BufRead" },
+    -- event = { "BufNewFile", "BufRead" },
     opts = {
       show_current_context = false,
       show_current_context_start = false,
@@ -31,7 +31,7 @@ return {
   },
   {
     "echasnovski/mini.indentscope",
-    event = { "BufReadPre", "BufNewFile" },
+    -- event = { "BufReadPre", "BufNewFile" },
     opts = { symbol = "│", options = { try_as_border = true } },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
