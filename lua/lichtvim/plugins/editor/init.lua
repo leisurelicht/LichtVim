@@ -10,8 +10,7 @@ return {
   { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
   {
     "echasnovski/mini.bufremove",
-    event = "VeryLazy",
-    -- event = { "BufRead", "BufNewFile" },
+    event = { "BufRead", "BufNewFile" },
     config = function(_, opts)
       require("mini.bufremove").setup(_, opts)
 
