@@ -6,6 +6,7 @@
 local M = {}
 
 M.unset_keybind_filetypes = {
+  "alpha",
   "neo-tree",
   "neo-tree-popup",
 }
