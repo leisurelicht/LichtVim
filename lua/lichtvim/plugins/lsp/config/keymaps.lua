@@ -50,14 +50,6 @@ function M.get()
       { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
     }
   end
-  if require("lichtvim.utils.lazy").has("lspsaga.nvim") then
-    local keys = {
-      { "<leader>lh", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover", has = "hover" },
-      { "<leader>lH", "<cmd>Lspsaga hover_doc ++keep<cr>", desc = "Hover keep", has = "hover" },
-      { "<leader>la", "<cmd>Lspsaga code_action<cr>", mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
-    }
-    utils.list.extend(M._keys, keys)
-  end
 
   return M._keys
 end
