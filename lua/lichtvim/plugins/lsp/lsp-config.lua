@@ -1,3 +1,35 @@
+-- 为 lsp hover 添加 filetype
+local function lsp_hover(_, result, ctx, config)
+  -- Add file type for LSP hover
+  local bufnr, winner = vim.lsp.handlers.hover(_, result, ctx, config)
+  if bufnr and winner then
+    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
+    return bufnr, winner
+  end
+end
+
+-- 为 lsp signature help 添加 filetype
+local function lsp_signature_help(_, result, ctx, config)
+  -- Add file type for LSP signature help
+  local bufnr, winner = vim.lsp.handlers.signature_help(_, result, ctx, config)
+  if bufnr and winner then
+    vim.api.nvim_buf_set_option(bufnr, "filetype", config.filetype)
+    return bufnr, winner
+  end
+end
+
+-- 设置浮动窗口样式及 filetype
+local lsp_handlers = {
+  ["textDocument/hover"] = vim.lsp.with(lsp_hover, {
+    border = "rounded",
+    filetype = "lsp-hover",
+  }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(lsp_signature_help, {
+    border = "rounded",
+    filetype = "lsp-signature-help",
+  }),
+}
+
 return {
   -- lspconfig
   {
@@ -127,6 +159,7 @@ return {
       local function setup(server)
         local options = s_opts[server] or {}
 
+        options.handlers = vim.tbl_extend("force", lsp_handlers, options.handlers or {})
         if options.disable_diagnostics ~= nil and options.disable_agnostics then
           options.handlers["textDocument/publishDiagnostics"] = function(...) end
         end
