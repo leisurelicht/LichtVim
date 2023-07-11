@@ -70,8 +70,8 @@ opt.pumheight = 10
 opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示控制
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
-opt.list = true -- 不可见字符不显示
-opt.listchars = { tab = "▸ ", nbsp = "␣", extends = "❯", precedes = "❮" } -- 字符转换
+opt.list = true -- 显示特殊字符
+opt.listchars = { tab = "󰌒  ", extends = "❯", precedes = "❮" } -- 字符转换
 
 local sys = require("lichtvim.utils").sys
 
