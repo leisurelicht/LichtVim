@@ -38,7 +38,12 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "williamboman/mason-lspconfig.nvim", dependencies = { "mason.nvim" } },
-      { "hrsh7th/cmp-nvim-lsp", dependencies = { "hrsh7th/nvim-cmp" } },
+      {
+        "hrsh7th/cmp-nvim-lsp",
+        cond = function()
+          return require("lichtvim.utils.lazy").has("nvim-cmp")
+        end,
+      },
     },
     ---@class PluginLspOpts
     opts = function()
@@ -146,13 +151,12 @@ return {
         s_opts[lsp_name] = lsp_opts
       end
 
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities(),
-        opts.capabilities or {}
-      )
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if ok then
+        capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
+      end
+      capabilities = vim.tbl_deep_extend("force", capabilities, opts.capabilities or {})
 
       local function setup(server)
         local options = s_opts[server] or {}
