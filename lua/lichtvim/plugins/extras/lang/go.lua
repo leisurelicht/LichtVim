@@ -23,6 +23,13 @@ return {
     opts = { custom_colorcolumn = { ["go"] = "120" } },
   },
   {
+    "numToStr/Comment.nvim",
+    opts = function(_, opts)
+      require("Comment.ft").set("gomod", "//%s")
+      return opts
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
