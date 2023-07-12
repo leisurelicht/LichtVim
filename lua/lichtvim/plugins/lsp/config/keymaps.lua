@@ -39,7 +39,7 @@ function M.get()
       { "<leader>la", vim.lsp.buf.code_action, mode = { "v", "n" }, desc = "Code action", has = "codeAction" },
       { "<leader>ll", call(vim.diagnostic.open_float, { scope = "line", border = "rounded" }), desc = "Diagnostic (line)" },
       { "<leader>lc", call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }), desc = "Diagnostic (cursor)" },
-      { "<leader>lD", call(vim.lsp.buf.definition, { jump_type = "tab" }), desc = "Goto definition (tab)", has = "definition" },
+      { "<leader>lD", call(vim.lsp.buf.declaration, {}), desc = "Goto declaration", has = "declaration" },
 
       { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
       { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
