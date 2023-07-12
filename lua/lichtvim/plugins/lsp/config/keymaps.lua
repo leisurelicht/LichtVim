@@ -46,8 +46,8 @@ function M.get()
       { "<leader>li", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
       { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
       { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
-      { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy" },
-      { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy" },
+      { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy/incomingCalls" },
+      { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy/outgoingCalls" },
     }
   end
 
