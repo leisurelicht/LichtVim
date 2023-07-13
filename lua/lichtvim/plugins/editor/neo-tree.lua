@@ -3,6 +3,7 @@ local icons = require("lichtvim.config").icons
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
@@ -14,6 +15,11 @@ return {
           selection_chars = "ABFJDKSL;CMRUEIWOQP",
           use_winbar = "always",
           show_prompt = false,
+          filter_rules = {
+            filetype = { "neo-tree", "neo-tree-popup", "notify", "alpha" },
+            buftype = { "terminal", "quickfix" },
+          },
+          -- other_win_hl_color = "#e35e4f",
         },
       },
     },
@@ -26,12 +32,12 @@ return {
     end,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = true
-      if vim.fn.argc() == 1 then
-        local stat = vim.loop.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == "directory" then
-          require("neo-tree")
-        end
-      end
+      -- if vim.fn.argc() == 1 then
+      --   local stat = vim.loop.fs_stat(vim.fn.argv(0))
+      --   if stat and stat.type == "directory" then
+      --     require("neo-tree")
+      --   end
+      -- end
     end,
     opts = {
       open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
