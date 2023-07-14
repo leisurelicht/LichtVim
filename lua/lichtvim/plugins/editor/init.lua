@@ -146,11 +146,11 @@ return {
           end
 
           local opt = { buffer = event.buf, silent = true }
-          map.set({ "n", "x", "o" }, "<leader>h", call(require("flash").jump), "󱃏 Flash", opt)
-          map.set({ "n", "x", "o" }, "<leader>H", call(require("flash").treesitter), "󰒅 Select", opt)
+          map.set({ "n", "x", "o" }, "<leader>s", call(require("flash").jump), "󱃏 Flash", opt)
+          map.set({ "n", "x", "o" }, "<leader>S", call(require("flash").treesitter), "󰒅 Flash treesitter", opt)
           map.set("o", "r", call(require("flash").remote), "Flash remote", opt)
-          map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash Treesitter Search", opt)
-          map.set({ "c" }, "<c-s>", call(require("flash").toggle), "Toggle flash search", opt)
+          map.set({ "o", "x" }, "R", call(require("flash").treesitter_search), "Flash treesitter search", opt)
+          map.set({ "c" }, "<C-s>", call(require("flash").toggle), "Toggle flash search", opt)
         end,
       })
     end,
@@ -181,7 +181,7 @@ return {
         })
       end
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-        mappings = { n = { f = flash }, i = { ["<c-f>"] = flash } },
+        mappings = { n = { s = flash }, i = { ["<C-s>"] = flash } },
       })
     end,
   },
