@@ -13,7 +13,7 @@ return {
         { "<leader>rw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
         { "<leader>rw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
         {
-          "<leader>frs",
+          "<leader>rs",
           utils.func.call(require("spectre").open_file_search, { select_word = true }),
           desc = "Word in file",
         },
