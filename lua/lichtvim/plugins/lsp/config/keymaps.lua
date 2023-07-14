@@ -5,7 +5,7 @@ M._keys = nil
 
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
-  local call = require("licthvim.utils").func.call
+  local call = require("lichtvim.utils").func.call
   local formatting = function()
     require("lichtvim.plugins.lsp.config.format").format({ force = true })
   end
