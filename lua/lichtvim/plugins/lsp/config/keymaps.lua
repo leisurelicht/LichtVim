@@ -6,7 +6,7 @@ M._keys = nil
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
   local format = require("lichtvim.plugins.lsp.config.format")
-  local builtin = require("telescope.builtin")
+  local telescope = require("telescope.builtin")
   local utils = require("lichtvim.utils")
   local call = utils.func.call
 
@@ -39,13 +39,13 @@ function M.get()
       { "<leader>lc", call(vim.diagnostic.open_float, { scope = "cursor", border = "rounded" }), desc = "Diagnostic (cursor)" },
       { "<leader>lD", call(vim.lsp.buf.declaration, {}), desc = "Goto declaration", has = "declaration" },
 
-      { "<leader>ld", call(builtin.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
-      { "<leader>le", call(builtin.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
-      { "<leader>lL", call(builtin.diagnostics, {}), desc = "Diagnostic (project)" },
-      { "<leader>lm", call(builtin.lsp_implementations, { show_line = false }), desc = "Goto implementation", has = "implementation" },
-      { "<leader>lt", call(builtin.lsp_type_definitions, { show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
-      { "<leader>li", call(builtin.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy/incomingCalls" },
-      { "<leader>lo", call(builtin.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy/outgoingCalls" },
+      { "<leader>ld", call(telescope.lsp_definitions, { reuse_win = true, show_line = false }), desc = "Goto definition", has = "definition" },
+      { "<leader>le", call(telescope.lsp_references, { show_line = false }), desc = "Goto references", has = "references" },
+      { "<leader>lL", call(telescope.diagnostics, {}), desc = "Diagnostic (project)" },
+      { "<leader>lm", call(telescope.lsp_implementations, { reuse_win = true, show_line = false }), desc = "Goto implementation", has = "implementation" },
+      { "<leader>lt", call(telescope.lsp_type_definitions, { reuse_win = true, show_line = false }), desc = "Goto type definition", has = "typeDefinition" },
+      { "<leader>li", call(telescope.lsp_incoming_calls, {}), desc = "Incoming calls", has = "callHierarchy/incomingCalls" },
+      { "<leader>lo", call(telescope.lsp_outgoing_calls, {}), desc = "Outgoing calls", has = "callHierarchy/outgoingCalls" },
     }
   end
 
