@@ -4,8 +4,7 @@ return {
   { "kkharji/sqlite.lua", lazy = true },
   {
     "nvim-pack/nvim-spectre",
-    lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "plenary.nvim" },
     keys = function()
       require("which-key").register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
       return {
@@ -24,77 +23,55 @@ return {
   {
     "AckslD/nvim-neoclip.lua",
     lazy = true,
-    dependencies = { { "kkharji/sqlite.lua", module = "sqlite" } },
-    opts = {
-      enable_persistent_history = true,
-      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-      config = function(_, opts)
-        require("neoclip").setup(opts)
-        require("telescope").load_extension("neoclip")
-      end,
-    },
+    dependencies = { { "sqlite.lua", module = "sqlite" } },
+    opts = { enable_persistent_history = true, db_path = vim.fn.stdpath("data") .. "/telescope/neoclip.sqlite3" },
+    config = function(_, opts)
+      require("neoclip").setup(opts)
+      require("telescope").load_extension("neoclip")
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
     version = false,
     dependencies = {
-      { "folke/trouble.nvim" },
+      { "trouble.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
     keys = function()
       require("which-key").register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
-      -- stylua: ignore
-      local _keys = {
-        { "<leader>f<tab>", utils.plugs.telescope("commands"), desc = "Commands" },
-        { "<leader>fc", utils.plugs.telescope("command_history"), desc = "Commands history" },
-        { "<leader>fs", utils.plugs.telescope("search_history"), desc = "Search history" },
-        { "<leader>ff", utils.plugs.telescope("files"), desc = "Files (root dir)" },
-        { "<leader>ff", utils.plugs.telescope("files", { cwd = false }), desc = "Files (cwd)" },
-        { "<leader>fm", utils.plugs.telescope("marks"), desc = "Marks" },
-        { "<leader>fo", utils.plugs.telescope("oldfiles"), desc = "Recently files" },
-        { "<leader>fO", utils.plugs.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
-        { "<leader>fg", utils.plugs.telescope("live_grep"), desc = "Grep (root dir)" },
-        { "<leader>fG", utils.plugs.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-        { "<leader>fw", utils.plugs.telescope("grep_string"), mode = { "n", "v" }, desc = "Word (root dir)" },
-        { "<leader>fW", utils.plugs.telescope("grep_string", { cwd = false }), mode = { "n", "v" }, desc = "Word (cwd)" },
-        { "<leader>fj", utils.plugs.telescope("jumplist"), desc = "Jump list" },
-        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
-        { "<leader>fe", utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), desc = "File Browser" },
-      }
 
-      return _keys
+      local plugs = utils.plugs
+      return {
+        { "<leader>f<tab>", plugs.telescope("commands"), desc = "Commands" },
+        { "<leader>fc", plugs.telescope("command_history"), desc = "Commands history" },
+        { "<leader>fs", plugs.telescope("search_history"), desc = "Search history" },
+        { "<leader>ff", plugs.telescope("files"), desc = "Files (root)" },
+        { "<leader>ff", plugs.telescope("files", { cwd = false }), desc = "Files (cwd)" },
+        { "<leader>fm", plugs.telescope("marks"), desc = "Marks" },
+        { "<leader>fo", plugs.telescope("oldfiles"), desc = "Recently files" },
+        { "<leader>fO", plugs.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
+        { "<leader>fg", plugs.telescope("live_grep"), desc = "Grep (root)" },
+        { "<leader>fG", plugs.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+        { "<leader>fw", plugs.telescope("grep_string"), mode = { "n", "v" }, desc = "Word (root)" },
+        { "<leader>fW", plugs.telescope("grep_string", { cwd = false }), mode = { "n", "v" }, desc = "Word (cwd)" },
+        { "<leader>fj", plugs.telescope("jumplist"), desc = "Jump list" },
+        { "<leader>fr", plugs.telescope("treesitter"), desc = "Treesitter" },
+        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
+        {
+          "<leader>fe",
+          utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
+          desc = "File Browser",
+        },
+      }
     end,
     opts = function(_, opts)
-      local Job = require("plenary.job")
       local themes = require("telescope.themes")
       local actions = require("telescope.actions")
-      local previewers = require("telescope.previewers")
       local make_entry = require("telescope.make_entry")
       local entry_display = require("telescope.pickers.entry_display")
       local fb_actions = require("telescope").extensions.file_browser.actions
       local trouble = require("trouble.providers.telescope")
-
-      -- Dont preview binaries
-      local new_maker = function(filepath, bufnr, options)
-        filepath = vim.fn.expand(filepath)
-        Job:new({
-          command = "file",
-          args = { "--mime-type", "-b", filepath },
-          on_exit = function(j)
-            local mime_type = vim.split(j:result()[1], "/")[1]
-            if mime_type == "text" then
-              previewers.buffer_previewer_maker(filepath, bufnr, options)
-            else
-              -- maybe we want to write something to the buffer here
-              vim.schedule(function()
-                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
-              end)
-            end
-          end,
-        }):sync()
-      end
 
       local gen_from_commands = function()
         local displayer = entry_display.create({
@@ -131,21 +108,13 @@ return {
         end
       end
 
-      local center_list = themes.get_dropdown({
-        winblend = 0, -- 透明度
-        prompt = "",
-        previewer = false,
-      })
-
-      opts = {
+      return {
         defaults = {
           prompt_prefix = "   ",
           selection_caret = " ",
-          path_display = { "truncate" },
-          set_env = { ["COLORTERM"] = "truecolor" },
-          buffer_previewer_maker = new_maker,
           sorting_strategy = "ascending",
           layout_config = { horizontal = { prompt_position = "top" } },
+          history = { path = vim.fn.stdpath("data") .. "/telescope/history" },
           mappings = {
             i = {
               ["<ESC>"] = actions.close,
@@ -158,46 +127,52 @@ return {
               ["<C-t>"] = trouble.open_with_trouble,
             },
             n = {
-              -- ["q"] = actions.close,
               ["<ESC>"] = actions.close,
               ["<C-t>"] = trouble.open_with_trouble,
             },
           },
         },
         pickers = {
-          find_files = { theme = "dropdown", find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
+          find_files = { theme = "dropdown" },
           git_files = { theme = "dropdown" },
-          oldfiles = center_list,
-          buffers = center_list,
-          marks = { theme = "dropdown" },
+          oldfiles = themes.get_dropdown({ previewer = false }),
+          buffers = themes.get_dropdown({ previewer = false }),
           commands = { theme = "dropdown", entry_maker = gen_from_commands() },
           command_history = { theme = "dropdown" },
           search_history = { theme = "dropdown" },
+          live_grep = {
+            prompt_title = "Text Search",
+            preview_title = "Text Preview",
+            disable_coordinates = true,
+            path_display = { "tail" },
+          },
+          grep_string = {
+            preview_title = "Word Preview",
+            disable_coordinates = true,
+            word_match = "-w",
+            path_display = { "tail" },
+            only_sort_text = true,
+          },
+          treesitter = { theme = "ivy" },
+          marks = { theme = "ivy" },
           git_commits = { theme = "ivy" },
           git_bcommits = { theme = "ivy" },
           git_branches = { theme = "ivy" },
           git_status = { theme = "ivy" },
           git_stash = { theme = "ivy" },
+          lsp_references = { theme = "ivy" },
+          lsp_definitions = { theme = "ivy" },
+          lsp_implementations = { theme = "ivy" },
+          lsp_type_definitions = { theme = "ivy" },
+          lsp_incoming_calls = { theme = "ivy" },
+          lsp_outgoing_calls = { theme = "ivy" },
         },
         extensions = {
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-          },
-          frecency = {
-            db_root = vim.fn.stdpath("data") .. "/databases",
-            show_scores = true,
-          },
-          file_browser = vim.tbl_extend("force", center_list, {
-            hijack_netrw = true,
+          fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case" },
+          file_browser = themes.get_dropdown({
+            previewer = false,
             sorting_strategy = "ascending",
-            layout_config = {
-              prompt_position = "top",
-              width = 0.4,
-              height = 0.5,
-            },
+            layout_config = { prompt_position = "top", width = 0.4, height = 0.5 },
             mappings = {
               ["i"] = {
                 ["<A-y>"] = false,
@@ -214,21 +189,16 @@ return {
                 ["<C-y>"] = fb_actions.copy,
                 ["<C-d>"] = fb_actions.remove,
               },
-              ["n"] = {
-                -- your custom normal mode mappings
-              },
+              ["n"] = {},
             },
           }),
         },
       }
-
-      return opts
     end,
     config = function(_, opts)
       local telescope = require("telescope")
       telescope.setup(opts)
       telescope.load_extension("fzf")
-      telescope.load_extension("frecency")
       telescope.load_extension("file_browser")
 
       if require("lazy.core.config").plugins["LichtVim"].dev then
