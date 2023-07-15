@@ -156,7 +156,7 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope.nvim",
+    "telescope.nvim",
     optional = true,
     opts = function(_, opts)
       if not require("lichtvim.utils.lazy").has("flash.nvim") then
