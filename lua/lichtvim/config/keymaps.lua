@@ -96,10 +96,10 @@ vim.api.nvim_create_autocmd("FileType", {
     end, "󰧨 Dashboard", opts)
 
     -- 窗口切换组合快捷键
-    map.set("n", "<C-j>", "<C-W><C-j>", "Down window", opts)
-    map.set("n", "<C-k>", "<C-W><C-k>", "Up window", opts)
-    map.set("n", "<C-l>", "<C-W><C-l>", "Left window", opts)
-    map.set("n", "<C-h>", "<C-W><C-h>", "Right window", opts)
+    map.set("n", "<C-j>", "<C-w><C-j>", "Down window", opts)
+    map.set("n", "<C-k>", "<C-w><C-k>", "Up window", opts)
+    map.set("n", "<C-l>", "<C-w><C-l>", "Left window", opts)
+    map.set("n", "<C-h>", "<C-w><C-h>", "Right window", opts)
     -- 窗口快速跳转
     map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1", opts)
     map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2", opts)
@@ -149,6 +149,6 @@ vim.api.nvim_create_autocmd("FileType", {
     map.set("n", "<leader>co", "wb~ea", "Upper first word", opts)
     map.set("i", "<C-u>", "<esc>viwUea", "Upper word", opts) -- 一键大写
     map.set("i", "<C-l>", "<esc>viwuea", "Lower word", opts) -- 一键小写
-    map.set("i", "<C-O>", "<ESC>wb~ea", "Upper first word", opts) -- 首字母大写
+    map.set("i", "<C-o>", "<esc>wb~ea", "Upper first word", opts) -- 首字母大写
   end,
 })
