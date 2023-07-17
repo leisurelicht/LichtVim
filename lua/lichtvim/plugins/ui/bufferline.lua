@@ -17,12 +17,8 @@ return {
           numbers = "ordinal",
           separator_style = "thin",
           always_show_bufferline = false,
-          hover = {
-            enabled = true,
-            delay = 200,
-            reveal = { "close" },
-          },
           indicator = { style = "underline" },
+          hover = { enabled = true, delay = 200, reveal = { "close" } },
           close_command = function(n)
             require("mini.bufremove").delete(n, false)
           end,
@@ -30,7 +26,7 @@ return {
             require("mini.bufremove").delete(n, false)
           end,
           diagnostics = "nvim_lsp",
-          diagnostics_indicator = function(count, level, diagnostics_dict, context)
+          diagnostics_indicator = function(count, _, _, _)
             return count > 0 and icons.diagnostics.Logo or nil
           end,
           offsets = {

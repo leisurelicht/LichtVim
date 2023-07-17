@@ -20,9 +20,7 @@ return {
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
           globalstatus = true,
-          refresh = {
-            statusline = 100,
-          },
+          refresh = { statusline = 100 },
         },
         tabline = {},
         winbar = {
@@ -36,13 +34,10 @@ return {
             },
           },
           lualine_x = {
+            -- stylua: ignore
             {
-              function()
-                return "󰸞 "
-              end,
-              cond = function()
-                return #vim.diagnostic.get(0) == 0
-              end,
+              function() return "󰸞 " end,
+              cond = function() return #vim.diagnostic.get(0) == 0 end,
               color = require("lichtvim.utils").fg("DiagnosticHint"),
             },
           },
@@ -58,13 +53,10 @@ return {
             },
           },
           lualine_x = {
+            -- stylua: ignore
             {
-              function()
-                return "󰸞 "
-              end,
-              cond = function()
-                return #vim.diagnostic.get(0) == 0
-              end,
+              function() return "󰸞 " end,
+              cond = function() return #vim.diagnostic.get(0) == 0 end,
               color = require("lichtvim.utils").fg("DiagnosticHint"),
             },
           },
@@ -76,13 +68,10 @@ return {
             { "diff", symbols = { added = i_git.Add, modified = i_git.Change, removed = i_git.Delete } },
           },
           lualine_c = {
+            -- stylua: ignore
             {
-              function()
-                return require("nvim-navic").get_location()
-              end,
-              cond = function()
-                return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-              end,
+              function() return require("nvim-navic").get_location() end,
+              cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
             },
           },
           lualine_x = {
