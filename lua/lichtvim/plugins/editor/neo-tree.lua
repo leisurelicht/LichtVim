@@ -100,7 +100,7 @@ return {
         hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
         always_show = { -- remains visible even if other settings would normally hide it
-          ".gitignored",
+          ".gitignore",
         },
         never_show_by_pattern = { -- uses glob style patterns
           ".null-ls_*",
