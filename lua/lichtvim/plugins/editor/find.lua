@@ -11,11 +11,8 @@ return {
         { "<leader>rr", utils.func.call(require("spectre").open), desc = "Spectre" },
         { "<leader>rw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
         { "<leader>rw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
-        {
-          "<leader>rs",
-          utils.func.call(require("spectre").open_file_search, { select_word = true }),
-          desc = "Word in file",
-        },
+        -- stylua: ignore
+        { "<leader>rs", utils.func.call(require("spectre").open_file_search, { select_word = true }), desc = "Word in file" },
       }
     end,
     opts = { open_cmd = "noswapfile vnew" },
@@ -200,6 +197,12 @@ return {
       telescope.setup(opts)
       telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
+
+      if require("lichtvim.utils.lazy").has("notify") then
+        telescope.load_extension("notify")
+        -- stylua: ignore
+        map.set( "n", "<leader>uq", utils.func.call(require("notify").dismiss, { silent = true, pending = true }), "Clear notifications")
+      end
 
       if require("lazy.core.config").plugins["LichtVim"].dev then
         map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")

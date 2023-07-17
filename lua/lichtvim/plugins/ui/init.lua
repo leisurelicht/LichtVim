@@ -12,7 +12,13 @@ return {
       { "<leader>fn", "<cmd>Telescope notify theme=dropdown<cr>", desc = "Notify" },
     },
     init = function()
-      vim.notify = require("notify")
+      -- when noice is not enabled, install notify on VeryLazy
+      local lazy = require("lichtvim.utils.lazy")
+      if not lazy.has("noice.nvim") then
+        lazy.on_very_lazy(function()
+          vim.notify = require("notify")
+        end)
+      end
     end,
     opts = {
       timeout = 3000,
@@ -23,16 +29,6 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end,
     },
-    config = function(_, opts)
-      require("notify").setup(opts)
-      require("telescope").load_extension("notify")
-      map.set(
-        "n",
-        "<leader>uq",
-        utils.func.call(require("notify").dismiss, { silent = true, pending = true }),
-        "Clear notifications"
-      )
-    end,
   },
   { -- better vim.ui
     "stevearc/dressing.nvim",
@@ -62,8 +58,6 @@ return {
   },
   { -- better quickfix
     "folke/trouble.nvim",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
     keys = {
       {
         "[q",
@@ -147,16 +141,13 @@ return {
 
       return {
         fold_virt_text_handler = handler,
-        provider_selector = function(bufnr, filetype, buftype)
+        provider_selector = function()
           return { "treesitter", "indent" }
         end,
         open_fold_hl_timeout = 400,
         close_fold_kinds = { "imports", "comment" },
         preview = {
-          win_config = {
-            border = { "", "─", "", "", "", "─", "", "" },
-            winblend = 0,
-          },
+          win_config = { border = { "", "─", "", "", "", "─", "", "" }, winblend = 0 },
           mappings = {
             scrollU = "<C-u>",
             scrollD = "<C-d>",
@@ -185,7 +176,6 @@ return {
     cond = function()
       return not require("lichtvim.utils").sys.is_neovide()
     end,
-
     event = "VeryLazy",
     opts = {
       lsp = {
