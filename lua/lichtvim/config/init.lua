@@ -6,12 +6,6 @@
 _G.map = require("lichtvim.utils.mapping")
 _G.log = require("lichtvim.utils.lazy").log
 
--- 展开打印各种数据
-_G.Dump = function(...)
-  local objects = vim.tbl_map(vim.inspect, { ... })
-  print(unpack(objects))
-end
-
 local icons = require("lichtvim.config.ui.icons")
 local utils = require("lichtvim.utils")
 
