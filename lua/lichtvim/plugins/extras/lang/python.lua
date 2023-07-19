@@ -1,10 +1,8 @@
-local python_filetypes = { "ninja", "python", "rst", "toml", "htmldjango" }
-
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, python_filetypes)
+      vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml", "htmldjango" })
     end,
   },
   {
@@ -17,7 +15,7 @@ return {
         group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
-          if vim.fn.index(python_filetypes, vim.bo[event.buf].filetype) == -1 then
+          if vim.fn.index({ "python", "htmldjango" }, vim.bo[event.buf].filetype) == -1 then
             return
           end
 
