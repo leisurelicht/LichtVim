@@ -198,12 +198,6 @@ return {
       telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
 
-      if require("lichtvim.utils.lazy").has("notify") then
-        telescope.load_extension("notify")
-        -- stylua: ignore
-        map.set( "n", "<leader>uq", utils.func.call(require("notify").dismiss, { silent = true, pending = true }), "Clear notifications")
-      end
-
       if require("lazy.core.config").plugins["LichtVim"].dev then
         map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")
         map.set("n", "<leader>fA", utils.plugs.telescope("autocommands"), "AutoCommands")
@@ -212,6 +206,16 @@ return {
         map.set("n", "<leader>fK", utils.plugs.telescope("keymaps"), "Key maps")
         map.set("n", "<leader>fC", utils.plugs.telescope("colorscheme", { enable_preview = true }), "Colorscheme")
         map.set("n", "<leader>fH", utils.plugs.telescope("help_tags"), "Help tags")
+      end
+
+      if require("lichtvim.utils.lazy").has("nvim-notify") then
+        telescope.load_extension("notify")
+        map.set(
+          "n",
+          "<leader>uq",
+          utils.func.call(require("notify").dismiss, { silent = true, pending = true }),
+          "Clear notifications"
+        )
       end
     end,
   },
