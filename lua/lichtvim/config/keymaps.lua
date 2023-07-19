@@ -11,6 +11,13 @@ map.set("n", "<leader>x", ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<
 -- better up/down
 map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "down", { expr = true, silent = true })
 map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "up", { expr = true, silent = true })
+
+-- 窗口切换组合快捷键
+map.set("n", "<C-j>", "<C-w><C-j>", "Down window")
+map.set("n", "<C-k>", "<C-w><C-k>", "Up window")
+map.set("n", "<C-l>", "<C-w><C-l>", "Left window")
+map.set("n", "<C-h>", "<C-w><C-h>", "Right window")
+
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map.set("n", "n", "'Nn'[v:searchforward]", "Next search result", { expr = true })
 map.set("x", "n", "'Nn'[v:searchforward]", "Next search result", { expr = true })
@@ -95,11 +102,6 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.cmd([[silent wa | silent %bd | Alpha]])
     end, "󰧨 Dashboard", opts)
 
-    -- 窗口切换组合快捷键
-    map.set("n", "<C-j>", "<C-w><C-j>", "Down window", opts)
-    map.set("n", "<C-k>", "<C-w><C-k>", "Up window", opts)
-    map.set("n", "<C-l>", "<C-w><C-l>", "Left window", opts)
-    map.set("n", "<C-h>", "<C-w><C-h>", "Right window", opts)
     -- 窗口快速跳转
     map.set("n", "<leader>1", "<cmd>1wincmd w<cr>", "Win 1", opts)
     map.set("n", "<leader>2", "<cmd>2wincmd w<cr>", "Win 2", opts)
