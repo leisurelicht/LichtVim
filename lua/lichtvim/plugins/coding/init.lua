@@ -166,6 +166,36 @@ return {
 
       local utils = require("lichtvim.utils")
 
+      --- Add a terminal window
+      local function smart_add_terminal()
+        ---@diagnostic disable-next-line: undefined-field
+        if vim.b.toggle_number == nil then
+          log.warn("Need to create a terminal and move in it first", { title = " Terminal" })
+          return
+        end
+
+        local direction = require("toggleterm.ui").guess_direction()
+
+        if direction == nil then
+          if vim.g._term_direction == 1 then
+            direction = "vertical"
+          elseif vim.g._term_direction == 2 then
+            direction = "horizontal"
+          elseif vim.g._term_direction == 0 then
+            log.warn("Can not add a terminal window", { title = " Terminal" })
+            return
+          end
+        end
+
+        if direction == "vertical" then
+          vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=vertical'")
+          vim.g._term_direction = 1
+        elseif direction == "horizontal" then
+          vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=horizontal'")
+          vim.g._term_direction = 2
+        end
+      end
+
       vim.api.nvim_create_autocmd({ "TermOpen" }, {
         group = vim.api.nvim_create_augroup(utils.title.add("TermKeymap"), { clear = true }),
         pattern = { "term://*" },
@@ -175,7 +205,7 @@ return {
           map.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], "Down", { buffer = 0 })
           map.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], "Left", { buffer = 0 })
           map.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], "Right", { buffer = 0 })
-          map.set("t", "<C-a>", utils.plugs.smart_add_terminal, "Add new terminal", { buffer = 0 })
+          map.set("t", "<C-a>", smart_add_terminal, "Add new terminal", { buffer = 0 })
         end,
       })
     end,

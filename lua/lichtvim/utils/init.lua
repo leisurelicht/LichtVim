@@ -323,36 +323,6 @@ function M.plugs.telescope(builtin, opts)
   end
 end
 
---- Add a terminal window
-function M.plugs.smart_add_terminal()
-  ---@diagnostic disable-next-line: undefined-field
-  if vim.b.toggle_number == nil then
-    log.warn("Need to create a terminal and move in it first", { title = " Terminal" })
-    return
-  end
-
-  local direction = require("toggleterm.ui").guess_direction()
-
-  if direction == nil then
-    if vim.g._term_direction == 1 then
-      direction = "vertical"
-    elseif vim.g._term_direction == 2 then
-      direction = "horizontal"
-    elseif vim.g._term_direction == 0 then
-      log.warn("Can not add a terminal window", { title = " Terminal" })
-      return
-    end
-  end
-
-  if direction == "vertical" then
-    vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=vertical'")
-    vim.g._term_direction = 1
-  elseif direction == "horizontal" then
-    vim.cmd("exe b:toggle_number+1.'ToggleTerm direction=horizontal'")
-    vim.g._term_direction = 2
-  end
-end
-
 M.func = {}
 
 function M.func.call(fn, ...)
