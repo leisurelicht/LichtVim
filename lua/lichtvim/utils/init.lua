@@ -12,9 +12,7 @@ M.unset_keybind_filetypes = {
 }
 
 function M.unset_keybind_buf(ft)
-  for _, filetype in ipairs(M.unset_keybind_filetypes) do
-    return ft == filetype
-  end
+  return vim.fn.index(M.unset_keybind_filetypes, ft) ~= -1 and true or false
 end
 
 function M.fg(name)
