@@ -65,7 +65,7 @@ opt.shortmess:append({ S = true, W = true, I = true, c = true }) -- 信息显示
 opt.cursorline = true -- 高亮所在行
 opt.guifont = "Hack Nerd Font" -- set gui font
 opt.list = true -- 显示特殊字符
-opt.listchars = { tab = "󰌒  ", extends = "❯", precedes = "❮" } -- 字符转换
+opt.listchars = { tab = "  ", extends = "❯", precedes = "❮" } -- 字符转换
 
 local sys = require("lichtvim.utils").sys
 

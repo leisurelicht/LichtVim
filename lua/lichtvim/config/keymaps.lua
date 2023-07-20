@@ -59,6 +59,7 @@ map.set("n", "<leader>t7", "7gt", "Tab 7")
 map.set("n", "<leader>t8", "8gt", "Tab 8")
 -- toggle
 map.set("n", "<leader>ua", utils.option.toggle_mouse, "Toggle mouse")
+map.set("n", "<leader>ul", utils.option.toggle_listchars, "Toggle list char")
 map.set("n", "<leader>ue", utils.option.toggle("spell"), "Toggle spell check")
 map.set("n", "<leader>uw", utils.option.toggle("wrap"), "Toggle wrap")
 map.set("n", "<leader>un", utils.option.toggle("number"), "Toggle number")
@@ -67,7 +68,6 @@ map.set("n", "<leader>uc", utils.option.toggle("cursorline"), "Toggle cursorline
 map.set("n", "<leader>uv", utils.option.toggle("cursorcolumn"), "Toggle cursorcolumn")
 map.set("n", "<leader>uf", utils.option.toggle("foldenable"), "Toggle foldenable")
 map.set("n", "<leader>ud", utils.option.toggle("foldcolumn", false, { "0", "1" }), "Toggle foldcolumn")
-map.set("n", "<leader>ul", utils.option.toggle("list"), "Toggle list")
 map.set("n", "<leader>uc", "<cmd>ColorizerToggle<cr>", "Toggle colorizer")
 if vim.lsp.inlay_hint then
   map("n", "<leader>uh", call(vim.buf.inlay_hint, { 0, nil }), "Toggle inlay hints")

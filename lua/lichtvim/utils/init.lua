@@ -298,6 +298,16 @@ function M.option.toggle_mouse()
   end
 end
 
+function M.option.toggle_listchars()
+  if vim.o.listchars == "extends:❯,precedes:❮,tab:  " then
+    vim.o.listchars = "tab:󰌒 ,eol:↴,trail:·,extends:❯,precedes:❮,nbsp:+,space:⋅"
+    log.info("Enabled listchars", { title = "Option" })
+  else
+    vim.o.listchars = "extends:❯,precedes:❮,tab:  "
+    log.warn("Disabled listchars", { title = "Option" })
+  end
+end
+
 M.plugs = {}
 
 --- This will return a function that calls telescope.
