@@ -109,7 +109,6 @@ return {
   },
   { -- better fold
     "kevinhwang91/nvim-ufo",
-    enabled = false,
     dependencies = "kevinhwang91/promise-async",
     init = function()
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
