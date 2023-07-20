@@ -5,8 +5,10 @@ return {
   { -- 缩进标识线
     "lukas-reineke/indent-blankline.nvim",
     opts = {
+      char = "│",
       show_current_context = false,
       show_current_context_start = false,
+      show_trailing_blankline_indent = false,
       filetype_exclude = {
         "log",
         "help",
