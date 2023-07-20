@@ -217,6 +217,14 @@ return {
           "Clear notifications"
         )
       end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup(require("lichtvim.utils").title.add("Keymap"), { clear = false }),
+        pattern = { "*" },
+        callback = function(event)
+          map.set("n", "<leader>bs", utils.plugs.telescope("buffers"), "Buffers", { buffer = event.buf, silent = true })
+        end,
+      })
     end,
   },
 }

@@ -43,9 +43,8 @@ return {
     config = function(_, opts)
       require("bufferline").setup(opts)
 
-      local utils = require("lichtvim.utils")
       vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        group = vim.api.nvim_create_augroup(require("lichtvim.utils").title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
           if vim.bo[event.buf].filetype == "neo-tree" then

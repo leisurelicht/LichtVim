@@ -10,9 +10,8 @@ return {
     cmd = "VenvSelect",
     ft = "python",
     keys = function()
-      local utils = require("lichtvim.utils")
       vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
+        group = vim.api.nvim_create_augroup(require("lichtvim.utils").title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
           if vim.fn.index({ "python", "htmldjango" }, vim.bo[event.buf].filetype) == -1 then
