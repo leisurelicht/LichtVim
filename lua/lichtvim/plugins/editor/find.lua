@@ -168,6 +168,7 @@ return {
           fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case" },
           file_browser = themes.get_dropdown({
             previewer = false,
+            hijack_netrw = true,
             sorting_strategy = "ascending",
             layout_config = { prompt_position = "top", width = 0.4, height = 0.5 },
             mappings = {

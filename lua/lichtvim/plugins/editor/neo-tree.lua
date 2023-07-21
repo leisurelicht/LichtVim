@@ -3,7 +3,7 @@ local icons = require("lichtvim.config").icons
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
@@ -30,15 +30,6 @@ return {
     deactivate = function()
       vim.cmd([[Neotree close]])
     end,
-    init = function()
-      vim.g.neo_tree_remove_legacy_commands = true
-      -- if vim.fn.argc() == 1 then
-      --   local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      --   if stat and stat.type == "directory" then
-      --     require("neo-tree")
-      --   end
-      -- end
-    end,
     opts = {
       open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
       auto_clean_after_session_restore = true,
@@ -59,11 +50,6 @@ return {
           expander_collapsed = "",
           expander_expanded = "",
           expander_highlight = "NeoTreeExpander",
-        },
-        icon = {
-          folder_closed = icons.file.FolderClosed,
-          folder_open = icons.file.FolderOpen,
-          folder_empty = icons.file.FolderEmpty,
         },
         modified = { symbol = icons.file.FileModified },
         git_status = {
@@ -86,8 +72,6 @@ return {
           ["<space>"] = "none",
           ["S"] = "none",
           ["m"] = "none",
-          -- [">"] = "none",
-          -- ["<"] = "none",
           ["o"] = "split_with_window_picker",
           ["s"] = "vsplit_with_window_picker",
           ["<cr>"] = "open_with_window_picker",
@@ -96,7 +80,8 @@ return {
         },
       },
       filesystem = {
-        follow_current_file = true,
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
         hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
         always_show = { -- remains visible even if other settings would normally hide it
