@@ -54,6 +54,7 @@ return {
         { "<leader>fW", plugs.telescope("grep_string", { cwd = false }), mode = { "n", "v" }, desc = "Word (cwd)" },
         { "<leader>fj", plugs.telescope("jumplist"), desc = "Jump list" },
         { "<leader>fr", plugs.telescope("treesitter"), desc = "Treesitter" },
+        { "<leader>fR", plugs.telescope("registers"), desc = "Registers" },
         { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
         {
           "<leader>fe",
