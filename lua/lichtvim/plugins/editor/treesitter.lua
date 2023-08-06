@@ -14,7 +14,7 @@ return {
       { "<leader>pT", "<cmd>TSModuleInfo<cr>", desc = "Treesitter info" },
     },
     opts = {
-      ensure_installed = { "comment" },
+      ensure_installed = { "comment", "markdown", "markdown_inline" },
       ignore_install = {},
       highlight = {
         enable = true,
