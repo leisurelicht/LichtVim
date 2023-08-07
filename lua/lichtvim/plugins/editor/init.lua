@@ -7,7 +7,37 @@ return {
   { import = "lichtvim.plugins.editor.neo-tree" },
   { import = "lichtvim.plugins.editor.which-key" },
   { import = "lichtvim.plugins.editor.find" },
-  { "itchyny/vim-cursorword", event = { "BufNewFile", "BufRead" } }, -- 标注所有光标所在单词
+  -- Automatically highlights other instances of the word under your cursor.
+  -- This works with LSP, Treesitter, and regexp matching to find the other
+  -- instances.
+  {
+    "RRethy/vim-illuminate",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " reference", buffer = buffer })
+      end
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(event)
+          map("]]", "next", event.buf)
+          map("[[", "prev", event.buf)
+        end,
+      })
+    end,
+  },
   {
     "echasnovski/mini.bufremove",
     event = { "BufRead", "BufNewFile" },
