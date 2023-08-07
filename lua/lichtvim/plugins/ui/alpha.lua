@@ -70,7 +70,7 @@ return {
           type = "group",
           val = {
             button("e", "  New File", "<cmd>enew<cr>"),
-            button("SPC j", "  Projects"),
+            button("SPC n j", "  Projects"),
             button("SPC f f", "  Find File"),
             button("SPC f o", "  Recently Opened Files"),
             button("q", "  Quit", "<cmd>confirm q<cr>"),
