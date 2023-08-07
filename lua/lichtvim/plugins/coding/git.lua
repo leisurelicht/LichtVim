@@ -2,40 +2,6 @@ local utils = require("lichtvim.utils")
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(
-          opts.ensure_installed,
-          { "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore" }
-        )
-      end
-    end,
-  },
-  {
-    "f-person/git-blame.nvim",
-    event = { "BufRead", "BufNewFile" },
-    init = function()
-      vim.g.gitblame_enabled = 0
-    end,
-    config = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
-        pattern = { "*" },
-        callback = function(event)
-          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
-            return
-          end
-
-          local opt = { buffer = event.buf, silent = true }
-          if utils.git.is_repo() then
-            map.set("n", "<leader>gb", "<cmd>GitBlameToggle<cr>", "Toggle line blame", opt)
-          end
-        end,
-      })
-    end,
-  },
-  {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead", "BufNewFile" },
     keys = function()
@@ -59,6 +25,10 @@ return {
       },
       signcolumn = true,
       numhl = true,
+      current_line_blame_opts = {
+        virt_text_pos = "right_align",
+        delay = 0,
+      },
       preview_config = {
         -- Options passed to nvim_open_win
         border = "rounded",
@@ -82,6 +52,7 @@ return {
         map.set("n", "<leader>gA", gs.stage_buffer, "Add buffer", { buffer = bufnr })
         map.set("n", "<leader>gR", gs.reset_buffer, "Reset buffer", { buffer = bufnr })
         map.set("n", "<leader>gp", gs.preview_hunk, "Preview hunk", { buffer = bufnr })
+        map.set("n", "<leader>gb", gs.toggle_current_line_blame, "Toggle line blame", { buffer = bufnr })
         -- stylua: ignore
         map.set("n", "]g", function() if vim.wo.diff then return "]g" end vim.schedule(function() gs.next_hunk() end) return "<Ignore>" end, "Next git hunk", { buffer = bufnr, expr = true })
         -- stylua: ignore
