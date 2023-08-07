@@ -11,6 +11,8 @@ return {
       key_labels = {
         ["<c-w>"] = "<C-W>",
         ["<leader>"] = "<Leader>",
+        ["<M-n>"] = "<M-N>",
+        ["<M-p>"] = "<M-P>",
       },
       icons = {
         breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
@@ -49,9 +51,9 @@ return {
       defaults = {
         n = {
           mode = { "n" },
-          ["<SNR>"] = { name = "Script Number" },
-          ["<leader>"] = { name = "Show Custom Key Map" },
-          ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show Key Map" },
+          ["<SNR>"] = { name = "Script number" },
+          ["<leader>"] = { name = "Show custom key map" },
+          ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show key map" },
 
           g = { name = "Goto" },
           gug = { name = "Goto" },
@@ -112,7 +114,6 @@ return {
           ['"'] = { name = "Registers" },
           ["'"] = { name = "Marks" },
           ["`"] = { name = "Marks" },
-          ["<c-w>"] = { name = "Window" },
 
           ["<leader>t"] = { name = "󱏈 Tab" },
           ["<leader>to"] = { name = "Close Only" },

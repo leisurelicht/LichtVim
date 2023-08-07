@@ -9,8 +9,8 @@ local call = utils.func.call
 map.set("n", "<leader>x", ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>", "󰽉 Redraw")
 
 -- better up/down
-map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "down", { expr = true, silent = true })
-map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "up", { expr = true, silent = true })
+map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", "Down", { expr = true, silent = true })
+map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "Up", { expr = true, silent = true })
 
 -- 窗口切换组合快捷键
 map.set("n", "<C-j>", "<C-w><C-j>", "Down window")
@@ -117,12 +117,12 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 
     -- 行移动
-    map.set("n", "<A-j>", "<cmd>m .+1<cr>==", "Move line down", opts)
-    map.set("n", "<A-k>", "<cmd>m .-2<cr>==", "Move line up", opts)
-    map.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", "Move line down", opts)
-    map.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move line up", opts)
-    map.set("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move line down", opts)
-    map.set("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move line up", opts)
+    map.set("n", "<A-J>", "<cmd>m .+1<cr>==", "Move line down", opts)
+    map.set("n", "<A-K>", "<cmd>m .-2<cr>==", "Move line up", opts)
+    map.set("i", "<A-J>", "<esc><cmd>m .+1<cr>==gi", "Move line down", opts)
+    map.set("i", "<A-K>", "<esc><cmd>m .-2<cr>==gi", "Move line up", opts)
+    map.set("v", "<A-J>", ":m '>+1<cr>gv=gv", "Move line down", opts)
+    map.set("v", "<A-K>", ":m '<-2<cr>gv=gv", "Move line up", opts)
     -- 连续缩进
     map.set("v", "<", "<gv", "Move left continuously", opts)
     map.set("v", ">", ">gv", "Move right continuously", opts)
