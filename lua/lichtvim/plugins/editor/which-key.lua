@@ -35,22 +35,11 @@ return {
       show_help = true, -- show a help message in the command line for using WhichKey
       show_keys = true, -- show the currently pressed key and its label as a message in the command line
       triggers = "auto", -- automatically setup triggers
-      disable = {
-        buftypes = {},
-        filetypes = {
-          "TelescopePrompt",
-          "lazy",
-          "NvimTree",
-          "mason",
-          "lspinfo",
-          "toggleterm",
-          "neo-tree",
-          "neo-tree-popup",
-        },
-      },
+      disable = { buftypes = {}, filetypes = {} },
       defaults = {
         n = {
           mode = { "n" },
+
           ["<SNR>"] = { name = "Script number" },
           ["<leader>"] = { name = "Show custom key map" },
           ["<localleader>"] = { "<cmd>WhichKey<cr>", "Show key map" },
@@ -132,16 +121,20 @@ return {
       wk.register(opts.defaults.n)
       wk.register(opts.defaults.v)
 
+      local utils = require("lichtvim.utils")
       vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup(require("lichtvim.utils").title.add("Keymap"), { clear = false }),
+        group = vim.api.nvim_create_augroup(utils.title.add("Keymap"), { clear = false }),
         pattern = { "*" },
         callback = function(event)
+          if utils.unset_keybind_buf(vim.bo[event.buf].filetype) then
+            return
+          end
+
           wk.register({
             -- d = { name = " Debugger" },
             c = { name = " ShortCuts" },
             b = { name = "󰓩 Buffers" },
             w = { name = " Window Split" },
-            u = { name = "󰨙 UI" },
           }, { mode = "n", prefix = "<leader>", buffer = event.buf })
         end,
       })
