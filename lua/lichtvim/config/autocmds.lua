@@ -107,6 +107,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup(utils.title.add("UnBindKeymap"), { clear = false }),
+  pattern = {
+    "lazy",
+    "mason",
+    "lspinfo",
+    "toggleterm",
+    "null-ls-info",
+    "neo-tree-popup",
+    "TelescopePrompt",
+  },
+  callback = function(event)
+    -- 取消leader键及localleader键的绑定
+    map.set("n", "<leader>", "<nop>", "", { buffer = event.buf })
+    map.set("n", "<localleader>", "<nop>", "", { buffer = event.buf })
+  end,
+})
+
 -- resize splits if window got resized
 -- vim.api.nvim_create_autocmd({ "VimResized" }, {
 --   group = vim.api.nvim_create_augroup(utils.title.add("resize_splits"), { clear = true }),
