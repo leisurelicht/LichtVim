@@ -107,6 +107,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- disable leader and localleader keys for some filetypes
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup(utils.title.add("UnBindKeymap"), { clear = false }),
   pattern = {

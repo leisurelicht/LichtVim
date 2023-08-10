@@ -9,6 +9,12 @@ M.unset_keybind_filetypes = {
   "alpha",
   "neo-tree",
   "neo-tree-popup",
+  "lazy",
+  "mason",
+  "lspinfo",
+  "toggleterm",
+  "null-ls-info",
+  "TelescopePrompt",
 }
 
 function M.unset_keybind_buf(ft)
@@ -21,17 +27,6 @@ function M.fg(name)
   local fg = hl and hl.fg or hl.foreground
   return fg and { fg = string.format("#%06x", fg) }
 end
-
--- M.table = {}
-
--- --- Merge extended options with a default table of options
--- ---@param default? table The default table that you want to merge into
--- ---@param opts? table The new options that should be merged with the default table
--- ---@return table # The merged table
--- function M.table.extend(default, opts)
---   opts = opts or {}
---   return default and vim.tbl_deep_extend("force", default, opts) or opts
--- end
 
 M.list = {}
 
