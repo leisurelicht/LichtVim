@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    optional = true,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "json", "json5", "jsonc" })
@@ -9,6 +10,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    optional = true,
     dependencies = {
       "b0o/SchemaStore.nvim",
       version = false, -- last release is way too old

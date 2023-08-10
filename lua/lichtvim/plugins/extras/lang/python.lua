@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    optional = true,
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml", "htmldjango" })
     end,
@@ -59,6 +60,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    optional = true,
     opts = {
       servers = {
         pyright = {},

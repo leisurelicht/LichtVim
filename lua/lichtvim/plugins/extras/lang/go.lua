@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    optional = true,
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, { "go", "gomod", "gowork", "gosum" })
       -- table.insert(opts.indent.disable, "go")
@@ -20,10 +21,12 @@ return {
   },
   {
     "m4xshen/smartcolumn.nvim",
+    optional = true,
     opts = { custom_colorcolumn = { ["go"] = "120" } },
   },
   {
     "numToStr/Comment.nvim",
+    optional = true,
     opts = function(_, opts)
       require("Comment.ft").set("gomod", "//%s")
       return opts
@@ -31,6 +34,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    optional = true,
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "goimports-reviser",
@@ -39,6 +43,7 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    optional = true,
     opts = function(_, opts)
       local null_ls = require("null-ls")
       vim.list_extend(opts.sources, {
@@ -52,7 +57,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    ft = "go",
+    optional = true,
     opts = {
       servers = {
         gopls = {
