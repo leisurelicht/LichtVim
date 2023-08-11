@@ -78,4 +78,18 @@ return {
       }
     end,
   },
+  {
+    "kosayoda/nvim-lightbulb",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      sign = { enabled = false },
+      float = {
+        enabled = true,
+        win_opts = {
+          border = "none",
+        },
+      },
+      autocmd = { enabled = true, events = { "CursorHold" } },
+    },
+  },
 }
