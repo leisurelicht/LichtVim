@@ -1,6 +1,6 @@
 return {
   { import = "lichtvim.plugins.lsp.lsp-config" },
-  -- { import = "lichtvim.plugins.lsp.cmp" },
+  { import = "lichtvim.plugins.lsp.cmp" },
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = "LspAttach",
