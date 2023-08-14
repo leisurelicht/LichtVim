@@ -6,7 +6,11 @@ return {
     "nvim-pack/nvim-spectre",
     dependencies = { "plenary.nvim" },
     keys = function()
-      require("which-key").register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
+      local has_which, which_key = pcall(require, "which-key")
+      if has_which then
+        which_key.register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
+      end
+
       return {
         { "<leader>rr", utils.func.call(require("spectre").open), desc = "Spectre" },
         { "<leader>rw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
