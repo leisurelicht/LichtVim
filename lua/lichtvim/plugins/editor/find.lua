@@ -36,7 +36,10 @@ return {
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
     keys = function()
-      require("which-key").register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
+      local has_which, which_key = pcall(require, "which-key")
+      if has_which then
+        which_key.register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
+      end
 
       local plugs = utils.plugs
       return {
