@@ -13,12 +13,13 @@ return {
       if has_which then
         which_key.register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
       end
-      map.set("n", "<leader>rr", utils.func.call(require("spectre").open),  "Spectre" )
-      map.set("n", "<leader>rw", utils.func.call(require("spectre").open_visual, "Word", { select_word = true }) )
-      map.set("v", "<leader>rw", utils.func.call(require("spectre").open_visual), "Word" )
+
+      map.set("n", "<leader>rr", utils.func.call(require("spectre").open), "Spectre")
+      map.set("n", "<leader>rw", utils.func.call(require("spectre").open_visual, "Word", { select_word = true }))
+      map.set("v", "<leader>rw", utils.func.call(require("spectre").open_visual), "Word")
       -- stylua: ignore
-      map.set("n", "<leader>rs", utils.func.call(require("spectre").open_file_search, { select_word = true }), "Word in file" )
-    end
+      map.set("n", "<leader>rs", utils.func.call(require("spectre").open_file_search, { select_word = true }), "Word in file")
+    end,
   },
   {
     "AckslD/nvim-neoclip.lua",
@@ -38,34 +39,6 @@ return {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-file-browser.nvim" },
     },
-    keys = function()
-      local has_which, which_key = pcall(require, "which-key")
-      if has_which then
-        which_key.register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
-      end
-
-      local plugs = utils.plugs
-      return {
-        { "<leader>f<tab>", plugs.telescope("commands"), desc = "Commands" },
-        { "<leader>fc", plugs.telescope("command_history"), desc = "Commands history" },
-        { "<leader>fs", plugs.telescope("search_history"), desc = "Search history" },
-        { "<leader>ff", plugs.telescope("files"), desc = "Files (root)" },
-        { "<leader>ff", plugs.telescope("files", { cwd = false }), desc = "Files (cwd)" },
-        { "<leader>fm", plugs.telescope("marks"), desc = "Marks" },
-        { "<leader>fo", plugs.telescope("oldfiles"), desc = "Recently files" },
-        { "<leader>fO", plugs.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recently files (cwd)" },
-        { "<leader>fg", plugs.telescope("live_grep"), desc = "Grep (root)" },
-        { "<leader>fG", plugs.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-        { "<leader>fw", plugs.telescope("grep_string", { word_match = "-w" }), desc = "Word (root)" },
-        { "<leader>fW", plugs.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-        { "<leader>fw", plugs.telescope("grep_string"), mode = "v", desc = "Word (root)" },
-        { "<leader>fW", plugs.telescope("grep_string", { cwd = false }), mode = "v", desc = "Word (cwd)" },
-        { "<leader>fj", plugs.telescope("jumplist"), desc = "Jump list" },
-        { "<leader>fr", plugs.telescope("treesitter"), desc = "Treesitter" },
-        { "<leader>fR", plugs.telescope("registers"), desc = "Registers" },
-        { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
-      }
-    end,
     opts = function(_, opts)
       local themes = require("telescope.themes")
       local actions = require("telescope.actions")
@@ -203,19 +176,47 @@ return {
       telescope.load_extension("fzf")
       telescope.load_extension("file_browser")
 
-      if require("lazy.core.config").plugins["LichtVim"].dev then
-        map.set("n", "<leader>fT", utils.plugs.telescope("builtin"), "Builtin")
-        map.set("n", "<leader>fA", utils.plugs.telescope("autocommands"), "AutoCommands")
-        map.set("n", "<leader>fM", utils.plugs.telescope("man_pages"), "Man pages")
-        map.set("n", "<leader>fP", utils.plugs.telescope("vim_options"), "Vim option")
-        map.set("n", "<leader>fK", utils.plugs.telescope("keymaps"), "Key maps")
-        map.set("n", "<leader>fC", utils.plugs.telescope("colorscheme", { enable_preview = true }), "Colorscheme")
-        map.set("n", "<leader>fH", utils.plugs.telescope("help_tags"), "Help tags")
+      local has_which, which_key = pcall(require, "which-key")
+      if has_which then
+        which_key.register({ ["<leader>f"] = { name = " Find" }, mode = { "n", "v" } })
       end
 
+      local plugs = utils.plugs
 
-      map.set( "n", "<leader>fe", utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
+      if require("lazy.core.config").plugins["LichtVim"].dev then
+        map.set("n", "<leader>fT", plugs.telescope("builtin"), "Builtin")
+        map.set("n", "<leader>fA", plugs.telescope("autocommands"), "AutoCommands")
+        map.set("n", "<leader>fM", plugs.telescope("man_pages"), "Man pages")
+        map.set("n", "<leader>fP", plugs.telescope("vim_options"), "Vim option")
+        map.set("n", "<leader>fK", plugs.telescope("keymaps"), "Key maps")
+        map.set("n", "<leader>fC", plugs.telescope("colorscheme", { enable_preview = true }), "Colorscheme")
+        map.set("n", "<leader>fH", plugs.telescope("help_tags"), "Help tags")
+      end
 
+      map.set("n", "<leader>f<tab>", plugs.telescope("commands"), "Commands")
+      map.set("n", "<leader>fc", plugs.telescope("command_history"), "Commands history")
+      map.set("n", "<leader>fs", plugs.telescope("search_history"), "Search history")
+      map.set("n", "<leader>ff", plugs.telescope("files"), "Files (root)")
+      map.set("n", "<leader>ff", plugs.telescope("files", { cwd = false }), "Files (cwd)")
+      map.set("n", "<leader>fm", plugs.telescope("marks"), "Marks")
+      map.set("n", "<leader>fo", plugs.telescope("oldfiles"), "Recently files")
+      map.set("n", "<leader>fO", plugs.telescope("oldfiles", { cwd = vim.loop.cwd() }), "Recently files (cwd)")
+      map.set("n", "<leader>fg", plugs.telescope("live_grep"), "Grep (root)")
+      map.set("n", "<leader>fG", plugs.telescope("live_grep", { cwd = false }), "Grep (cwd)")
+      map.set("n", "<leader>fw", plugs.telescope("grep_string", { word_match = "-w" }), "Word (root)")
+      map.set("n", "<leader>fW", plugs.telescope("grep_string", { cwd = false, word_match = "-w" }), "Word (cwd)")
+      map.set("v", "<leader>fw", plugs.telescope("grep_string"), "Word (root)")
+      map.set("v", "<leader>fW", plugs.telescope("grep_string", { cwd = false }), "Word (cwd)")
+      map.set("n", "<leader>fj", plugs.telescope("jumplist"), "Jump list")
+      map.set("n", "<leader>fr", plugs.telescope("treesitter"), "Treesitter")
+      map.set("n", "<leader>fR", plugs.telescope("registers"), "Registers")
+      map.set("n", "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", "Paster")
+      map.set(
+        "n",
+        "<leader>fe",
+        utils.func.call(telescope.extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
+        "File Browser"
+      )
 
       if require("lichtvim.utils.lazy").has("nvim-notify") then
         telescope.load_extension("notify")
@@ -235,7 +236,7 @@ return {
             return
           end
 
-          map.set("n", "<leader>bs", utils.plugs.telescope("buffers"), "Buffers", { buffer = event.buf, silent = true })
+          map.set("n", "<leader>bs", plugs.telescope("buffers"), "Buffers", { buffer = event.buf, silent = true })
         end,
       })
     end,
