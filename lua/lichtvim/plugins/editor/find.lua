@@ -5,21 +5,20 @@ return {
   {
     "nvim-pack/nvim-spectre",
     dependencies = { "plenary.nvim" },
-    keys = function()
+    opts = { open_cmd = "noswapfile vnew" },
+    config = function(_, opts)
+      require("spectre").setup(opts)
+
       local has_which, which_key = pcall(require, "which-key")
       if has_which then
         which_key.register({ ["<leader>r"] = { name = "󰛔 Replace" }, mode = { "n", "v" } })
       end
-
-      return {
-        { "<leader>rr", utils.func.call(require("spectre").open), desc = "Spectre" },
-        { "<leader>rw", utils.func.call(require("spectre").open_visual, { select_word = true }), desc = "Word" },
-        { "<leader>rw", utils.func.call(require("spectre").open_visual), mode = "v", desc = "Word" },
-        -- stylua: ignore
-        { "<leader>rs", utils.func.call(require("spectre").open_file_search, { select_word = true }), desc = "Word in file" },
-      }
-    end,
-    opts = { open_cmd = "noswapfile vnew" },
+      map.set("n", "<leader>rr", utils.func.call(require("spectre").open),  "Spectre" )
+      map.set("n", "<leader>rw", utils.func.call(require("spectre").open_visual, "Word", { select_word = true }) )
+      map.set("v", "<leader>rw", utils.func.call(require("spectre").open_visual), "Word" )
+      -- stylua: ignore
+      map.set("n", "<leader>rs", utils.func.call(require("spectre").open_file_search, { select_word = true }), "Word in file" )
+    end
   },
   {
     "AckslD/nvim-neoclip.lua",
@@ -65,11 +64,6 @@ return {
         { "<leader>fr", plugs.telescope("treesitter"), desc = "Treesitter" },
         { "<leader>fR", plugs.telescope("registers"), desc = "Registers" },
         { "<leader>fp", "<cmd>Telescope neoclip a extra=star,plus,b theme=dropdown<cr>", desc = "Paster" },
-        {
-          "<leader>fe",
-          utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }),
-          desc = "File Browser",
-        },
       }
     end,
     opts = function(_, opts)
@@ -218,6 +212,10 @@ return {
         map.set("n", "<leader>fC", utils.plugs.telescope("colorscheme", { enable_preview = true }), "Colorscheme")
         map.set("n", "<leader>fH", utils.plugs.telescope("help_tags"), "Help tags")
       end
+
+
+      map.set( "n", "<leader>fe", utils.func.call(require("telescope").extensions.file_browser.file_browser, { path = vim.fn.expand("~") }), "File Browser")
+
 
       if require("lichtvim.utils.lazy").has("nvim-notify") then
         telescope.load_extension("notify")
