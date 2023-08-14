@@ -121,7 +121,11 @@ return {
     "akinsho/toggleterm.nvim",
     cmd = "ToggleTerm",
     keys = function()
-      require("which-key").register({ mode = { "n" }, ["<leader>o"] = { name = " Terminal" } })
+      local has_which, which_key = pcall(require, "which-key")
+      if has_which then
+        which_key.register({ mode = { "n" }, ["<leader>o"] = { name = " Terminal" } })
+      end
+
       return {
         { "<C-\\>", "<CMD>exe v:count1 . 'ToggleTerm'<CR>", desc = "Toggle terminal" },
         { "<leader>of", "<CMD>ToggleTerm direction=float<CR>", desc = "Toggle in float" },
