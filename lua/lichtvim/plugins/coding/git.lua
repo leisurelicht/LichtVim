@@ -4,19 +4,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead", "BufNewFile" },
-    keys = function()
-      if utils.git.is_repo() then
-        local has_which, which_key = pcall(require, "which-key")
-        if has_which then
-          which_key.register({ ["<leader>g"] = { name = "󰊢 Git" }, mode = { "n", "v" } })
-        end
-
-        local lazyUtils = require("lichtvim.utils.lazy")
-        local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
-        map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opt), "Lazygit")
-        map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opt), "Lazygit log")
-      end
-    end,
     opts = {
       signs = {
         add = { text = "│" },
@@ -42,6 +29,10 @@ return {
       },
       on_attach = function(bufnr)
         if utils.unset_keybind_buf(vim.bo[bufnr].filetype) then
+          return
+        end
+
+        if not utils.git.is_repo() then
           return
         end
 
