@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "null-ls-info",
     "neo-tree-popup",
     "TelescopePrompt",
-    "confirmQuit",
+    "confirm-quit",
   },
   callback = function(event)
     -- 取消leader键及localleader键的绑定

@@ -83,12 +83,9 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       sign = { enabled = false },
-      float = {
-        enabled = true,
-        win_opts = {
-          border = "none",
-        },
-      },
+      virtual_text = { enabled = true },
+      -- status_text = { enabled = true },
+      -- float = { enabled = true, win_opts = { border = "none" } },
       autocmd = { enabled = true, events = { "CursorHold" } },
     },
   },

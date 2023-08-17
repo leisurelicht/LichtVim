@@ -49,7 +49,7 @@ function M.confirmQuit()
     end,
   })
 
-  vim.api.nvim_buf_set_option(menu.bufnr, "filetype", "confirmQuit")
+  vim.api.nvim_buf_set_option(menu.bufnr, "filetype", "confirm-quit")
 
   menu:mount()
   menu:on(event.BufLeave, function()

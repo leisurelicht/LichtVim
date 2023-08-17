@@ -25,7 +25,7 @@ return {
         "dashboard",
         "toggleterm",
         "TelescopePrompt",
-        "confirmQuit",
+        "confirm-quit",
       },
       buftype_exclude = { "terminal" },
     },
@@ -53,7 +53,7 @@ return {
           "dashboard",
           "toggleterm",
           "TelescopePrompt",
-          "confirmQuit",
+          "confirm-quit",
         },
         callback = function()
           vim.b.miniindentscope_disable = true
