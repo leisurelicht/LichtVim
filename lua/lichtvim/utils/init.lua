@@ -21,6 +21,42 @@ function M.unset_keybind_buf(ft)
   return vim.fn.index(M.unset_keybind_filetypes, ft) ~= -1 and true or false
 end
 
+function M.confirmQuit()
+  local Menu = require("nui.menu")
+  local event = require("nui.utils.autocmd").event
+
+  local menu = Menu({
+    position = "50%",
+    size = { width = 30, height = 3 },
+    win_options = { winhighlight = "Normal:Normal,FloatBorder:Normal" },
+    border = { style = "rounded", text = { top = " Confirm to quit? ", top_align = "center" } },
+  }, {
+    lines = {
+      Menu.item("           Yes(Y)"),
+      Menu.item("            No(N)"),
+      Menu.item("         Cancel(ESC)"),
+    },
+    max_width = 20,
+    keymap = {
+      focus_next = { "j", "<Down>", "<Tab>" },
+      focus_prev = { "k", "<Up>", "<S-Tab>" },
+      close = { "<Esc>", "<C-c>", "n" },
+      submit = { "<CR>", "y" },
+    },
+    on_submit = function(item)
+      print("Menu Submitted: ", item.text)
+      -- vim.cmd([[wa | quitall]])
+    end,
+  })
+
+  vim.api.nvim_buf_set_option(menu.bufnr, "filetype", "confirmQuit")
+
+  menu:mount()
+  menu:on(event.BufLeave, function()
+    menu:unmount()
+  end)
+end
+
 function M.fg(name)
   ---@type {foreground?:number}?
   local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name }) or vim.api.nvim_get_hl_by_name(name, true)

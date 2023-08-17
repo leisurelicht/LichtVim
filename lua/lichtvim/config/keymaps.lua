@@ -79,20 +79,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function(event)
     local opts = { buffer = event.buf, silent = true }
 
-    map.set("n", "<leader>q", function()
-      vim.ui.select({ "Yes", "No" }, {
-        prompt = "Comfirm to quit?",
-        telescope = require("telescope.themes").get_dropdown({
-          winblend = 0,
-          layout_config = { width = 0.22, height = 0.12 },
-        }),
-      }, function(choice)
-        if choice ~= "Yes" then
-          return
-        end
-        vim.cmd([[ wa | quitall ]])
-      end)
-    end, " Quit", opts)
+    map.set("n", "<leader>q", utils.confirmQuit, " Quit", opts)
 
     map.set("n", "<leader>;", function()
       call(require("notify").dismiss, { silent = true, pending = true })
@@ -112,9 +99,6 @@ vim.api.nvim_create_autocmd("FileType", {
       local opt = { border = "rounded", cmd = utils.path.get_root, esc_esc = false, ctrl_hjkl = false }
       map.set("n", "<leader>gg", utils.func.call(lazyUtils.float_term, { "lazygit" }, opt), "Lazygit", opts)
       map.set("n", "<leader>gl", utils.func.call(lazyUtils.float_term, { "lazygit", "log" }, opt), "Lazygit log", opts)
-      -- else
-      --   map.set("n", "<leader>gg", "<nop>", "", opts)
-      --   map.set("n", "<leader>gl", "<nop>", "", opts)
     end
 
     -- 窗口快速跳转
