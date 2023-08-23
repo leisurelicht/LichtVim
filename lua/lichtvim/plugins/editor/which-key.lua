@@ -132,7 +132,7 @@ return {
 
           wk.register({
             -- d = { name = " Debugger" },
-            c = { name = " ShortCuts" },
+            c = { name = " Code" },
             b = { name = "󰓩 Buffers" },
             w = { name = " Window Split" },
           }, { mode = "n", prefix = "<leader>", buffer = event.buf })
