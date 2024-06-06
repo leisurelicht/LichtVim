@@ -22,3 +22,17 @@
   A Custom Neovim Config Base On <a href="https://github.com/LazyVim/LazyVim">LazyVim</a>
 </h4>
 
+## 🚀 Getting Started
+
+You can install by the following command 
+
+```
+git clone --depth 1 --single-branch --branch main https://github.com/leisurelicht/LichtVim.git ~/.config/nvim
+```
+
+or you can have try according the following command
+
+```
+git clone --depth 1 --single-branch --branch main https://github.com/leisurelicht/LichtVim.git ~/.config/LichtVim
+nvim -u ~/.config/LichtVim/init.lua
+```
