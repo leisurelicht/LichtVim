@@ -8,6 +8,7 @@ vim.g.python3_host_prog = "$HOME/.pyenv/versions/3.12.3/envs/neovim/bin/python"
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
+vim.g.trouble_lualine = false
 -- vim.g.lazyvim_statuscolumn = {
 --   folds_open = true, -- show fold sign when fold is open
 --   folds_githl = true, -- highlight fold sign with git sign color
