@@ -6,7 +6,7 @@ return {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufRead" },
     init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "poopup" }
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
   {
@@ -130,13 +130,13 @@ return {
   {
     "olexsmir/gopher.nvim",
     ft = "go",
+    build = function()
+      vim.cmd.GoInstallDeps()
+    end,
     dependencies = { -- dependencies
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    init = function()
-      vim.cmd([[silent! GoInstallDeps]])
-    end,
     config = true,
   },
 }
