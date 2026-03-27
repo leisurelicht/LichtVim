@@ -25,7 +25,7 @@ end
 ---@return boolean # True if the system is linux, false if not
 function M.sys.is_linux()
   -- return vim.fn.has("unix") and not fn.has("macunix") and not fn.has("win32unix")
-  return vim.loop.os_uname().sysname() == "Linux"
+  return vim.loop.os_uname().sysname == "Linux"
 end
 
 --- Check if the system is windows
