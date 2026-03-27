@@ -63,6 +63,9 @@ return {
   },
   {
     "brglng/vim-im-select",
+    enabled = function()
+      return utils.sys.is_macos()
+    end,
     event = { "BufRead", "BufNewFile" },
     keys = {
       {
@@ -82,7 +85,7 @@ return {
     },
     init = function()
       vim.g.im_select_enable_focus_events = 1
-      if utils.sys.is_macos() or utils.sys.is_linux() then
+      if utils.sys.is_macos() then
         vim.api.nvim_create_autocmd({ "TermEnter" }, {
           group = vim.api.nvim_create_augroup("im_select", { clear = true }),
           pattern = { "*" },
