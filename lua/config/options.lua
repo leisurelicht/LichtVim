@@ -4,7 +4,16 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-vim.g.python3_host_prog = "$HOME/.pyenv/versions/3.12.3/envs/neovim/bin/python"
+-- Python host prog: prefer pyenv neovim env, fallback to system python3
+local pyenv_neovim = vim.fn.expand("$HOME/.pyenv/versions/3.12.3/envs/neovim/bin/python")
+if vim.fn.filereadable(pyenv_neovim) == 1 then
+  vim.g.python3_host_prog = pyenv_neovim
+else
+  local system_python = vim.fn.exepath("python3")
+  if system_python ~= "" then
+    vim.g.python3_host_prog = system_python
+  end
+end
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
